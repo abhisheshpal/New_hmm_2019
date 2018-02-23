@@ -6,6 +6,12 @@
 # @info: Picker - a simple picker class
 # ----------------------------------
 
+import rospy
+import geometry_msgs.msg
+import tf
+import math
+
+
 class Picker(object):
     """Picker class definition"""
     def __init__(self, name, env, farm, tray_capacity, max_n_trays,
@@ -48,6 +54,8 @@ class Picker(object):
         self.picking_progress = 0.  # percentage of tray_capacity
 
         self.transport_progress = 0.
+        self.pose_pub = rospy.Publisher('/%s/pose' %(self.name), geometry_msgs.msg.Pose, queue_size=10)
+        self.pose = geometry_msgs.msg.Pose()
 
         self.action = self.env.process(self.picking_process())
 
@@ -89,6 +97,9 @@ class Picker(object):
                                                                                         self.n_trays,
                                                                                         self.picking_progress))
                     self.curr_node = "" + next_node
+                    # publish pose
+                    self.publish_pose(self.curr_node, 0.)
+
                     if self.curr_node == self.row_path[-1]:
                         self.picking_dir = "reverse"
                         print("%s changing to reverse along %s at %0.3f" %(self.name,
@@ -146,6 +157,9 @@ class Picker(object):
                                                                                         self.picking_progress))
 
                     self.curr_node = "" + next_node
+                    # publish pose
+                    self.publish_pose(self.curr_node, math.pi/2)
+
                     if self.curr_node == self.row_path[0]:
                         # row is finished
                         self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
@@ -248,6 +262,9 @@ class Picker(object):
                     if self.curr_node is None:
                         self.curr_node = self.curr_row_info[5]
                         self.local_storage_node = self.curr_row_info[5]
+                        
+                        # publish pose
+                        self.publish_pose(self.curr_node, 0.)
 
                     print("%s is moving to the start of %s at %0.3f" %(self.name,
                                                                         self.curr_row,
@@ -261,6 +278,9 @@ class Picker(object):
                     # picker moved to the start_node of the row (yield above)
                     self.curr_node = self.curr_row_info[1]
                     self.row_path = self.farm.graph.get_path(self.curr_node, self.curr_row_info[2])
+
+                    # publish pose
+                    self.publish_pose(self.curr_node, 0.)
 
                     print("%s started forward picking on %s at %0.3f" %(self.name, row_id, self.env.now))
                     # change current mode to picking
@@ -278,6 +298,8 @@ class Picker(object):
         # Only a timeout implementation is done now.
         #   1. move along the path (yield timeout(time_to_travel_path))
         yield self.env.timeout(time_to_transport)
+        # publish pose
+        self.publish_pose(self.local_storage_node, 0.0)
         #   2. request for the local storage access
         #   3. wait further for unloading (yield timeout(loading_time))
         print("%s requesting for local_storage resource at %0.3f" %(self.name, self.env.now))
@@ -285,7 +307,25 @@ class Picker(object):
             yield req
             print("%s got access to local_storage resource at %0.3f" %(self.name, self.env.now))
             yield self.env.timeout(self.loading_time)
+
             print("%s spent %0.3f for unloading at the local_staorage" %(self.name, self.loading_time))
         # if needed, return to previous node
         if n_times == 2:
             yield self.env.timeout(time_to_transport)
+            # publish pose
+            if self.picking_dir is "forward":
+                self.publish_pose(self.curr_node, 0.)
+            else:
+                self.publish_pose(self.curr_node, math.pi/2)
+
+    def publish_pose(self, node, z_orientation):
+        """This method publishes the current position of the picker. Called only at nodes"""
+        self.pose.position.x = self.farm.graph.nodes[node].x
+        self.pose.position.y = self.farm.graph.nodes[node].y
+        self.pose.position.z = 0.0
+        quaternion = tf.transformations.quaternion_from_euler(0., 0., z_orientation)
+        self.pose.orientation.x = quaternion[0]
+        self.pose.orientation.y = quaternion[1]
+        self.pose.orientation.z = quaternion[2]
+        self.pose.orientation.w = quaternion[3]
+        self.pose_pub.publish(self.pose)

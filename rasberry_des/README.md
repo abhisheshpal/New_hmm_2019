@@ -5,7 +5,8 @@ A rospackage for running discrete event simulation of a strawberry farm, pickers
 # Nodes:
   1. pickers_only.py
 
-     - `simpy.Environment` is used in `pickers_only.py` to run a quick simulation. `simpy.RealtimeEnvironment` can also be used to simulate in real-time (that line is commented in `pickers_only.py`).
+     - `simpy.Environment` can be used to run a quick simulation. 
+     - `simpy.RealtimeEnvironment` can be used to simulate in real-time.
      - `env.step` is used for getting a control over the simulation.
 
 
@@ -21,6 +22,7 @@ A `Picker` class is defined in `picker.py`:
   1. `picking_process`: This process first reports the arrival of picker to the farm. If a row is allocated to the picker, this process first moves the picker to the start of the assigned row from current position. Picking involves moving forward along the nodes in the row and then returning to the start of the node (picking on the other side). When the current tray is full, moves it to his cart (`max_n_trays` > 1) and when `n_trays` reach `max_n_trays` initiate `transport_process` to unload trays to local storage.
   2. `transport_process`: This may involve one navigation to local storage (final unloading) or two navigations (from a row node to local storage and return).
   3. When there are no more rows to be allocated in the farm, the picker dumps all berries at local storage.
+  4. Each picker publishes a `/<picker_name>/pose` topic when its position is updated (reaching a node).
 
 # Known Issues:
   1. `env.step` is used now rather than the `env.run` to kill the simulation with `Ctrl+c`. Although it gives better control over the simulation, 

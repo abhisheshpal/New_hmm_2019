@@ -87,10 +87,7 @@ if __name__ == "__main__":
         else:
             pass
 
-    if (SHOW_INFO):        
-        
-        rospy.signal_shutdown("Simulation completed ")
-    
+    if (SHOW_INFO):
         # farm details
         print("-----------------\n----%s----\n-----------------" %(rasb_farm.name))
         print("n_pickers: %d" %(len(rasb_farm.pickers_reported)))
