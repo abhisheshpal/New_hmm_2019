@@ -23,12 +23,12 @@ import numpy
 
 RANDOM_SEED = 1234
 
-N_ROWS = 10                  # number of rows
+N_ROWS = 5                  # number of rows
 ROW_NODE_DIST = 2           # m, distance between two ndoes in a row
-ROW_LENGTH = 100              # m, length of a row
+ROW_LENGTH = 10              # m, length of a row
 ROW_SPACING = 2             # m, spacing between two rows
 
-N_PICKERS = 5               # total number of pickers
+N_PICKERS = 3               # total number of pickers
 PICKING_RATE = 0.2          # m/s, speed of the picker while picking
 TRANSPORT_RATE = 0.8        # m/s, speed of the picker while transporting
 MAX_N_TRAYS = 1             # maximum number of trays that can be carried by the
@@ -38,35 +38,56 @@ TRAY_CAPACITY = 12 * 250.0  # g, tray is assumed to take 12 small trays, each 25
 
 YIELD_PER_NODE = 200.0      # g/m, yield per node distance
 
+SHOW_INFO = False
+
 
 if __name__ == "__main__":
     random.seed(RANDOM_SEED)
     numpy.random.seed(RANDOM_SEED)
 
     rospy.init_node("rasberry_des", anonymous=True)
-    while not rospy.is_shutdown():
-#    if (True):
-        env = simpy.Environment()
-    #    env = simpy.RealtimeEnvironment(initial_time=0, factor=1.0, strict=False)
-        # assuming the following:
-        # 1. only one head lane
-        # 2. a picker won't have to wait longer than loadingTime
-        local_storages = [simpy.Resource(env, capacity=N_PICKERS)]
-        rasb_farm = rasberry_des.farm.Farm("RAS-Berry", env)
-        rasb_farm.init_graph_fork(N_ROWS, ROW_NODE_DIST, ROW_LENGTH, ROW_SPACING, YIELD_PER_NODE, local_storages)
-    #    rasb_farm.graph.print_nodes()
-        env.process(rasb_farm.scheduler_monitor())
     
-        rasb_pickers = []
-        for i in range(N_PICKERS):
-            picking_rate = random.uniform(PICKING_RATE - 0.04, PICKING_RATE + 0.04)
-            transport_rate = random.uniform(TRANSPORT_RATE - 0.08, TRANSPORT_RATE + 0.08)
-            loading_time = random.uniform(LOADING_TIME - 2, LOADING_TIME + 2)
+#    env = simpy.Environment()
+    t_start = rospy.get_time()
+    # RealtimeEnvironment can be enabled by uncommenting the line below.
+    # The farm size and n_pickers given would take 420s to run
+    # To vary the speed of RT sim, change 'factor'
+    env = simpy.RealtimeEnvironment(initial_time=t_start, factor=1.0, strict=False)
 
-            rasb_pickers.append(rasberry_des.picker.Picker("picker-%02d" %(i), env, rasb_farm, TRAY_CAPACITY,
-                                  MAX_N_TRAYS, picking_rate, transport_rate, loading_time))
-    
-        env.run(until=6000)
+    # assuming a fork graph with the following:
+    # 1. only one head lane
+    # 2. a picker won't have to wait longer than loadingTime
+    local_storages = [simpy.Resource(env, capacity=N_PICKERS)]
+    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", env)
+    rasb_farm.init_graph_fork(N_ROWS, ROW_NODE_DIST, ROW_LENGTH, ROW_SPACING, YIELD_PER_NODE, local_storages)
+    env.process(rasb_farm.scheduler_monitor())
+
+    rasb_pickers = []
+    for i in range(N_PICKERS):
+        picking_rate = random.uniform(PICKING_RATE - 0.04, PICKING_RATE + 0.04)
+        transport_rate = random.uniform(TRANSPORT_RATE - 0.08, TRANSPORT_RATE + 0.08)
+        loading_time = random.uniform(LOADING_TIME - 2, LOADING_TIME + 2)
+
+        rasb_pickers.append(rasberry_des.picker.Picker("picker-%02d" %(i), env, rasb_farm, TRAY_CAPACITY,
+                              MAX_N_TRAYS, picking_rate, transport_rate, loading_time))
+
+    while not rospy.is_shutdown():
+        try:
+#            t_now = rospy.get_time()
+#            print ("%0.3f, %0.3f" %(env.now, t_now))
+            # instead of env.run() we should env.step() to have any control (Ctrl+c)
+            # If multiple events are scheduled for the same simpy.time, there would be
+            # at least a ms delay (in ros/realtime clock) between the events
+            # This seems to be unavoidable at this stage
+            env.step()
+        except simpy.core.EmptySchedule:
+            break
+        except rospy.ROSInterruptException:
+            break
+        else:
+            pass
+
+    if (SHOW_INFO):        
         
         rospy.signal_shutdown("Simulation completed ")
     
@@ -102,8 +123,12 @@ if __name__ == "__main__":
             print("max_n_trays: %d" %(rasb_pickers[i].max_n_trays))
             print("rows allocated: ", rasb_farm.picker_allocations[rasb_pickers[i].name])
             for row_id in rasb_farm.picker_allocations[rasb_pickers[i].name]:
-                print("  %s allocation time: %0.3f" %(row_id, rasb_farm.allocation_time[row_id]))
-                print("  %s completion time: %0.3f" %(row_id, rasb_farm.row_finish_time[row_id]))
+                alloc_time = rasb_farm.allocation_time[row_id]
+                finish_time = rasb_farm.row_finish_time[row_id]
+                print("  %s allocation time: %0.3f" %(row_id,
+                                                      alloc_time if alloc_time is not None else float("inf")))
+                print("  %s completion time: %0.3f" %(row_id,
+                                                      finish_time if finish_time is not None else float("inf")))
             print("tot_trays: %0.3f (%0.3f g)" %(rasb_pickers[i].tot_trays, 
                                                  rasb_pickers[i].tot_trays * rasb_pickers[i].tray_capacity))
             print("-----------------\n")

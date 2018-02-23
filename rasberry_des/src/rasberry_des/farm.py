@@ -67,7 +67,7 @@ class Farm(object):
             self.picker_allocations[picker_id] = []
             self.curr_picker_allocations[picker_id] = None
             self.pickers_reported.append(picker_id)
-            print("%s reporting at %04.3f" %(picker_id, self.env.now))
+            print("%s reporting at %0.3f" %(picker_id, self.env.now))
 
     def finished_picking(self, ):
         """Method to check whether all allocated rows are finished"""
@@ -106,13 +106,13 @@ class Farm(object):
                         # this row is finished
                         self.n_finished_rows += 1
                         # TODO: there could be slight delay in this time
-                        print ("%s reported finish-row at %04.3f and now time is %04.3f" %(picker_id,
+                        print ("%s reported finish-row at %0.3f and now time is %0.3f" %(picker_id,
                                                                                            self.finished_rows[row_id].value,
                                                                                            self.env.now))
                         self.row_finish_time[row_id] = self.finished_rows[row_id].value
                         # relieve the picker
                         self.curr_picker_allocations[picker_id] = None
-                        print("%s reported completion of row %s at %04.3f" %(picker_id,
+                        print("%s reported completion of row %s at %0.3f" %(picker_id,
                                                                              row_id,
                                                                              self.row_finish_time[row_id]))
             if self.finished_picking():
@@ -132,7 +132,7 @@ class Farm(object):
                         self.allocation_time[row_id] = self.env.now
                         # the value picker checks is updated last
                         self.curr_picker_allocations[picker_id] = row_id
-                        print("%s is allocated to %s at %04.3f" %(picker_id,
+                        print("%s is allocated to %s at %0.3f" %(picker_id,
                                                                   row_id,
                                                                   self.allocation_time[row_id]))
 
