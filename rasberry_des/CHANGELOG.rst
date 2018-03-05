@@ -2,8 +2,8 @@
 Changelog for package rasberry_des
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.1 (2018-03-05)
+------------------
 * Modified the Picker class to publish /<picker_name>/pose (geometry_msgs.msg.Pose) topic when it reaches a node.
   Ros topics were not published while runnning quick sim (simpy.Environment), probably too fast. This needs double checking.
 * Changes:
