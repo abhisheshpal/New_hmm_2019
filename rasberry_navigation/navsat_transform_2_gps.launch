@@ -2,22 +2,31 @@
 <launch>
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_novatel" clear_params="true">
     <rosparam command="load" file="$(find rasberry_navigation)/config/navsat_transform_novatel.yaml" />
-
       <!-- Placeholders for input remapping. Set your topic names as the "to" values.
-      <remap from="imu/data" to=""/> -->
-      <remap from="odometry/filtered" to="novatel/odometry"/>
+        
+    -->
+      <remap from="odometry/gps" to="/novatel/odometry"/>
+      <remap from="imu/data" to="/imu/data"/> 
+      <remap from="odometry/filtered" to="rl/odometry"/> 
       <remap from="gps/fix" to="/navsat_fix"/>
+      <remap from="gps/filtered" to="/navsatfix/filtered"/>  
 
   </node>
 
   <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_mtig" clear_params="true">
     <rosparam command="load" file="$(find rasberry_navigation)/config/navsat_transform_mtig.yaml" />
 
-      <!-- Placeholders for input remapping. Set your topic names as the "to" values.
-      <remap from="imu/data" to=""/> -->
-      <remap from="odometry/filtered" to="mtig/odometry"/>
-      <remap from="gps/fix" to="fix"/>
-
+      <!-- Placeholders for input remapping. Set your topic names as the "to" values. -->
+      <remap from="imu/data" to="/imu/data"/> 
+      <remap from="odometry/filtered" to="rl/odometry"/> 
+      <remap from="gps/fix" to="/fix"/>
+      <remap from="odometry/gps" to="mtig/odometry"/>
+      <remap from="gps/filtered" to="/fix/filtered"/>
   </node>
+
+  <node name="bl_novatel_tf" pkg="tf" type="static_transform_publisher" respawn="true" args="0 0 0.41 0 0 0 1 odom gps 100" output="log"/>
+
+  <node name="novatel_fix_tf" pkg="tf" type="static_transform_publisher" respawn="true" args="0 0 0.41 0 0 0 1 gps base_imu 100" output="log"/>
+
 </launch>
 
