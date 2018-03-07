@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<launch>
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_novatel" clear_params="true">
+    <rosparam command="load" file="$(find rasberry_navigation)/config/navsat_transform_novatel.yaml" />
+
+      <!-- Placeholders for input remapping. Set your topic names as the "to" values.
+      <remap from="imu/data" to=""/> -->
+      <remap from="odometry/filtered" to="novatel/odometry"/>
+      <remap from="gps/fix" to="/navsat_fix"/>
+
+  </node>
+
+  <node pkg="robot_localization" type="navsat_transform_node" name="navsat_transform_mtig" clear_params="true">
+    <rosparam command="load" file="$(find rasberry_navigation)/config/navsat_transform_mtig.yaml" />
+
+      <!-- Placeholders for input remapping. Set your topic names as the "to" values.
+      <remap from="imu/data" to=""/> -->
+      <remap from="odometry/filtered" to="mtig/odometry"/>
+      <remap from="gps/fix" to="fix"/>
+
+  </node>
+</launch>
+
