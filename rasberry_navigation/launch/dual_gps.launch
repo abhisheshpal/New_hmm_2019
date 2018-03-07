@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+
+<launch>
+ 
+  <node pkg="xsens_driver" type="mtnode.py" name="mtinode">
+	<param name="frame_id" value="imu"/>
+  </node>
+
+
+ 
+
+  <node pkg="nmea_navsat_driver" type="nmea_serial_driver" name="nmea_navsat">
+	<param name="frame_id" value="novatel"/>
+	<param name="baud" value="57600"/>
+	<param name="port" value="/dev/ttyUSB0"/>
+  </node>
+
+</launch>
