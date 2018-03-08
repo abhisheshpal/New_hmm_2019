@@ -1,0 +1,1855 @@
+- meta:
+    map: ''
+    node: hn-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - head_row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_from_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: hn-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: hn-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - head_row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_from_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: hn-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: hn-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - head_row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_from_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: hn-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: hn-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - head_row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_from_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: hn-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: hn-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - head_row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_from_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: hn-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_to_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_00_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_01_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_01_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_02_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_02_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_03_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_03_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_04_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_04_05
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_05_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 0.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_to_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_00_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_01_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_01_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_02_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_02_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_03_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_03_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_04_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_04_05
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_05_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 2.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_to_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_02_00_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_01_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_02_01_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_02_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_02_02_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_03_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_02_03_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_04_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_02_04_05
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-02-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_02
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_02_05_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-02-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-02-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 4.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_to_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_03_00_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_01_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_03_01_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_02_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_03_02_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_03_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_03_03_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_04_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_03_04_05
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-03-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_03
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_03_05_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-03-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-03-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_to_head
+      inflation_radius: 0.0
+      map_2d: ''
+      node: hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_04_00_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-00
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_01_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_04_01_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-01
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_02_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_04_02_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-02
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_03_02
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_04_03_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-03
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_04_03
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_04_04_05
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-04
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-04-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    tag:
+    - row_04
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_04_05_04
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-04-05
+    pointset: /home/gpdas/workspace/kinetic/src/my_packages/rasberry/rasberry_des/maps/fork_map.tplg
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1

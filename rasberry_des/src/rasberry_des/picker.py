@@ -14,23 +14,23 @@ import math
 
 class Picker(object):
     """Picker class definition"""
-    def __init__(self, name, env, farm, tray_capacity, max_n_trays,
-                 picking_rate, transport_rate, loading_time):
+    def __init__(self, picker_id, env, farm, tray_capacity, max_n_trays,
+                 picking_rate, transportation_rate, loading_time):
         """Create a Picker object
 
         Keyword arguments:
-        name -- name/id of the picker
+        picker_id -- name/id of the picker
         env -- simpy.Environment
         farm -- provides the allocation and monitor process as well as a graph.
         """
-        self.name = name
+        self.picker_id = picker_id
         self.env = env
         self.farm = farm
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
         self.tray_capacity = tray_capacity
         self.picking_rate = picking_rate
-        self.transport_rate = transport_rate
+        self.transportation_rate = transportation_rate
         self.max_n_trays = max_n_trays
         self.max_wait_for_allocation = 5    # max time to wait before unloading everything
 
@@ -54,7 +54,7 @@ class Picker(object):
         self.picking_progress = 0.  # percentage of tray_capacity
 
         self.transport_progress = 0.
-        self.pose_pub = rospy.Publisher('/%s/pose' %(self.name), geometry_msgs.msg.Pose, queue_size=10)
+        self.pose_pub = rospy.Publisher('/%s/pose' %(self.picker_id), geometry_msgs.msg.Pose, queue_size=10)
         self.pose = geometry_msgs.msg.Pose()
 
         self.action = self.env.process(self.picking_process())
@@ -63,7 +63,7 @@ class Picker(object):
         """ Picker's picking process
         """
         # 1. picker should report for duty first
-        self.farm.picker_report(self.name)
+        self.farm.picker_report(self.picker_id)
         while True:
             # 2. If the picker is assigned a row,
             #   a. continue picking
@@ -89,10 +89,10 @@ class Picker(object):
 
                     # update the picking progress
                     self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
-                    print("%s reached %s from %s at %0.3f" %(self.name, next_node,
+                    print("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
                                                               self.curr_node,
                                                               self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
+                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                         self.tot_trays,
                                                                                         self.n_trays,
                                                                                         self.picking_progress))
@@ -102,7 +102,7 @@ class Picker(object):
 
                     if self.curr_node == self.row_path[-1]:
                         self.picking_dir = "reverse"
-                        print("%s changing to reverse along %s at %0.3f" %(self.name,
+                        print("%s changing to reverse along %s at %0.3f" %(self.picker_id,
                                                                             self.curr_row,
                                                                             self.env.now))
 
@@ -116,17 +116,17 @@ class Picker(object):
                         # transport to local storage and return
                         trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                        self.local_storage_node)
-                        time_to_transport = trans_path_dist / self.transport_rate
+                        time_to_transport = trans_path_dist / self.transportation_rate
                         self.mode = 2
-                        print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
+                        print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                         self.max_n_trays,
                                                                                         self.env.now))
-                        print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
+                        print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                             self.tot_trays,
                                                                                             self.n_trays,
                                                                                             self.picking_progress))
                         yield self.env.process(self.transport_process(time_to_transport, 2))
-                        print("%s returned from local storage at %0.3f" %(self.name,
+                        print("%s returned from local storage at %0.3f" %(self.picker_id,
                                                                            self.env.now))
 
                         # resume picking
@@ -148,10 +148,10 @@ class Picker(object):
 
                     # update the picking progress
                     self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
-                    print("%s reached %s from %s at %0.3f" %(self.name, next_node,
+                    print("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
                                                               self.curr_node,
                                                               self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
+                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                         self.tot_trays,
                                                                                         self.n_trays,
                                                                                         self.picking_progress))
@@ -180,9 +180,9 @@ class Picker(object):
                                 # transport to local storage. no need to return as row is finished
                                 trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                                self.local_storage_node)
-                                time_to_transport = trans_path_dist / self.transport_rate
+                                time_to_transport = trans_path_dist / self.transportation_rate
                                 self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
+                                print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                                 self.max_n_trays,
                                                                                                 self.env.now))
                                 yield self.env.process(self.transport_process(time_to_transport, 1))
@@ -197,13 +197,13 @@ class Picker(object):
                                 # transport to local storage and return
                                 trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                                self.local_storage_node)
-                                time_to_transport = trans_path_dist / self.transport_rate
+                                time_to_transport = trans_path_dist / self.transportation_rate
                                 self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
+                                print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                                 self.max_n_trays,
                                                                                                 self.env.now))
                                 yield self.env.process(self.transport_process(time_to_transport, 2))
-                                print("%s returned from local storage at %0.3f" %(self.name,
+                                print("%s returned from local storage at %0.3f" %(self.picker_id,
                                                                                    self.env.now))
 
                                 # resume picking
@@ -221,10 +221,10 @@ class Picker(object):
             #       If there is a new assignment
             #           a. Move to the start node of the path
             #           b. Get the path from the current loc to start_node of new row
-            #           c. Move at transport_rate to start_node
+            #           c. Move at transportation_rate to start_node
             #           d. Continue/Start picking along the new row by changing mode to picking
             elif self.mode == 0:
-                row_id = self.farm.curr_picker_allocations[self.name]
+                row_id = self.farm.curr_picker_allocations[self.picker_id]
                 row_id = None if row_id == self.prev_row else row_id
 
                 if (row_id is None) and (len(self.farm.unallocated_rows) == 0):
@@ -242,7 +242,7 @@ class Picker(object):
                         if (self.n_trays > 0) or (self.picking_progress > 0.):
                             trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                            self.local_storage_node)
-                            time_to_transport = trans_path_dist / self.transport_rate
+                            time_to_transport = trans_path_dist / self.transportation_rate
                             self.mode = 2
                             self.env.process(self.transport_process(time_to_transport, 1))
                             self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
@@ -251,7 +251,7 @@ class Picker(object):
 
                         self.mode = 3
                     # finish the picking process
-                    print("%s finishing picking process. all rows are assigned" %(self.name))
+                    print("%s finishing picking process. all rows are assigned" %(self.picker_id))
                     break
 
                 elif row_id is not None: # if there is a row assigned to the picker
@@ -262,17 +262,17 @@ class Picker(object):
                     if self.curr_node is None:
                         self.curr_node = self.curr_row_info[5]
                         self.local_storage_node = self.curr_row_info[5]
-                        
+
                         # publish pose
                         self.publish_pose(self.curr_node, 0.)
 
-                    print("%s is moving to the start of %s at %0.3f" %(self.name,
+                    print("%s is moving to the start of %s at %0.3f" %(self.picker_id,
                                                                         self.curr_row,
                                                                         self.env.now))
                     # transport to the start_node of the row
                     trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                    self.curr_row_info[1])
-                    time_to_transport = trans_path_dist / self.transport_rate
+                    time_to_transport = trans_path_dist / self.transportation_rate
                     yield self.env.timeout(time_to_transport)
 
                     # picker moved to the start_node of the row (yield above)
@@ -282,7 +282,7 @@ class Picker(object):
                     # publish pose
                     self.publish_pose(self.curr_node, 0.)
 
-                    print("%s started forward picking on %s at %0.3f" %(self.name, row_id, self.env.now))
+                    print("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
                     # change current mode to picking
                     self.mode = 1 # picking mode
 
@@ -302,13 +302,13 @@ class Picker(object):
         self.publish_pose(self.local_storage_node, 0.0)
         #   2. request for the local storage access
         #   3. wait further for unloading (yield timeout(loading_time))
-        print("%s requesting for local_storage resource at %0.3f" %(self.name, self.env.now))
+        print("%s requesting for local_storage resource at %0.3f" %(self.picker_id, self.env.now))
         with self.farm.local_storages[self.local_storage_node].request() as req:
             yield req
-            print("%s got access to local_storage resource at %0.3f" %(self.name, self.env.now))
+            print("%s got access to local_storage resource at %0.3f" %(self.picker_id, self.env.now))
             yield self.env.timeout(self.loading_time)
 
-            print("%s spent %0.3f for unloading at the local_staorage" %(self.name, self.loading_time))
+            print("%s spent %0.3f for unloading at the local_staorage" %(self.picker_id, self.loading_time))
         # if needed, return to previous node
         if n_times == 2:
             yield self.env.timeout(time_to_transport)

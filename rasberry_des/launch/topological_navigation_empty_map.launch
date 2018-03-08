@@ -1,0 +1,39 @@
+<launch>
+	<!-- this is a modified version of topological_navigation/launch/topological_navigation_empty_map.launch-->
+	<!-- declare arg to be passed in -->
+	<arg name="top_map" />
+	<arg name="config_file" default="$(find rasberry_des)/config/des_config.yaml" />
+	<arg name="met_map" default="$(find rasberry_des)/maps/empty_world.yaml" />
+	<arg name="mon_nav_config_file"  default="" />
+	<arg name="wait_reset_bumper_duration" default="0.0"/>
+	<arg name="topological_navigation_retries" default="3"/>
+	<arg name="execute_policy_retries" default="3"/>
+
+	<node pkg="rasberry_des" type="tf2_broadcaster.py" name="tf2_broadcaster" args="map 0 0 0 0 0 0" />
+	<node pkg="map_server" type="map_server" name="map_server" args="$(arg met_map)" />
+	<rosparam command="load" file="$(arg config_file)" ns="rasberry_des_config"/>
+
+ 	<node pkg="monitored_navigation" type="monitored_nav.py" name="monitored_nav" output="screen" args="$(arg mon_nav_config_file)">
+		<param name="wait_reset_bumper_duration" value="$(arg wait_reset_bumper_duration)"/>
+	</node>
+
+	<!-- <node pkg="topological_navigation" type="map_publisher.py" name="topological_map_publisher" args="$(arg top_map)" /> -->
+	<node pkg="topological_navigation" type="map_manager.py" name="topological_map_manager" args="-n $(arg top_map)"/>
+
+	<node pkg="fremenserver" type="fremenserver" name="fremenserver"/>
+
+	<node pkg="topological_navigation" name="topological_localisation" type="localisation.py" output="screen"/>
+	<node pkg="topological_navigation" name="topological_navigation" type="navigation.py" output="screen">
+		<param name="retries" type="int" value="$(arg topological_navigation_retries)"/>
+	</node>
+	<node pkg="topological_navigation" name="execute_policy_server" type="execute_policy_server.py" output="screen">
+		<param name="retries" type="int" value="$(arg execute_policy_retries)"/>
+	</node>
+
+	<node pkg="topological_navigation" type="visualise_map.py" name="visualise_map" args="$(arg top_map)"/>
+
+	<node pkg="topological_navigation" type="travel_time_estimator.py" name="travel_time_estimator" />
+	<node pkg="topological_navigation" type="topological_prediction.py" name="topological_prediction" output="screen" />
+
+
+</launch>
