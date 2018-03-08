@@ -8,7 +8,6 @@
 import rospy
 import rasberry_des.generate_map
 import rasberry_des.config_utils
-import sys
 
 
 FORK_MAP_HEAD_NODE_Y = 1.0
@@ -16,12 +15,7 @@ FORK_MAP_HEAD_NODE_Y = 1.0
 if __name__ == "__main__":
     rospy.init_node("fork_map_generator", anonymous=True)
 
-    if len(sys.argv) < 2:
-        ns = "/rasberry_des_config/"
-    else:
-        ns = sys.argv[1] if sys.argv[1][-1] == "/" else sys.argv[1] + "/"
-
-    config_params = rasberry_des.config_utils.get_fork_map_config_parameters(ns)
+    config_params = rasberry_des.config_utils.get_fork_map_config_parameters()
 
     n_farm_rows = config_params[0]
     half_rows = config_params[1]

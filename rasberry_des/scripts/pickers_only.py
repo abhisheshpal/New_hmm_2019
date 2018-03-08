@@ -30,19 +30,16 @@ if __name__ == "__main__":
     random.seed(RANDOM_SEED)
     numpy.random.seed(RANDOM_SEED)
 
+    ns = rospy.get_namespace()
+
     if len(sys.argv) < 2:
-        ns = "/rasberry_des_config/"
-        top_map = "fork_map"
-    elif len(sys.argv) == 2:
-        ns = sys.argv[1] if sys.argv[1][-1] == "/" else sys.argv[1] + "/"
         top_map = "fork_map"
     else:
-        ns = sys.argv[1] if sys.argv[1][-1] == "/" else sys.argv[1] + "/"
-        top_map = sys.argv[2]
+        top_map = sys.argv[1]
 
-    rospy.init_node("rasberry_des", anonymous=True)
+    rospy.init_node("pickers_only", anonymous=True)
     # required des config parameters
-    config_params = rasberry_des.config_utils.get_des_config_parameters(ns, map_from_db=False)
+    config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
 
     n_farm_rows = config_params[0]
     half_rows = config_params[1]
@@ -76,8 +73,8 @@ if __name__ == "__main__":
         simpy_env = simpy.RealtimeEnvironment(initial_time=t_start, factor=1.0, strict=False)
         print simpy_env
     else:
-        raise ValueError("%sdes_env must be either simpy or ros" %(ns))
-        rospy.logerr("%sdes_env must be either simpy or ros" %(ns))
+        raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
+        rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
 
     # assuming a fork graph with the following:
     # 1. only one head lane

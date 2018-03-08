@@ -6,18 +6,12 @@
 # ----------------------------------
 
 import rospy
-import sys
 import rasberry_des.config_utils
 
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        ns = "/rasberry_des_config/"
-    else:
-        ns = sys.argv[1] if sys.argv[1][-1] == '/' else sys.argv[1] + "/"
-
     rospy.init_node("check_des_fork_map_config_parameters", anonymous=True)
-    missing_params = rasberry_des.config_utils.check_fork_map_config(ns)
+    missing_params = rasberry_des.config_utils.check_fork_map_config()
 
     if len(missing_params) != 0:
         rospy.ROSException("Required DES configuration parameters missing")

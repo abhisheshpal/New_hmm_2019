@@ -11,7 +11,9 @@
 
 	<node pkg="rasberry_des" type="tf2_broadcaster.py" name="tf2_broadcaster" args="map 0 0 0 0 0 0" />
 	<node pkg="map_server" type="map_server" name="map_server" args="$(arg met_map)" />
-	<rosparam command="load" file="$(arg config_file)" ns="rasberry_des_config"/>
+	<group ns="/">
+		<rosparam command="load" file="$(arg config_file)"/>
+	</group>
 
  	<node pkg="monitored_navigation" type="monitored_nav.py" name="monitored_nav" output="screen" args="$(arg mon_nav_config_file)">
 		<param name="wait_reset_bumper_duration" value="$(arg wait_reset_bumper_duration)"/>
