@@ -7,12 +7,12 @@
 
   <!-- <arg name="robot_model_conf" default="$(find thorvald_model)/config/thorvald_ii_4wd4ws_std/thorvald_ii_4wd4ws_std.yaml" /> -->
 
-  <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_example.xacro" />
+  <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
 
   <arg name="simple_sim" default="True" />
 
 
-  <include file="$(find gazebo_ros)/launch/empty_world.launch" />
+  <include file="$(find rasberry_gazebo)/launch/polypoles.launch" />
 
 
   <!-- model bringup -->
