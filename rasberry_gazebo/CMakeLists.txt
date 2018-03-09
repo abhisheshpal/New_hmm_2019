@@ -8,6 +8,8 @@ project(rasberry_gazebo)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  thorvald_gazebo_plugins
+  thorvald_model
   gazebo_ros
   gazebo_plugins
   geometry_msgs
