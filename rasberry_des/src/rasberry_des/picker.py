@@ -113,6 +113,39 @@ class Picker(object):
 
                     # if max_n_trays is reached
                     if self.n_trays == self.max_n_trays:
+                        # if full rows, and at the end node,
+                        #   send row finished
+                        #   go to local storage and no return
+                        if (not self.farm.half_rows) and (self.curr_node == self.row_path[-1]):
+                            # row is finished
+                            self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
+                            # row finished
+                            self.picking_dir = None
+                            self.prev_row = "" + self.curr_row
+                            self.prev_row_info = [] + self.curr_row_info
+                            self.curr_row = None
+                            self.row_path = []
+                            # transport to the local storage and don't return
+                            trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
+                                                                                       self.local_storage_node)
+                            time_to_transport = trans_path_dist / self.transportation_rate
+                            self.mode = 2
+                            print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                                                                                            self.max_n_trays,
+                                                                                            self.env.now))
+                            print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                                                                                                self.tot_trays,
+                                                                                                self.n_trays,
+                                                                                                self.picking_progress))
+                            yield self.env.process(self.transport_process(time_to_transport, 1))
+                            # finished the allocated row and transported all berries
+                            # now at local_storage_node
+                            # no current allocation - change mode to zero
+                            self.tot_trays += self.max_n_trays
+                            self.n_trays -= self.max_n_trays
+                            self.curr_node = "" + self.local_storage_node
+                            self.mode = 0
+
                         # transport to local storage and return
                         trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
                                                                                        self.local_storage_node)
@@ -143,11 +176,18 @@ class Picker(object):
                     else:
                         node_dist = self.curr_row_info[4]
 
-                    time_to_pick = node_dist / self.picking_rate
-                    yield self.env.timeout(time_to_pick)
+                    if self.farm.half_rows:
+                        # half rows at start and end (berries on both sides), work normally
+                        time_to_pick = node_dist / self.picking_rate
+                        yield self.env.timeout(time_to_pick)
+                        # update the picking progress
+                        self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
+                    elif (self.curr_row == self.farm.row_ids[0]) or (self.curr_row == self.farm.row_ids[-1]):
+                        # there are full rows at the start and end
+                        # navigate to the start node of the row and send row finish (no picking)
+                        time_to_transport = node_dist / self.transportation_rate
+                        yield self.env.timeout(time_to_transport)
 
-                    # update the picking progress
-                    self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
                     print("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
                                                               self.curr_node,
                                                               self.env.now))

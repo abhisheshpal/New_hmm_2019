@@ -189,7 +189,11 @@ include_directories(
 # )
 
 install(PROGRAMS
+  scripts/check_des_config_parameters.py
+  scripts/check_des_fork_map_config_parameters.py
+  scripts/fork_map_generator.py
   scripts/pickers_only.py
+  scripts/tf2_broadcaster.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
