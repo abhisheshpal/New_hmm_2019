@@ -9,7 +9,7 @@
 	<arg name="topological_navigation_retries" default="3"/>
 	<arg name="execute_policy_retries" default="3"/>
 
-	<node pkg="rasberry_des" type="tf2_broadcaster.py" name="tf2_broadcaster" args="map 0 0 0 0 0 0" />
+	<node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map odom 10"/>
 	<node pkg="map_server" type="map_server" name="map_server" args="$(arg met_map)" />
 	<group ns="/">
 		<rosparam command="load" file="$(arg config_file)"/>
