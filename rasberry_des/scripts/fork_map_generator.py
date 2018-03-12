@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # ----------------------------------
 # @author: gpdas
 # @email: pdasgautham@gmail.com
