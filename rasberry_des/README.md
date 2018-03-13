@@ -18,15 +18,17 @@ A rospackage for running discrete event simulation of a strawberry farm, pickers
 # How to run
 
 1. Launch the `mongodb_store` nodes
-`roslaunch mongodb_store mongodb_store.launch db:=<path_to_mongo_db_storage_dir>`
-2. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
-  * Edit the `rasberry_des/config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
+  `roslaunch mongodb_store mongodb_store.launch db:=<path_to_mongo_db_storage_dir>`
+2. Launch some preliminary nodes
+  * Edit the `config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
+  * `roslaunch rasbderry_des rasberry-des_config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
+3. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
   * Launch the `topological_navigation` nodes. This will create a `topological_map` with the given name in mongodb, and nodes, edges added to the map would be with the name of the map as `pointset`.
-    `roslaunch rasberry_des topological_navigation_empty_map.launch topo_map:="<tplg_map_dataset_name> [map:="<path_to_metric_map.yaml>" config_file:="<path_to_des_config_file.yaml>"]`
+    `roslaunch topological_navigation topological_navigation_empty_map.launch map:="<tplg_map_dataset_name>"`
   * Check whether all des fork_map config parameters are loaded by running
-    `rosrun rasberry_des check_des_fork_map_config_parameters.py [<namespace>]`
+    `rosrun rasberry_des check_des_fork_map_config_parameters.py`
   * Generate the map (assuming only fork_map at this stage).
-    `rosrun rasberry_des fork_map_generator.py [<namespace>]`
+    `rosrun rasberry_des fork_map_generator.py ns:="/"`
   * Now all nodes are in the mongodb. To visualise them in rviz,
     * `rosrun rviz rviz`
     * Add `Map` elemet with topic `map`
@@ -39,23 +41,23 @@ A rospackage for running discrete event simulation of a strawberry farm, pickers
       `rosrun topological_utils topological_map_update.py`
       Add `MarkerArray` element with topic `/topological_map_visualisation`
       The `/topological_map` topic is also being published
-3. If you already have a map, load topological_navigation nodes
-  * Edit the `rasberry_des/config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
-  * If the topological map nodes are not in the mongodb, store them in mongodb
-    * if only a waypoint file is available, create tmap and yaml files from that.
+4. If you already have a map (as a waypoint, yaml or tmap file), load topological_navigation nodes
+  * If the topological map nodes are not in the mongodb, store them in mongodb first
+    * if only a waypoint file is available, create tmap and yaml files and load any of them to the mongodb.
       `rosrun topological_utils waypoints_to_yaml_tmap.py <input_file.txt> <outfile> <tplg_map_dataset_name> <tplg_map_name> [max_dist_connect]`
     * from a yaml file
       `rosrun topological_utils load_yaml_map.py [-h] [--pointset POINTSET] [-f] [--keep-alive] <in_mapfile.yaml>`
     * from a tmap file
       `rosrun topological_utils insert_map.py <infile.tmap> <tplg_map_dataset_name> <tplg_map_name>`
   * Launch the `topological_navigation` nodes. 
-    `roslaunch rasberry_des topological_navigation.launch topo_map:="<tplg_map_dataset_name> [map:="<path_to_metric_map.yaml>" config_file:="<path_to_des_config_file.yaml>"]`
+    `roslaunch topological_navigation topological_navigation.launch map:="<tplg_map_dataset_name>`
   * Update the ros parameters corresponding to the topological_map
-4. Discrete event simulation
-  * Complete Step 2 or 3. Make sure all required des configuration parameters are set
-    `rosrun rasberry_des check_des_config_parameters.py [<namespace>]`
-    If any parameters are not set, edit the `des_config.yaml` file mentioned in Step 2 or 3 and relaunch the `topological_navigation` nodes.
-  * `roslaunch rasberry_des pickers_only.launch [namespace]`
+5. Discrete event simulation
+  * Make sure all required des configuration parameters are set.
+    `rosrun rasberry_des check_des_config_parameters.py`
+    If any parameters are not set, edit the `des_config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.
+  * Run the `pickers_only` discrete event simulation. 
+    `roslaunch rasberry_des pickers_only.launch`
 
 # Main classes:
 A `Farm` class is defined in `farm.py`:

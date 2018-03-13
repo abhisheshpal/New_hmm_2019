@@ -89,7 +89,7 @@ if __name__ == "__main__":
 
     simpy_env.process(rasb_farm.scheduler_monitor())
 
-    picker_ids = ["picker-%02d" %(i) for i in range(n_pickers)]
+    picker_ids = ["picker_%02d" %(i) for i in range(n_pickers)]
 
     if _picking_rate.__class__ == list:
         if len(_picking_rate) == n_pickers:
