@@ -15,7 +15,8 @@ A topological map is created and stored in mongodb with corresponding topics and
     Node to generate `fork_map`, a topological map in the mongodb. 
 
 # Launch files
-  1. pickers_only.launch
+  1. rasberry_des_config.launch
+  2. pickers_only.launch
 
 # How to run
 
