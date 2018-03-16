@@ -189,10 +189,21 @@ include_directories(
 # )
 
 install(PROGRAMS
+  scripts/check_des_config_parameters.py
+  scripts/check_des_fork_map_config_parameters.py
+  scripts/fork_map_generator.py
   scripts/pickers_only.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+  ${USE_SOURCE_PERMISSIONS}
 )
 
+install(DIRECTORY launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
+
+install(DIRECTORY maps
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 #############
 ## Testing ##
 #############
