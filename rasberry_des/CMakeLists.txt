@@ -194,7 +194,7 @@ install(PROGRAMS
   scripts/fork_map_generator.py
   scripts/pickers_only.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-  USE_SOURCE_PERMISSIONS
+  ${USE_SOURCE_PERMISSIONS}
 )
 
 install(DIRECTORY launch

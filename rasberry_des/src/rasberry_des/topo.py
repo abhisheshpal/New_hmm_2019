@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # ----------------------------------
 # @author: gpdas
 # @email: pdasgautham@gmail.com
@@ -14,277 +14,185 @@
 # ----------------------------------
 
 
-import math
+import topological_navigation.tmap_utils
+import topological_navigation.route_search
+import strands_navigation_msgs.msg
+import rospy
+import numpy
 
-
-class Node(object):
-    """Node class definition"""
-    def __init__(self, name, x, y, yield_at_node=0.):
-        """Create a Node object
-
-        Keyword arguments:
-        name -- name of the object, a unique id
-        x -- x coordinate
-        y --y coordinate
-        yield_at_node -- yield from this node to next node
-        """
-        self.name = name
-        self.x = x
-        self.y = y
-        self.yield_at_node = yield_at_node
-
-    def __str__(self, ):
-        return self.name
-
-
-class Graph(object):
-    """Graph class definition"""
-    def __init__(self, ):
-        """Create an instance of Graph"""
-        self.nodes = {}             # dict of Node objects
-        self.neighbours = {}        # {NODE:[adjacent nodes]}
-        self.edge_distances = {}      # {(NODE1, NODE2): distance/cost}
-
-    def add_node(self, node, neighbours=None, edge_distances=None):
-        """Add a node to the graph
+class TopologicalForkGraph(object):
+    """TopologicalForkGraph: A class to store and retreive information of topological map,
+        stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
+        one head lane and different rows.
+    """
+    def __init__(self, n_topo_nav_rows, row_ids, _node_yields, local_storages):
+        """TopologicalForkGraph: A class to store and retreive information of topological map,
+        stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
+        one head lane and different rows.
 
         Keyword arguments:
-        node -- NODE object
-        neighbours -- list of adjacent Node objects, default: None
-        edge_distances -- dict {adjacentNode : distance}, default: None
+
+        n_topo_nav_row -- number of toplogical navigation rows, int
+        row_ids -- identifications of the navigation rows, list of size n_topo_nav_rows
+        _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
+        local_storages -- simpy.Resource objects, list
         """
-        if node.name not in self.nodes:
-            # node is not added earlier
-            self.nodes[node.name] = node
-            self.neighbours[node] = []
-            if neighbours is not None:
-                # edges
-                for nb_node in neighbours:
-                    # the edgeNode is added to the nodes in the graph
-                    # without any neighbouring nodes.
-                    # this is for forward compatibility with directed graphs.
-                    # if an edge is bi-directional, the reverse should also be
-                    # added explicitly.
-                    if nb_node not in self.nodes:
-                        self.add_node(nb_node)
+        ns = rospy.get_namespace()
+        self.row_ids = row_ids
+        self.n_topo_nav_rows = n_topo_nav_rows
+        self.head_nodes = {}        # {row_id:head_node_name}
+        self.row_nodes = {}         # {row_id:[row_node_names]}
+        # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist, local_storage]}
+        self.row_info = {}
+        # yield_at_node {node_id:yield_at_node}
+        self.yield_at_node = {}
+        # local storage nodes
+        self.local_storages = {}
+        self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
 
-                    self.neighbours[node].append(nb_node)
-                    # either no distances are given or all are given
-                    if edge_distances is None:
-                        self.edge_distances[(node, nb_node)] = math.sqrt((node.x - nb_node.x)**2 +
-                                                                         (node.y - nb_node.y)**2)
-                    else:
-                        self.edge_distances[(node, nb_node)] = edge_distances[nb_node]
-
-        else:
-            # if the node is already added to the graph.
-            # this node might have been added when an edge from another
-            # node was added earlier.
-            if neighbours is not None:
-                for nb_node in neighbours:
-                    # if the neighbouring node is not present in nodes, add it
-                    if nb_node not in self.nodes:
-                        self.add_node(nb_node)
-                    if nb_node not in self.neighbours[node]:
-                        self.neighbours[node].append(nb_node)
-                        # if the edge distance is given take that else Euclidian
-                        # either no distances are given or all are given
-                        if edge_distances is None:
-                            self.edge_distances[(node, nb_node)] = math.sqrt((node.x - nb_node.x)**2 +
-                                                                             (node.y - nb_node.y)**2)
-                        else:
-                            self.edge_distances[(node, nb_node)] = edge_distances[nb_node]
-
-    def print_nodes(self, ):
-        """print all node names"""
-        print(":Nodes:\n------------")
-        for node in self.nodes:
-            print node
-        print("------------")
-
-    def print_neighbours(self, ):
-        """print all nodes and their neighbours"""
-        print(":Neighbours:\n------------")
-        for node in self.nodes:
-            nb_str = "%s: ["%(node)
-            for nb_node in self.neighbours[self.nodes[node]]:
-                nb_str += "%s, " %(nb_node)
-            nb_str += "]"
-            print(nb_str)
-        print("------------")
-
-    def a_star(self, start_node, goal_node):
-        """run A* to get path from start_node to goal_node
-
-        Keyword arguments:
-        start_node -- starting Node object
-        goal_node -- goal Node object
-        """
-        def get_min_f_score_node():
-            """get the node with minimum f_score"""
-            min_score = float("inf")
-            min_score_node = None
-            for node in open_set:
-                if f_score[node] < min_score:
-                    min_score = f_score[node]
-                    min_score_node = node
-            return min_score_node
-
-        def reconstruct_path(node):
-            """reconstruct path from node by tracing came_from"""
-            par_node = came_from[node]
-#            print(par_node)
-            if par_node != None:
-                edge_path.append(par_node)
-                return reconstruct_path(par_node)
+        for i in range(10):
+            try:
+                self.topo_map = rospy.wait_for_message(ns + "topological_map", strands_navigation_msgs.msg.TopologicalMap, timeout=10)
+            except:
+                rospy.logerr(ns + "topological_map topic is not published?")
+                rospy.sleep(0.1)
             else:
-                return edge_path
+                rospy.loginfo("TopologicalForkGraph object ready")
+                break
 
-        def heuristic_score(start_node, goal_node):
-            """give a heuristic score based on Euclidean distance between two nodes"""
-            # Euclidian disatance heuristic
-            return math.sqrt((start_node.x - goal_node.x)**2 + (start_node.y - goal_node.y)**2)
+        if self.topo_map:
+            self.get_row_info()
+            self.set_node_yields(_node_yields)
+            self.set_local_storages(local_storages)
+            self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
+        else:
+            rospy.ROSException(ns + "topological_map topic not received")
 
-        closed_set = set()               # nodes already evaluated
-        open_set = set([start_node])        # set of currently discovered and not evaluated nodes
-        came_from = {start_node: None}    # most efficient previous step
-        g_score = {start_node: 0}         # cost of getting to the node from the goal node
-        # total cost of getting to the goal_node from the start_node, through the node
-        f_score = {start_node: heuristic_score(start_node, goal_node)}
-
-        path_start_goal = None
-
-        while len(open_set) != 0:
-            curr_node = get_min_f_score_node()
-            if curr_node is goal_node:
-                edge_path = [goal_node]
-                path_start_goal = reconstruct_path(curr_node)
-                path_start_goal.reverse()
-                return path_start_goal
-
-            open_set.remove(curr_node)
-            closed_set.add(curr_node)
-
-            for nb_node in self.neighbours[curr_node]:
-                if nb_node in closed_set:
-                    # ignore neighbour, if already evaluated
-                    continue
-
-                if nb_node not in open_set:
-                    # if neighbour was not evaluated, add to open_set
-                    open_set.add(nb_node)
-
-                tentative_g_score = g_score[curr_node] + self.edge_distances[(curr_node, nb_node)]
-                if nb_node not in g_score:
-                    # if g_score is not calculated for nb_node, go ahead
-                    pass
-                elif tentative_g_score >= g_score[nb_node]:
-                    # this may not be better path as score increased
-                    # (score proportional to distance, we need min)
-                    # ignore this neighbour
-                    continue
-
-                came_from[nb_node] = curr_node
-                g_score[nb_node] = tentative_g_score
-                f_score[nb_node] = g_score[nb_node] + heuristic_score(nb_node, goal_node)
-
-        return None
-
-    def get_path_distance(self, edge_path_names):
-        """given a path (list of names of connected nodes),
-        get distance from start_node to goal_node
+    def set_node_yields(self, _node_yields):
+        """set_node_yields: Set the yields at each node from the node yields given for each row / all rows
 
         Keyword arguments:
-        edge_path_names -- list of names of nodes forming a sequence of connected edges"""
-        path_distance = 0
-        for i in range(len(edge_path_names) - 1):
-            path_distance += self.edge_distances[(self.nodes[edge_path_names[i]],
-                                                  self.nodes[edge_path_names[i+1]])]
-        return path_distance
 
-    def get_distance_to_node(self, x, y, node_name):
-        """given an arbitrary point and a node, give the distance between them
-
-        Keyword arguments:
-        x -- x coordinate of arbitrary point
-        y -- y coordinate of arbitrary point
-        node_name -- name of node from which the distance to the arbitrary point is calculated"""
-        return math.sqrt((x - self.nodes[node_name].x)**2 + (y - self.nodes[node_name].y)**2)
-
-    def get_path(self, start_node_name, goal_node_name):
-        """a wrapper for a_star method to use with node names.
-        returns names of nodes in the path
-
-        Keyword arguments:
-        start_node_name -- name of the starting node
-        goal_node_name -- name of the goal node
+        _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
         """
-        path_nodes = self.a_star(self.nodes[start_node_name], self.nodes[goal_node_name])
-        path_node_names = []
-        for node in path_nodes:
-            path_node_names.append(node.name)
-        return path_node_names
+        if _node_yields.__class__ == list:
+            if len(_node_yields) == self.n_topo_nav_rows:
+                node_yield_in_row = {self.row_ids[i]:_node_yields[i] for i in range(self.n_topo_nav_rows)}
+            elif len(_node_yields) == 1:
+                node_yield_in_row = {self.row_ids[i]:_node_yields[0] for i in range(self.n_topo_nav_rows)}
+        else:
+            raise TypeError("_node_yields must be list of length %d or 1" %(self.n_topo_nav_rows))
+
+        for row_id in self.row_ids:
+            n_row_nodes = len(self.row_nodes[row_id])
+
+            for j in range(n_row_nodes):
+                node_id = self.row_nodes[row_id][j]
+                # yield from each row node to next row node
+                if j != n_row_nodes - 1:
+                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
+                else:
+                    # between the last two nodes, the distance could be smaller than node_dist
+                    row_node_dist = self.row_info[row_id][3]
+                    last_node_dist = self.row_info[row_id][4]
+                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
+
+    def set_local_storages(self, local_storages):
+        """set_local_storages: set the local_storage_nodes {row_id:storage_node_id} and
+        local_storages {storage_node_id: simpy.Resource}
+
+        Keyword arguments:
+
+        local_storages -- simpy.Resource objects, list
+        """
+        n_local_storages = len(local_storages)
+
+        storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
+
+        for i in range(n_local_storages):
+            start_row = storage_row_groups[i][0]
+            end_row = storage_row_groups[i][-1]
+            storage_row = "hn-%02d" %(start_row + int((end_row - start_row) / 2))
+
+            for row in storage_row_groups[i]:
+                self.local_storage_nodes["row-%02d" %(row)] = storage_row
+            self.local_storages[storage_row] = local_storages[i]
+
+    def get_row_info(self, ):
+        """get_row_info: Get information about each row
+        {row_id: [head_node_name, start_node, end_node, node_dist, last_node_dist]}
+        """
+        # TODO: meta information is not queried from the db now.
+        # The row and head node names are hard coded now
+        # An ugly way to sort the nodes is implemented
+        # get_nodes in topological_utils.queries might be useful to get nodes with same tag
+        self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
+        self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
+
+        for node in self.topo_map.nodes:
+            for i in range(self.n_topo_nav_rows):
+                if "rn-%02d" %(i) in node.name:
+                    self.row_nodes["row-%02d" %(i)].append(node.name)
+
+        for row_id in self.row_ids:
+            self.row_nodes[row_id].sort()
+            n_row_nodes = len(self.row_nodes[row_id])
+            if n_row_nodes > 2:
+                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                       self.row_nodes[row_id][0])
+                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                     self.row_nodes[row_id][1])
+                row_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
+                                                                                       to_node)
+
+                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                       self.row_nodes[row_id][-2])
+                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                     self.row_nodes[row_id][-1])
+                last_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
+                                                                                       to_node)
+            elif n_row_nodes == 2:
+                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                       self.row_nodes[row_id][0])
+                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
+                                                                     self.row_nodes[row_id][1])
+                row_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
+                                                                                       to_node)
+
+                last_node_dist = row_node_dist
+            else:
+                row_node_dist = last_node_dist = 0.
+
+            self.row_info[row_id] = [self.head_nodes[row_id],
+                                     self.row_nodes[row_id][0],
+                                     self.row_nodes[row_id][-1],
+                                     row_node_dist,
+                                     last_node_dist]
 
     def get_path_details(self, start_node_name, goal_node_name):
-        """get path and path_dist from start_node_name to goal_node_name
+        """get route_nodes, route_edges and route_distance from start_node_name to goal_node_name
 
         Keyword arguments:
         start_node_name -- name of the starting node
         goal_node_name -- name of the goal node
         """
-        path_node_names = self.get_path(start_node_name, goal_node_name)
-        path_dist = self.get_path_distance(path_node_names)
-        return (path_node_names, path_dist)
+        route_distance = 0.0
+        route = self.route_search.search_route(start_node_name, goal_node_name)
+        route_nodes = route.source
+        route_edges = route.edge_id
 
+        edge_to_goal = topological_navigation.tmap_utils.get_edges_between(self.topo_map, route_nodes[-1], goal_node_name)
+        route_edges.append(edge_to_goal[0])
+        route_nodes.append(goal_node_name)
 
-class BiGraph(Graph):
-    """ A subclass of Graph.
-        Each edge can be bi-directional.
-    """
-    def __init__(self, ):
-        Graph.__init__(self, )
+        for i in range(len(route_nodes) - 1):
+            from_node = topological_navigation.tmap_utils.get_node(self.topo_map, route_nodes[i])
+            to_node = topological_navigation.tmap_utils.get_node(self.topo_map, route_nodes[i+1])
+            route_distance += topological_navigation.tmap_utils.get_distance_to_node(from_node, to_node)
 
-    def add_node(self, node, neighbours=None, edge_distances=None):
-        """extend the add_node of Graph by adding bi-directional edges at the same time
+        return (route_nodes, route_edges, route_distance)
 
-        Keyword arguments:
-        node -- NODE object
-        neighbours -- list of adjacent Node objects, default: None
-        edge_distances -- dict {adjacentNode : distance}, default: None
-        """
-        # starts with the parent class's add_node method
-        Graph.add_node(self, node, neighbours, edge_distances)
-        # add bi-directional edges
-        for nb_node in self.neighbours[node]:
-            if node not in self.neighbours[nb_node]:
-#                print(">>> node=%s, nb_node=%s" %(node, nb_node))
-                self.neighbours[nb_node].append(node)
-                self.edge_distances[(nb_node, node)] = self.edge_distances[(node, nb_node)]
-
-if __name__ == "__main__":
-    # A sample code for testing node distance calculation
-    graph = BiGraph()
-    a = Node("a", 0, 0, 0)
-    b = Node("b", 1, 1, 0)
-    c = Node("c", 2, 2, 0)
-    d = Node("d", 3, 1, 0)
-    e = Node("e", 5, 5, 0)
-    f = Node("f", 0, 3, 0)
-    g = Node("g", 1, 4, 0)
-    h = Node("h", 3, 4, 0)
-    graph.add_node(a, [b, f])
-    graph.add_node(b, [a, c, f])
-    graph.add_node(c, [b, d, g])
-    graph.add_node(d, [c, h, e])
-    graph.add_node(e, [d, h])
-    graph.add_node(f, [a, b, g])
-    graph.add_node(g, [c, f, h])
-    graph.add_node(h, [d, e, g])
-
-    edge_path = graph.a_star(a, e)
-    for node in edge_path:
-        print("%s" %(node))
-
-    print(graph.print_nodes())
-    print(graph.print_neighbours())
-    
+    def get_node_xy(self, node_name):
+        """get_node_pose: Given a node name return its x and y coordinates"""
+        node = topological_navigation.tmap_utils.get_node(self.topo_map, node_name)
+        return (node.pose.position.x, node.pose.position.y)

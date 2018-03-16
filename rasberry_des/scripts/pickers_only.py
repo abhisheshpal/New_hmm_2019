@@ -13,14 +13,15 @@
 #        Uses the simple topological graph representation in topo.py
 # ----------------------------------
 
-import rospy
-import rasberry_des.farm
-import rasberry_des.picker
-import rasberry_des.config_utils
 import random
 import simpy
 import numpy
 import sys
+import rospy
+import rasberry_des.farm
+import rasberry_des.picker
+import rasberry_des.config_utils
+
 
 RANDOM_SEED = 1234
 SHOW_INFO = False
@@ -41,24 +42,25 @@ if __name__ == "__main__":
     # required des config parameters
     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
 
-    n_farm_rows = config_params[0]
-    half_rows = config_params[1]
-    n_topo_nav_rows = config_params[2]
-    head_row_node_dist = config_params[3]
-    head_node_y = config_params[4]
-    _row_node_dist = config_params[5]
-    _row_length = config_params[6]
-    _row_spacing = config_params[7]
+    n_farm_rows = config_params["n_farm_rows"]
+    half_rows = config_params["half_rows"]
+    n_topo_nav_rows = config_params["n_topo_nav_rows"]
+    head_row_node_dist = config_params["head_row_node_dist"]
+    head_node_y = config_params["head_node_y"]
+    _row_node_dist = config_params["row_node_dist"]
+    _row_length = config_params["row_length"]
+    _row_spacing = config_params["row_spacing"]
 
-    des_env = config_params[8]
-    n_pickers = config_params[9]
-    _picking_rate = config_params[10]
-    _transportation_rate = config_params[11]
-    _max_n_trays = config_params[12]
-    _loading_time = config_params[13]
-    tray_capacity = config_params[14]
+    des_env = config_params["des_env"]
+    n_pickers = config_params["n_pickers"]
+    _picking_rate = config_params["picking_rate"]
+    _transportation_rate = config_params["transportation_rate"]
+    _max_n_trays = config_params["max_n_trays"]
+    _loading_time = config_params["loading_time"]
+    tray_capacity = config_params["tray_capacity"]
+    n_local_storages = config_params["n_local_storages"]
 
-    _yield_per_node = config_params[15]
+    _yield_per_node = config_params["yield_per_node"]
 
     if des_env == "simpy":
         print des_env
@@ -79,13 +81,13 @@ if __name__ == "__main__":
     # assuming a fork graph with the following:
     # 1. only one head lane
     # 2. a picker won't have to wait longer than loadingTime
-    local_storages = [simpy.Resource(simpy_env, capacity=n_pickers)]
-    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", simpy_env)
+    local_storages = [simpy.Resource(simpy_env, capacity=n_pickers) for i in range(n_local_storages)]
+    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", simpy_env, n_farm_rows, half_rows, _yield_per_node, local_storages)
 
-    rasb_farm.init_graph_fork(n_farm_rows, half_rows, n_topo_nav_rows,
-                              head_row_node_dist, head_node_y,
-                              _row_node_dist, _row_length, _row_spacing,
-                              _yield_per_node, local_storages)
+#    rasb_farm.init_graph_fork(n_farm_rows, half_rows, n_topo_nav_rows,
+#                              head_row_node_dist, head_node_y,
+#                              _row_node_dist, _row_length, _row_spacing,
+#                              _yield_per_node, local_storages)
 
     simpy_env.process(rasb_farm.scheduler_monitor())
 
@@ -141,7 +143,7 @@ if __name__ == "__main__":
     while not rospy.is_shutdown():
         try:
 #            t_now = rospy.get_time()
-#            print ("%0.3f, %0.3f" %(env.now, t_now))
+#            print ("%0.3f, %0.3f" %(simpy_env.now, t_now))
             # instead of env.run() we should env.step() to have any control (Ctrl+c)
             # If multiple events are scheduled for the same simpy.time, there would be
             # at least a ms delay (in ros/realtime clock) between the events
@@ -154,7 +156,7 @@ if __name__ == "__main__":
         else:
             pass
 
-    if (SHOW_INFO):
+    if SHOW_INFO:
         # farm details
         print("-----------------\n----%s----\n-----------------" %(rasb_farm.name))
         print("n_pickers: %d" %(len(rasb_farm.pickers_reported)))
@@ -180,13 +182,13 @@ if __name__ == "__main__":
 
         # picker details
         for i in range(n_pickers):
-            print("----%s----\n-----------------" %(rasb_pickers[i].name))
+            print("----%s----\n-----------------" %(rasb_pickers[i].picker_id))
             print("picking_rate: %0.3f m/s" %(rasb_pickers[i].picking_rate))
             print("transportation_rate: %0.3f m/s" %(rasb_pickers[i].transportation_rate))
             print("tray_capacity: %d g" %(rasb_pickers[i].tray_capacity))
             print("max_n_trays: %d" %(rasb_pickers[i].max_n_trays))
-            print("rows allocated: ", rasb_farm.picker_allocations[rasb_pickers[i].name])
-            for row_id in rasb_farm.picker_allocations[rasb_pickers[i].name]:
+            print("rows allocated: ", rasb_farm.picker_allocations[rasb_pickers[i].picker_id])
+            for row_id in rasb_farm.picker_allocations[rasb_pickers[i].picker_id]:
                 alloc_time = rasb_farm.allocation_time[row_id]
                 finish_time = rasb_farm.row_finish_time[row_id]
                 print("  %s allocation time: %0.3f" %(row_id,
