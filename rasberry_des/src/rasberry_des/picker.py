@@ -91,10 +91,10 @@ class Picker(object):
 
                     # update the picking progress
                     self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
-                    print("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
+                    rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
                                                              self.curr_node,
                                                              self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                    rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                         self.tot_trays,
                                                                                         self.n_trays,
                                                                                         self.picking_progress))
@@ -104,7 +104,7 @@ class Picker(object):
 
                     if self.curr_node == self.row_path[-1]:
                         self.picking_dir = "reverse"
-                        print("%s changing to reverse along %s at %0.3f" %(self.picker_id,
+                        rospy.loginfo("%s changing to reverse along %s at %0.3f" %(self.picker_id,
                                                                            self.curr_row,
                                                                            self.env.now))
 
@@ -132,10 +132,10 @@ class Picker(object):
                                                                                                         self.local_storage_node)
                             time_to_transport = route_distance / self.transportation_rate
                             self.mode = 2
-                            print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                            rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                            self.max_n_trays,
                                                                                            self.env.now))
-                            print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                            rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                                 self.tot_trays,
                                                                                                 self.n_trays,
                                                                                                 self.picking_progress))
@@ -153,15 +153,15 @@ class Picker(object):
                                                                                                     self.local_storage_node)
                         time_to_transport = route_distance / self.transportation_rate
                         self.mode = 2
-                        print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                        rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                        self.max_n_trays,
                                                                                        self.env.now))
-                        print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                        rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                             self.tot_trays,
                                                                                             self.n_trays,
                                                                                             self.picking_progress))
                         yield self.env.process(self.transport_process(time_to_transport, 2))
-                        print("%s returned from local storage at %0.3f" %(self.picker_id,
+                        rospy.loginfo("%s returned from local storage at %0.3f" %(self.picker_id,
                                                                           self.env.now))
 
                         # resume picking
@@ -190,10 +190,10 @@ class Picker(object):
                         time_to_transport = node_dist / self.transportation_rate
                         yield self.env.timeout(time_to_transport)
 
-                    print("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
+                    rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
                                                              self.curr_node,
                                                              self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                    rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                         self.tot_trays,
                                                                                         self.n_trays,
                                                                                         self.picking_progress))
@@ -224,7 +224,7 @@ class Picker(object):
                                                                                                             self.local_storage_node)
                                 time_to_transport = route_distance / self.transportation_rate
                                 self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                                rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                                self.max_n_trays,
                                                                                                self.env.now))
                                 yield self.env.process(self.transport_process(time_to_transport, 1))
@@ -241,11 +241,11 @@ class Picker(object):
                                                                                                             self.local_storage_node)
                                 time_to_transport = route_distance / self.transportation_rate
                                 self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                                rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
                                                                                                self.max_n_trays,
                                                                                                self.env.now))
                                 yield self.env.process(self.transport_process(time_to_transport, 2))
-                                print("%s returned from local storage at %0.3f" %(self.picker_id,
+                                rospy.loginfo("%s returned from local storage at %0.3f" %(self.picker_id,
                                                                                   self.env.now))
 
                                 # resume picking
@@ -293,7 +293,7 @@ class Picker(object):
 
                         self.mode = 3
                     # finish the picking process
-                    print("%s finishing picking process. all rows are assigned" %(self.picker_id))
+                    rospy.loginfo("%s finishing picking process. all rows are assigned" %(self.picker_id))
                     break
 
                 elif row_id is not None: # if there is a row assigned to the picker
@@ -307,7 +307,7 @@ class Picker(object):
                         # publish pose
                         self.publish_pose(self.curr_node, 0.)
 
-                    print("%s is moving to the start of %s at %0.3f" %(self.picker_id,
+                    rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
                                                                        self.curr_row,
                                                                        self.env.now))
                     # transport to the start_node of the row
@@ -324,7 +324,7 @@ class Picker(object):
                     # publish pose
                     self.publish_pose(self.curr_node, 0.)
 
-                    print("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
+                    rospy.loginfo("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
                     # change current mode to picking
                     self.mode = 1 # picking mode
 
@@ -344,13 +344,13 @@ class Picker(object):
         self.publish_pose(self.local_storage_node, 0.0)
         #   2. request for the local storage access
         #   3. wait further for unloading (yield timeout(loading_time))
-        print("%s requesting for local_storage resource at %0.3f" %(self.picker_id, self.env.now))
+        rospy.loginfo("%s requesting for local_storage resource at %0.3f" %(self.picker_id, self.env.now))
         with self.farm.graph.local_storages[self.local_storage_node].request() as req:
             yield req
-            print("%s got access to local_storage resource at %0.3f" %(self.picker_id, self.env.now))
+            rospy.loginfo("%s got access to local_storage resource at %0.3f" %(self.picker_id, self.env.now))
             yield self.env.timeout(self.loading_time)
 
-            print("%s spent %0.3f for unloading at the local_staorage" %(self.picker_id, self.loading_time))
+            rospy.loginfo("%s spent %0.3f for unloading at the local_staorage" %(self.picker_id, self.loading_time))
         # if needed, return to previous node
         if n_times == 2:
             yield self.env.timeout(time_to_transport)

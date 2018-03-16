@@ -24,7 +24,7 @@ import rasberry_des.config_utils
 
 
 RANDOM_SEED = 1234
-SHOW_INFO = False
+SHOW_INFO = True
 
 
 if __name__ == "__main__":
@@ -63,17 +63,13 @@ if __name__ == "__main__":
     _yield_per_node = config_params["yield_per_node"]
 
     if des_env == "simpy":
-        print des_env
         simpy_env = simpy.Environment()
-        print simpy_env
     elif des_env == "ros":
-        print des_env
         t_start = rospy.get_time()
         # RealtimeEnvironment can be enabled by uncommenting the line below.
         # The farm size and n_pickers given would take 420s to run
         # To vary the speed of RT sim, change 'factor'
         simpy_env = simpy.RealtimeEnvironment(initial_time=t_start, factor=1.0, strict=False)
-        print simpy_env
     else:
         raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
@@ -157,24 +153,34 @@ if __name__ == "__main__":
             pass
 
     if SHOW_INFO:
+        # no ros related calls here to ensure printing even when the pickers_only node is killed
         # farm details
         print("-----------------\n----%s----\n-----------------" %(rasb_farm.name))
         print("n_pickers: %d" %(len(rasb_farm.pickers_reported)))
-        print("n_rows: %d" %(rasb_farm.n_rows))
+        print("n_farm_rows: %d" %(rasb_farm.n_farm_rows))
+        print("n_topo_nav_rows: %d" %(rasb_farm.n_topo_nav_rows))
         tot_yield = 0.
-        for row_id in rasb_farm.rows:
+        for row_id in rasb_farm.row_ids:
             print("  --%s--" %(row_id))
-            row_length = rasb_farm.graph.nodes[rasb_farm.row_info[row_id][2]].y
-            node_dist = rasb_farm.row_info[row_id][3]
+            row_start_node = rasb_farm.graph.row_info[row_id][1]
+            row_end_node = rasb_farm.graph.row_info[row_id][2]
+            row_start_y = rasb_farm.graph.get_node_xy(row_start_node)[1]
+            row_end_y = rasb_farm.graph.get_node_xy(row_end_node)[1]
+            row_length = row_end_y - row_start_y
+            node_dist = rasb_farm.graph.row_info[row_id][3]
             print("  row_length: %0.3f m" %(row_length))
             print("  node_dist: %0.3f m" %(node_dist))
             row_yield = 0.
             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-            for i in range(n_row_nodes):
-                if (i == 0) or (i == n_row_nodes - 1):
-                    row_yield += rasb_farm.graph.nodes[rasb_farm.row_node_names[row_id][i]].yield_at_node
-                else:
-                    row_yield += 2 * rasb_farm.graph.nodes[rasb_farm.row_node_names[row_id][i]].yield_at_node
+            if (not rasb_farm.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(rasb_farm.n_topo_nav_rows)):
+                for i in range(n_row_nodes):
+                    row_yield += rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
+            else:
+                for i in range(n_row_nodes):
+                    if (i == 0) or (i == n_row_nodes - 1):
+                        row_yield += rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
+                    else:
+                        row_yield += 2 * rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
             print("  row_yield: %0.3f g" %(row_yield))
             tot_yield += row_yield
         print("tot_yield: %0.3f trays (%0.3f g)" %(tot_yield/tray_capacity, tot_yield))
