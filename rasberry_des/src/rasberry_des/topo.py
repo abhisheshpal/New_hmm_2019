@@ -4,13 +4,6 @@
 # @email: pdasgautham@gmail.com
 # @date: 05-Feb-2018
 # @info:
-#        Graph - A simple topological graph representation with
-#                   nodes,
-#                   neighbours,
-#                   edge_distances and
-#                   A* method to find a path from one node to another.
-#       Bi_Graph - A child class of Graph for bi-directional graph
-#                   Only addition is adding both edges at the same time when a neighbour is added
 # ----------------------------------
 
 
@@ -42,7 +35,7 @@ class TopologicalForkGraph(object):
         self.n_topo_nav_rows = n_topo_nav_rows
         self.head_nodes = {}        # {row_id:head_node_name}
         self.row_nodes = {}         # {row_id:[row_node_names]}
-        # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist, local_storage]}
+        # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
         self.yield_at_node = {}
