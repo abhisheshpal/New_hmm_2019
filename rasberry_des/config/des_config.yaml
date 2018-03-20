@@ -1,6 +1,6 @@
 des_env: ros # simpy or ros
 n_farm_rows: 5 # number of rows in the farm / poly-tunnel
-half_rows: true # whether the first and last rows are half (berries only on one side) or full rows (berries on both sides)
+half_rows: false # whether the first and last rows are half (berries only on one side) or full rows (berries on both sides)
 head_row_node_dist: [5.0] # distance from head node to the first row node of each row
 head_node_y: [1.0] # y coordinate of head nodes
 row_node_dist: [2.0] # distance between two nodes in each row, m

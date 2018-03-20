@@ -21,10 +21,10 @@ import rospy
 import rasberry_des.farm
 import rasberry_des.picker
 import rasberry_des.config_utils
-
+import rasberry_des.visualise
 
 RANDOM_SEED = 1234
-SHOW_INFO = True
+SHOW_INFO = False
 
 
 if __name__ == "__main__":
@@ -135,6 +135,8 @@ if __name__ == "__main__":
         rasb_pickers.append(rasberry_des.picker.Picker(picker_id, simpy_env, rasb_farm, tray_capacity,
                                                        max_n_trays[picker_id], picking_rate[picker_id],
                                                        transportation_rate[picker_id], loading_time[picker_id]))
+
+    vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, rasb_pickers)
 
     while not rospy.is_shutdown():
         try:
