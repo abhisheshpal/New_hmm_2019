@@ -7,11 +7,12 @@
 # ----------------------------------
 
 
+import numpy
+import rospy
 import topological_navigation.tmap_utils
 import topological_navigation.route_search
 import strands_navigation_msgs.msg
-import rospy
-import numpy
+
 
 class TopologicalForkGraph(object):
     """TopologicalForkGraph: A class to store and retreive information of topological map,
@@ -33,8 +34,8 @@ class TopologicalForkGraph(object):
         ns = rospy.get_namespace()
         self.row_ids = row_ids
         self.n_topo_nav_rows = n_topo_nav_rows
-        self.head_nodes = {}        # {row_id:head_node_name}
-        self.row_nodes = {}         # {row_id:[row_node_names]}
+        self.head_nodes = {}        # {row_id:head_node}
+        self.row_nodes = {}         # {row_id:[row_nodes]}
         # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
@@ -113,7 +114,7 @@ class TopologicalForkGraph(object):
 
     def get_row_info(self, ):
         """get_row_info: Get information about each row
-        {row_id: [head_node_name, start_node, end_node, node_dist, last_node_dist]}
+        {row_id: [head_node, start_node, end_node, node_dist, last_node_dist]}
         """
         # TODO: meta information is not queried from the db now.
         # The row and head node names are hard coded now
@@ -131,26 +132,14 @@ class TopologicalForkGraph(object):
             self.row_nodes[row_id].sort()
             n_row_nodes = len(self.row_nodes[row_id])
             if n_row_nodes > 2:
-                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                       self.row_nodes[row_id][0])
-                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                     self.row_nodes[row_id][1])
-                row_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
-                                                                                       to_node)
+                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
+                                                                self.row_nodes[row_id][1])
 
-                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                       self.row_nodes[row_id][-2])
-                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                     self.row_nodes[row_id][-1])
-                last_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
-                                                                                       to_node)
+                last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
+                                                                 self.row_nodes[row_id][-1])
             elif n_row_nodes == 2:
-                from_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                       self.row_nodes[row_id][0])
-                to_node = topological_navigation.tmap_utils.get_node(self.topo_map,
-                                                                     self.row_nodes[row_id][1])
-                row_node_dist = topological_navigation.tmap_utils.get_distance_to_node(from_node,
-                                                                                       to_node)
+                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
+                                                                self.row_nodes[row_id][1])
 
                 last_node_dist = row_node_dist
             else:
@@ -162,30 +151,60 @@ class TopologicalForkGraph(object):
                                      row_node_dist,
                                      last_node_dist]
 
-    def get_path_details(self, start_node_name, goal_node_name):
-        """get route_nodes, route_edges and route_distance from start_node_name to goal_node_name
+    def get_path_details(self, start_node, goal_node):
+        """get route_nodes, route_edges and route_distance from start_node to goal_node
 
         Keyword arguments:
-        start_node_name -- name of the starting node
-        goal_node_name -- name of the goal node
+        start_node -- name of the starting node
+        goal_node -- name of the goal node
         """
-        route_distance = 0.0
-        route = self.route_search.search_route(start_node_name, goal_node_name)
+        route_distance = []
+        route = self.route_search.search_route(start_node, goal_node)
         route_nodes = route.source
         route_edges = route.edge_id
 
-        edge_to_goal = topological_navigation.tmap_utils.get_edges_between(self.topo_map, route_nodes[-1], goal_node_name)
+        edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
         route_edges.append(edge_to_goal[0])
-        route_nodes.append(goal_node_name)
+        route_nodes.append(goal_node)
 
         for i in range(len(route_nodes) - 1):
-            from_node = topological_navigation.tmap_utils.get_node(self.topo_map, route_nodes[i])
-            to_node = topological_navigation.tmap_utils.get_node(self.topo_map, route_nodes[i+1])
-            route_distance += topological_navigation.tmap_utils.get_distance_to_node(from_node, to_node)
+            route_distance.append(self.get_distance_between_nodes(route_nodes[i], route_nodes[i + 1]))
 
         return (route_nodes, route_edges, route_distance)
 
-    def get_node_xy(self, node_name):
-        """get_node_pose: Given a node name return its x and y coordinates"""
-        node = topological_navigation.tmap_utils.get_node(self.topo_map, node_name)
-        return (node.pose.position.x, node.pose.position.y)
+    def get_node(self, node):
+        """get_node: Given a node name return its node object.
+        A wrapper for the get_node function in tmap_utils
+
+        Keyword arguments:
+
+        node -- name of the node in topological map"""
+        return topological_navigation.tmap_utils.get_node(self.topo_map, node)
+
+    def get_distance_between_nodes(self, from_node, to_node):
+        """get_distance_between_nodes: Given names of two nodes, return the distance of the edge
+        between their node objects. A wrapper for the get_distance_to_node function in tmap_utils.
+        Works only for adjacent nodes.
+
+        Keyword arguments:
+
+        from_node -- name of the starting node
+        to_node -- name of the ending node name"""
+        from_node_obj = self.get_node(from_node)
+        to_node_obj = self.get_node(to_node)
+        return topological_navigation.tmap_utils.get_distance_to_node(from_node_obj, to_node_obj)
+
+    def get_edges_between_nodes(self, from_node, to_node):
+        """get_edges_between_nodes: Given names of two nodes, return the direct edges
+        between their node objects. A wrapper for the get_edges_between function in tmap_utils.
+        Works only for adjacent nodes.
+
+        Keyword arguments:
+
+        from_node -- name of the starting node
+        to_node -- name of the ending node name"""
+        edge_ids = []
+        edges = topological_navigation.tmap_utils.get_edges_between(self.topo_map, from_node, to_node)
+        for edge in edges:
+            edge_ids.append(edge.edge_id)
+        return edge_ids

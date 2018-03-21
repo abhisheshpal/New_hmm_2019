@@ -22,6 +22,11 @@ class Picker(object):
         picker_id -- name/id of the picker
         env -- simpy.Environment
         farm -- provides the allocation and monitor process as well as a graph.
+        try_capacity -- capacity of the tray picker is carrying
+        max_n_trays -- number of trays with the picker
+        picking_rate -- rate at which the picker moves while picking
+        transportation_rate -- rate at which the picker moves while transporting
+        loading_time -- time the picker will spend at the local storage for unloading
         """
         self.picker_id = picker_id
         self.env = env
@@ -53,7 +58,8 @@ class Picker(object):
 
         self.picking_progress = 0.  # percentage of tray_capacity
 
-        self.transport_progress = 0.
+        self.prev_pub_time = 0.
+
         self.pose_pub = rospy.Publisher('/%s/pose' %(self.picker_id),
                                         geometry_msgs.msg.Pose,
                                         queue_size=10)
@@ -66,307 +72,315 @@ class Picker(object):
         """
         # 1. picker should report for duty first
         self.farm.picker_report(self.picker_id)
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+
+        ns = rospy.get_namespace()
+        start_sim = rospy.get_param(ns + "rasberry_des_config/start_sim")
         while True:
-            # 2. If the picker is assigned a row,
-            #   a. continue picking
-            #   b. yield time to move along each row_node_dist
-            #   c. update and check tray_cap,
-            #       i. if tray_cap is reached, increment n_trays
-            #       ii. if n_trays reach max_n_trays, start the transport_process
-            #       ii. if not move to the next row_node in the next iter
-            if self.mode == 1:
-                # move along each node in the assigned row
-                # the picker is at the curr_node
-                # move to the node next to curr_node in the row_path
-                if self.picking_dir is "forward":
-                    curr_node_index = self.row_path.index(self.curr_node)
-                    next_node = self.row_path[curr_node_index + 1]
-                    if curr_node_index != len(self.row_path) - 2:
-                        node_dist = self.curr_row_info[3]
-                    else:
-                        node_dist = self.curr_row_info[4]
+            if start_sim:
+                # 2. If the picker is assigned a row,
+                #   a. continue picking
+                #   b. yield go_to_node(next_node) process
+                #   c. update and check tray_cap,
+                #       i. if tray_cap is reached, increment n_trays
+                #       ii. if n_trays reach max_n_trays, start the transport_process
+                #       ii. if not move to the next row_node in the next iter
+                if self.mode == 1:
+                    # move along each node in the assigned row
+                    # the picker is at the curr_node
+                    # move to the node next to curr_node in the row_path
+                    if self.picking_dir is "forward":
+                        curr_node_index = self.row_path.index(self.curr_node)
+                        next_node = self.row_path[curr_node_index + 1]
+                        # pick through to the next node
+                        yield self.env.process(self.go_to_node(next_node, self.picking_rate))
 
-                    time_to_pick = node_dist / self.picking_rate
-                    yield self.env.timeout(time_to_pick)
-
-                    # update the picking progress
-                    self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
-                    rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
-                                                             self.curr_node,
-                                                             self.env.now))
-                    rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
-                                                                                        self.tot_trays,
-                                                                                        self.n_trays,
-                                                                                        self.picking_progress))
-                    self.curr_node = "" + next_node
-                    # publish pose
-                    self.publish_pose(self.curr_node, 0.)
-
-                    if self.curr_node == self.row_path[-1]:
-                        self.picking_dir = "reverse"
-                        rospy.loginfo("%s changing to reverse along %s at %0.3f" %(self.picker_id,
-                                                                           self.curr_row,
-                                                                           self.env.now))
-
-                    # if the tray capacity is reached, increment n_trays
-                    if self.picking_progress >= self.tray_capacity:
-                        self.n_trays += 1
-                        self.picking_progress -= self.tray_capacity
-
-                    # if max_n_trays is reached
-                    if self.n_trays == self.max_n_trays:
-                        # if full rows, and at the end node,
-                        #   send row finished
-                        #   go to local storage and no return
-                        if (not self.farm.half_rows) and (self.curr_node == self.row_path[-1]):
-                            # row is finished
-                            self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
-                            # row finished
-                            self.picking_dir = None
-                            self.prev_row = "" + self.curr_row
-                            self.prev_row_info = [] + self.curr_row_info
-                            self.curr_row = None
-                            self.row_path = []
-                            # transport to the local storage and don't return
-                            route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                        self.local_storage_node)
-                            time_to_transport = route_distance / self.transportation_rate
-                            self.mode = 2
-                            rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
-                                                                                           self.max_n_trays,
-                                                                                           self.env.now))
-                            rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
-                                                                                                self.tot_trays,
-                                                                                                self.n_trays,
-                                                                                                self.picking_progress))
-                            yield self.env.process(self.transport_process(time_to_transport, 1))
-                            # finished the allocated row and transported all berries
-                            # now at local_storage_node
-                            # no current allocation - change mode to zero
-                            self.tot_trays += self.max_n_trays
-                            self.n_trays -= self.max_n_trays
-                            self.curr_node = "" + self.local_storage_node
-                            self.mode = 0
-
-                        # transport to local storage and return
-                        route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                    self.local_storage_node)
-                        time_to_transport = route_distance / self.transportation_rate
-                        self.mode = 2
-                        rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
-                                                                                       self.max_n_trays,
-                                                                                       self.env.now))
+                        # update the picking progress
+                        self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
+                        rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
+                                                                 self.curr_node,
+                                                                 self.env.now))
                         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                             self.tot_trays,
                                                                                             self.n_trays,
                                                                                             self.picking_progress))
-                        yield self.env.process(self.transport_process(time_to_transport, 2))
-                        rospy.loginfo("%s returned from local storage at %0.3f" %(self.picker_id,
-                                                                          self.env.now))
+                        # reverse at the end
+                        if self.curr_node == self.row_path[-1]:
+                            self.picking_dir = "reverse"
+                            rospy.loginfo("%s changing to reverse along %s at %0.3f" %(self.picker_id,
+                                                                               self.curr_row,
+                                                                               self.env.now))
 
-                        # resume picking
-                        self.tot_trays += self.max_n_trays
-                        self.n_trays -= self.max_n_trays
-                        self.mode = 1
+                        # if the tray capacity is reached, increment n_trays
+                        if self.picking_progress >= self.tray_capacity:
+                            self.n_trays += 1
+                            self.picking_progress -= self.tray_capacity
 
-                elif self.picking_dir is "reverse":
-                    # work with negative indices
-                    curr_node_index = self.row_path.index(self.curr_node) - len(self.row_path)
-                    next_node = self.row_path[curr_node_index - 1]
-                    if curr_node_index != -1:
-                        node_dist = self.curr_row_info[3]
-                    else:
-                        node_dist = self.curr_row_info[4]
-
-                    if self.farm.half_rows:
-                        # half rows at start and end (berries on both sides), work normally
-                        time_to_pick = node_dist / self.picking_rate
-                        yield self.env.timeout(time_to_pick)
-                        # update the picking progress
-                        self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
-                    elif (self.curr_row == self.farm.row_ids[0]) or (self.curr_row == self.farm.row_ids[-1]):
-                        # there are full rows at the start and end
-                        # navigate to the start node of the row and send row finish (no picking)
-                        time_to_transport = node_dist / self.transportation_rate
-                        yield self.env.timeout(time_to_transport)
-
-                    rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
-                                                             self.curr_node,
-                                                             self.env.now))
-                    rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
-                                                                                        self.tot_trays,
-                                                                                        self.n_trays,
-                                                                                        self.picking_progress))
-
-                    self.curr_node = "" + next_node
-                    # publish pose
-                    self.publish_pose(self.curr_node, math.pi/2)
-
-                    if self.curr_node == self.row_path[0]:
-                        # row is finished
-                        self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
-
-                        self.picking_dir = None
-                        self.prev_row = "" + self.curr_row
-                        self.prev_row_info = [] + self.curr_row_info
-                        self.curr_row = None
-                        self.row_path = []
-
-                    # check picking progress
-                    if self.picking_progress >= self.tray_capacity:
-                        self.picking_progress -= self.tray_capacity
-                        self.n_trays += 1
-
+                        # if max_n_trays is reached
                         if self.n_trays == self.max_n_trays:
-                            if self.curr_row is None:
-                                # transport to local storage. no need to return as row is finished
-                                route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                            self.local_storage_node)
-                                time_to_transport = route_distance / self.transportation_rate
-                                self.mode = 2
-                                rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
-                                                                                               self.max_n_trays,
-                                                                                               self.env.now))
-                                yield self.env.process(self.transport_process(time_to_transport, 1))
-                                # finished the allocated row and transported all berries
+                            # if full rows, and at the end node,
+                            #   send row finished
+                            #   go to local storage and no return
+                            if (not self.farm.half_rows) and (self.curr_node == self.row_path[-1]):
+                                # row is finished
+                                self.finished_row_routine()
+
+                                # transport to the local storage and don't return
+                                yield self.env.process(self.transport_to_local_storage(item="tray"))
+                                # finished the allocated row and transported full berry trays
                                 # now at local_storage_node
                                 # no current allocation - change mode to zero
-                                self.tot_trays += self.max_n_trays
-                                self.n_trays -= self.max_n_trays
-                                self.curr_node = "" + self.local_storage_node
                                 self.mode = 0
                             else:
-                                # transport to local storage and return
-                                route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                            self.local_storage_node)
-                                time_to_transport = route_distance / self.transportation_rate
-                                self.mode = 2
-                                rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
-                                                                                               self.max_n_trays,
-                                                                                               self.env.now))
-                                yield self.env.process(self.transport_process(time_to_transport, 2))
-                                rospy.loginfo("%s returned from local storage at %0.3f" %(self.picker_id,
-                                                                                  self.env.now))
-
+                                curr_node = "" + self.curr_node # back up of self.curr_node
+                                yield self.env.process(self.transport_to_local_storage(item="tray"))
+                                # now at local storage, return to the curr_node
+                                yield self.env.process(self.go_to_node(curr_node, self.transportation_rate))
                                 # resume picking
-                                self.tot_trays += self.max_n_trays
-                                self.n_trays -= self.max_n_trays
                                 self.mode = 1
-                    else:
-                        # picking_progress != tray_capacity : go to not allocated mode
-                        if self.curr_row is None:
-                            # no current allcoations
-                            self.mode = 0
 
-            # 3. If in mode free, check if there is any new assignments
-            #       If there is no new assignment and no rows left to be assigned, finish picking
-            #       If there is a new assignment
-            #           a. Move to the start node of the path
-            #           b. Get the path from the current loc to start_node of new row
-            #           c. Move at transportation_rate to start_node
-            #           d. Continue/Start picking along the new row by changing mode to picking
-            elif self.mode == 0:
-                row_id = self.farm.curr_picker_allocations[self.picker_id]
-                row_id = None if row_id == self.prev_row else row_id
+                    elif self.picking_dir is "reverse":
+                        # work with negative indices
+                        curr_node_index = self.row_path.index(self.curr_node) - len(self.row_path)
+                        next_node = self.row_path[curr_node_index - 1]
 
-                if (row_id is None) and (len(self.farm.unallocated_rows) == 0):
-                    if self.curr_node == self.local_storage_node:
-                        # at local storage after unloading max_n_trays
-                        # if there is anything left, unload those and leave the picking process
-                        if (self.n_trays > 0) or (self.picking_progress > 0.):
-                            self.env.process(self.transport_process(0, 1))
-                            self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
-                            self.n_trays = 0
-                            self.picking_progress = 0
+                        if self.farm.half_rows:
+                            # half rows at start and end (berries on both sides)
+                            # pick through to the next node
+                            yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+                            # update the picking progress
+                            self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
+                        elif (self.curr_row == self.farm.row_ids[0]) or (self.curr_row == self.farm.row_ids[-1]):
+                            # there are full rows at the start and end
+                            # navigate to the start node of the row and send row finish (no picking)
+                            next_node = self.row_path[0]
+                            yield self.env.process(self.go_to_node(next_node, self.transportation_rate))
+
+                        rospy.loginfo("%s reached %s from %s at %0.3f" %(self.picker_id, next_node,
+                                                                 self.curr_node,
+                                                                 self.env.now))
+                        rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                                                                                            self.tot_trays,
+                                                                                            self.n_trays,
+                                                                                            self.picking_progress))
+
+                        self.curr_node = "" + next_node
+
+                        if self.curr_node == self.row_path[0]:
+                            # row is finished
+                            self.finished_row_routine()
+
+                        # check picking progress
+                        if self.picking_progress >= self.tray_capacity:
+                            self.picking_progress -= self.tray_capacity
+                            self.n_trays += 1
+
+                            if self.n_trays == self.max_n_trays:
+                                if self.curr_row is None:
+                                    # finished picking along curr_row
+                                    # transport to local storage and don't return
+                                    yield self.env.process(self.transport_to_local_storage(item="tray"))
+                                    # reset to no allocations
+                                    self.mode = 0
+                                else:
+                                    # transport to local storage and return
+                                    curr_node = "" + self.curr_node
+                                    yield self.env.process(self.transport_to_local_storage(item="tray"))
+                                    # return
+                                    yield self.env.process(self.go_to_node(curr_node, self.transportation_rate))
+                                    # resume picking
+                                    self.mode = 1
+                        else:
+                            # picking_progress != tray_capacity : go to not allocated mode
+                            if self.curr_row is None:
+                                # no current allcoations
+                                self.mode = 0
+
+                # 3. If in mode free, check if there is any new assignments
+                #       If there is no new assignment and no rows left to be assigned, finish picking
+                #       If there is a new assignment
+                #           a. Move to the start node of the path
+                #           b. Get the path from the current loc to start_node of new row
+                #           c. Move at transportation_rate to start_node
+                #           d. Continue/Start picking along the new row by changing mode to picking
+                elif self.mode == 0:
+                    row_id = self.farm.curr_picker_allocations[self.picker_id]
+                    row_id = None if row_id == self.prev_row else row_id
+
+                    if (row_id is None) and (len(self.farm.unallocated_rows) == 0):
+                        # The picker has an assigned row and all rows are allocated
+                        # unload any berries left in hand and leave the picking process
+                        if self.curr_node == self.local_storage_node:
+                            # at local storage after unloading max_n_trays
+                            if (self.n_trays > 0) or (self.picking_progress > 0.):
+                                yield self.env.process(self.unload(item="all"))
+                        elif self.curr_node is not None:
+                            # the picker is at some node already
+                            if (self.n_trays > 0) or (self.picking_progress > 0.):
+                                yield self.env.process(self.transport_to_local_storage(item="all"))
                         self.mode = 3
-                    elif self.curr_node is not None:
-                        # not the first allocation, meaning the picker is at some node already
-                        if (self.n_trays > 0) or (self.picking_progress > 0.):
-                            route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                        self.local_storage_node)
-                            time_to_transport = route_distance / self.transportation_rate
-                            self.mode = 2
-                            self.env.process(self.transport_process(time_to_transport, 1))
-                            self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
-                            self.n_trays = 0
-                            self.picking_progress = 0
+                        # finish the picking process
+                        rospy.loginfo("%s finishing picking process. all rows are assigned" %(self.picker_id))
+                        break
 
-                        self.mode = 3
-                    # finish the picking process
-                    rospy.loginfo("%s finishing picking process. all rows are assigned" %(self.picker_id))
-                    break
+                    elif row_id is not None: # if there is a row assigned to the picker
+                        self.curr_row = row_id
+                        self.curr_row_info = self.farm.graph.row_info[self.curr_row]
+                        # TODO: Now the local_storage_node of the first assigned row is assumed to be
+                        # the starting position of the picker. Is an origin_node required?
+                        if self.curr_node is None:
+                            self.curr_node = self.farm.graph.local_storage_nodes[self.curr_row]
+                            self.local_storage_node = self.farm.graph.local_storage_nodes[self.curr_row]
 
-                elif row_id is not None: # if there is a row assigned to the picker
-                    self.curr_row = row_id
-                    self.curr_row_info = self.farm.graph.row_info[self.curr_row]
-                    # set local storage as curr_node if never assigned before
-                    if self.curr_node is None:
-                        self.curr_node = self.farm.graph.local_storage_nodes[self.curr_row]
-                        self.local_storage_node = self.farm.graph.local_storage_nodes[self.curr_row]
+                        rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
+                                                                           self.curr_row,
+                                                                           self.env.now))
+                        self.mode = 2
+                        # go to the start_node of the row
+                        yield self.env.process(self.go_to_node(self.curr_row_info[1], self.transportation_rate))
 
-                        # publish pose
-                        self.publish_pose(self.curr_node, 0.)
+                        # picker moved to the start_node of the row (yield above)
+                        # get the path from start to end of the row
+                        self.row_path, _, _ = self.farm.graph.get_path_details(self.curr_node, self.curr_row_info[2])
 
-                    rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
-                                                                       self.curr_row,
-                                                                       self.env.now))
-                    # transport to the start_node of the row
-                    route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
-                                                                                                self.curr_row_info[1])
-                    time_to_transport = route_distance / self.transportation_rate
-                    yield self.env.timeout(time_to_transport)
+                        rospy.loginfo("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
+                        # change current mode to picking
+                        self.mode = 1 # picking mode
 
-                    # picker moved to the start_node of the row (yield above)
-                    # get the path from start to end of the row
-                    self.curr_node = self.curr_row_info[1]
-                    self.row_path, _, _ = self.farm.graph.get_path_details(self.curr_node, self.curr_row_info[2])
+                        self.picking_dir = "forward"
 
-                    # publish pose
-                    self.publish_pose(self.curr_node, 0.)
-
-                    rospy.loginfo("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
-                    # change current mode to picking
-                    self.mode = 1 # picking mode
-
-                    self.picking_dir = "forward"
+                # publish pose
+                if (self.curr_node is not None) and (self.env.now - self.prev_pub_time > 0.1):
+                    curr_node_obj = self.farm.graph.get_node(self.curr_node)
+                    position[0] = curr_node_obj.pose.position.x
+                    position[1] = curr_node_obj.pose.position.y
+                    self.publish_pose(position, orientation)
+            else:
+                start_sim = rospy.get_param(ns + "rasberry-des_config/start_sim")
 
             yield self.env.timeout(0.001)
 
-    def transport_process(self, time_to_transport, n_times):
-        """Picker's transportation process
+    def unload(self, item="tray"):
+        """Picker's unloading process at the local storage node
+
+        Keyword arguments:
+
+        item -- unload "tray" or "all"; "tray" is normal, "all" only when no more rows are free
         """
-        # This node should ideally implement picker's transportation to the local storage
-        # and return if needed.
-        # Only a timeout implementation is done now.
-        #   1. move along the path (yield timeout(time_to_travel_path))
-        yield self.env.timeout(time_to_transport)
-        # publish pose
-        self.publish_pose(self.local_storage_node, 0.0)
-        #   2. request for the local storage access
-        #   3. wait further for unloading (yield timeout(loading_time))
-        rospy.loginfo("%s requesting for local_storage resource at %0.3f" %(self.picker_id, self.env.now))
-        with self.farm.graph.local_storages[self.local_storage_node].request() as req:
-            yield req
-            rospy.loginfo("%s got access to local_storage resource at %0.3f" %(self.picker_id, self.env.now))
-            yield self.env.timeout(self.loading_time)
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+        curr_node_obj = self.farm.graph.get_node(self.curr_node)
+        position[0] = curr_node_obj.pose.position.x
+        position[1] = curr_node_obj.pose.position.y
 
-            rospy.loginfo("%s spent %0.3f for unloading at the local_staorage" %(self.picker_id, self.loading_time))
-        # if needed, return to previous node
-        if n_times == 2:
-            yield self.env.timeout(time_to_transport)
-            # publish pose
-            if self.picking_dir is "forward":
-                self.publish_pose(self.curr_node, 0.)
-            else:
-                self.publish_pose(self.curr_node, math.pi/2)
+        self.publish_pose(position, orientation)
+        start_time = self.env.now
+        delta_time = self.env.now - start_time
 
-    def publish_pose(self, node, z_orientation):
+        while delta_time <= self.loading_time:
+            now_time = self.env.now
+            if now_time - self.prev_pub_time >= 0.1:
+                self.publish_pose(position, orientation)
+            yield self.env.timeout(0.05)
+            delta_time = now_time - start_time
+
+        # update tot_trays
+        if item == "tray":
+            self.tot_trays += self.max_n_trays
+            self.n_trays -= self.max_n_trays
+        elif item == "all":
+            self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
+            self.n_trays = 0
+            self.picking_progress = 0
+
+        rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                                                                            self.tot_trays,
+                                                                            self.n_trays,
+                                                                            self.picking_progress))
+
+        yield self.env.timeout(0.001)
+
+    def publish_pose(self, position, orientation):
         """This method publishes the current position of the picker. Called only at nodes"""
-        self.pose.position.x, self.pose.position.y = self.farm.graph.get_node_xy(node)
-        self.pose.position.z = 0.0
-        quaternion = tf.transformations.quaternion_from_euler(0., 0., z_orientation)
+        self.pose.position.x = position[0]
+        self.pose.position.y = position[1]
+        self.pose.position.z = position[2]
+        quaternion = tf.transformations.quaternion_from_euler(orientation[0], orientation[1],
+                                                              orientation[2])
         self.pose.orientation.x = quaternion[0]
         self.pose.orientation.y = quaternion[1]
         self.pose.orientation.z = quaternion[2]
         self.pose.orientation.w = quaternion[3]
         self.pose_pub.publish(self.pose)
+
+        self.prev_pub_time = self.env.now
+
+    def go_to_node(self, goal_node, nav_speed):
+        """Simpy process to Mimic moving to the goal_node by publishing new position based on speed
+
+        Keyword arguments:
+        goal_node -- node to reach from current node
+        """
+        route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
+                                                                                    goal_node)
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+        for i in range(len(route_nodes) - 1):
+            # move through each edge
+            curr_node_obj = self.farm.graph.get_node(route_nodes[i])
+            next_node_obj = self.farm.graph.get_node(route_nodes[i + 1])
+            theta = math.atan2((next_node_obj.pose.position.y - curr_node_obj.pose.position.y),
+                               (next_node_obj.pose.position.x - curr_node_obj.pose.position.x))
+
+            position[0] = curr_node_obj.pose.position.x
+            position[1] = curr_node_obj.pose.position.y
+
+            edge_distance = route_distance[i]
+            travel_time = edge_distance / nav_speed
+
+            self.publish_pose(position, orientation)
+            start_time = self.env.now
+            delta_time = self.env.now - start_time
+
+            while delta_time <= travel_time:
+                delta = nav_speed * delta_time
+                position[0] = curr_node_obj.pose.position.x + delta * math.cos(theta)
+                position[1] = curr_node_obj.pose.position.y + delta * math.sin(theta)
+                now_time = self.env.now
+                if now_time - self.prev_pub_time >= 0.1:
+                    self.publish_pose(position, orientation)
+                delta_time = now_time - start_time
+                yield self.env.timeout(0.05)
+            self.curr_node = route_nodes[i + 1]
+
+        yield self.env.timeout(0.001)
+
+    def transport_to_local_storage(self, item="tray"):
+        """Transport item to local storage by yielding to go_to_node and unload processes
+
+        Keyword arguments:
+
+        item -- unload "tray" or "all"; "tray" is normal, "all" only when no more rows are free
+        """
+        # transport to the local storage and don't return
+        self.mode = 2
+        rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
+                                                                       self.max_n_trays,
+                                                                       self.env.now))
+        yield self.env.process(self.go_to_node(self.local_storage_node, self.transportation_rate))
+
+        # reached local storage, now unload
+        yield self.env.process(self.unload(item))
+
+    def finished_row_routine(self, ):
+        """Common things to do when picking along the allocated row is finished
+        """
+        # trigger finished_rows event for the curr_row
+        self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
+        # some attributes are reset
+        self.picking_dir = None
+        self.prev_row = "" + self.curr_row
+        self.prev_row_info = [] + self.curr_row_info
+        self.curr_row = None
+        self.row_path = []

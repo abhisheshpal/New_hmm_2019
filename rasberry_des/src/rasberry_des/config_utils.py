@@ -55,7 +55,8 @@ def check_des_config():
         missing_params.append("rasberry_des_config/yield_per_node")
     if not rospy.has_param(ns + "rasberry_des_config/n_local_storages"):
         missing_params.append(ns + "rasberry_des_config/n_local_storages")
-
+    if not rospy.has_param(ns + "rasberry_des_config/start_sim"):
+        missing_params.append(ns + "rasberry_des_config/start_sim")
     return missing_params
 
 def des_param_list_check(param, list_object, ideal_list_len, alt_list_len=1):
