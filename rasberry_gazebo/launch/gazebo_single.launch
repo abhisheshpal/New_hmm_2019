@@ -4,6 +4,7 @@
 
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
+  <arg name="world" default="polytunnelsAB" />
 
   <!-- <arg name="robot_model_conf" default="$(find thorvald_model)/config/thorvald_ii_4wd4ws_std/thorvald_ii_4wd4ws_std.yaml" /> -->
 
@@ -12,7 +13,9 @@
   <arg name="simple_sim" default="True" />
 
 
-  <include file="$(find rasberry_gazebo)/launch/polypoles.launch" />
+  <include file="$(find rasberry_gazebo)/launch/polypoles.launch" >
+     <arg name="world_name" value="$(arg world).world" />
+  </include>
 
 
   <!-- model bringup -->
@@ -34,7 +37,8 @@
 
   <!--<include file="$(find thorvald_bringup)/launch/$(arg robot_model)/$(arg robot_model)_sim.launch" />-->
 
-
+  <include file="$(find thorvald_teleop)/launch/teleop_xbox.launch" />
+  
   <node pkg="gazebo_ros" type="spawn_model"
   		name="spawner" args="-urdf -param /robot_description -model thorvald_ii">
   </node>
