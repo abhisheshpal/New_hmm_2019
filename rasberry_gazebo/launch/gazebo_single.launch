@@ -4,7 +4,7 @@
 
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
-  <arg name="world" default="polytunnelsAB" />
+  <arg name="world" default="enclosure" />
 
   <!-- <arg name="robot_model_conf" default="$(find thorvald_model)/config/thorvald_ii_4wd4ws_std/thorvald_ii_4wd4ws_std.yaml" /> -->
 
