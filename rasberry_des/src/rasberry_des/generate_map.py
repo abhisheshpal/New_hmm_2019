@@ -76,18 +76,22 @@ def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_di
         raise TypeError("row_spacing must be list of length %d or 1" %(n_topo_nav_rows))
 
     # 1. create the nodes - head_nodes and row_nodes
-    i = 0   # head node counter: one head node per row
-    x = 0.
-    for row_id in row_ids:
+    x = []
+    for i in range(n_topo_nav_rows):
+        row_id = row_ids[i]
         # words in node names are separated with -
         # words in tags are separated with _
         # words in edge_ids are separated with _
         head_node = "hn-%02d" %(i)
 
-        x += row_spacing[row_id] / 2.
+        if i == 0:
+            x.append(row_spacing[row_id] / 2.)
+        else:
+            prev_row_id = row_ids[i - 1]
+            x.append(x[-1] + row_spacing[prev_row_id] / 2. + row_spacing[row_id] / 2.)
         y = head_node_y[row_id]
 
-        pose.position.x = x
+        pose.position.x = x[-1]
         pose.position.y = y
 
         add_node(head_node, pose)
@@ -131,5 +135,3 @@ def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_di
             add_edges(curr_node, next_node, "move_base", "edge_%02d_%02d_%02d" %(i, j, j+1))
             add_edges(next_node, curr_node, "move_base", "edge_%02d_%02d_%02d" %(i, j+1, j))
 
-        # increment head node counter
-        i += 1
