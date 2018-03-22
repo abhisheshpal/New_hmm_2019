@@ -86,6 +86,7 @@ class Farm(object):
             1. do a periodic checking of completion status of rows
             2. allocate free pickers to one of the unallocated rows
         """
+
         while True:
             # check for any completion update of any rows
             for i in range(len(self.pickers_reported)):

@@ -47,7 +47,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -82,7 +82,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 1.0
         z: 0.0
     verts:
@@ -105,7 +105,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -140,7 +140,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 1.0
         z: 0.0
     verts:
@@ -163,7 +163,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -180,6 +180,13 @@
       node: rn-03-00
       recovery_behaviours_config: ''
       top_vel: 0.55
+    - action: move_base
+      edge_id: hn-03_hn-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     localise_by_topic: ''
     map: fork_map
     name: hn-03
@@ -191,7 +198,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 1.0
         z: 0.0
     verts:
@@ -214,7 +221,116 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: hn-04_hn-03
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-04_rn-04-00
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-04_hn-05
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: hn-04
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: hn-05_hn-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-05_rn-05-00
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: hn-05
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -265,7 +381,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -316,7 +432,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -367,7 +483,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -418,7 +534,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -469,7 +585,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -513,7 +629,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -541,7 +657,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 6.0
         z: 0.0
     verts:
@@ -564,7 +680,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -592,7 +708,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 8.0
         z: 0.0
     verts:
@@ -615,7 +731,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -643,7 +759,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 10.0
         z: 0.0
     verts:
@@ -666,7 +782,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -694,7 +810,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 12.0
         z: 0.0
     verts:
@@ -717,7 +833,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -745,7 +861,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 14.0
         z: 0.0
     verts:
@@ -768,7 +884,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -789,7 +905,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 2.0
+        x: 3.0
         y: 16.0
         z: 0.0
     verts:
@@ -812,7 +928,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -840,7 +956,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 6.0
         z: 0.0
     verts:
@@ -863,7 +979,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -891,7 +1007,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 8.0
         z: 0.0
     verts:
@@ -914,7 +1030,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -942,7 +1058,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 10.0
         z: 0.0
     verts:
@@ -965,7 +1081,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -993,7 +1109,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 12.0
         z: 0.0
     verts:
@@ -1016,7 +1132,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1044,7 +1160,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 14.0
         z: 0.0
     verts:
@@ -1067,7 +1183,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1088,7 +1204,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
+        x: 5.0
         y: 16.0
         z: 0.0
     verts:
@@ -1111,7 +1227,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1139,7 +1255,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 6.0
         z: 0.0
     verts:
@@ -1162,7 +1278,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1190,7 +1306,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 8.0
         z: 0.0
     verts:
@@ -1213,7 +1329,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1241,7 +1357,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 10.0
         z: 0.0
     verts:
@@ -1264,7 +1380,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1292,7 +1408,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 12.0
         z: 0.0
     verts:
@@ -1315,7 +1431,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1343,7 +1459,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 14.0
         z: 0.0
     verts:
@@ -1366,7 +1482,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1387,7 +1503,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.0
+        x: 7.0
         y: 16.0
         z: 0.0
     verts:
@@ -1410,5 +1526,603 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-03-05
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-00_hn-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-00_rn-04-01
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-00
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-01_rn-04-00
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-01_rn-04-02
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-01
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-02_rn-04-01
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-02_rn-04-03
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-02
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-03_rn-04-02
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-03_rn-04-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-03
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-04_rn-04-03
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-04_rn-04-05
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-04
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-04-05_rn-04-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-04-05
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 9.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-00_hn-05
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-00_rn-05-01
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-00
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 6.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-01_rn-05-00
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-01_rn-05-02
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-01
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 8.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-02_rn-05-01
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-02_rn-05-03
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-02
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 10.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-03_rn-05-02
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-03_rn-05-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-03
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 12.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-04_rn-05-03
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-04_rn-05-05
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-04
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 14.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
+      edge_id: rn-05-05_rn-05-04
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: rn-05-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: rn-05-05
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 11.0
+        y: 16.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-05-05
     pointset: fork_map
