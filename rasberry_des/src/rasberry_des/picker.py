@@ -75,6 +75,7 @@ class Picker(object):
         self.status.picker_id = self.picker_id
         self.status.picking_rate = picking_rate
         self.status.transportation_rate = transportation_rate
+        self.status.tray_capacity = self.tray_capacity
         self.status.picking_progress = 0.
         self.status.n_trays = 0
         self.status.tot_trays = 0
@@ -318,7 +319,7 @@ class Picker(object):
         self.pose_pub.publish(self.pose)
 
         # update variables in status and publish
-        self.status.picking_progress = self.picking_progress
+        self.status.picking_progress = self.picking_progress / self.tray_capacity
         self.status.n_trays = self.n_trays
         self.status.tot_trays = self.tot_trays
         self.status.n_rows = self.n_rows
