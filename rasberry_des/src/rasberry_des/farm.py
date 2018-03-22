@@ -86,56 +86,51 @@ class Farm(object):
             1. do a periodic checking of completion status of rows
             2. allocate free pickers to one of the unallocated rows
         """
-        ns = rospy.get_namespace()
-        start_sim = rospy.get_param(ns + "rasberry_des_config/start_sim")
 
         while True:
-            if start_sim:
-                # check for any completion update of any rows
-                for i in range(len(self.pickers_reported)):
-                    picker_id = self.pickers_reported[i]
-                    if self.curr_picker_allocations[picker_id] is not None:
-                        # check if there is a row allocated to the picker
-                        row_id = self.curr_picker_allocations[picker_id]
-                        if self.finished_rows[row_id].triggered:
-                            # this row is finished
-                            self.n_finished_rows += 1
-                            # TODO: there could be slight delay in this time
-                            rospy.loginfo("%s reported finish-row at %0.3f and now time is %0.3f" %(picker_id,
-                                                                                               self.finished_rows[row_id].value,
-                                                                                               self.env.now))
-                            self.row_finish_time[row_id] = self.finished_rows[row_id].value
-                            # relieve the picker
-                            self.curr_picker_allocations[picker_id] = None
-                            rospy.loginfo("%s reported completion of row %s at %0.3f" %(picker_id,
-                                                                                 row_id,
-                                                                                 self.row_finish_time[row_id]))
-                if self.finished_picking():
-                    # once all rows are picked finish the process
-                    break
+            # check for any completion update of any rows
+            for i in range(len(self.pickers_reported)):
+                picker_id = self.pickers_reported[i]
+                if self.curr_picker_allocations[picker_id] is not None:
+                    # check if there is a row allocated to the picker
+                    row_id = self.curr_picker_allocations[picker_id]
+                    if self.finished_rows[row_id].triggered:
+                        # this row is finished
+                        self.n_finished_rows += 1
+                        # TODO: there could be slight delay in this time
+                        rospy.loginfo("%s reported finish-row at %0.3f and now time is %0.3f" %(picker_id,
+                                                                                           self.finished_rows[row_id].value,
+                                                                                           self.env.now))
+                        self.row_finish_time[row_id] = self.finished_rows[row_id].value
+                        # relieve the picker
+                        self.curr_picker_allocations[picker_id] = None
+                        rospy.loginfo("%s reported completion of row %s at %0.3f" %(picker_id,
+                                                                             row_id,
+                                                                             self.row_finish_time[row_id]))
+            if self.finished_picking():
+                # once all rows are picked finish the process
+                break
 
-                # allocate, if there are rows yet to be allocated
-                if not self.finished_allocating():
-                    for picker_id in self.pickers_reported:
-                        if not self.curr_picker_allocations[picker_id]:
-                            # allocate if picker is free
-                            # get the first free row
-                            row_id = self.unallocated_rows.pop(0)
-                            # allocate row_id to the picker
-                            self.allocations[row_id] = picker_id
-                            self.picker_allocations[picker_id].append(row_id)
-                            self.allocation_time[row_id] = self.env.now
-                            # the value picker checks is updated last
-                            self.curr_picker_allocations[picker_id] = row_id
-                            rospy.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
-                                                                      row_id,
-                                                                      self.allocation_time[row_id]))
+            # allocate, if there are rows yet to be allocated
+            if not self.finished_allocating():
+                for picker_id in self.pickers_reported:
+                    if not self.curr_picker_allocations[picker_id]:
+                        # allocate if picker is free
+                        # get the first free row
+                        row_id = self.unallocated_rows.pop(0)
+                        # allocate row_id to the picker
+                        self.allocations[row_id] = picker_id
+                        self.picker_allocations[picker_id].append(row_id)
+                        self.allocation_time[row_id] = self.env.now
+                        # the value picker checks is updated last
+                        self.curr_picker_allocations[picker_id] = row_id
+                        rospy.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
+                                                                  row_id,
+                                                                  self.allocation_time[row_id]))
 
-                        # check if all rows are allocated after each allocation
-                        if self.finished_allocating():
-                            break
-            else:
-                start_sim = rospy.get_param(ns + "rasberry_des_config/start_sim")
+                    # check if all rows are allocated after each allocation
+                    if self.finished_allocating():
+                        break
 
             # take a short break after each allocation loop
             yield self.env.timeout(0.1)

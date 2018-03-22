@@ -14,4 +14,3 @@ loading_time: [80.0] # time required by each picker to unload berries at local s
 tray_capacity: 3000 # capacity of each tray, g 
 yield_per_node: [200.0] # yield at a topo_nav node (from the node to the next), per row, g
 n_local_storages: 1 # number of local storage stations
-start_sim: false # parameter to control when to start the simulation

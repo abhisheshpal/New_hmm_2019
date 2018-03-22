@@ -24,7 +24,10 @@ import rasberry_des.config_utils
 import rasberry_des.visualise
 
 RANDOM_SEED = 1234
+SHOW_VIS = True
+DETAILED_VIS = False
 SHOW_INFO = False
+SIM_RT_FACTOR = 10.0
 
 
 if __name__ == "__main__":
@@ -69,7 +72,7 @@ if __name__ == "__main__":
         # RealtimeEnvironment can be enabled by uncommenting the line below.
         # The farm size and n_pickers given would take 420s to run
         # To vary the speed of RT sim, change 'factor'
-        simpy_env = simpy.RealtimeEnvironment(initial_time=t_start, factor=1.0, strict=False)
+        simpy_env = simpy.RealtimeEnvironment(initial_time=t_start, factor=SIM_RT_FACTOR, strict=False)
     else:
         raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
@@ -132,11 +135,22 @@ if __name__ == "__main__":
 
     rasb_pickers = []
     for picker_id in picker_ids:
-        rasb_pickers.append(rasberry_des.picker.Picker(picker_id, simpy_env, rasb_farm, tray_capacity,
-                                                       max_n_trays[picker_id], picking_rate[picker_id],
-                                                       transportation_rate[picker_id], loading_time[picker_id]))
+        if des_env == "ros":
+            rasb_pickers.append(rasberry_des.picker.Picker(picker_id, simpy_env, rasb_farm,
+                                                           tray_capacity, max_n_trays[picker_id],
+                                                           picking_rate[picker_id],
+                                                           transportation_rate[picker_id],
+                                                           loading_time[picker_id],
+                                                           SIM_RT_FACTOR))
+        elif des_env == "simpy":
+            rasb_pickers.append(rasberry_des.picker.Picker(picker_id, simpy_env, rasb_farm,
+                                                           tray_capacity, max_n_trays[picker_id],
+                                                           picking_rate[picker_id],
+                                                           transportation_rate[picker_id],
+                                                           loading_time[picker_id]))
 
-    vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, rasb_pickers)
+    if SHOW_VIS:
+        vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, rasb_pickers, DETAILED_VIS)
 
     while not rospy.is_shutdown():
         try:
@@ -147,6 +161,7 @@ if __name__ == "__main__":
             # at least a ms delay (in ros/realtime clock) between the events
             # This seems to be unavoidable at this stage
             simpy_env.step()
+            vis.plot_update()
         except simpy.core.EmptySchedule:
             break
         except rospy.ROSInterruptException:
