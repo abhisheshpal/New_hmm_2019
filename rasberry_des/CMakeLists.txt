@@ -10,11 +10,11 @@ project(rasberry_des)
 find_package(catkin REQUIRED COMPONENTS
   rospy
   message_generation
-  topological_navigation
-  gazebo_ros
-  gazebo_plugins
   geometry_msgs
   std_msgs
+  strands_navigation_msgs
+  tf
+  topological_navigation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -54,6 +54,7 @@ catkin_python_setup()
 add_message_files(
   FILES
   Picker_Status.msg
+  Robot_Status.msg
 #   Message2.msg
 )
 
@@ -74,8 +75,8 @@ add_message_files(
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
-  std_msgs  # Or other packages containing msgs
   geometry_msgs
+  std_msgs  # Or other packages containing msgs
 )
 
 ################################################

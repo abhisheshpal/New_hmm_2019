@@ -81,6 +81,7 @@ class Picker(object):
         self.status.tot_trays = 0
         self.status.n_rows = 0
         self.status.curr_row = "None"
+        self.status.mode = self.mode
 
         self.action = self.env.process(self.picking_process())
 
@@ -296,6 +297,9 @@ class Picker(object):
             self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
             self.n_trays = 0
             self.picking_progress = 0
+            self.mode = 0
+
+        self.publish_pose()
 
         rospy.loginfo("%s finished unloading at %0.1f" %(self.picker_id, self.env.now))
         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
@@ -325,6 +329,7 @@ class Picker(object):
         self.status.n_rows = self.n_rows
         self.status.curr_row = "%s" %(self.curr_row)
         self.status_pub.publish(self.status)
+        self.status.mode = self.mode
 
         self.prev_pub_time = self.env.now
 

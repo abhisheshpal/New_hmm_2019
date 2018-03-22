@@ -7,4 +7,5 @@ int32 n_trays
 int32 tot_trays
 int32 n_rows
 string curr_row
+int32 mode
 
