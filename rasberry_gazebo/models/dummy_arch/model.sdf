@@ -2,7 +2,7 @@
 <sdf version="1.5">
     <model name="dummy_arch">
         <static>1</static>
-        <pose>0.0 0.0 0.1 0.0 0.0 0.0</pose>
+        <pose>0.0 0.0 0.0 1.570796 0.0 1.570796</pose>
         <link name="link">
                 <kinematic>0</kinematic>
                 <inertial>
