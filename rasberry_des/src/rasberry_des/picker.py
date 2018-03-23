@@ -15,8 +15,8 @@ import rasberry_des.msg
 
 class Picker(object):
     """Picker class definition"""
-    def __init__(self, picker_id, env, farm, tray_capacity, max_n_trays,
-                 picking_rate, transportation_rate, loading_time, sim_rt_factor=1.0):
+    def __init__(self, picker_id, env, farm, des_env, tray_capacity, max_n_trays,
+                 picking_rate, transportation_rate, unloading_time, sim_rt_factor=1.0):
         """Create a Picker object
 
         Keyword arguments:
@@ -27,7 +27,7 @@ class Picker(object):
         max_n_trays -- number of trays with the picker
         picking_rate -- rate at which the picker moves while picking
         transportation_rate -- rate at which the picker moves while transporting
-        loading_time -- time the picker will spend at the local storage for unloading
+        unloading_time -- time the picker will spend at the local storage for unloading
         """
         self.picker_id = picker_id
         self.env = env
@@ -41,7 +41,7 @@ class Picker(object):
         self.max_n_trays = max_n_trays
         self.max_wait_for_allocation = 5    # max time to wait before unloading everything
 
-        self.loading_time = loading_time / sim_rt_factor    # time spent at localStorage
+        self.unloading_time = unloading_time / sim_rt_factor    # time spent at localStorage
         self.assigned_row = None            # only for picking mode
 
         self.mode = 0       # 0:free, 1:picking, 2:transporting, 3:finished_job
@@ -61,14 +61,22 @@ class Picker(object):
         self.picking_progress = 0.  # percentage of tray_capacity
 
         self.prev_pub_time = 0.
-        self.pub_delay = 0.1
+
+        if des_env == "simpy":
+            self.pub_delay = 1.0
+            self.process_timeout = 0.001
+            self.loop_timeout = 1.0
+        elif des_env == "ros":
+            self.pub_delay = 0.1
+            self.process_timeout = 0.001
+            self.loop_timeout = 0.05
 
         self.pose_pub = rospy.Publisher('/%s/pose' %(self.picker_id),
                                         geometry_msgs.msg.Pose,
                                         queue_size=10)
         self.status_pub = rospy.Publisher('/%s/status' %(self.picker_id),
-                                        rasberry_des.msg.Picker_Status,
-                                        queue_size=10)
+                                          rasberry_des.msg.Picker_Status,
+                                          queue_size=10)
 
         self.pose = geometry_msgs.msg.Pose()
         self.status = rasberry_des.msg.Picker_Status()
@@ -118,8 +126,8 @@ class Picker(object):
                     if self.curr_node == self.row_path[-1]:
                         self.picking_dir = "reverse"
                         rospy.loginfo("%s changing to reverse along %s at %0.3f" %(self.picker_id,
-                                                                           self.curr_row,
-                                                                           self.env.now))
+                                                                                   self.curr_row,
+                                                                                   self.env.now))
 
                     # if the tray capacity is reached, increment n_trays
                     if self.picking_progress >= self.tray_capacity:
@@ -132,9 +140,9 @@ class Picker(object):
                         #   send row finished
                         #   go to local storage and no return
                         if ((not self.farm.half_rows) and
-                            ((self.curr_row == self.farm.row_ids[0]) or
-                             (self.curr_row == self.farm.row_ids[-1])) and
-                            (self.curr_node == self.row_path[-1])):
+                                ((self.curr_row == self.farm.row_ids[0]) or
+                                 (self.curr_row == self.farm.row_ids[-1])) and
+                                (self.curr_node == self.row_path[-1])):
                             # row is finished
                             self.finished_row_routine()
                             # transport to the local storage and don't return
@@ -234,8 +242,8 @@ class Picker(object):
                         self.local_storage_node = self.farm.graph.local_storage_nodes[self.curr_row]
 
                     rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
-                                                                       self.curr_row,
-                                                                       self.env.now))
+                                                                               self.curr_row,
+                                                                               self.env.now))
                     self.mode = 2
                     # go to the start_node of the row
                     yield self.env.process(self.go_to_node(self.curr_row_info[1], self.transportation_rate))
@@ -257,7 +265,7 @@ class Picker(object):
                 position[1] = curr_node_obj.pose.position.y
                 self.publish_pose(position, orientation)
 
-            yield self.env.timeout(0.001)
+            yield self.env.timeout(self.process_timeout)
 
     def unload(self, item="tray"):
         """Picker's unloading process at the local storage node
@@ -281,12 +289,12 @@ class Picker(object):
             # wait for permission to acces local storage, no pose publishing in between
             yield req
             rospy.loginfo("%s was granted access to local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
-
-            while delta_time <= self.loading_time:
+            unloading_time = self.unloading_time * (self.n_trays if item == "tray" else (self.n_trays + 1))
+            while delta_time <= unloading_time:
                 now_time = self.env.now
                 if now_time - self.prev_pub_time >= self.pub_delay:
                     self.publish_pose(position, orientation)
-                yield self.env.timeout(0.05)
+                yield self.env.timeout(self.loop_timeout)
                 delta_time = now_time - start_time
 
         # update tot_trays
@@ -299,15 +307,15 @@ class Picker(object):
             self.picking_progress = 0
             self.mode = 0
 
-        self.publish_pose()
+        self.publish_pose(position, orientation)
 
         rospy.loginfo("%s finished unloading at %0.1f" %(self.picker_id, self.env.now))
         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
-                                                                            self.tot_trays,
-                                                                            self.n_trays,
-                                                                            self.picking_progress))
+                                                                                    self.tot_trays,
+                                                                                    self.n_trays,
+                                                                                    self.picking_progress))
 
-        yield self.env.timeout(0.001)
+        yield self.env.timeout(self.process_timeout)
 
     def publish_pose(self, position, orientation):
         """This method publishes the current position of the picker. Called only at nodes"""
@@ -362,16 +370,21 @@ class Picker(object):
 
             while delta_time <= travel_time:
                 delta = nav_speed * delta_time
-                position[0] = curr_node_obj.pose.position.x + delta * math.cos(theta)
-                position[1] = curr_node_obj.pose.position.y + delta * math.sin(theta)
+                if delta <= edge_distance:
+                    position[0] = curr_node_obj.pose.position.x + delta * math.cos(theta)
+                    position[1] = curr_node_obj.pose.position.y + delta * math.sin(theta)
+                else:
+                    position[0] = next_node_obj.pose.position.x
+                    position[1] = next_node_obj.pose.position.y
+
                 now_time = self.env.now
                 if now_time - self.prev_pub_time >= self.pub_delay:
                     self.publish_pose(position, orientation)
                 delta_time = now_time - start_time
-                yield self.env.timeout(0.05)
+                yield self.env.timeout(self.loop_timeout)
             self.curr_node = route_nodes[i + 1]
 
-        yield self.env.timeout(0.001)
+        yield self.env.timeout(self.process_timeout)
 
     def transport_to_local_storage(self, item="tray"):
         """Transport item to local storage by yielding to go_to_node and unload processes
@@ -383,8 +396,8 @@ class Picker(object):
         # transport to the local storage and don't return
         self.mode = 2
         rospy.loginfo("%s reached %d trays. going to local storage at %0.3f" %(self.picker_id,
-                                                                       self.max_n_trays,
-                                                                       self.env.now))
+                                                                               self.max_n_trays,
+                                                                               self.env.now))
         yield self.env.process(self.go_to_node(self.local_storage_node, self.transportation_rate))
 
         # reached local storage, now unload

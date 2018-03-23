@@ -29,8 +29,8 @@ class Robot(object):
         self.pose = geometry_msgs.msg.Pose()
 
         self.status_pub = rospy.Publisher('/%s/status' %(self.robot_id),
-                                        rasberry_des.msg.Robot_Status,
-                                        queue_size=10)
+                                          rasberry_des.msg.Robot_Status,
+                                          queue_size=10)
         self.status = rasberry_des.msg.Robot_Status()
         self.status.robot_id = self.robot_id
         self.status.transportation_rate = transportation_rate

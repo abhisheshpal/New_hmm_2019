@@ -15,7 +15,7 @@ import rasberry_des.msg
 
 class Visualise_Agents(object):
     """A class to animate agent locations in matplotlib"""
-    def __init__(self, farm, pickers, detailed=False):
+    def __init__(self, farm, picker_ids, detailed=False):
         """initialise the Visualise_Agents class
 
         Keyword arguments:
@@ -23,8 +23,8 @@ class Visualise_Agents(object):
         farm -- rasberry_des.farm.Farm object
         pickers == list of rasberry_des.picker.Picker objects
         """
-        self.n_pickers = len(pickers)
-        self.pickers = pickers
+        self.n_pickers = len(picker_ids)
+        self.picker_ids = picker_ids
         self.farm = farm
         self.detailed = detailed
 
@@ -33,20 +33,20 @@ class Visualise_Agents(object):
         self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'normal', 'size': 8,}
 
         # dynamic object related
-        self.picker_pose_subs = []
-        self.set_picker_pose_subs()
-        self.picker_x = {self.pickers[i].picker_id:0. for i in range(self.n_pickers)}
-        self.picker_y = {self.pickers[i].picker_id:0. for i in range(self.n_pickers)}
-        self.picker_position_lines = []
-        self.picker_position_texts = []
+        self.picker_pose_subs = {}
+        self.init_picker_pose_subs()
+        self.picker_x = {picker_id:0. for picker_id in self.picker_ids}
+        self.picker_y = {picker_id:0. for picker_id in self.picker_ids}
+        self.picker_position_lines = {}
+        self.picker_position_texts = {}
 
         if self.detailed:
-            self.picker_status_subs = []
-            self.set_picker_status_subs()
-            self.picker_picking_progress = {self.pickers[i].picker_id:0. for i in range(self.n_pickers)}
-            self.picker_n_trays = {self.pickers[i].picker_id:0 for i in range(self.n_pickers)}
-            self.picker_tot_trays = {self.pickers[i].picker_id:0 for i in range(self.n_pickers)}
-            self.picker_n_rows = {self.pickers[i].picker_id:0 for i in range(self.n_pickers)}
+            self.picker_status_subs = {}
+            self.init_picker_status_subs()
+            self.picker_picking_progress = {picker_id:0. for picker_id in self.picker_ids}
+            self.picker_n_trays = {picker_id:0. for picker_id in self.picker_ids}
+            self.picker_tot_trays = {picker_id:0. for picker_id in self.picker_ids}
+            self.picker_n_rows = {picker_id:0. for picker_id in self.picker_ids}
 
         self.init_plot()
 #        self.ani = matplotlib.animation.FuncAnimation(self.fig, func=self.plot_update, blit=False, interval=100)
@@ -140,40 +140,44 @@ class Visualise_Agents(object):
                      markeredgecolor="r", linestyle="none")
         # dynamic objects - pickers and robots
         # pickers
-        for i in range(self.n_pickers):
-            self.picker_position_lines.append(self.ax.plot(self.picker_x[self.pickers[i].picker_id],
-                                                           self.picker_y[self.pickers[i].picker_id],
-                                                           color="blue", marker="8", markersize=20,
-                                                           markeredgecolor="r", linestyle="none")[0])
+        for picker_id in self.picker_ids:
+            self.picker_position_lines[picker_id] = self.ax.plot(self.picker_x[picker_id],
+                                                                 self.picker_y[picker_id],
+                                                                 color="blue", marker="8",
+                                                                 markersize=20,
+                                                                 markeredgecolor="r",
+                                                                 linestyle="none")[0]
             if self.detailed:
-                self.picker_position_texts.append(self.ax.text(self.picker_x[self.pickers[i].picker_id] -0.75,
-                                                               self.picker_y[self.pickers[i].picker_id] + 0.3,
-                                                               "P_%s\n%0.2f\n%d\n%d\n%d" %(self.pickers[i].picker_id[-2:],
-                                                                                           self.picker_picking_progress[self.pickers[i].picker_id],
-                                                                                           self.picker_n_trays[self.pickers[i].picker_id],
-                                                                                           self.picker_tot_trays[self.pickers[i].picker_id],
-                                                                                           self.picker_n_rows[self.pickers[i].picker_id],),
-                                                               fontdict=self.font))
+                self.picker_position_texts[picker_id] = self.ax.text(self.picker_x[picker_id] -0.75,
+                                                                     self.picker_y[picker_id] + 0.3,
+                                                                     "P_%s\n%0.2f\n%d\n%d\n%d" %(picker_id[-2:],
+                                                                                                 self.picker_picking_progress[picker_id],
+                                                                                                 self.picker_n_trays[picker_id],
+                                                                                                 self.picker_tot_trays[picker_id],
+                                                                                                 self.picker_n_rows[picker_id],),
+                                                                     fontdict=self.font)
             else:
-                self.picker_position_texts.append(self.ax.text(self.picker_x[self.pickers[i].picker_id] -0.75,
-                                                               self.picker_y[self.pickers[i].picker_id] + 0.3,
-                                                               "P_%s" %(self.pickers[i].picker_id[-2:]), fontdict=self.font))
+                self.picker_position_texts[picker_id] = self.ax.text(self.picker_x[picker_id] -0.75,
+                                                                     self.picker_y[picker_id] + 0.3,
+                                                                     "P_%s" %(picker_id[-2:]), fontdict=self.font)
 
-    def set_picker_pose_subs(self, ):
-        for i in range(self.n_pickers):
-            self.picker_pose_subs.append(rospy.Subscriber("/%s/pose"%(self.pickers[i].picker_id),
-                                                          geometry_msgs.msg.Pose,
-                                                          self.update_picker_positions,
-                                                          callback_args=self.pickers[i].picker_id))
+    def init_picker_pose_subs(self, ):
+        ns = rospy.get_namespace()
+        for picker_id in self.picker_ids:
+            self.picker_pose_subs[picker_id] = rospy.Subscriber(ns + "%s/pose"%(picker_id),
+                                                                geometry_msgs.msg.Pose,
+                                                                self.update_picker_position,
+                                                                callback_args=picker_id)
 
-    def set_picker_status_subs(self, ):
-        for i in range(self.n_pickers):
-            self.picker_pose_subs.append(rospy.Subscriber("/%s/status"%(self.pickers[i].picker_id),
-                                                          rasberry_des.msg.Picker_Status,
-                                                          self.update_picker_status,
-                                                          callback_args=self.pickers[i].picker_id))
+    def init_picker_status_subs(self, ):
+        ns = rospy.get_namespace()
+        for picker_id in self.picker_ids:
+            self.picker_pose_subs[picker_id] = rospy.Subscriber(ns + "%s/status"%(picker_id),
+                                                                rasberry_des.msg.Picker_Status,
+                                                                self.update_picker_status,
+                                                                callback_args=picker_id)
 
-    def update_picker_positions(self, msg, picker_id):
+    def update_picker_position(self, msg, picker_id):
         self.picker_x[picker_id] = msg.position.x
         self.picker_y[picker_id] = msg.position.y
 
@@ -185,21 +189,21 @@ class Visualise_Agents(object):
         pass
 
     def plot_update(self, *args):
-        for i in range(self.n_pickers):
-            self.picker_position_lines[i].set_data(self.picker_x[self.pickers[i].picker_id],
-                                                   self.picker_y[self.pickers[i].picker_id])
+        for picker_id in self.picker_ids:
+            self.picker_position_lines[picker_id].set_data(self.picker_x[picker_id],
+                                                           self.picker_y[picker_id])
             if self.detailed:
-                self.picker_position_texts.append(self.ax.text(self.picker_x[self.pickers[i].picker_id] -0.75,
-                                                               self.picker_y[self.pickers[i].picker_id] + 0.3,
-                                                               "P_%s\n%0.2f\n%d\n%d\n%d" %(self.pickers[i].picker_id[-2:],
-                                                                                           self.picker_picking_progress[self.pickers[i].picker_id],
-                                                                                           self.picker_n_trays[self.pickers[i].picker_id],
-                                                                                           self.picker_tot_trays[self.pickers[i].picker_id],
-                                                                                           self.picker_n_rows[self.pickers[i].picker_id],),
-                                                               fontdict=self.font))
+                self.picker_position_texts[picker_id].set_position(self.ax.text(self.picker_x[picker_id] -0.75,
+                                                                                self.picker_y[picker_id] + 0.3,
+                                                                                "P_%s\n%0.2f\n%d\n%d\n%d" %(picker_id[-2:],
+                                                                                                            self.picker_picking_progress[picker_id],
+                                                                                                            self.picker_n_trays[picker_id],
+                                                                                                            self.picker_tot_trays[picker_id],
+                                                                                                            self.picker_n_rows[picker_id],),
+                                                                                fontdict=self.font))
             else:
-                self.picker_position_texts[i].set_position((self.picker_x[self.pickers[i].picker_id] -0.75,
-                                                            self.picker_y[self.pickers[i].picker_id] + 0.3))
+                self.picker_position_texts[picker_id].set_position((self.picker_x[picker_id] -0.75,
+                                                                    self.picker_y[picker_id] + 0.3))
         self.fig.canvas.draw()
 
 

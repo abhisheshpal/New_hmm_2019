@@ -8,9 +8,13 @@ row_length: [10.0] # length of rows, m
 row_spacing: [2] # spacing between two rows in the farm, m
 n_pickers: 3 # number of pickers
 picking_rate: [0.2] # speed of pickers while picking, m/s
-transportation_rate: [0.8] # transportation speed of pickers, m/s
-max_n_trays: [1] # maximum number of trays that can be carried by each pickers
-loading_time: [80.0] # time required by each picker to unload berries at local storage, s
+picker_transportation_rate: [0.8] # transportation speed of pickers, m/s
+picker_max_n_trays: [1] # maximum number of trays that can be carried by each pickers
+picker_unloading_time: [10.0] # time required by each picker to unload a tray at local storage, s
 tray_capacity: 3000 # capacity of each tray, g 
 yield_per_node: [200.0] # yield at a topo_nav node (from the node to the next), per row, g
 n_local_storages: 1 # number of local storage stations
+n_robots: 0 # number of robots in the farm
+robot_transportation_rate: [2.0] # speed of a robot, m/s
+robot_max_n_trays: [4] # maximum number of trays that can be carried by the robot
+
