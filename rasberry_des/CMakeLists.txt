@@ -9,6 +9,7 @@ project(rasberry_des)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   rospy
+  actionlib_msgs
   message_generation
   geometry_msgs
   std_msgs
@@ -59,22 +60,23 @@ add_message_files(
 )
 
 ## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
+add_service_files(
+  FILES
+  Trays_Full.srv
 #   Service2.srv
-# )
+)
 
 ## Generate actions in the 'action' folder
-# add_action_files(
-#   FILES
-#   Action1.action
+add_action_files(
+  FILES
+  Robot_Collection.action
 #   Action2.action
-# )
+)
 
 ## Generate added messages and services with any dependencies listed here
 generate_messages(
   DEPENDENCIES
+  actionlib_msgs
   geometry_msgs
   std_msgs  # Or other packages containing msgs
 )
@@ -111,7 +113,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rasberry_des
-  CATKIN_DEPENDS message_runtime geometry_msgs std_msgs
+  CATKIN_DEPENDS actionlib_msgs message_runtime geometry_msgs std_msgs
 #  DEPENDS system_lib
 )
 
@@ -207,6 +209,7 @@ install(DIRECTORY launch
 install(DIRECTORY maps
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
+
 #############
 ## Testing ##
 #############

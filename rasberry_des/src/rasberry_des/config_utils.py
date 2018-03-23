@@ -61,6 +61,8 @@ def check_des_config():
         missing_params.append(ns + "rasberry_des_config/robot_transportation_rate")
     if not rospy.has_param(ns + "rasberry_des_config/robot_max_n_trays"):
         missing_params.append(ns + "rasberry_des_config/robot_max_n_trays")
+    if not rospy.has_param(ns + "rasberry_des_config/robot_unloading_time"):
+        missing_params.append(ns + "rasberry_des_config/robot_unloading_time")
 
     return missing_params
 
@@ -178,6 +180,9 @@ def get_des_config_parameters(map_from_db=False):
     _robot_max_n_trays = rospy.get_param(ns + "rasberry_des_config/robot_max_n_trays")
     robot_max_n_trays = des_param_list_check(ns + "rasberry_des_config/robot_max_n_trays", _robot_max_n_trays, n_robots, 1)
 
+    _robot_unloading_time = rospy.get_param(ns + "rasberry_des_config/robot_unloading_time")
+    robot_unloading_time = des_param_list_check(ns + "rasberry_des_config/robot_unloading_time", _robot_unloading_time, n_robots, 1)
+
     config_params["des_env"] = des_env
     config_params["n_pickers"] = n_pickers
     config_params["picking_rate"] = picking_rate
@@ -190,5 +195,6 @@ def get_des_config_parameters(map_from_db=False):
     config_params["n_robots"] = n_robots
     config_params["robot_transportation_rate"] = robot_transportation_rate
     config_params["robot_max_n_trays"] = robot_max_n_trays
+    config_params["robot_unloading_time"] = robot_unloading_time
 
     return config_params

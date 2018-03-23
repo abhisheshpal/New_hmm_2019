@@ -1,0 +1,9 @@
+string picker_node
+string picker_id
+string local_storage_node
+int32 n_trays
+---
+bool success
+---
+float64 eta_picker_node
+float64 eta_local_storage_node

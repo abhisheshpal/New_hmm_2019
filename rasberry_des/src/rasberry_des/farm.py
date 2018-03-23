@@ -52,6 +52,7 @@ class Farm(object):
         self.picker_allocations = {}        # {picker_id:[row_ids]}
         self.curr_picker_allocations = {}   # {picker_id:row_id} row=None if free
 
+        # publishers / subscribers
         self.picker_pose_subs = {}
         self.picker_poses = {picker_id:geometry_msgs.msg.Pose() for picker_id in self.picker_ids}
         self.picker_status_subs = {}
@@ -64,6 +65,14 @@ class Farm(object):
         self.robot_statuses = {robot_id:rasberry_des.msg.Robot_Status() for robot_id in self.robot_ids}
         self.init_robot_subs()
 
+        # services / clients
+        self.tray_full_service = rospy.Service('tray_full', rasberry_des.srv.Trays_Full, self.update_tray_full)
+        self.picker_unload_service = rospy.Service('tray_unload', rasberry_des.srv.Trays_Full, self.update_tray_unload)
+
+        self.pickers_with_tray_full = []
+        self.pickers_full_trays = {}
+        self.tot_trays_unloaded = 0.0
+
         print des_env
         if des_env == "simpy":
             self.process_timeout = 1.0
@@ -72,6 +81,17 @@ class Farm(object):
 
         # topological map based graph ()
         self.graph = topo.TopologicalForkGraph(self.n_topo_nav_rows, self.row_ids, _yield_per_node, local_storages)
+
+    def update_tray_full(self, srv):
+        self.pickers_with_tray_full.append(srv.picker_id)
+        self.pickers_full_trays[srv.picker_id] = srv.n_trays
+        return rasberry_des.srv.Trays_FullResponse()
+
+    def update_tray_unload(self, srv):
+        self.tot_trays_unloaded += srv.n_trays
+        self.pickers_with_tray_full.remove(srv.picker_id)
+        self.pickers_full_trays[srv.picker_id] = 0
+        return rasberry_des.srv.Trays_FullResponse()
 
     def init_picker_subs(self, ):
         """initialise picker related subscribers"""

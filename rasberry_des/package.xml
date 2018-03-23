@@ -50,6 +50,8 @@
   <!--   <doc_depend>doxygen</doc_depend> -->
 
   <depend>rospy</depend>
+  <depend>actionlib</depend>
+  <depend>actionlib_msgs</depend>
   <depend>geometry_msgs</depend>
   <depend>std_msgs</depend>
   <depend>strands_navigation_msgs</depend>

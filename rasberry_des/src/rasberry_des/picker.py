@@ -11,12 +11,14 @@ import rospy
 import tf
 import geometry_msgs.msg
 import rasberry_des.msg
+import rasberry_des.srv
 
 
 class Picker(object):
     """Picker class definition"""
-    def __init__(self, picker_id, env, farm, des_env, tray_capacity, max_n_trays,
-                 picking_rate, transportation_rate, unloading_time, sim_rt_factor=1.0):
+    def __init__(self, picker_id, tray_capacity, max_n_trays,
+                 picking_rate, transportation_rate, unloading_time,
+                 env, farm, des_env, sim_rt_factor=1.0):
         """Create a Picker object
 
         Keyword arguments:
@@ -67,10 +69,11 @@ class Picker(object):
             self.process_timeout = 0.001
             self.loop_timeout = 1.0
         elif des_env == "ros":
-            self.pub_delay = 0.1
+            self.pub_delay = max(0.1, 0.1 / sim_rt_factor)
             self.process_timeout = 0.001
             self.loop_timeout = 0.05
 
+        # publishers / subscribers
         self.pose_pub = rospy.Publisher('/%s/pose' %(self.picker_id),
                                         geometry_msgs.msg.Pose,
                                         queue_size=10)
@@ -90,6 +93,13 @@ class Picker(object):
         self.status.n_rows = 0
         self.status.curr_row = "None"
         self.status.mode = self.mode
+
+        # services / clients
+        rospy.wait_for_service("tray_full")
+        rospy.wait_for_service("tray_unload")
+
+        self.tray_full_client = rospy.ServiceProxy("tray_full", rasberry_des.srv.Trays_Full)
+        self.tray_unload_client = rospy.ServiceProxy("tray_unload", rasberry_des.srv.Trays_Full)
 
         self.action = self.env.process(self.picking_process())
 
@@ -136,6 +146,7 @@ class Picker(object):
 
                     # if max_n_trays is reached
                     if self.n_trays == self.max_n_trays:
+                        self.tray_full_client(self.picker_id, self.n_trays)
                         # if full rows, and at first or last row, and at the end node,
                         #   send row finished
                         #   go to local storage and no return
@@ -190,6 +201,7 @@ class Picker(object):
                         self.n_trays += 1
 
                         if self.n_trays == self.max_n_trays:
+                            self.tray_full_client(self.picker_id, self.n_trays)
                             if self.curr_row is None:
                                 # finished picking along curr_row
                                 # transport to local storage and don't return
@@ -301,6 +313,8 @@ class Picker(object):
         if item == "tray":
             self.tot_trays += self.max_n_trays
             self.n_trays -= self.max_n_trays
+            self.tray_unload_client(self.picker_id, self.n_trays)
+
         elif item == "all":
             self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
             self.n_trays = 0
@@ -346,6 +360,7 @@ class Picker(object):
 
         Keyword arguments:
         goal_node -- node to reach from current node
+        nav_speed -- navigation speed (picking / transportation rate)
         """
         route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
                                                                                     goal_node)

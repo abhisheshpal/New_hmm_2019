@@ -32,6 +32,7 @@ class Visualise_Agents(object):
         self.ax = self.fig.add_subplot(111)
         self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'normal', 'size': 8,}
 
+        # publishers / subscribers
         # dynamic object related
         self.picker_pose_subs = {}
         self.init_picker_pose_subs()
