@@ -6,7 +6,7 @@
 # ----------------------------------
 
 import simpy
-import topo
+import rasberry_des.topo
 import rospy
 import geometry_msgs.msg
 import rasberry_des.msg
@@ -14,7 +14,7 @@ import rasberry_des.msg
 
 class Farm(object):
     """Farm class definition"""
-    def __init__(self, name, env, des_env, n_farm_rows, half_rows, _yield_per_node, local_storages, picker_ids, robot_ids):
+    def __init__(self, name, env, des_env, n_topo_nav_rows, topo_graph, picker_ids, robot_ids):
         """Create a Farm object
 
         Keyword arguments:
@@ -28,26 +28,25 @@ class Farm(object):
         # could be useful in future to take breaks or late arrivals
         self.pickers_reported = []
 
-        self.n_farm_rows = n_farm_rows
-        self.half_rows = half_rows
-        self.n_topo_nav_rows = n_farm_rows - 1 if half_rows else n_farm_rows + 1
+        self.n_topo_nav_rows = n_topo_nav_rows
         self.picker_ids = picker_ids
         self.n_pickers = len(self.picker_ids)
         self.robot_ids = robot_ids
         self.n_robots = len(self.robot_ids)
 
-        self.row_ids = ["row-%02d" %(i) for i in range(self.n_topo_nav_rows)]              # can be a row name / id
+        # topological map based graph ()
+        self.graph = topo_graph
 
         # related to picker finishing a row
         # finished_rows - A dict of simpy.Events. picker triggers
-        self.finished_rows = {row_id:simpy.Event(self.env) for row_id in self.row_ids}
+        self.finished_rows = {row_id:simpy.Event(self.env) for row_id in self.graph.row_ids}
         self.n_finished_rows = 0
-        self.row_finish_time = {row_id:None for row_id in self.row_ids} # {row_id: finish time}
+        self.row_finish_time = {row_id:None for row_id in self.graph.row_ids} # {row_id: finish time}
 
         # related to allocation
-        self.unallocated_rows = [] + self.row_ids                       # a list of unallocated rows
-        self.allocations = {row_id:None for row_id in self.row_ids}     # {row_ids: picker_id}
-        self.allocation_time = {row_id:None for row_id in self.row_ids} # {row_id: allocation time}
+        self.unallocated_rows = [] + self.graph.row_ids                       # a list of unallocated rows
+        self.allocations = {row_id:None for row_id in self.graph.row_ids}     # {row_ids: picker_id}
+        self.allocation_time = {row_id:None for row_id in self.graph.row_ids} # {row_id: allocation time}
 
         self.picker_allocations = {}        # {picker_id:[row_ids]}
         self.curr_picker_allocations = {}   # {picker_id:row_id} row=None if free
@@ -78,9 +77,6 @@ class Farm(object):
             self.process_timeout = 1.0
         elif des_env == "ros":
             self.process_timeout = 0.1
-
-        # topological map based graph ()
-        self.graph = topo.TopologicalForkGraph(self.n_topo_nav_rows, self.row_ids, _yield_per_node, local_storages)
 
     def update_tray_full(self, srv):
         self.pickers_with_tray_full.append(srv.picker_id)

@@ -18,7 +18,7 @@ class Picker(object):
     """Picker class definition"""
     def __init__(self, picker_id, tray_capacity, max_n_trays,
                  picking_rate, transportation_rate, unloading_time,
-                 env, farm, des_env, sim_rt_factor=1.0):
+                 env, farm, topo_graph, des_env, sim_rt_factor=1.0):
         """Create a Picker object
 
         Keyword arguments:
@@ -42,6 +42,7 @@ class Picker(object):
         self.transportation_rate = transportation_rate * sim_rt_factor
         self.max_n_trays = max_n_trays
         self.max_wait_for_allocation = 5    # max time to wait before unloading everything
+        self.graph = topo_graph
 
         self.unloading_time = unloading_time / sim_rt_factor    # time spent at localStorage
         self.assigned_row = None            # only for picking mode
@@ -130,7 +131,7 @@ class Picker(object):
                     yield self.env.process(self.go_to_node(next_node, self.picking_rate))
 
                     # update the picking progress
-                    self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
+                    self.picking_progress += self.graph.yield_at_node[self.curr_node]
 
                     # reverse at the end
                     if self.curr_node == self.row_path[-1]:
@@ -150,9 +151,9 @@ class Picker(object):
                         # if full rows, and at first or last row, and at the end node,
                         #   send row finished
                         #   go to local storage and no return
-                        if ((not self.farm.half_rows) and
-                                ((self.curr_row == self.farm.row_ids[0]) or
-                                 (self.curr_row == self.farm.row_ids[-1])) and
+                        if ((not self.graph.half_rows) and
+                                ((self.curr_row == self.graph.row_ids[0]) or
+                                 (self.curr_row == self.graph.row_ids[-1])) and
                                 (self.curr_node == self.row_path[-1])):
                             # row is finished
                             self.finished_row_routine()
@@ -175,9 +176,9 @@ class Picker(object):
                     curr_node_index = self.row_path.index(self.curr_node) - len(self.row_path)
                     next_node = self.row_path[curr_node_index - 1]
 
-                    if ((not self.farm.half_rows) and
-                            ((self.curr_row == self.farm.row_ids[0]) or
-                             (self.curr_row == self.farm.row_ids[-1])) and
+                    if ((not self.graph.half_rows) and
+                            ((self.curr_row == self.graph.row_ids[0]) or
+                             (self.curr_row == self.graph.row_ids[-1])) and
                             (self.curr_node == self.row_path[-1])):
                         # there are full rows at the start and end
                         # row is finished
@@ -190,7 +191,7 @@ class Picker(object):
                         # pick through to the next node
                         yield self.env.process(self.go_to_node(next_node, self.picking_rate))
                         # update the picking progress
-                        self.picking_progress += self.farm.graph.yield_at_node[self.curr_node]
+                        self.picking_progress += self.graph.yield_at_node[self.curr_node]
                         if self.curr_node == self.row_path[0]:
                             # row is finished
                             self.finished_row_routine()
@@ -246,12 +247,12 @@ class Picker(object):
 
                 elif row_id is not None: # if there is a row assigned to the picker
                     self.curr_row = row_id
-                    self.curr_row_info = self.farm.graph.row_info[self.curr_row]
+                    self.curr_row_info = self.graph.row_info[self.curr_row]
                     # TODO: Now the local_storage_node of the first assigned row is assumed to be
                     # the starting position of the picker. Is an origin_node required?
                     if self.curr_node is None:
-                        self.curr_node = self.farm.graph.local_storage_nodes[self.curr_row]
-                        self.local_storage_node = self.farm.graph.local_storage_nodes[self.curr_row]
+                        self.curr_node = self.graph.local_storage_nodes[self.curr_row]
+                        self.local_storage_node = self.graph.local_storage_nodes[self.curr_row]
 
                     rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
                                                                                self.curr_row,
@@ -262,7 +263,7 @@ class Picker(object):
 
                     # picker moved to the start_node of the row (yield above)
                     # get the path from start to end of the row
-                    self.row_path, _, _ = self.farm.graph.get_path_details(self.curr_node, self.curr_row_info[2])
+                    self.row_path, _, _ = self.graph.get_path_details(self.curr_node, self.curr_row_info[2])
 
                     rospy.loginfo("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
                     # change current mode to picking
@@ -272,7 +273,7 @@ class Picker(object):
 
             # publish pose
             if (self.curr_node is not None) and (self.env.now - self.prev_pub_time >= self.pub_delay):
-                curr_node_obj = self.farm.graph.get_node(self.curr_node)
+                curr_node_obj = self.graph.get_node(self.curr_node)
                 position[0] = curr_node_obj.pose.position.x
                 position[1] = curr_node_obj.pose.position.y
                 self.publish_pose(position, orientation)
@@ -288,7 +289,7 @@ class Picker(object):
         """
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
-        curr_node_obj = self.farm.graph.get_node(self.curr_node)
+        curr_node_obj = self.graph.get_node(self.curr_node)
         position[0] = curr_node_obj.pose.position.x
         position[1] = curr_node_obj.pose.position.y
 
@@ -297,7 +298,7 @@ class Picker(object):
         delta_time = self.env.now - start_time
 
         rospy.loginfo("%s requesting for accessing the local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
-        with self.farm.graph.local_storages[self.local_storage_node].request() as req:
+        with self.graph.local_storages[self.local_storage_node].request() as req:
             # wait for permission to acces local storage, no pose publishing in between
             yield req
             rospy.loginfo("%s was granted access to local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
@@ -362,14 +363,14 @@ class Picker(object):
         goal_node -- node to reach from current node
         nav_speed -- navigation speed (picking / transportation rate)
         """
-        route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
+        route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
         for i in range(len(route_nodes) - 1):
             # move through each edge
-            curr_node_obj = self.farm.graph.get_node(route_nodes[i])
-            next_node_obj = self.farm.graph.get_node(route_nodes[i + 1])
+            curr_node_obj = self.graph.get_node(route_nodes[i])
+            next_node_obj = self.graph.get_node(route_nodes[i + 1])
             theta = math.atan2((next_node_obj.pose.position.y - curr_node_obj.pose.position.y),
                                (next_node_obj.pose.position.x - curr_node_obj.pose.position.x))
 

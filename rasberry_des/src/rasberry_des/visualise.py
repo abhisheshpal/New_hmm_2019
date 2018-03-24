@@ -15,7 +15,7 @@ import rasberry_des.msg
 
 class Visualise_Agents(object):
     """A class to animate agent locations in matplotlib"""
-    def __init__(self, farm, picker_ids, detailed=False):
+    def __init__(self, farm, picker_ids, robot_ids, detailed=False):
         """initialise the Visualise_Agents class
 
         Keyword arguments:
@@ -25,6 +25,8 @@ class Visualise_Agents(object):
         """
         self.n_pickers = len(picker_ids)
         self.picker_ids = picker_ids
+        self.robot_ids = robot_ids
+        self.n_robots = len(robot_ids)
         self.farm = farm
         self.detailed = detailed
 
@@ -33,21 +35,35 @@ class Visualise_Agents(object):
         self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'normal', 'size': 8,}
 
         # publishers / subscribers
-        # dynamic object related
+        # picker related
         self.picker_pose_subs = {}
         self.init_picker_pose_subs()
         self.picker_x = {picker_id:0. for picker_id in self.picker_ids}
         self.picker_y = {picker_id:0. for picker_id in self.picker_ids}
         self.picker_position_lines = {}
         self.picker_position_texts = {}
+        # robot related
+        self.robot_pose_subs = {}
+        self.init_robot_pose_subs()
+        self.robot_x = {robot_id:0. for robot_id in self.robot_ids}
+        self.robot_y = {robot_id:0. for robot_id in self.robot_ids}
+        self.robot_position_lines = {}
+        self.robot_position_texts = {}
 
         if self.detailed:
             self.picker_status_subs = {}
-            self.init_picker_status_subs()
             self.picker_picking_progress = {picker_id:0. for picker_id in self.picker_ids}
-            self.picker_n_trays = {picker_id:0. for picker_id in self.picker_ids}
-            self.picker_tot_trays = {picker_id:0. for picker_id in self.picker_ids}
-            self.picker_n_rows = {picker_id:0. for picker_id in self.picker_ids}
+            self.picker_n_trays = {picker_id:0 for picker_id in self.picker_ids}
+            self.picker_tot_trays = {picker_id:0 for picker_id in self.picker_ids}
+            self.picker_n_rows = {picker_id:0 for picker_id in self.picker_ids}
+            self.picker_mode = {picker_id:0 for picker_id in self.picker_ids}
+
+            self.robot_status_subs = {}
+            self.init_robot_status_subs()
+            self.robot_n_empty_trays = {robot_id:0 for robot_id in self.robot_ids}
+            self.robot_n_full_trays = {robot_id:0 for robot_id in self.robot_ids}
+            self.robot_tot_trays = {robot_id:0. for robot_id in self.robot_ids}
+            self.robot_mode= {robot_id:0 for robot_id in self.robot_ids}
 
         self.init_plot()
 #        self.ani = matplotlib.animation.FuncAnimation(self.fig, func=self.plot_update, blit=False, interval=100)
@@ -151,16 +167,38 @@ class Visualise_Agents(object):
             if self.detailed:
                 self.picker_position_texts[picker_id] = self.ax.text(self.picker_x[picker_id] -0.75,
                                                                      self.picker_y[picker_id] + 0.3,
-                                                                     "P_%s\n%0.2f\n%d\n%d\n%d" %(picker_id[-2:],
+                                                                     "P_%s\n%0.2f\n%d\n%d\n%d\n%d" %(picker_id[-2:],
                                                                                                  self.picker_picking_progress[picker_id],
                                                                                                  self.picker_n_trays[picker_id],
                                                                                                  self.picker_tot_trays[picker_id],
-                                                                                                 self.picker_n_rows[picker_id],),
+                                                                                                 self.picker_n_rows[picker_id],
+                                                                                                 self.picker_mode[picker_id]),
                                                                      fontdict=self.font)
             else:
                 self.picker_position_texts[picker_id] = self.ax.text(self.picker_x[picker_id] -0.75,
                                                                      self.picker_y[picker_id] + 0.3,
                                                                      "P_%s" %(picker_id[-2:]), fontdict=self.font)
+        # robots
+        for robot_id in self.robot_ids:
+            self.robot_position_lines[robot_id] = self.ax.plot(self.robot_x[robot_id],
+                                                                 self.robot_y[robot_id],
+                                                                 color="blue", marker="*",
+                                                                 markersize=20,
+                                                                 markeredgecolor="r",
+                                                                 linestyle="none")[0]
+            if self.detailed:
+                self.robot_position_texts[robot_id] = self.ax.text(self.robot_x[robot_id] -0.75,
+                                                                     self.robot_y[robot_id] + 0.3,
+                                                                     "P_%s\n%0.2f\n%d\n%d\n%d\n%d" %(robot_id[-2:],
+                                                                                                 self.robot_n_empty_trays[robot_id],
+                                                                                                 self.robot_n_full_trays[robot_id],
+                                                                                                 self.robot_tot_trays[robot_id],
+                                                                                                 self.robot_mode[robot_id]),
+                                                                     fontdict=self.font)
+            else:
+                self.robot_position_texts[robot_id] = self.ax.text(self.robot_x[robot_id] -0.75,
+                                                                     self.robot_y[robot_id] + 0.3,
+                                                                     "R_%s" %(robot_id[-2:]), fontdict=self.font)
 
     def init_picker_pose_subs(self, ):
         ns = rospy.get_namespace()
@@ -187,7 +225,33 @@ class Visualise_Agents(object):
         self.picker_n_trays[picker_id] = msg.n_trays
         self.picker_tot_trays[picker_id] = msg.tot_trays
         self.picker_n_rows[picker_id] = msg.n_rows
-        pass
+        self.picker_modes[picker_id] = msg.mode
+
+    def init_robot_pose_subs(self, ):
+        ns = rospy.get_namespace()
+        for robot_id in self.robot_ids:
+            self.robot_pose_subs[robot_id] = rospy.Subscriber(ns + "%s/pose"%(robot_id),
+                                                                geometry_msgs.msg.Pose,
+                                                                self.update_robot_position,
+                                                                callback_args=robot_id)
+
+    def init_robot_status_subs(self, ):
+        ns = rospy.get_namespace()
+        for robot_id in self.robot_ids:
+            self.robot_pose_subs[robot_id] = rospy.Subscriber(ns + "%s/status"%(robot_id),
+                                                                rasberry_des.msg.Robot_Status,
+                                                                self.update_robot_status,
+                                                                callback_args=robot_id)
+
+    def update_robot_position(self, msg, robot_id):
+        self.robot_x[robot_id] = msg.position.x
+        self.robot_y[robot_id] = msg.position.y
+
+    def update_robot_status(self, msg, robot_id):
+        self.robot_n_empty_trays[robot_id] = msg.n_empty_trays
+        self.robot_n_full_trays[robot_id] = msg.n_full_trays
+        self.robot_tot_trays[robot_id] = msg.tot_trays
+        self.robot_mode[robot_id] = msg.mode
 
     def plot_update(self, *args):
         for picker_id in self.picker_ids:
@@ -200,11 +264,29 @@ class Visualise_Agents(object):
                                                                                                             self.picker_picking_progress[picker_id],
                                                                                                             self.picker_n_trays[picker_id],
                                                                                                             self.picker_tot_trays[picker_id],
-                                                                                                            self.picker_n_rows[picker_id],),
+                                                                                                            self.picker_n_rows[picker_id],
+                                                                                                            self.picker_mode[picker_id]),
                                                                                 fontdict=self.font))
             else:
                 self.picker_position_texts[picker_id].set_position((self.picker_x[picker_id] -0.75,
                                                                     self.picker_y[picker_id] + 0.3))
+
+        for robot_id in self.robot_ids:
+            self.robot_position_lines[robot_id].set_data(self.robot_x[robot_id],
+                                                           self.robot_y[robot_id])
+            if self.detailed:
+                self.robot_position_texts[robot_id].set_position(self.ax.text(self.robot_x[robot_id] -0.75,
+                                                                                self.robot_y[robot_id] + 0.3,
+                                                                                "P_%s\n%0.2f\n%d\n%d\n%d" %(robot_id[-2:],
+                                                                                                            self.robot_n_empty_trays[robot_id],
+                                                                                                            self.robot_n_full_trays[robot_id],
+                                                                                                            self.robot_tot_trays[robot_id],
+                                                                                                            self.robot_mode[robot_id],),
+                                                                                fontdict=self.font))
+            else:
+                self.robot_position_texts[robot_id].set_position((self.robot_x[robot_id] -0.75,
+                                                                    self.robot_y[robot_id] + 0.3))
+
         self.fig.canvas.draw()
 
 

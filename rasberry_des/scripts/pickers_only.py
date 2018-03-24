@@ -23,6 +23,7 @@ import rasberry_des.picker
 import rasberry_des.config_utils
 import rasberry_des.visualise
 import rasberry_des.robot
+import rasberry_des.topo
 
 RANDOM_SEED = 1234
 SHOW_VIS = True
@@ -90,8 +91,15 @@ if __name__ == "__main__":
     # 1. only one head lane
     # 2. a picker won't have to wait longer than loadingTime
     local_storages = [simpy.Resource(rasb_env, capacity=n_pickers) for i in range(n_local_storages)]
-    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env, des_env, n_farm_rows, half_rows,
-                                       _yield_per_node, local_storages, picker_ids, robot_ids)
+
+    topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, half_rows,
+                                                        n_topo_nav_rows,
+                                                        _yield_per_node,
+                                                        local_storages)
+
+    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env, des_env,
+                                       n_topo_nav_rows, topo_graph,
+                                       picker_ids, robot_ids)
 
 #    rasb_farm.init_graph_fork(n_farm_rows, half_rows, n_topo_nav_rows,
 #                              head_row_node_dist, head_node_y,
@@ -170,12 +178,6 @@ if __name__ == "__main__":
     else:
         rospy.ROSException("robot_unloading_time must be a list of size %d or 1" %(n_robots))
 
-picker_id, tray_capacity, max_n_trays,
-                 picking_rate, transportation_rate, unloading_time,
-                 env, farm, des_env, sim_rt_factor=1.0
-
-                 robot_id, transportation_rate, max_n_trays, env, farm, des_env, sim_rt_factor=1.0
-
     rasb_pickers = []
     rasb_robots = []
     if des_env == "ros":
@@ -185,14 +187,14 @@ picker_id, tray_capacity, max_n_trays,
                                                            picking_rate[picker_id],
                                                            picker_transportation_rate[picker_id],
                                                            picker_unloading_time[picker_id],
-                                                           rasb_env, rasb_farm, des_env,
+                                                           rasb_env, rasb_farm, topo_graph, des_env,
                                                            SIM_RT_FACTOR))
 
         for robot_id in robot_ids:
             rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
                                                         robot_max_n_trays[robot_id],
-                                                        robot_unloadin_time[robot_id],
-                                                        rasb_env, rasb_farm,
+                                                        robot_unloading_time[robot_id],
+                                                        rasb_env, rasb_farm, topo_graph,
                                                         des_env, SIM_RT_FACTOR))
     elif des_env == "simpy":
         for picker_id in picker_ids:
@@ -201,13 +203,13 @@ picker_id, tray_capacity, max_n_trays,
                                                            picking_rate[picker_id],
                                                            picker_transportation_rate[picker_id],
                                                            picker_unloading_time[picker_id],
-                                                           rasb_env, rasb_farm, des_env))
+                                                           rasb_env, rasb_farm, topo_graph, des_env))
 
         for robot_id in robot_ids:
             rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
                                                         robot_max_n_trays[robot_id],
-                                                        unloading_time[robot_id],
-                                                        rasb_env, rasb_farm, des_env))
+                                                        robot_unloading_time[robot_id],
+                                                        rasb_env, rasb_farm, topo_graph, des_env))
 
     SHOW_VIS = True
     SHOW_INFO = True
@@ -240,27 +242,27 @@ picker_id, tray_capacity, max_n_trays,
         print("n_farm_rows: %d" %(rasb_farm.n_farm_rows))
         print("n_topo_nav_rows: %d" %(rasb_farm.n_topo_nav_rows))
         tot_yield = 0.
-        for row_id in rasb_farm.row_ids:
+        for row_id in topo_graph.row_ids:
             print("  --%s--" %(row_id))
-            row_start_node = rasb_farm.graph.row_info[row_id][1]
-            row_end_node = rasb_farm.graph.row_info[row_id][2]
-            row_start_y = rasb_farm.graph.get_node(row_start_node).pose.position.y
-            row_end_y = rasb_farm.graph.get_node(row_end_node).pose.position.y
+            row_start_node = topo_graph.row_info[row_id][1]
+            row_end_node = topo_graph.row_info[row_id][2]
+            row_start_y = topo_graph.get_node(row_start_node).pose.position.y
+            row_end_y = topo_graph.get_node(row_end_node).pose.position.y
             row_length = row_end_y - row_start_y
-            node_dist = rasb_farm.graph.row_info[row_id][3]
+            node_dist = topo_graph.row_info[row_id][3]
             print("  row_length: %0.3f m" %(row_length))
             print("  node_dist: %0.3f m" %(node_dist))
             row_yield = 0.
             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
             if (not rasb_farm.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(rasb_farm.n_topo_nav_rows)):
                 for i in range(n_row_nodes):
-                    row_yield += rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
+                    row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
             else:
                 for i in range(n_row_nodes):
                     if (i == 0) or (i == n_row_nodes - 1):
-                        row_yield += rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
+                        row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
                     else:
-                        row_yield += 2 * rasb_farm.graph.yield_at_node[rasb_farm.graph.row_nodes[row_id][i]]
+                        row_yield += 2 * topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
             print("  row_yield: %0.3f g" %(row_yield))
             tot_yield += row_yield
         print("tot_yield: %0.3f trays (%0.3f g)" %(tot_yield/tray_capacity, tot_yield))

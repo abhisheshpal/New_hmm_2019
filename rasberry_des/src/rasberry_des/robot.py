@@ -16,10 +16,11 @@ import actionlib
 
 class Robot(object):
     """Robot class definition"""
-    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env, farm, des_env, sim_rt_factor=1.0):
+    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env, farm, topo_graph, des_env, sim_rt_factor=1.0):
         self.robot_id = robot_id
         self.env = env
         self.farm = farm
+        self.graph = topo_graph
         self.transportation_rate = transportation_rate * sim_rt_factor
         self.max_n_trays = max_n_trays
         self.n_empty_trays = self.max_n_trays
@@ -56,7 +57,7 @@ class Robot(object):
 
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
-        self.curr_node = self.farm.graph.local_storage_nodes[self.farm.row_ids[0]]
+        self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
 
         if des_env == "simpy":
             self.pub_delay = 1.0
@@ -72,18 +73,17 @@ class Robot(object):
         self.mode = 1
 
         # feedbacks
-        _, _, distance_to_picker = self.farm.graph.get_path_details(self.curr_node, self.collection_goal.picker_node)
+        _, _, distance_to_picker = self.graph.get_path_details(self.curr_node, self.collection_goal.picker_node)
         self.collection_feedback.eta_picker_node = sum(distance_to_picker) / self.transportation_rate
-        _, _, distance_to_storage = self.farm.graph.get_path_details(self.collection_goal.picker_node, self.collection_goal.local_storage_node)
+        _, _, distance_to_storage = self.graph.get_path_details(self.collection_goal.picker_node, self.collection_goal.local_storage_node)
         self.collection_feedback.eta_local_storage_node = sum(distance_to_storage) / self.transportation_rate
-        self.collection_feedback.eta_local_storage_node += self.collection_goal.n_trays * self.unloading_time
         self.collection_action.publish_feedback(self.collection_feedback)
 
         # go to the picker_node
-        yield self.env.process(self.go_to_node(self.collection_goal.picker_node))
+        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.picker_node, "picker"))
 
         # TODO: This will be replaced with a service call to the picker
-        curr_node_obj = self.farm.graph.get_node(self.curr_node)
+        curr_node_obj = self.graph.get_node(self.curr_node)
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
         position[0] = curr_node_obj.pose.position.x
@@ -103,24 +103,34 @@ class Robot(object):
         self.n_full_trays += self.collection_goal.n_trays
         self.publish_pose(position, orientation)
         # TODO: publish feedback
+        self.collection_action.publish_feedback(self.collection_feedback)
 
         # go to local storage node and send success
+        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.picker_node, "storage"))
 
-    def go_to_node_with_feedback(self, goal_node):
+        # TODO: Wait for unloading time
+        self.tot_trays += self.n_full_trays
+        self.n_empty_trays += self.n_full_trays
+        self.n_full_trays = 0
+
+        # send success
+        self.collection_action.set_succeeded(result=True)
+
+    def go_to_node_with_feedback(self, goal_node, stage):
         """Simpy process to Mimic moving to the goal_node by publishing new position
 
         Keyword arguments:
         goal_node -- node to reach from current node
         """
         #TODO: update to send feedback
-        route_nodes, route_edges, route_distance = self.farm.graph.get_path_details(self.curr_node,
+        route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
         for i in range(len(route_nodes) - 1):
             # move through each edge
-            curr_node_obj = self.farm.graph.get_node(route_nodes[i])
-            next_node_obj = self.farm.graph.get_node(route_nodes[i + 1])
+            curr_node_obj = self.graph.get_node(route_nodes[i])
+            next_node_obj = self.graph.get_node(route_nodes[i + 1])
             theta = math.atan2((next_node_obj.pose.position.y - curr_node_obj.pose.position.y),
                                (next_node_obj.pose.position.x - curr_node_obj.pose.position.x))
 
@@ -129,6 +139,8 @@ class Robot(object):
 
             edge_distance = route_distance[i]
             travel_time = edge_distance / self.transportation_rate
+
+            eta = sum(route_distance[i + 1:]) / self.transportation_rate
 
             self.publish_pose(position, orientation)
             start_time = self.env.now
@@ -146,9 +158,21 @@ class Robot(object):
                 now_time = self.env.now
                 if now_time - self.prev_pub_time >= self.pub_delay:
                     self.publish_pose(position, orientation)
+                    if stage == "picker":
+                        self.collection_feedback.eta_picker_node = eta + delta_time
+                    elif stage == "storage":
+                        self.collection_feedback.eta_storage_node = eta + delta_time
+                    self.collection_action.publish_feedback(self.collection_feedback)
                 delta_time = now_time - start_time
                 yield self.env.timeout(self.loop_timeout)
             self.curr_node = route_nodes[i + 1]
+
+        self.publish_pose(position, orientation)
+        if stage == "picker":
+            self.collection_feedback.eta_picker_node = 0.
+        elif stage == "storage":
+            self.collection_feedback.eta_storage_node = 0.
+        self.collection_action.publish_feedback(self.collection_feedback)
 
         yield self.env.timeout(self.process_timeout)
 
@@ -168,6 +192,7 @@ class Robot(object):
         # TODO: update variables in status and publish
         self.status.n_empty_trays = self.n_empty_trays
         self.status.n_full_trays = self.n_full_trays
+        self.status.tot_trays = self.tot_trays
         self.status.mode = self.mode
         self.status_pub.publish(self.status)
 
