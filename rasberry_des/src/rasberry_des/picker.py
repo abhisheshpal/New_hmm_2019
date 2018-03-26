@@ -102,9 +102,171 @@ class Picker(object):
         self.tray_full_client = rospy.ServiceProxy("tray_full", rasberry_des.srv.Trays_Full)
         self.tray_unload_client = rospy.ServiceProxy("tray_unload", rasberry_des.srv.Trays_Full)
 
-        self.action = self.env.process(self.picking_process())
+        if self.farm.n_robots == 0:
+            self.action = self.env.process(self.pickers_only())
+        else:
+            self.action = self.env.process(self.pickers_with_robot_carriers())
 
-    def picking_process(self, ):
+    def pickers_with_robot_carriers(self, ):
+        """ Picker's picking process
+        """
+        # 1. picker should report for duty first
+        self.farm.picker_report(self.picker_id)
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+
+        while True:
+            # 2. If the picker is assigned a row,
+            #   a. continue picking
+            #   b. yield go_to_node(next_node) process
+            #   c. update and check tray_cap,
+            #       i. if tray_cap is reached, increment n_trays
+            #       ii. if n_trays reach max_n_trays, start the transport_process
+            #       ii. if not move to the next row_node in the next iter
+            if self.mode == 1:
+                # move along each node in the assigned row
+                # the picker is at the curr_node
+                # move to the node next to curr_node in the row_path
+                if self.picking_dir is "forward":
+                    curr_node_index = self.row_path.index(self.curr_node)
+                    next_node = self.row_path[curr_node_index + 1]
+                    # pick through to the next node
+                    yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+
+                    # update the picking progress
+                    self.picking_progress += self.graph.yield_at_node[self.curr_node]
+
+                    # reverse at the end
+                    if self.curr_node == self.row_path[-1]:
+                        self.picking_dir = "reverse"
+                        rospy.loginfo("%s changing to reverse along %s at %0.3f" %(self.picker_id,
+                                                                                   self.curr_row,
+                                                                                   self.env.now))
+
+                    # if the tray capacity is reached, increment n_trays
+                    if self.picking_progress >= self.tray_capacity:
+                        self.n_trays += 1
+                        self.picking_progress -= self.tray_capacity
+
+                    # if max_n_trays is reached
+                    if self.n_trays == self.max_n_trays:
+                        self.tray_full_client(self.picker_id, self.n_trays)
+                        # if full rows, and at first or last row, and at the end node,
+                        #   send row finished
+                        #   robot will come and collect full trays and give empty trays
+                        #   TODO: wait until robot arrives, load robot and contiune picking
+
+                        #   go to local storage and no return
+                        if ((not self.graph.half_rows) and
+                                ((self.curr_row == self.graph.row_ids[0]) or
+                                 (self.curr_row == self.graph.row_ids[-1])) and
+                                (self.curr_node == self.row_path[-1])):
+                            # row is finished
+                            self.finished_row_routine()
+                            # no current allocation - change mode back to zero
+                            self.mode = 0
+
+                elif self.picking_dir is "reverse":
+                    # work with negative indices
+                    curr_node_index = self.row_path.index(self.curr_node) - len(self.row_path)
+                    next_node = self.row_path[curr_node_index - 1]
+
+                    if ((not self.graph.half_rows) and
+                            ((self.curr_row == self.graph.row_ids[0]) or
+                             (self.curr_row == self.graph.row_ids[-1])) and
+                            (self.curr_node == self.row_path[-1])):
+                        # there are full rows at the start and end
+                        # row is finished
+                        # navigate to the start node of the row and send row finish (no picking)
+                        next_node = self.row_path[0] # finished_row_routine will reset row_path
+                        self.finished_row_routine()
+                        yield self.env.process(self.go_to_node(next_node, self.transportation_rate))
+                    else:
+                        # half rows at start and end (berries on both sides)
+                        # pick through to the next node
+                        yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+                        # update the picking progress
+                        self.picking_progress += self.graph.yield_at_node[self.curr_node]
+                        if self.curr_node == self.row_path[0]:
+                            # row is finished
+                            self.finished_row_routine()
+
+                    # check picking progress
+                    if self.picking_progress >= self.tray_capacity:
+                        self.picking_progress -= self.tray_capacity
+                        self.n_trays += 1
+
+                        if self.n_trays == self.max_n_trays:
+                            self.tray_full_client(self.picker_id, self.n_trays)
+                            # TODO: wait for robot to come and collect
+                            if self.curr_row is None:
+                                # finished picking along curr_row
+                                # reset mode to no allocations
+                                self.mode = 0
+
+            # 3. If in mode free, check if there is any new assignments
+            #       If there is no new assignment and no rows left to be assigned, finish picking
+            #       If there is a new assignment
+            #           a. Move to the start node of the path
+            #           b. Get the path from the current loc to start_node of new row
+            #           c. Move at transportation_rate to start_node
+            #           d. Continue/Start picking along the new row by changing mode to picking
+            elif self.mode == 0:
+                row_id = self.farm.curr_picker_allocations[self.picker_id]
+                row_id = None if row_id == self.prev_row else row_id
+
+                if (row_id is None) and (len(self.farm.unallocated_rows) == 0):
+                    # The picker has an assigned row and all rows are allocated
+                    # unload any berries left in hand and leave the picking process
+                    if self.curr_node == self.local_storage_node:
+                        # at local storage after unloading max_n_trays
+                        if (self.n_trays > 0) or (self.picking_progress > 0.):
+                            yield self.env.process(self.unload(item="all"))
+                    elif self.curr_node is not None:
+                        # the picker is at some node already
+                        if (self.n_trays > 0) or (self.picking_progress > 0.):
+                            yield self.env.process(self.transport_to_local_storage(item="all"))
+                    self.mode = 3
+                    # finish the picking process
+                    rospy.loginfo("%s finishing picking process. all rows are assigned" %(self.picker_id))
+                    break
+
+                elif row_id is not None: # if there is a row assigned to the picker
+                    self.curr_row = row_id
+                    self.curr_row_info = self.graph.row_info[self.curr_row]
+                    # TODO: Now the local_storage_node of the first assigned row is assumed to be
+                    # the starting position of the picker. Is an origin_node required?
+                    if self.curr_node is None:
+                        self.curr_node = self.graph.local_storage_nodes[self.curr_row]
+                        self.local_storage_node = self.graph.local_storage_nodes[self.curr_row]
+
+                    rospy.loginfo("%s is moving to the start of %s at %0.3f" %(self.picker_id,
+                                                                               self.curr_row,
+                                                                               self.env.now))
+                    self.mode = 2
+                    # go to the start_node of the row
+                    yield self.env.process(self.go_to_node(self.curr_row_info[1], self.transportation_rate))
+
+                    # picker moved to the start_node of the row (yield above)
+                    # get the path from start to end of the row
+                    self.row_path, _, _ = self.graph.get_path_details(self.curr_node, self.curr_row_info[2])
+
+                    rospy.loginfo("%s started forward picking on %s at %0.3f" %(self.picker_id, row_id, self.env.now))
+                    # change current mode to picking
+                    self.mode = 1 # picking mode
+
+                    self.picking_dir = "forward"
+
+            # publish pose
+            if (self.curr_node is not None) and (self.env.now - self.prev_pub_time >= self.pub_delay):
+                curr_node_obj = self.graph.get_node(self.curr_node)
+                position[0] = curr_node_obj.pose.position.x
+                position[1] = curr_node_obj.pose.position.y
+                self.publish_pose(position, orientation)
+
+            yield self.env.timeout(self.process_timeout)
+
+    def pickers_only(self, ):
         """ Picker's picking process
         """
         # 1. picker should report for duty first
