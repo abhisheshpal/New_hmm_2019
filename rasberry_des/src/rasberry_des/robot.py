@@ -5,7 +5,6 @@
 # @date:
 # ----------------------------------
 
-
 import math
 import rospy
 import geometry_msgs.msg
@@ -44,6 +43,11 @@ class Robot(object):
 
         self.prev_pub_time = 0.0
 
+        # service / client
+        self.trays_loaded_service = rospy.Service("%s/tray_loaded", rasberry_des.srv.Trays_Full, self.update_trays_loaded)
+        self.load_info = []
+        self.trays_loaded_reponse = rasberry_des.srv.Trays_FullResponse()
+
         # action server / client
         self.collection_action = actionlib.SimpleActionServer("%s/collection" %(self.robot_id),
                                                               rasberry_des.msg.Robot_CollectionAction,
@@ -54,6 +58,7 @@ class Robot(object):
         self.collection_action.start()
 
         self.mode = 0   # 0 - free, 1 - busy, 2 - charging
+        self.loaded = False
 
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
@@ -68,7 +73,17 @@ class Robot(object):
             self.process_timeout = 0.001
             self.loop_timeout = 0.05
 
+    def update_trays_loaded(self, srv):
+        self.load_info.append((srv.picker_id, srv.n_trays))
+        self.n_empty_trays -= srv.n_trays
+        self.n_full_trays += srv.n_trays
+        self.loaded = True
+        return self.tray_loaded_resposnse()
+
     def collect_n_unload(self, goal):
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+
         self.collection_goal = goal
         self.mode = 1
 
@@ -82,39 +97,60 @@ class Robot(object):
         # go to the picker_node
         yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.picker_node, "picker"))
 
-        # TODO: This will be replaced with a service call to the picker
-        curr_node_obj = self.graph.get_node(self.curr_node)
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
-        position[0] = curr_node_obj.pose.position.x
-        position[1] = curr_node_obj.pose.position.y
-
-        start_time = self.env.now
-        wait_time = 10
-        delta_time = self.env.now - start_time
-        while delta_time <= wait_time:
+        # picker knows which robot is coming and when the robot's pose is his node, he will
+        # request the trays_unload service from farm, which in turn will call the service tray_loaded
+        # this will set self.loaded
+        while not self.loaded:
+            curr_node_obj = self.graph.get_node(self.curr_node)
+            position[0] = curr_node_obj.pose.position.x
+            position[1] = curr_node_obj.pose.position.y
             if self.prev_pub_time - self.env.now >= self.pub_delay:
                 self.publish_pose(position, orientation)
-                # TODO: publish feedback
-            yield self.env.timeout(self.loop_timeout)
+                self.collection_action.publish_feedback(self.collection_feedback)
+            pass
 
-        # after the loading time, the tray counts are modified
-        self.n_empty_trays -= self.collection_goal.n_trays
-        self.n_full_trays += self.collection_goal.n_trays
+        # publish pose and feedback
         self.publish_pose(position, orientation)
-        # TODO: publish feedback
         self.collection_action.publish_feedback(self.collection_feedback)
 
-        # go to local storage node and send success
-        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.picker_node, "storage"))
+        # go to local storage node
+        # wait for unloading time
+        # send success
+        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.storage_node, "storage"))
+        wait_time = self.unloading_time * self.n_full_trays
+        yield self.env.process(self.wait_with_feedback(wait_time))
 
-        # TODO: Wait for unloading time
+        # update tray counts
         self.tot_trays += self.n_full_trays
         self.n_empty_trays += self.n_full_trays
         self.n_full_trays = 0
 
+        self.loaded = False
+        self.mode = 0
+
         # send success
         self.collection_action.set_succeeded(result=True)
+
+    def wait_with_feedback(self, wait_time):
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+        curr_node_obj = self.graph.get_node(self.curr_node)
+        position[0] = curr_node_obj.pose.position.x
+        position[1] = curr_node_obj.pose.position.y
+
+        self.collection_feedback.eta_picker_node = 0.
+        self.collection_feedback.eta_storage_node = 0.
+
+        start_time = self.env.now
+        delta_time = self.env.now - start_time
+
+        while delta_time <= wait_time:
+            now_time = self.env.now
+            if now_time - self.prev_pub_time >= self.pub_delay:
+                self.publish_pose(position, orientation)
+                self.collection_action.publish_feedback(self.collection_feedback)
+            delta_time = now_time - start_time
+            yield self.env.timeout(self.loop_timeout)
 
     def go_to_node_with_feedback(self, goal_node, stage):
         """Simpy process to Mimic moving to the goal_node by publishing new position
@@ -194,6 +230,7 @@ class Robot(object):
         self.status.n_full_trays = self.n_full_trays
         self.status.tot_trays = self.tot_trays
         self.status.mode = self.mode
+        self.status.loaded = self.loaded
         self.status_pub.publish(self.status)
 
         self.prev_pub_time = self.env.now

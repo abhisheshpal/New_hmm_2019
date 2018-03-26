@@ -18,7 +18,7 @@ class Picker(object):
     """Picker class definition"""
     def __init__(self, picker_id, tray_capacity, max_n_trays,
                  picking_rate, transportation_rate, unloading_time,
-                 env, farm, topo_graph, des_env, sim_rt_factor=1.0):
+                 env, farm, topo_graph, des_env, robot_ids, sim_rt_factor=1.0):
         """Create a Picker object
 
         Keyword arguments:
@@ -34,6 +34,7 @@ class Picker(object):
         self.picker_id = picker_id
         self.env = env
         self.farm = farm
+        self.robot_ids = robot_ids
         self.n_rows = 0
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
@@ -41,11 +42,9 @@ class Picker(object):
         self.picking_rate = picking_rate * sim_rt_factor
         self.transportation_rate = transportation_rate * sim_rt_factor
         self.max_n_trays = max_n_trays
-        self.max_wait_for_allocation = 5    # max time to wait before unloading everything
         self.graph = topo_graph
 
         self.unloading_time = unloading_time / sim_rt_factor    # time spent at localStorage
-        self.assigned_row = None            # only for picking mode
 
         self.mode = 0       # 0:free, 1:picking, 2:transporting, 3:finished_job
         self.curr_node = None
@@ -75,10 +74,11 @@ class Picker(object):
             self.loop_timeout = 0.05
 
         # publishers / subscribers
-        self.pose_pub = rospy.Publisher('/%s/pose' %(self.picker_id),
+        ns = rospy.get_namespace()
+        self.pose_pub = rospy.Publisher(ns + "%s/pose" %(self.picker_id),
                                         geometry_msgs.msg.Pose,
                                         queue_size=10)
-        self.status_pub = rospy.Publisher('/%s/status' %(self.picker_id),
+        self.status_pub = rospy.Publisher(ns + "%s/status" %(self.picker_id),
                                           rasberry_des.msg.Picker_Status,
                                           queue_size=10)
 
@@ -95,20 +95,42 @@ class Picker(object):
         self.status.curr_row = "None"
         self.status.mode = self.mode
 
-        # services / clients
-        rospy.wait_for_service("tray_full")
-        rospy.wait_for_service("tray_unload")
+        self.robot_pose_subscribers = {}
+        self.robot_poses = {}
+        for robot_id in self.robot_ids:
+            self.robot_poses[robot_id] = geometry_msgs.msg.Pose()
+            self.robot_pose_subscribers[robot_id] = rospy.Subscriber(ns + "%s/pose" %(robot_id),
+                                                                     geometry_msgs.msg.Pose,
+                                                                     self.update_robot_position,
+                                                                     callback_args=robot_id)
 
-        self.tray_full_client = rospy.ServiceProxy("tray_full", rasberry_des.srv.Trays_Full)
-        self.tray_unload_client = rospy.ServiceProxy("tray_unload", rasberry_des.srv.Trays_Full)
+        # services / clients
+        rospy.wait_for_service("trays_full")
+        rospy.wait_for_service("trays_unload")
+        rospy.wait_for_service("robot_info")
+
+        # client of farm service - trays_full
+        self.trays_full_client = rospy.ServiceProxy("trays_full", rasberry_des.srv.Trays_Full)
+        self.trays_full_request = rasberry_des.srv.Trays_FullRequest()
+        self.trays_full_request.picker_id = self.picker_id
+
+        # client of farm service - trays_unload
+        self.trays_unload_client = rospy.ServiceProxy("trays_unload", rasberry_des.srv.Trays_Full)
+        self.trays_unload_request = rasberry_des.srv.Trays_UnloadRequest()
+        self.trays_unload_request.picker_id = self.picker_id
+
+        # client of farm service - robot_info
+        self.robot_info_client = rospy.ServiceProxy("robot_info", rasberry_des.srv.Robot_Info)
+        self.robot_info_request = rasberry_des.srv.Robot_Info()
+        self.robot_info_request.picker_id = self.picker_id
 
         if self.farm.n_robots == 0:
-            self.action = self.env.process(self.pickers_only())
+            self.action = self.env.process(self.pickers_without_robots())
         else:
-            self.action = self.env.process(self.pickers_with_robot_carriers())
+            self.action = self.env.process(self.pickers_with_robots())
 
-    def pickers_with_robot_carriers(self, ):
-        """ Picker's picking process
+    def pickers_with_robots(self, ):
+        """ Picker's picking process when there are robots to carry full trays
         """
         # 1. picker should report for duty first
         self.farm.picker_report(self.picker_id)
@@ -150,13 +172,11 @@ class Picker(object):
 
                     # if max_n_trays is reached
                     if self.n_trays == self.max_n_trays:
-                        self.tray_full_client(self.picker_id, self.n_trays)
-                        # if full rows, and at first or last row, and at the end node,
-                        #   send row finished
-                        #   robot will come and collect full trays and give empty trays
-                        #   TODO: wait until robot arrives, load robot and contiune picking
+                        # inform farm about trays_full, robot_info, trays_unload
+                        yield self.env.process(self.load_on_robot())
 
-                        #   go to local storage and no return
+                        # if full rows, and at first or last row, and at the end node,
+                        #   send row finished. wait for any new row
                         if ((not self.graph.half_rows) and
                                 ((self.curr_row == self.graph.row_ids[0]) or
                                  (self.curr_row == self.graph.row_ids[-1])) and
@@ -197,8 +217,9 @@ class Picker(object):
                         self.n_trays += 1
 
                         if self.n_trays == self.max_n_trays:
-                            self.tray_full_client(self.picker_id, self.n_trays)
-                            # TODO: wait for robot to come and collect
+                            # inform farm about trays_full, robot_info, trays_unload
+                            yield self.env.process(self.load_on_robot())
+
                             if self.curr_row is None:
                                 # finished picking along curr_row
                                 # reset mode to no allocations
@@ -266,7 +287,7 @@ class Picker(object):
 
             yield self.env.timeout(self.process_timeout)
 
-    def pickers_only(self, ):
+    def pickers_without_robots(self, ):
         """ Picker's picking process
         """
         # 1. picker should report for duty first
@@ -309,7 +330,9 @@ class Picker(object):
 
                     # if max_n_trays is reached
                     if self.n_trays == self.max_n_trays:
-                        self.tray_full_client(self.picker_id, self.n_trays)
+                        self.trays_full_request.curr_node = self.curr_node
+                        self.trays_full_request.n_trays = self.n_trays
+                        self.trays_full_client(self.trays_full_request)
                         # if full rows, and at first or last row, and at the end node,
                         #   send row finished
                         #   go to local storage and no return
@@ -364,7 +387,10 @@ class Picker(object):
                         self.n_trays += 1
 
                         if self.n_trays == self.max_n_trays:
-                            self.tray_full_client(self.picker_id, self.n_trays)
+                            self.trays_full_request.curr_node = self.curr_node
+                            self.trays_full_request.n_trays = self.n_trays
+                            self.trays_full_client(self.trays_full_request)
+
                             if self.curr_row is None:
                                 # finished picking along curr_row
                                 # transport to local storage and don't return
@@ -442,6 +468,61 @@ class Picker(object):
 
             yield self.env.timeout(self.process_timeout)
 
+    def load_on_robot(self, ):
+        """Picker's unloading process at the local storage node
+
+        Keyword arguments:
+
+        item -- unload "tray" or "all"; "tray" is normal, "all" only when no more rows are free
+        """
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+        curr_node_obj = self.graph.get_node(self.curr_node)
+        position[0] = curr_node_obj.pose.position.x
+        position[1] = curr_node_obj.pose.position.y
+
+        self.publish_pose(position, orientation)
+
+        # inform farm that trays are full
+        self.trays_full_request.n_trays = self.n_trays
+        self.trays_full_request.curr_node = self.curr_node
+        self.trays_full_client(self.trays_full_request)
+        # request for the allocated robot info
+        robot_id = self.robot_info_client(self.robot_info_request)
+        # wait for the robot to arrive
+        while self.dist_to_robot(robot_id) > 0:
+            # publish pose
+            if self.env.now - self.prev_pub_time >= self.pub_delay:
+                curr_node_obj = self.graph.get_node(self.curr_node)
+                position[0] = curr_node_obj.pose.position.x
+                position[1] = curr_node_obj.pose.position.y
+                self.publish_pose(position, orientation)
+            yield self.env.timeout(self.loop_timeout)
+
+        # If the robot is at the current node, wait for unloading time
+        start_time = self.env.now
+        wait_time = self.unloading_time * self.n_trays
+        delta_time = self.env.now - start_time
+        while delta_time <= wait_time:
+            if self.prev_pub_time - self.env.now >= self.pub_delay:
+                self.publish_pose(position, orientation)
+            yield self.env.timeout(self.loop_timeout)
+
+        # call trays_unload service
+        # The farm will in turn call the robot service to indicate the loading on robot is complete
+        self.trays_unload_request.n_trays = self.n_trays
+        self.trays_unload_request.curr_node = self.curr_node
+
+        self.publish_pose(position, orientation)
+
+        rospy.loginfo("%s finished unloading at %0.1f" %(self.picker_id, self.env.now))
+        rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
+                                                                                    self.tot_trays,
+                                                                                    self.n_trays,
+                                                                                    self.picking_progress))
+
+        yield self.env.timeout(self.process_timeout)
+
     def unload(self, item="tray"):
         """Picker's unloading process at the local storage node
 
@@ -476,7 +557,7 @@ class Picker(object):
         if item == "tray":
             self.tot_trays += self.max_n_trays
             self.n_trays -= self.max_n_trays
-            self.tray_unload_client(self.picker_id, self.n_trays)
+            self.trays_unload_client(self.picker_id, self.n_trays)
 
         elif item == "all":
             self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
@@ -594,3 +675,13 @@ class Picker(object):
         self.row_path = []
         self.n_rows += 1
         self.mode = 0
+
+    def update_robot_position(self, msg, robot_id):
+        """callback for pose topics from robots"""
+        self.robot_poses[robot_id].position.x = msg.position.x
+        self.robot_poses[robot_id].position.y = msg.position.y
+        self.robot_poses[robot_id].position.z = msg.position.z
+        self.robot_poses[robot_id].orientation.x = msg.orientation.x
+        self.robot_poses[robot_id].orientation.y = msg.orientation.y
+        self.robot_poses[robot_id].orientation.z = msg.orientation.z
+        self.robot_poses[robot_id].orientation.w = msg.orientation.w

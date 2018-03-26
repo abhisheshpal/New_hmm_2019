@@ -6,10 +6,11 @@
 # ----------------------------------
 
 import simpy
-import rasberry_des.topo
 import rospy
 import geometry_msgs.msg
 import rasberry_des.msg
+import actioblib
+import actionlib_msgs.msg
 
 
 class Farm(object):
@@ -65,11 +66,31 @@ class Farm(object):
         self.init_robot_subs()
 
         # services / clients
-        self.tray_full_service = rospy.Service('tray_full', rasberry_des.srv.Trays_Full, self.update_tray_full)
-        self.picker_unload_service = rospy.Service('tray_unload', rasberry_des.srv.Trays_Full, self.update_tray_unload)
+        self.trays_full_service = rospy.Service("trays_full", rasberry_des.srv.Trays_Full, self.trays_full)
+        self.trays_unload_service = rospy.Service("trays_unload", rasberry_des.srv.Trays_Full, self.trays_unload)
+        self.robot_info_service = rospy.Service("robot_info", rasberry_des.srv.Robot_Info, self.send_robot_info)
 
-        self.pickers_with_tray_full = []
-        self.pickers_full_trays = {}
+        self.trays_full_response = rasberry_des.srv.Trays_FullResponse()
+        self.trays_unload_response = rasberry_des.srv.Trays_unloadResponse()
+        self.robot_info_response = rasberry_des.srv.Robot_InfoResponse()
+
+        self.robot_tray_loaded_clients = {}
+        for robot_id in self.robot_ids:
+            self.robot_tray_loaded_clients[robot_id] = rospy.ServiceProxy("%s/tray_loaded", rasberry_des.srv.Tray_Full)
+
+        # action client
+        self.robot_collection_clients = {}
+        for robot_id in self.robot_ids:
+            self.robot_collection_clients[robot_id] = actioblib.SimpleActionClient("%s/collection" %(robot_id),
+                                                                                   rasberry_des.msg.Robot_CollectionAction)
+            self.robot_collection_clients[robot_id].wait_for_server()
+
+        self.assigned_picker_robot = {picker_id:None for picker_id in self.picker_ids}
+        self.assigned_robot_picker = {robot_id:None for robot_id in self.robot_ids}
+
+        self.trays_full_pickers = []
+        self.trays_full_picker_n_trays = {}
+        self.trays_full_picker_nodes = {}
         self.tot_trays_unloaded = 0.0
 
         print des_env
@@ -78,16 +99,45 @@ class Farm(object):
         elif des_env == "ros":
             self.process_timeout = 0.1
 
-    def update_tray_full(self, srv):
-        self.pickers_with_tray_full.append(srv.picker_id)
-        self.pickers_full_trays[srv.picker_id] = srv.n_trays
-        return rasberry_des.srv.Trays_FullResponse()
+    def send_robot_info(self, srv):
+        """After sending the tarys_full service request, a picker will request for robot info.
+        These are decoupled to enable scheduling outside the trays_full service response.
+        If the picker is in the tray full list, a while loop is run until a robot is assigned.
+        The assigned robot's id is sent as response to the picker
+        """
+        self.robot_info_response.robot_id = None
+        while srv.picker_id in self.trays_full_pickers:
+            if self.assigned_picker_robot[srv.picker_id] is not None:
+                self.robot_info_response.robot_id = self.assigned_picker_robot[srv.picker_id]
+                break
+        return self.robot_info_response
 
-    def update_tray_unload(self, srv):
-        self.tot_trays_unloaded += srv.n_trays
-        self.pickers_with_tray_full.remove(srv.picker_id)
-        self.pickers_full_trays[srv.picker_id] = 0
-        return rasberry_des.srv.Trays_FullResponse()
+    def trays_full(self, srv):
+        """callback function for trays_full service"""
+        self.trays_full_pickers.append(srv.picker_id)
+        self.trays_full_picker_n_trays[srv.picker_id] = srv.n_trays
+        self.trays_full_picker_nodes[srv.picker_id] = srv.curr_node
+        return self.trays_full_response
+
+    def trays_unload(self, srv):
+        """callback function for trays_unload service"""
+        # picker is calling this only from row nodes
+        if self.n_robots > 0:
+            # if there is a robot assigned to the picker, call its trays_loaded service
+            robot_id = self.assigned_picker_robot[srv.picker_id]
+            request = rasberry_des.srv.Tray_FullRequest()
+            request.picker_id = srv.picker_id
+            request.n_trays = srv.n_trays
+            self.robot_tray_loaded_clients[robot_id](request)
+        else:
+            self.update_tray_counts(srv.picker_id, srv.n_trays)
+        return self.trays_unload_response
+
+    def update_tray_counts(self, picker_id, n_trays):
+        """update tray counts after unloading"""
+        self.tot_trays_unloaded += n_trays
+        self.trays_full_pickers.remove(picker_id)
+        self.trays_full_picker_n_trays[picker_id] = 0
 
     def init_picker_subs(self, ):
         """initialise picker related subscribers"""
@@ -192,6 +242,24 @@ class Farm(object):
             return False
         return True
 
+    def assign_robot_to_picker(self, robot_id, picker_id):
+        """Assign a robot to go to a picker, collect full trays and take them to storage"""
+        collection_goal = rasberry_des.msg.Robot_CollectionGoal()
+        collection_goal.picker_id = picker_id
+        collection_goal.picker_node = self.trays_full_picker_nodes[picker_id]
+        collection_goal.storage_node = self.graph.local_storage_node[self.curr_picker_allocations[picker_id]]
+        self.assigned_picker_robot[picker_id] = robot_id
+        self.assigned_robot_picker[robot_id] = picker_id
+        self.robot_collection_clients[robot_id].send_goal(collection_goal, done_cb=self.collection_done)
+
+    def collection_done(self, state, result):
+        robot_id = result.robot_id
+        picker_id = self.assigned_robot_picker[robot_id]
+        n_trays = self.trays_full_picker_n_trays[picker_id]
+        self.update_tray_counts(picker_id, n_trays)
+        self.assigned_picker_robot[picker_id] = None
+        self.assigned_robot_picker[robot_id] = None
+
     def scheduler_monitor(self, ):
         """A process to allocate rows to the pickers.
         the picker should request for a row or
@@ -205,6 +273,24 @@ class Farm(object):
         """
 
         while True:
+            # when there are robots, assign them to collect
+            if self.n_robots > 0:
+                # TODO:
+                # check the number of trays_full service from agents
+                # check which robots are free
+                # assign each request to a robot by calling its Robot_Collection action
+                for picker_id in self.trays_full_pickers:
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # TODO: check action progress. if finished, get result
+                        # update tray counts
+                        # update robot contributions
+                        pass
+                    else:
+                        # TODO: assign a robot to the picker
+                        for robot_id in self.robot_ids:
+                            if self.robot_statuses[robot_id].mode == 0:
+                                self.assign_robot_to_picker(robot_id, picker_id) # by sending action goal to the robot
+
             # check for any completion update of any rows
             for i in range(len(self.pickers_reported)):
                 picker_id = self.pickers_reported[i]
@@ -251,3 +337,4 @@ class Farm(object):
 
             # take a short break after each allocation loop
             yield self.env.timeout(self.process_timeout)
+
