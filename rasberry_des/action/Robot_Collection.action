@@ -1,10 +1,9 @@
-string picker_node
 string picker_id
+string picker_node
 string local_storage_node
 int32 n_trays
 ---
 string robot_id
-bool success
 ---
 string robot_id
 float64 eta_picker_node

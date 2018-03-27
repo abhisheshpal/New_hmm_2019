@@ -15,15 +15,16 @@ import actionlib
 
 class Robot(object):
     """Robot class definition"""
-    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env, farm, topo_graph, des_env, sim_rt_factor=1.0):
+    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env,
+                 topo_graph, des_env, sim_rt_factor=1.0):
         self.robot_id = robot_id
         self.env = env
-        self.farm = farm
         self.graph = topo_graph
         self.transportation_rate = transportation_rate * sim_rt_factor
         self.max_n_trays = max_n_trays
         self.n_empty_trays = self.max_n_trays
         self.n_full_trays = 0
+        self.tot_trays = 0
 
         # publishers / subscribers
         self.pose_pub = rospy.Publisher('/%s/pose' %(self.robot_id),
@@ -44,7 +45,8 @@ class Robot(object):
         self.prev_pub_time = 0.0
 
         # service / client
-        self.trays_loaded_service = rospy.Service("%s/tray_loaded", rasberry_des.srv.Trays_Full, self.update_trays_loaded)
+        self.trays_loaded_service = rospy.Service("%s/tray_loaded" %(self.robot_id), rasberry_des.srv.Trays_Full, self.update_trays_loaded)
+        rospy.loginfo("%s initialised service '%s/robot_info'" %(self.robot_id, self.robot_id))
         self.load_info = []
         self.trays_loaded_reponse = rasberry_des.srv.Trays_FullResponse()
 
@@ -52,9 +54,12 @@ class Robot(object):
         self.collection_action = actionlib.SimpleActionServer("%s/collection" %(self.robot_id),
                                                               rasberry_des.msg.Robot_CollectionAction,
                                                               execute_cb=self.collect_n_unload, auto_start=False)
+        rospy.loginfo("%s initialised action server '%s/collection'" %(self.robot_id, self.robot_id))
         self.collection_goal = rasberry_des.msg.Robot_CollectionGoal()
         self.collection_result = rasberry_des.msg.Robot_CollectionResult()
+        self.collection_result.robot_id = self.robot_id
         self.collection_feedback = rasberry_des.msg.Robot_CollectionFeedback()
+        self.collection_feedback.robot_id = self.robot_id
         self.collection_action.start()
 
         self.mode = 0   # 0 - free, 1 - busy, 2 - charging
@@ -69,9 +74,24 @@ class Robot(object):
             self.process_timeout = 0.001
             self.loop_timeout = 1.0
         elif des_env == "ros":
-            self.pub_delay = max(0.1, 0.1 / sim_rt_factor)
+            self.pub_delay = max(0.25, 0.25 / sim_rt_factor)
             self.process_timeout = 0.001
-            self.loop_timeout = 0.05
+            self.loop_timeout = 0.1
+
+        self.action = self.env.process(self.normal_operation())
+
+    def normal_operation(self, ):
+        position = [0., 0., 0.]
+        orientation = [0., 0., 0.]
+        curr_node_obj = self.graph.get_node(self.curr_node)
+        position[0] = curr_node_obj.pose.position.x
+        position[1] = curr_node_obj.pose.position.y
+
+        while True:
+            now_time = self.env.now
+            if now_time - self.prev_pub_time >= self.pub_delay:
+                self.publish_pose(position, orientation)
+            yield self.env.timeout(self.loop_timeout)
 
     def update_trays_loaded(self, srv):
         self.load_info.append((srv.picker_id, srv.n_trays))
@@ -94,8 +114,12 @@ class Robot(object):
         self.collection_feedback.eta_local_storage_node = sum(distance_to_storage) / self.transportation_rate
         self.collection_action.publish_feedback(self.collection_feedback)
 
+        if (not self.collection_action.is_active()) or (self.collection_action.is_preempt_requested()):
+            rospy.loginfo("%s's goal is inactive or pre-empted" %(self.robot_id))
+            return
+
         # go to the picker_node
-        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.picker_node, "picker"))
+        self.go_to_node_with_feedback(self.collection_goal.picker_node, "picker")
 
         # picker knows which robot is coming and when the robot's pose is his node, he will
         # request the trays_unload service from farm, which in turn will call the service tray_loaded
@@ -116,9 +140,9 @@ class Robot(object):
         # go to local storage node
         # wait for unloading time
         # send success
-        yield self.env.process(self.go_to_node_with_feedback(self.collection_goal.storage_node, "storage"))
+        self.go_to_node_with_feedback(self.collection_goal.local_storage_node, "storage")
         wait_time = self.unloading_time * self.n_full_trays
-        yield self.env.process(self.wait_with_feedback(wait_time))
+        self.wait_with_feedback(wait_time)
 
         # update tray counts
         self.tot_trays += self.n_full_trays
@@ -129,7 +153,8 @@ class Robot(object):
         self.mode = 0
 
         # send success
-        self.collection_action.set_succeeded(result=True)
+#        self.collection_result.success = True
+        self.collection_action.set_succeeded(self.collection_result)
 
     def wait_with_feedback(self, wait_time):
         position = [0., 0., 0.]
@@ -158,7 +183,6 @@ class Robot(object):
         Keyword arguments:
         goal_node -- node to reach from current node
         """
-        #TODO: update to send feedback
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
         position = [0., 0., 0.]
@@ -191,16 +215,18 @@ class Robot(object):
                     position[0] = next_node_obj.pose.position.x
                     position[1] = next_node_obj.pose.position.y
 
+                print position[0], position[1]
+
                 now_time = self.env.now
                 if now_time - self.prev_pub_time >= self.pub_delay:
                     self.publish_pose(position, orientation)
                     if stage == "picker":
-                        self.collection_feedback.eta_picker_node = eta + delta_time
+                        self.collection_feedback.eta_picker_node = eta + (travel_time - delta_time)
                     elif stage == "storage":
-                        self.collection_feedback.eta_storage_node = eta + delta_time
+                        self.collection_feedback.eta_storage_node = eta + (travel_time - delta_time)
                     self.collection_action.publish_feedback(self.collection_feedback)
                 delta_time = now_time - start_time
-                yield self.env.timeout(self.loop_timeout)
+                rospy.sleep(self.loop_timeout)
             self.curr_node = route_nodes[i + 1]
 
         self.publish_pose(position, orientation)
@@ -209,8 +235,6 @@ class Robot(object):
         elif stage == "storage":
             self.collection_feedback.eta_storage_node = 0.
         self.collection_action.publish_feedback(self.collection_feedback)
-
-        yield self.env.timeout(self.process_timeout)
 
     def publish_pose(self, position, orientation):
         """This method publishes the current position of the picker. Called only at nodes"""
@@ -225,7 +249,7 @@ class Robot(object):
         self.pose.orientation.w = quaternion[3]
         self.pose_pub.publish(self.pose)
 
-        # TODO: update variables in status and publish
+        # status publisher
         self.status.n_empty_trays = self.n_empty_trays
         self.status.n_full_trays = self.n_full_trays
         self.status.tot_trays = self.tot_trays

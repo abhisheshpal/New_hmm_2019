@@ -15,7 +15,7 @@ import rasberry_des.msg
 
 class Visualise_Agents(object):
     """A class to animate agent locations in matplotlib"""
-    def __init__(self, farm, picker_ids, robot_ids, detailed=False):
+    def __init__(self, farm, topo_graph, picker_ids, robot_ids, detailed=False):
         """initialise the Visualise_Agents class
 
         Keyword arguments:
@@ -29,6 +29,7 @@ class Visualise_Agents(object):
         self.n_robots = len(robot_ids)
         self.farm = farm
         self.detailed = detailed
+        self.graph = topo_graph
 
         self.fig = matplotlib.pyplot.figure()
         self.ax = self.fig.add_subplot(111)
@@ -80,15 +81,15 @@ class Visualise_Agents(object):
         local_storage_x, local_storage_y = [], []
         local_storage_nodes = []
         for i in range(self.farm.n_topo_nav_rows):
-            row_id = self.farm.row_ids[i]
-            head_node = self.farm.graph.get_node(self.farm.graph.head_nodes[row_id])
+            row_id = self.graph.row_ids[i]
+            head_node = self.graph.get_node(self.graph.head_nodes[row_id])
             head_nodes_x.append(head_node.pose.position.x)
             head_nodes_y.append(head_node.pose.position.y)
-            for j in range(len(self.farm.graph.row_nodes[row_id])):
-                curr_node = self.farm.graph.get_node(self.farm.graph.row_nodes[row_id][j])
+            for j in range(len(self.graph.row_nodes[row_id])):
+                curr_node = self.graph.get_node(self.graph.row_nodes[row_id][j])
                 if j == 0:
                     start_node = curr_node
-                elif j == len(self.farm.graph.row_nodes[row_id]) - 1:
+                elif j == len(self.graph.row_nodes[row_id]) - 1:
                     last_node = curr_node
                 nav_row_nodes_x.append(curr_node.pose.position.x)
                 nav_row_nodes_y.append(curr_node.pose.position.y)
@@ -102,7 +103,7 @@ class Visualise_Agents(object):
                 head_lane_x.append(head_node.pose.position.x)
                 head_lane_y.append(head_node.pose.position.y)
 
-            if self.farm.half_rows:
+            if self.graph.half_rows:
                 if i == 0:
                     farm_rows_x.append((0., 0.))
                     farm_rows_y.append((start_node.pose.position.y, last_node.pose.position.y))
@@ -125,9 +126,9 @@ class Visualise_Agents(object):
                     farm_rows_x.append((start_node_x, last_node_x))
                     farm_rows_y.append((start_node.pose.position.y, last_node.pose.position.y))
 
-            if self.farm.graph.local_storage_nodes[row_id] not in local_storage_nodes:
-                local_storage_nodes.append(self.farm.graph.local_storage_nodes[row_id])
-                node_obj = self.farm.graph.get_node(local_storage_nodes[-1])
+            if self.graph.local_storage_nodes[row_id] not in local_storage_nodes:
+                local_storage_nodes.append(self.graph.local_storage_nodes[row_id])
+                node_obj = self.graph.get_node(local_storage_nodes[-1])
                 local_storage_x.append(node_obj.pose.position.x)
                 local_storage_y.append(node_obj.pose.position.y)
 
@@ -182,7 +183,7 @@ class Visualise_Agents(object):
         for robot_id in self.robot_ids:
             self.robot_position_lines[robot_id] = self.ax.plot(self.robot_x[robot_id],
                                                                  self.robot_y[robot_id],
-                                                                 color="blue", marker="*",
+                                                                 color="green", marker="*",
                                                                  markersize=20,
                                                                  markeredgecolor="r",
                                                                  linestyle="none")[0]

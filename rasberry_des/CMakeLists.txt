@@ -63,6 +63,7 @@ add_message_files(
 add_service_files(
   FILES
   Trays_Full.srv
+  Robot_Info.srv
 #   Service2.srv
 )
 

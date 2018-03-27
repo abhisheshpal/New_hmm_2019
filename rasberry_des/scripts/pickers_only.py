@@ -50,11 +50,6 @@ if __name__ == "__main__":
     n_farm_rows = config_params["n_farm_rows"]
     half_rows = config_params["half_rows"]
     n_topo_nav_rows = config_params["n_topo_nav_rows"]
-    head_row_node_dist = config_params["head_row_node_dist"]
-    head_node_y = config_params["head_node_y"]
-    _row_node_dist = config_params["row_node_dist"]
-    _row_length = config_params["row_length"]
-    _row_spacing = config_params["row_spacing"]
 
     des_env = config_params["des_env"]
     n_pickers = config_params["n_pickers"]
@@ -72,6 +67,19 @@ if __name__ == "__main__":
     _robot_max_n_trays = config_params["robot_max_n_trays"]
     _robot_unloading_time = config_params["robot_unloading_time"]
 
+    picker_ids = ["picker_%02d" %(i) for i in range(n_pickers)]
+
+    picking_rate = rasberry_des.config_utils.param_list_to_dict("picking_rate", _picking_rate, picker_ids)
+    picker_transportation_rate = rasberry_des.config_utils.param_list_to_dict("picker_transportation_rate", _picker_transportation_rate, picker_ids)
+    picker_max_n_trays = rasberry_des.config_utils.param_list_to_dict("picker_max_n_trays", _picker_max_n_trays, picker_ids)
+    picker_unloading_time = rasberry_des.config_utils.param_list_to_dict("picker_unloading_time", _picker_unloading_time, picker_ids)
+
+    robot_ids = ["robot_%02d" %(i) for i in range(n_robots)]
+
+    robot_transportation_rate = rasberry_des.config_utils.param_list_to_dict("robot_transportation_rate", _robot_transportation_rate, robot_ids)
+    robot_max_n_trays = rasberry_des.config_utils.param_list_to_dict("robot_max_n_trays", _robot_max_n_trays, robot_ids)
+    robot_unloading_time = rasberry_des.config_utils.param_list_to_dict("robot_unloading_time", _robot_unloading_time, robot_ids)
+
     if des_env == "simpy":
         rasb_env = simpy.Environment()
     elif des_env == "ros":
@@ -84,12 +92,7 @@ if __name__ == "__main__":
         raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
 
-    picker_ids = ["picker_%02d" %(i) for i in range(n_pickers)]
-    robot_ids = ["robot_%02d" %(i) for i in range(n_robots)]
-
-    # assuming a fork graph with the following:
-    # 1. only one head lane
-    # 2. a picker won't have to wait longer than loadingTime
+    # assuming a fork graph with a head lane
     local_storages = [simpy.Resource(rasb_env, capacity=n_pickers) for i in range(n_local_storages)]
 
     topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, half_rows,
@@ -97,129 +100,38 @@ if __name__ == "__main__":
                                                         _yield_per_node,
                                                         local_storages)
 
+    rasb_robots = []
+    for robot_id in robot_ids:
+        rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
+                                                    robot_max_n_trays[robot_id],
+                                                    robot_unloading_time[robot_id],
+                                                    rasb_env, topo_graph,
+                                                    des_env, SIM_RT_FACTOR))
+
     rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env, des_env,
                                        n_topo_nav_rows, topo_graph,
                                        picker_ids, robot_ids)
 
-#    rasb_farm.init_graph_fork(n_farm_rows, half_rows, n_topo_nav_rows,
-#                              head_row_node_dist, head_node_y,
-#                              _row_node_dist, _row_length, _row_spacing,
-#                              _yield_per_node, local_storages)
-
     rasb_env.process(rasb_farm.scheduler_monitor())
 
-    if _picking_rate.__class__ == list:
-        if len(_picking_rate) == n_pickers:
-            picking_rate = {picker_ids[i]:_picking_rate[i] for i in range(n_pickers)}
-        elif len(_picking_rate) == 1:
-            picking_rate = {picker_ids[i]:random.uniform(_picking_rate[0] - 0.04, _picking_rate[0] + 0.04) for i in range(n_pickers)}
-        else:
-            rospy.ROSException("picking_rate must be a list of size %d or 1" %(n_pickers))
-    else:
-        rospy.ROSException("picking_rate must be a list of size %d or 1" %(n_pickers))
-
-    if _picker_transportation_rate.__class__ == list:
-        if len(_picker_transportation_rate) == n_pickers:
-            picker_transportation_rate = {picker_ids[i]:_picker_transportation_rate[i] for i in range(n_pickers)}
-        elif len(_picking_rate) == 1:
-            picker_transportation_rate = {picker_ids[i]:random.uniform(_picker_transportation_rate[0] - 0.08, _picker_transportation_rate[0] + 0.08) for i in range(n_pickers)}
-        else:
-            rospy.ROSException("picker_transportation_rate must be a list of size %d or 1" %(n_pickers))
-    else:
-        rospy.ROSException("picker_transportation_rate must be a list of size %d or 1" %(n_pickers))
-
-    if _picker_max_n_trays.__class__ == list:
-        if len(_picker_max_n_trays) == n_pickers:
-            picker_max_n_trays = {picker_ids[i]:_picker_max_n_trays[i] for i in range(n_pickers)}
-        elif len(_picking_rate) == 1:
-            picker_max_n_trays = {picker_ids[i]:_picker_max_n_trays[0] for i in range(n_pickers)}
-        else:
-            rospy.ROSException("picker_max_n_trays must be a list of size %d or 1" %(n_pickers))
-    else:
-        rospy.ROSException("picker_max_n_trays must be a list of size %d or 1" %(n_pickers))
-
-    if _picker_unloading_time.__class__ == list:
-        if len(_picker_unloading_time) == n_pickers:
-            picker_unloading_time = {picker_ids[i]:_picker_unloading_time[i] for i in range(n_pickers)}
-        elif len(_picking_rate) == 1:
-            picker_unloading_time = {picker_ids[i]:random.uniform(_picker_unloading_time[0] - 4, _picker_unloading_time[0] + 4) for i in range(n_pickers)}
-        else:
-            rospy.ROSException("picker_unloading_time must be a list of size %d or 1" %(n_pickers))
-    else:
-        rospy.ROSException("picker_unloading_time must be a list of size %d or 1" %(n_pickers))
-
-    if _robot_transportation_rate.__class__ == list:
-        if len(_robot_transportation_rate) == n_robots:
-            robot_transportation_rate = {robot_ids[i]:_robot_transportation_rate[i] for i in range(n_robots)}
-        elif len(_picking_rate) == 1:
-            robot_transportation_rate = {robot_ids[i]:random.uniform(_robot_transportation_rate[0] - 4, _robot_transportation_rate[0] + 4) for i in range(n_robots)}
-        else:
-            rospy.ROSException("robot_transportation_rate must be a list of size %d or 1" %(n_robots))
-    else:
-        rospy.ROSException("robot_transportation_rate must be a list of size %d or 1" %(n_robots))
-
-    if _robot_max_n_trays.__class__ == list:
-        if len(_robot_max_n_trays) == n_robots:
-            robot_max_n_trays = {robot_ids[i]:_robot_max_n_trays[i] for i in range(n_robots)}
-        elif len(_picking_rate) == 1:
-            robot_max_n_trays = {robot_ids[i]:_robot_max_n_trays for i in range(n_robots)}
-        else:
-            rospy.ROSException("robot_max_n_trays must be a list of size %d or 1" %(n_robots))
-    else:
-        rospy.ROSException("robot_max_n_trays must be a list of size %d or 1" %(n_robots))
-
-    if _robot_unloading_time.__class__ == list:
-        if len(_robot_unloading_time) == n_robots:
-            robot_unloading_time = {robot_ids[i]:_robot_unloading_time[i] for i in range(n_robots)}
-        elif len(_picking_rate) == 1:
-            robot_unloading_time = {robot_ids[i]:_robot_transportation_rate[0] for i in range(n_robots)}
-        else:
-            rospy.ROSException("robot_unloading_time must be a list of size %d or 1" %(n_robots))
-    else:
-        rospy.ROSException("robot_unloading_time must be a list of size %d or 1" %(n_robots))
-
     rasb_pickers = []
-    rasb_robots = []
-    if des_env == "ros":
-        for picker_id in picker_ids:
-            rasb_pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
-                                                           picker_max_n_trays[picker_id],
-                                                           picking_rate[picker_id],
-                                                           picker_transportation_rate[picker_id],
-                                                           picker_unloading_time[picker_id],
-                                                           rasb_env, rasb_farm, topo_graph, des_env,
-                                                           SIM_RT_FACTOR))
 
-        for robot_id in robot_ids:
-            rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
-                                                        robot_max_n_trays[robot_id],
-                                                        robot_unloading_time[robot_id],
-                                                        rasb_env, rasb_farm, topo_graph,
-                                                        des_env, SIM_RT_FACTOR))
-    elif des_env == "simpy":
-        for picker_id in picker_ids:
-            rasb_pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
-                                                           picker_max_n_trays[picker_id],
-                                                           picking_rate[picker_id],
-                                                           picker_transportation_rate[picker_id],
-                                                           picker_unloading_time[picker_id],
-                                                           rasb_env, rasb_farm, topo_graph, des_env))
-
-        for robot_id in robot_ids:
-            rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
-                                                        robot_max_n_trays[robot_id],
-                                                        robot_unloading_time[robot_id],
-                                                        rasb_env, rasb_farm, topo_graph, des_env))
+    for picker_id in picker_ids:
+        rasb_pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
+                                                       picker_max_n_trays[picker_id],
+                                                       picking_rate[picker_id],
+                                                       picker_transportation_rate[picker_id],
+                                                       picker_unloading_time[picker_id],
+                                                       rasb_env, rasb_farm, topo_graph, des_env,
+                                                       robot_ids, SIM_RT_FACTOR))
 
     SHOW_VIS = True
-    SHOW_INFO = True
+    SHOW_INFO = False
     if SHOW_VIS:
-        vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, picker_ids, DETAILED_VIS)
+        vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, topo_graph, picker_ids, robot_ids, DETAILED_VIS)
 
     while not rospy.is_shutdown():
         try:
-#            t_now = rospy.get_time()
-#            print ("%0.3f, %0.3f" %(rasb_env.now, t_now))
             # instead of env.run() we should env.step() to have any control (Ctrl+c)
             # If multiple events are scheduled for the same simpy.time, there would be
             # at least a ms delay (in ros/realtime clock) between the events
@@ -239,8 +151,8 @@ if __name__ == "__main__":
         # farm details
         print("-----------------\n----%s----\n-----------------" %(rasb_farm.name))
         print("n_pickers: %d" %(len(rasb_farm.pickers_reported)))
-        print("n_farm_rows: %d" %(rasb_farm.n_farm_rows))
-        print("n_topo_nav_rows: %d" %(rasb_farm.n_topo_nav_rows))
+        print("n_farm_rows: %d" %(topo_graph.n_farm_rows))
+        print("n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows))
         tot_yield = 0.
         for row_id in topo_graph.row_ids:
             print("  --%s--" %(row_id))
@@ -254,7 +166,7 @@ if __name__ == "__main__":
             print("  node_dist: %0.3f m" %(node_dist))
             row_yield = 0.
             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-            if (not rasb_farm.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(rasb_farm.n_topo_nav_rows)):
+            if (not rasb_farm.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(topo_graph.n_topo_nav_rows)):
                 for i in range(n_row_nodes):
                     row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
             else:

@@ -12,6 +12,7 @@ import rospy
 import topological_navigation.tmap_utils
 import topological_navigation.route_search
 import strands_navigation_msgs.msg
+import rasberry_des.config_utils
 
 
 class TopologicalForkGraph(object):
@@ -19,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, row_ids, _node_yields, local_storages):
+    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, _node_yields, local_storages):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -32,7 +33,7 @@ class TopologicalForkGraph(object):
         local_storages -- simpy.Resource objects, list
         """
         ns = rospy.get_namespace()
-        self.row_ids = row_ids
+        self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
         self.n_farm_rows = n_farm_rows
         self.half_rows = half_rows
         self.n_topo_nav_rows = n_topo_nav_rows
@@ -71,13 +72,7 @@ class TopologicalForkGraph(object):
 
         _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
         """
-        if _node_yields.__class__ == list:
-            if len(_node_yields) == self.n_topo_nav_rows:
-                node_yield_in_row = {self.row_ids[i]:_node_yields[i] for i in range(self.n_topo_nav_rows)}
-            elif len(_node_yields) == 1:
-                node_yield_in_row = {self.row_ids[i]:_node_yields[0] for i in range(self.n_topo_nav_rows)}
-        else:
-            raise TypeError("_node_yields must be list of length %d or 1" %(self.n_topo_nav_rows))
+        node_yield_in_row = rasberry_des.config_utils.param_list_to_dict("node_yields", _node_yields, self.row_ids)
 
         for row_id in self.row_ids:
             n_row_nodes = len(self.row_nodes[row_id])

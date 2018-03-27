@@ -39,6 +39,8 @@ class Picker(object):
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
         self.tray_capacity = tray_capacity
+        if des_env == "simpy":
+            sim_rt_factor = 1.0 # ignore sim_rt_factor for "ros" env
         self.picking_rate = picking_rate * sim_rt_factor
         self.transportation_rate = transportation_rate * sim_rt_factor
         self.max_n_trays = max_n_trays
@@ -69,9 +71,9 @@ class Picker(object):
             self.process_timeout = 0.001
             self.loop_timeout = 1.0
         elif des_env == "ros":
-            self.pub_delay = max(0.1, 0.1 / sim_rt_factor)
+            self.pub_delay = max(0.25, 0.25 / sim_rt_factor)
             self.process_timeout = 0.001
-            self.loop_timeout = 0.05
+            self.loop_timeout = 0.1
 
         # publishers / subscribers
         ns = rospy.get_namespace()
@@ -84,16 +86,7 @@ class Picker(object):
 
         self.pose = geometry_msgs.msg.Pose()
         self.status = rasberry_des.msg.Picker_Status()
-        self.status.picker_id = self.picker_id
-        self.status.picking_rate = picking_rate
-        self.status.transportation_rate = transportation_rate
-        self.status.tray_capacity = self.tray_capacity
-        self.status.picking_progress = 0.
-        self.status.n_trays = 0
-        self.status.tot_trays = 0
-        self.status.n_rows = 0
-        self.status.curr_row = "None"
-        self.status.mode = self.mode
+        self.init_status_attribute(picking_rate, transportation_rate)
 
         self.robot_pose_subscribers = {}
         self.robot_poses = {}
@@ -105,29 +98,46 @@ class Picker(object):
                                                                      callback_args=robot_id)
 
         # services / clients
-        rospy.wait_for_service("trays_full")
-        rospy.wait_for_service("trays_unload")
-        rospy.wait_for_service("robot_info")
-
         # client of farm service - trays_full
+        rospy.loginfo("%s waiting for %s service" %(self.picker_id, "trays_full"))
+        rospy.wait_for_service("trays_full")
         self.trays_full_client = rospy.ServiceProxy("trays_full", rasberry_des.srv.Trays_Full)
+        rospy.loginfo("%s conencted to %s service" %(self.picker_id, "trays_full"))
         self.trays_full_request = rasberry_des.srv.Trays_FullRequest()
         self.trays_full_request.picker_id = self.picker_id
 
         # client of farm service - trays_unload
+        rospy.loginfo("%s waiting for %s service" %(self.picker_id, "trays_unload"))
+        rospy.wait_for_service("trays_unload")
         self.trays_unload_client = rospy.ServiceProxy("trays_unload", rasberry_des.srv.Trays_Full)
-        self.trays_unload_request = rasberry_des.srv.Trays_UnloadRequest()
+        rospy.loginfo("%s conencted to %s service" %(self.picker_id, "trays_unload"))
+        self.trays_unload_request = rasberry_des.srv.Trays_FullRequest()
         self.trays_unload_request.picker_id = self.picker_id
 
         # client of farm service - robot_info
+        rospy.loginfo("%s waiting for %s service" %(self.picker_id, "robot_info"))
+        rospy.wait_for_service("robot_info")
         self.robot_info_client = rospy.ServiceProxy("robot_info", rasberry_des.srv.Robot_Info)
-        self.robot_info_request = rasberry_des.srv.Robot_Info()
+        rospy.loginfo("%s conencted to %s service" %(self.picker_id, "robot_info"))
+        self.robot_info_request = rasberry_des.srv.Robot_InfoRequest()
         self.robot_info_request.picker_id = self.picker_id
 
         if self.farm.n_robots == 0:
             self.action = self.env.process(self.pickers_without_robots())
         else:
             self.action = self.env.process(self.pickers_with_robots())
+
+    def init_status_attribute(self, picking_rate, transportation_rate):
+        self.status.picker_id = self.picker_id
+        self.status.picking_rate = picking_rate
+        self.status.transportation_rate = transportation_rate
+        self.status.tray_capacity = self.tray_capacity
+        self.status.picking_progress = 0.
+        self.status.n_trays = 0
+        self.status.tot_trays = 0
+        self.status.n_rows = 0
+        self.status.curr_row = "None"
+        self.status.mode = self.mode
 
     def pickers_with_robots(self, ):
         """ Picker's picking process when there are robots to carry full trays
@@ -487,8 +497,10 @@ class Picker(object):
         self.trays_full_request.n_trays = self.n_trays
         self.trays_full_request.curr_node = self.curr_node
         self.trays_full_client(self.trays_full_request)
+        rospy.loginfo("%s informed scheduler about trays_full" %(self.picker_id))
         # request for the allocated robot info
-        robot_id = self.robot_info_client(self.robot_info_request)
+        robot_id = self.robot_info_client(self.robot_info_request).robot_id
+        rospy.loginfo("%s is assigned to %s" %(self.picker_id, robot_id))
         # wait for the robot to arrive
         while self.dist_to_robot(robot_id) > 0:
             # publish pose
@@ -497,6 +509,7 @@ class Picker(object):
                 position[0] = curr_node_obj.pose.position.x
                 position[1] = curr_node_obj.pose.position.y
                 self.publish_pose(position, orientation)
+            rospy.loginfo("distance between %s and %s: %0.1f" %(self.picker_id, robot_id, self.dist_to_robot(robot_id)))
             yield self.env.timeout(self.loop_timeout)
 
         # If the robot is at the current node, wait for unloading time
@@ -515,13 +528,24 @@ class Picker(object):
 
         self.publish_pose(position, orientation)
 
-        rospy.loginfo("%s finished unloading at %0.1f" %(self.picker_id, self.env.now))
+        rospy.loginfo("%s finished loading trays on %s at %0.1f" %(self.picker_id, robot_id, self.env.now))
         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
                                                                                     self.tot_trays,
                                                                                     self.n_trays,
                                                                                     self.picking_progress))
 
         yield self.env.timeout(self.process_timeout)
+
+    def dist_to_robot(self, robot_id):
+        """return Eucledian distance between robot's pose and picker's pose"""
+        print robot_id, self.robot_poses[robot_id]
+        robot_x = self.robot_poses[robot_id].position.x
+        robot_y = self.robot_poses[robot_id].position.y
+        curr_node_obj = self.graph.get_node(self.curr_node)
+        curr_x = curr_node_obj.pose.position.x
+        curr_y = curr_node_obj.pose.position.y
+        dist = math.hypot((robot_x - curr_x), (robot_y - curr_y))
+        return dist
 
     def unload(self, item="tray"):
         """Picker's unloading process at the local storage node
