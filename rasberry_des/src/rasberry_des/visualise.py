@@ -36,6 +36,8 @@ class Visualise_Agents(object):
         self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'normal', 'size': 8,}
 
         # publishers / subscribers
+        self.robot_data_updated = False
+        self.picker_data_updated = False
         # picker related
         self.picker_pose_subs = {}
         self.init_picker_pose_subs()
@@ -220,6 +222,7 @@ class Visualise_Agents(object):
     def update_picker_position(self, msg, picker_id):
         self.picker_x[picker_id] = msg.position.x
         self.picker_y[picker_id] = msg.position.y
+        self.picker_data_updated = True
 
     def update_picker_status(self, msg, picker_id):
         self.picker_picking_progress[picker_id] = msg.picking_progress
@@ -227,6 +230,7 @@ class Visualise_Agents(object):
         self.picker_tot_trays[picker_id] = msg.tot_trays
         self.picker_n_rows[picker_id] = msg.n_rows
         self.picker_modes[picker_id] = msg.mode
+        self.picker_data_updated = True
 
     def init_robot_pose_subs(self, ):
         ns = rospy.get_namespace()
@@ -247,48 +251,53 @@ class Visualise_Agents(object):
     def update_robot_position(self, msg, robot_id):
         self.robot_x[robot_id] = msg.position.x
         self.robot_y[robot_id] = msg.position.y
+        self.robot_data_updated = True
 
     def update_robot_status(self, msg, robot_id):
         self.robot_n_empty_trays[robot_id] = msg.n_empty_trays
         self.robot_n_full_trays[robot_id] = msg.n_full_trays
         self.robot_tot_trays[robot_id] = msg.tot_trays
         self.robot_mode[robot_id] = msg.mode
+        self.robot_data_updated = True
 
     def plot_update(self, *args):
-        for picker_id in self.picker_ids:
-            self.picker_position_lines[picker_id].set_data(self.picker_x[picker_id],
-                                                           self.picker_y[picker_id])
-            if self.detailed:
-                self.picker_position_texts[picker_id].set_position(self.ax.text(self.picker_x[picker_id] -0.75,
-                                                                                self.picker_y[picker_id] + 0.3,
-                                                                                "P_%s\n%0.2f\n%d\n%d\n%d" %(picker_id[-2:],
-                                                                                                            self.picker_picking_progress[picker_id],
-                                                                                                            self.picker_n_trays[picker_id],
-                                                                                                            self.picker_tot_trays[picker_id],
-                                                                                                            self.picker_n_rows[picker_id],
-                                                                                                            self.picker_mode[picker_id]),
-                                                                                fontdict=self.font))
-            else:
-                self.picker_position_texts[picker_id].set_position((self.picker_x[picker_id] -0.75,
-                                                                    self.picker_y[picker_id] + 0.3))
+        if self.picker_data_updated or self.robot_data_updated:
+            for picker_id in self.picker_ids:
+                self.picker_position_lines[picker_id].set_data(self.picker_x[picker_id],
+                                                               self.picker_y[picker_id])
+                if self.detailed:
+                    self.picker_position_texts[picker_id].set_position(self.ax.text(self.picker_x[picker_id] -0.75,
+                                                                                    self.picker_y[picker_id] + 0.3,
+                                                                                    "P_%s\n%0.2f\n%d\n%d\n%d" %(picker_id[-2:],
+                                                                                                                self.picker_picking_progress[picker_id],
+                                                                                                                self.picker_n_trays[picker_id],
+                                                                                                                self.picker_tot_trays[picker_id],
+                                                                                                                self.picker_n_rows[picker_id],
+                                                                                                                self.picker_mode[picker_id]),
+                                                                                    fontdict=self.font))
+                else:
+                    self.picker_position_texts[picker_id].set_position((self.picker_x[picker_id] -0.75,
+                                                                        self.picker_y[picker_id] + 0.3))
 
-        for robot_id in self.robot_ids:
-            self.robot_position_lines[robot_id].set_data(self.robot_x[robot_id],
-                                                           self.robot_y[robot_id])
-            if self.detailed:
-                self.robot_position_texts[robot_id].set_position(self.ax.text(self.robot_x[robot_id] -0.75,
-                                                                                self.robot_y[robot_id] + 0.3,
-                                                                                "P_%s\n%0.2f\n%d\n%d\n%d" %(robot_id[-2:],
-                                                                                                            self.robot_n_empty_trays[robot_id],
-                                                                                                            self.robot_n_full_trays[robot_id],
-                                                                                                            self.robot_tot_trays[robot_id],
-                                                                                                            self.robot_mode[robot_id],),
-                                                                                fontdict=self.font))
-            else:
-                self.robot_position_texts[robot_id].set_position((self.robot_x[robot_id] -0.75,
-                                                                    self.robot_y[robot_id] + 0.3))
+            for robot_id in self.robot_ids:
+                self.robot_position_lines[robot_id].set_data(self.robot_x[robot_id],
+                                                               self.robot_y[robot_id])
+                if self.detailed:
+                    self.robot_position_texts[robot_id].set_position(self.ax.text(self.robot_x[robot_id] -0.75,
+                                                                                    self.robot_y[robot_id] + 0.3,
+                                                                                    "P_%s\n%0.2f\n%d\n%d\n%d" %(robot_id[-2:],
+                                                                                                                self.robot_n_empty_trays[robot_id],
+                                                                                                                self.robot_n_full_trays[robot_id],
+                                                                                                                self.robot_tot_trays[robot_id],
+                                                                                                                self.robot_mode[robot_id],),
+                                                                                    fontdict=self.font))
+                else:
+                    self.robot_position_texts[robot_id].set_position((self.robot_x[robot_id] -0.75,
+                                                                        self.robot_y[robot_id] + 0.3))
 
-        self.fig.canvas.draw()
+            self.fig.canvas.draw()
+            self.robot_data_updated = False
+            self.picker_data_updated = False
 
 
 

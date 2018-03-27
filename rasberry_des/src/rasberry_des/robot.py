@@ -91,7 +91,7 @@ class Robot(object):
             now_time = self.env.now
             if now_time - self.prev_pub_time >= self.pub_delay:
                 self.publish_pose(position, orientation)
-            yield self.env.timeout(self.loop_timeout)
+            yield self.env.timeout(self.process_timeout)
 
     def update_trays_loaded(self, srv):
         self.load_info.append((srv.picker_id, srv.n_trays))
@@ -166,16 +166,9 @@ class Robot(object):
         self.collection_feedback.eta_picker_node = 0.
         self.collection_feedback.eta_storage_node = 0.
 
-        start_time = self.env.now
-        delta_time = self.env.now - start_time
-
-        while delta_time <= wait_time:
-            now_time = self.env.now
-            if now_time - self.prev_pub_time >= self.pub_delay:
-                self.publish_pose(position, orientation)
-                self.collection_action.publish_feedback(self.collection_feedback)
-            delta_time = now_time - start_time
-            yield self.env.timeout(self.loop_timeout)
+        yield self.env.timeout(wait_time)
+        self.publish_pose(position, orientation)
+        self.collection_action.publish_feedback(self.collection_feedback)
 
     def go_to_node_with_feedback(self, goal_node, stage):
         """Simpy process to Mimic moving to the goal_node by publishing new position
@@ -191,43 +184,35 @@ class Robot(object):
             # move through each edge
             curr_node_obj = self.graph.get_node(route_nodes[i])
             next_node_obj = self.graph.get_node(route_nodes[i + 1])
-            theta = math.atan2((next_node_obj.pose.position.y - curr_node_obj.pose.position.y),
-                               (next_node_obj.pose.position.x - curr_node_obj.pose.position.x))
 
             position[0] = curr_node_obj.pose.position.x
             position[1] = curr_node_obj.pose.position.y
+            self.publish_pose(position, orientation)
 
             edge_distance = route_distance[i]
             travel_time = edge_distance / self.transportation_rate
 
-            eta = sum(route_distance[i + 1:]) / self.transportation_rate
+            eta = sum(route_distance[i:]) / self.transportation_rate
+            if stage == "picker":
+                self.collection_feedback.eta_picker_node = eta
+            elif stage == "storage":
+                self.collection_feedback.eta_storage_node = eta
+            self.collection_action.publish_feedback(self.collection_feedback)
 
-            self.publish_pose(position, orientation)
-            start_time = self.env.now
-            delta_time = self.env.now - start_time
+            # travel the node distance
+            yield self.env.timeout(travel_time)
 
-            while delta_time <= travel_time:
-                delta = self.transportation_rate * delta_time
-                if delta <= edge_distance:
-                    position[0] = curr_node_obj.pose.position.x + delta * math.cos(theta)
-                    position[1] = curr_node_obj.pose.position.y + delta * math.sin(theta)
-                else:
-                    position[0] = next_node_obj.pose.position.x
-                    position[1] = next_node_obj.pose.position.y
-
-                print position[0], position[1]
-
-                now_time = self.env.now
-                if now_time - self.prev_pub_time >= self.pub_delay:
-                    self.publish_pose(position, orientation)
-                    if stage == "picker":
-                        self.collection_feedback.eta_picker_node = eta + (travel_time - delta_time)
-                    elif stage == "storage":
-                        self.collection_feedback.eta_storage_node = eta + (travel_time - delta_time)
-                    self.collection_action.publish_feedback(self.collection_feedback)
-                delta_time = now_time - start_time
-                rospy.sleep(self.loop_timeout)
             self.curr_node = route_nodes[i + 1]
+            position[0] = next_node_obj.pose.position.x
+            position[1] = next_node_obj.pose.position.y
+            self.publish_pose(position, orientation)
+
+            eta = sum(route_distance[i + 1:]) / self.transportation_rate
+            if stage == "picker":
+                self.collection_feedback.eta_picker_node = eta
+            elif stage == "storage":
+                self.collection_feedback.eta_storage_node = eta
+            self.collection_action.publish_feedback(self.collection_feedback)
 
         self.publish_pose(position, orientation)
         if stage == "picker":

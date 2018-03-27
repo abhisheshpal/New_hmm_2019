@@ -258,17 +258,8 @@ class Farm(object):
             # when there are robots, assign them to collect
             if self.n_robots > 0:
                 # assign each request to a robot by calling its Robot_Collection action
-                for picker_id in self.trays_full_pickers:
-                    rospy.loginfo("%s has trays full, %s is the robot assigned" %(picker_id, self.assigned_picker_robot[picker_id]))
-                    if self.assigned_picker_robot[picker_id] is None:
-                        # TODO: assign a robot to the picker
-                        for robot_id in self.robot_ids:
-                            print "5", robot_id
-                            if self.robot_statuses[robot_id].mode == 0:
-                                self.assign_robot_to_picker(robot_id, picker_id) # by sending action goal to the robot
-                    else:
-                        # a robot is already assigned and its action is checked through done_cb
-                        pass
+                # TODO: This is done in robot_info_service request
+                pass
 
             # check for any completion update of any rows
             for i in range(len(self.pickers_reported)):

@@ -490,7 +490,6 @@ class Picker(object):
         curr_node_obj = self.graph.get_node(self.curr_node)
         position[0] = curr_node_obj.pose.position.x
         position[1] = curr_node_obj.pose.position.y
-
         self.publish_pose(position, orientation)
 
         # inform farm that trays are full
@@ -501,25 +500,18 @@ class Picker(object):
         # request for the allocated robot info
         robot_id = self.robot_info_client(self.robot_info_request).robot_id
         rospy.loginfo("%s is assigned to %s" %(self.picker_id, robot_id))
+
         # wait for the robot to arrive
+        # TODO: try to check with curr_node instead of dist < 0
         while self.dist_to_robot(robot_id) > 0:
-            # publish pose
-            if self.env.now - self.prev_pub_time >= self.pub_delay:
-                curr_node_obj = self.graph.get_node(self.curr_node)
-                position[0] = curr_node_obj.pose.position.x
-                position[1] = curr_node_obj.pose.position.y
-                self.publish_pose(position, orientation)
             rospy.loginfo("distance between %s and %s: %0.1f" %(self.picker_id, robot_id, self.dist_to_robot(robot_id)))
             yield self.env.timeout(self.loop_timeout)
+        self.publish_pose(position, orientation)
 
         # If the robot is at the current node, wait for unloading time
-        start_time = self.env.now
         wait_time = self.unloading_time * self.n_trays
-        delta_time = self.env.now - start_time
-        while delta_time <= wait_time:
-            if self.prev_pub_time - self.env.now >= self.pub_delay:
-                self.publish_pose(position, orientation)
-            yield self.env.timeout(self.loop_timeout)
+        yield self.env.timeout(wait_time)
+        self.publish_pose(position, orientation)
 
         # call trays_unload service
         # The farm will in turn call the robot service to indicate the loading on robot is complete
@@ -561,8 +553,6 @@ class Picker(object):
         position[1] = curr_node_obj.pose.position.y
 
         self.publish_pose(position, orientation)
-        start_time = self.env.now
-        delta_time = self.env.now - start_time
 
         rospy.loginfo("%s requesting for accessing the local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
         with self.graph.local_storages[self.local_storage_node].request() as req:
@@ -570,12 +560,8 @@ class Picker(object):
             yield req
             rospy.loginfo("%s was granted access to local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
             unloading_time = self.unloading_time * (self.n_trays if item == "tray" else (self.n_trays + 1))
-            while delta_time <= unloading_time:
-                now_time = self.env.now
-                if now_time - self.prev_pub_time >= self.pub_delay:
-                    self.publish_pose(position, orientation)
-                yield self.env.timeout(self.loop_timeout)
-                delta_time = now_time - start_time
+            yield self.env.timeout(unloading_time)
+            self.publish_pose(position, orientation)
 
         # update tot_trays
         if item == "tray":
@@ -588,8 +574,6 @@ class Picker(object):
             self.n_trays = 0
             self.picking_progress = 0
             self.mode = 0
-
-        self.publish_pose(position, orientation)
 
         rospy.loginfo("%s finished unloading at %0.1f" %(self.picker_id, self.env.now))
         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
@@ -638,34 +622,19 @@ class Picker(object):
             # move through each edge
             curr_node_obj = self.graph.get_node(route_nodes[i])
             next_node_obj = self.graph.get_node(route_nodes[i + 1])
-            theta = math.atan2((next_node_obj.pose.position.y - curr_node_obj.pose.position.y),
-                               (next_node_obj.pose.position.x - curr_node_obj.pose.position.x))
 
             position[0] = curr_node_obj.pose.position.x
             position[1] = curr_node_obj.pose.position.y
+            self.publish_pose(position, orientation)
 
             edge_distance = route_distance[i]
             travel_time = edge_distance / nav_speed
+            yield self.env.timeout(travel_time)
 
-            self.publish_pose(position, orientation)
-            start_time = self.env.now
-            delta_time = self.env.now - start_time
-
-            while delta_time <= travel_time:
-                delta = nav_speed * delta_time
-                if delta <= edge_distance:
-                    position[0] = curr_node_obj.pose.position.x + delta * math.cos(theta)
-                    position[1] = curr_node_obj.pose.position.y + delta * math.sin(theta)
-                else:
-                    position[0] = next_node_obj.pose.position.x
-                    position[1] = next_node_obj.pose.position.y
-
-                now_time = self.env.now
-                if now_time - self.prev_pub_time >= self.pub_delay:
-                    self.publish_pose(position, orientation)
-                delta_time = now_time - start_time
-                yield self.env.timeout(self.loop_timeout)
             self.curr_node = route_nodes[i + 1]
+            position[0] = next_node_obj.pose.position.x
+            position[1] = next_node_obj.pose.position.y
+            self.publish_pose(position, orientation)
 
         yield self.env.timeout(self.process_timeout)
 
