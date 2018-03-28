@@ -126,12 +126,12 @@ if __name__ == "__main__":
                                                        picker_transportation_rate[picker_id],
                                                        picker_unloading_time[picker_id],
                                                        rasb_env, rasb_farm, topo_graph, des_env,
-                                                       robot_ids, SIM_RT_FACTOR))
+                                                       rasb_robots, SIM_RT_FACTOR))
 
     SHOW_VIS = True
     SHOW_INFO = False
     if SHOW_VIS:
-        vis = rasberry_des.visualise.Visualise_Agents(rasb_farm, topo_graph, picker_ids, robot_ids, DETAILED_VIS)
+        vis = rasberry_des.visualise.Visualise_Agents(topo_graph, rasb_robots, rasb_pickers)
 
     while not rospy.is_shutdown():
         try:
@@ -141,7 +141,7 @@ if __name__ == "__main__":
             # This seems to be unavoidable at this stage
             rasb_env.step()
             if SHOW_VIS:
-                vis.plot_update()
+                vis.update_plot()
         except simpy.core.EmptySchedule:
             if SHOW_VIS:
                 vis.close_plot()

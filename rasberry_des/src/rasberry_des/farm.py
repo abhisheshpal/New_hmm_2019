@@ -10,7 +10,6 @@ import rospy
 import geometry_msgs.msg
 import rasberry_des.msg
 import actionlib
-import actionlib_msgs.msg
 
 
 class Farm(object):
@@ -51,19 +50,6 @@ class Farm(object):
 
         self.picker_allocations = {}        # {picker_id:[row_ids]}
         self.curr_picker_allocations = {}   # {picker_id:row_id} row=None if free
-
-        # publishers / subscribers
-        self.picker_pose_subs = {}
-        self.picker_poses = {picker_id:geometry_msgs.msg.Pose() for picker_id in self.picker_ids}
-        self.picker_status_subs = {}
-        self.picker_statuses = {picker_id:rasberry_des.msg.Picker_Status() for picker_id in self.picker_ids}
-        self.init_picker_subs()
-
-        self.robot_pose_subs = {}
-        self.robot_poses = {robot_id:geometry_msgs.msg.Pose() for robot_id in self.robot_ids}
-        self.robot_status_subs = {}
-        self.robot_statuses = {robot_id:rasberry_des.msg.Robot_Status() for robot_id in self.robot_ids}
-        self.init_robot_subs()
 
         # services / clients
         self.trays_full_service = rospy.Service("trays_full", rasberry_des.srv.Trays_Full, self.trays_full)
@@ -153,50 +139,6 @@ class Farm(object):
         self.tot_trays_unloaded += n_trays
         self.trays_full_pickers.remove(picker_id)
         self.trays_full_picker_n_trays[picker_id] = 0
-
-    def init_picker_subs(self, ):
-        """initialise picker related subscribers"""
-        ns = rospy.get_namespace()
-        for picker_id in self.picker_ids:
-            self.picker_pose_subs[picker_id] = rospy.Subscriber(ns + "%s/pose"%(picker_id),
-                                                                geometry_msgs.msg.Pose,
-                                                                self.update_picker_position,
-                                                                callback_args=picker_id)
-
-            self.picker_status_subs[picker_id] = rospy.Subscriber(ns + "%s/status"%(picker_id),
-                                                                  rasberry_des.msg.Picker_Status,
-                                                                  self.update_picker_status,
-                                                                  callback_args=picker_id)
-
-    def update_picker_position(self, msg, picker_id):
-        """callback for pose topics from pickers"""
-        self.picker_poses[picker_id] = msg
-
-    def update_picker_status(self, msg, picker_id):
-        """callback for status topics from pickers"""
-        self.picker_statuses[picker_id] = msg
-
-    def init_robot_subs(self, ):
-        """initialise robot related subscribers"""
-        ns = rospy.get_namespace()
-        for robot_id in self.robot_ids:
-            self.robot_pose_subs[robot_id] = rospy.Subscriber(ns + "%s/pose"%(robot_id),
-                                                              geometry_msgs.msg.Pose,
-                                                              self.update_robot_position,
-                                                              callback_args=robot_id)
-
-            self.robot_status_subs[robot_id] = rospy.Subscriber(ns + "%s/status"%(robot_id),
-                                                                rasberry_des.msg.Robot_Status,
-                                                                self.update_robot_status,
-                                                                callback_args=robot_id)
-
-    def update_robot_position(self, msg, robot_id):
-        """callback for pose topics from robots"""
-        self.robot_poses[robot_id] = msg
-
-    def update_robot_status(self, msg, robot_id):
-        """callback for status topics from robots"""
-        self.robot_statuses[robot_id].robot_id = msg
 
     def picker_report(self, picker_id):
         """Method a picker should call when he reports to work

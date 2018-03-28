@@ -44,6 +44,13 @@ class Robot(object):
 
         self.prev_pub_time = 0.0
 
+        # parameters to check utilisation
+        self.time_spent_picking = 0.
+        self.time_spent_transportation = 0.
+        self.time_spent_idle = 0.
+        self.time_spent_loading = 0.
+        self.time_spent_unloading = 0.
+
         # service / client
         self.trays_loaded_service = rospy.Service("%s/trays_loaded" %(self.robot_id), rasberry_des.srv.Trays_Full, self.update_trays_loaded)
         rospy.loginfo("%s initialised service '%s/robot_info'" %(self.robot_id, self.robot_id))
@@ -77,21 +84,21 @@ class Robot(object):
             self.process_timeout = 0.001
             self.loop_timeout = 0.1
 
-        self.action = self.env.process(self.normal_operation())
-
-    def normal_operation(self, ):
-        ns = rospy.get_namespace()
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
-        curr_node_obj = self.graph.get_node(self.curr_node)
-        position[0] = curr_node_obj.pose.position.x
-        position[1] = curr_node_obj.pose.position.y
-
-        while rospy.get_param(ns + "des_running"):
-            now_time = self.env.now
-            if now_time - self.prev_pub_time >= self.pub_delay:
-                self.publish_pose(position, orientation)
-            yield self.env.timeout(self.process_timeout)
+#        self.action = self.env.process(self.normal_operation())
+#
+#    def normal_operation(self, ):
+#        ns = rospy.get_namespace()
+#        position = [0., 0., 0.]
+#        orientation = [0., 0., 0.]
+#        curr_node_obj = self.graph.get_node(self.curr_node)
+#        position[0] = curr_node_obj.pose.position.x
+#        position[1] = curr_node_obj.pose.position.y
+#
+#        while rospy.get_param(ns + "des_running"):
+#            now_time = self.env.now
+#            if now_time - self.prev_pub_time >= self.pub_delay:
+#                self.publish_pose(position, orientation)
+#            yield self.env.timeout(self.process_timeout)
 
     def update_trays_loaded(self, srv):
         self.load_info.append((srv.picker_id, srv.n_trays))
@@ -101,6 +108,8 @@ class Robot(object):
         return self.trays_loaded_response
 
     def collect_n_unload(self, goal):
+        """collection_action execute_cb"""
+        # TODO: check action server implementation
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
 

@@ -18,7 +18,7 @@ class Picker(object):
     """Picker class definition"""
     def __init__(self, picker_id, tray_capacity, max_n_trays,
                  picking_rate, transportation_rate, unloading_time,
-                 env, farm, topo_graph, des_env, robot_ids, sim_rt_factor=1.0):
+                 env, farm, topo_graph, des_env, robots, sim_rt_factor=1.0):
         """Create a Picker object
 
         Keyword arguments:
@@ -34,7 +34,11 @@ class Picker(object):
         self.picker_id = picker_id
         self.env = env
         self.farm = farm
-        self.robot_ids = robot_ids
+        self.robots = {}
+        self.robot_ids = []
+        for robot in robots:
+            robot_id = robot.robot_id
+            self.robots[robot_id] = robot
         self.n_rows = 0
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
@@ -64,7 +68,12 @@ class Picker(object):
 
         self.picking_progress = 0.  # percentage of tray_capacity
 
-        self.prev_pub_time = 0.
+        # parameters to check utilisation
+        self.time_spent_picking = 0.
+        self.time_spent_transportation = 0.
+        self.time_spent_idle = 0.
+        self.time_spent_loading = 0.
+        self.time_spent_unloading = 0.
 
         if des_env == "simpy":
             self.pub_delay = 1.0
@@ -74,28 +83,6 @@ class Picker(object):
             self.pub_delay = max(0.25, 0.25 / sim_rt_factor)
             self.process_timeout = 0.001
             self.loop_timeout = 0.1
-
-        # publishers / subscribers
-        ns = rospy.get_namespace()
-        self.pose_pub = rospy.Publisher(ns + "%s/pose" %(self.picker_id),
-                                        geometry_msgs.msg.Pose,
-                                        queue_size=10)
-        self.status_pub = rospy.Publisher(ns + "%s/status" %(self.picker_id),
-                                          rasberry_des.msg.Picker_Status,
-                                          queue_size=10)
-
-        self.pose = geometry_msgs.msg.Pose()
-        self.status = rasberry_des.msg.Picker_Status()
-        self.init_status_attribute(picking_rate, transportation_rate)
-
-        self.robot_pose_subscribers = {}
-        self.robot_poses = {}
-        for robot_id in self.robot_ids:
-            self.robot_poses[robot_id] = geometry_msgs.msg.Pose()
-            self.robot_pose_subscribers[robot_id] = rospy.Subscriber(ns + "%s/pose" %(robot_id),
-                                                                     geometry_msgs.msg.Pose,
-                                                                     self.update_robot_position,
-                                                                     callback_args=robot_id)
 
         # services / clients
         # client of farm service - trays_full
@@ -288,13 +275,6 @@ class Picker(object):
 
                     self.picking_dir = "forward"
 
-            # publish pose
-            if (self.curr_node is not None) and (self.env.now - self.prev_pub_time >= self.pub_delay):
-                curr_node_obj = self.graph.get_node(self.curr_node)
-                position[0] = curr_node_obj.pose.position.x
-                position[1] = curr_node_obj.pose.position.y
-                self.publish_pose(position, orientation)
-
             yield self.env.timeout(self.process_timeout)
 
     def pickers_without_robots(self, ):
@@ -469,13 +449,6 @@ class Picker(object):
 
                     self.picking_dir = "forward"
 
-            # publish pose
-            if (self.curr_node is not None) and (self.env.now - self.prev_pub_time >= self.pub_delay):
-                curr_node_obj = self.graph.get_node(self.curr_node)
-                position[0] = curr_node_obj.pose.position.x
-                position[1] = curr_node_obj.pose.position.y
-                self.publish_pose(position, orientation)
-
             yield self.env.timeout(self.process_timeout)
 
     def load_on_robot(self, ):
@@ -485,13 +458,6 @@ class Picker(object):
 
         item -- unload "tray" or "all"; "tray" is normal, "all" only when no more rows are free
         """
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
-        curr_node_obj = self.graph.get_node(self.curr_node)
-        position[0] = curr_node_obj.pose.position.x
-        position[1] = curr_node_obj.pose.position.y
-        self.publish_pose(position, orientation)
-
         # inform farm that trays are full
         self.trays_full_request.n_trays = self.n_trays
         self.trays_full_request.curr_node = self.curr_node
@@ -506,12 +472,10 @@ class Picker(object):
         while self.dist_to_robot(robot_id) > 0:
             rospy.loginfo("distance between %s and %s: %0.1f" %(self.picker_id, robot_id, self.dist_to_robot(robot_id)))
             yield self.env.timeout(self.loop_timeout)
-        self.publish_pose(position, orientation)
 
         # If the robot is at the current node, wait for unloading time
         wait_time = self.unloading_time * self.n_trays
         yield self.env.timeout(wait_time)
-        self.publish_pose(position, orientation)
 
         # call trays_unloaded service
         # The farm will in turn call the robot service to indicate the loading on robot is complete
@@ -520,8 +484,6 @@ class Picker(object):
         self.tot_trays += self.max_n_trays
         self.n_trays -= self.max_n_trays
         self.trays_unloaded_client(self.trays_unloaded_request)
-
-        self.publish_pose(position, orientation)
 
         rospy.loginfo("%s finished loading trays on %s at %0.1f" %(self.picker_id, robot_id, self.env.now))
         rospy.loginfo("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.picker_id,
@@ -533,13 +495,16 @@ class Picker(object):
 
     def dist_to_robot(self, robot_id):
         """return Eucledian distance between robot's pose and picker's pose"""
-        robot_x = self.robot_poses[robot_id].position.x
-        robot_y = self.robot_poses[robot_id].position.y
+        robot_node = self.robots[robot_id].curr_node
+        robot_node_obj = self.graph.get_node(robot_node)
+        robot_x = robot_node_obj.pose.position.x
+        robot_y = robot_node_obj.pose.position.y
+
         curr_node_obj = self.graph.get_node(self.curr_node)
         curr_x = curr_node_obj.pose.position.x
         curr_y = curr_node_obj.pose.position.y
-        dist = math.hypot((robot_x - curr_x), (robot_y - curr_y))
-        return dist
+
+        return math.hypot((robot_x - curr_x), (robot_y - curr_y))
 
     def unload(self, item="tray"):
         """Picker's unloading process at the local storage node
@@ -548,14 +513,6 @@ class Picker(object):
 
         item -- unload "tray" or "all"; "tray" is normal, "all" only when no more rows are free
         """
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
-        curr_node_obj = self.graph.get_node(self.curr_node)
-        position[0] = curr_node_obj.pose.position.x
-        position[1] = curr_node_obj.pose.position.y
-
-        self.publish_pose(position, orientation)
-
         rospy.loginfo("%s requesting for accessing the local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
         with self.graph.local_storages[self.local_storage_node].request() as req:
             # wait for permission to acces local storage, no pose publishing in between
@@ -563,7 +520,6 @@ class Picker(object):
             rospy.loginfo("%s was granted access to local storage %s at %0.1f" %(self.picker_id, self.local_storage_node, self.env.now))
             unloading_time = self.unloading_time * (self.n_trays if item == "tray" else (self.n_trays + 1))
             yield self.env.timeout(unloading_time)
-            self.publish_pose(position, orientation)
 
         # update tot_trays
         if item == "tray":
@@ -587,30 +543,6 @@ class Picker(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def publish_pose(self, position, orientation):
-        """This method publishes the current position of the picker. Called only at nodes"""
-        self.pose.position.x = position[0]
-        self.pose.position.y = position[1]
-        self.pose.position.z = position[2]
-        quaternion = tf.transformations.quaternion_from_euler(orientation[0], orientation[1],
-                                                              orientation[2])
-        self.pose.orientation.x = quaternion[0]
-        self.pose.orientation.y = quaternion[1]
-        self.pose.orientation.z = quaternion[2]
-        self.pose.orientation.w = quaternion[3]
-        self.pose_pub.publish(self.pose)
-
-        # update variables in status and publish
-        self.status.picking_progress = self.picking_progress / self.tray_capacity
-        self.status.n_trays = self.n_trays
-        self.status.tot_trays = self.tot_trays
-        self.status.n_rows = self.n_rows
-        self.status.curr_row = "%s" %(self.curr_row)
-        self.status_pub.publish(self.status)
-        self.status.mode = self.mode
-
-        self.prev_pub_time = self.env.now
-
     def go_to_node(self, goal_node, nav_speed):
         """Simpy process to Mimic moving to the goal_node by publishing new position based on speed
 
@@ -620,25 +552,13 @@ class Picker(object):
         """
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
         for i in range(len(route_nodes) - 1):
             # move through each edge
-            curr_node_obj = self.graph.get_node(route_nodes[i])
-            next_node_obj = self.graph.get_node(route_nodes[i + 1])
-
-            position[0] = curr_node_obj.pose.position.x
-            position[1] = curr_node_obj.pose.position.y
-            self.publish_pose(position, orientation)
-
             edge_distance = route_distance[i]
             travel_time = edge_distance / nav_speed
             yield self.env.timeout(travel_time)
 
             self.curr_node = route_nodes[i + 1]
-            position[0] = next_node_obj.pose.position.x
-            position[1] = next_node_obj.pose.position.y
-            self.publish_pose(position, orientation)
 
         yield self.env.timeout(self.process_timeout)
 
@@ -672,13 +592,3 @@ class Picker(object):
         self.row_path = []
         self.n_rows += 1
         self.mode = 0
-
-    def update_robot_position(self, msg, robot_id):
-        """callback for pose topics from robots"""
-        self.robot_poses[robot_id].position.x = msg.position.x
-        self.robot_poses[robot_id].position.y = msg.position.y
-        self.robot_poses[robot_id].position.z = msg.position.z
-        self.robot_poses[robot_id].orientation.x = msg.orientation.x
-        self.robot_poses[robot_id].orientation.y = msg.orientation.y
-        self.robot_poses[robot_id].orientation.z = msg.orientation.z
-        self.robot_poses[robot_id].orientation.w = msg.orientation.w
