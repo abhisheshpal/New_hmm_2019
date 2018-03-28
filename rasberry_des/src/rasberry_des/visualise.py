@@ -73,6 +73,9 @@ class Visualise_Agents(object):
         # show the plot
         matplotlib.pyplot.show(block=False)
 
+    def close_plot(self, ):
+        matplotlib.pyplot.close(self.fig)
+
     def init_plot(self, ):
         """Initialise the plot frame"""
         farm_rows_x, farm_rows_y = [], []

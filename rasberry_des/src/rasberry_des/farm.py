@@ -68,21 +68,21 @@ class Farm(object):
         # services / clients
         self.trays_full_service = rospy.Service("trays_full", rasberry_des.srv.Trays_Full, self.trays_full)
         rospy.loginfo("farm initialised service 'trays_full'")
-        self.trays_unload_service = rospy.Service("trays_unload", rasberry_des.srv.Trays_Full, self.trays_unload)
-        rospy.loginfo("farm initialised service 'trays_unload'")
+        self.trays_unloaded_service = rospy.Service("trays_unloaded", rasberry_des.srv.Trays_Full, self.trays_unloaded)
+        rospy.loginfo("farm initialised service 'trays_unloaded'")
         self.robot_info_service = rospy.Service("robot_info", rasberry_des.srv.Robot_Info, self.send_robot_info)
         rospy.loginfo("farm initialised service 'robot_info'")
 
         self.trays_full_response = rasberry_des.srv.Trays_FullResponse()
-        self.trays_unload_response = rasberry_des.srv.Trays_FullResponse()
+        self.trays_unloaded_response = rasberry_des.srv.Trays_FullResponse()
         self.robot_info_response = rasberry_des.srv.Robot_InfoResponse()
 
-        self.robot_tray_loaded_clients = {}
+        self.robot_trays_loaded_clients = {}
         for robot_id in self.robot_ids:
-            self.robot_tray_loaded_clients[robot_id] = rospy.ServiceProxy("%s/tray_loaded" %(robot_id), rasberry_des.srv.Trays_Full)
-            rospy.loginfo("%s waiting for %s/tray_loaded service" %("farm", robot_id))
-            rospy.wait_for_service("%s/tray_loaded" %(robot_id))
-            rospy.loginfo("farm connected to service %s/tray_loaded" %(robot_id))
+            self.robot_trays_loaded_clients[robot_id] = rospy.ServiceProxy("%s/trays_loaded" %(robot_id), rasberry_des.srv.Trays_Full)
+            rospy.loginfo("%s waiting for %s/trays_loaded service" %("farm", robot_id))
+            rospy.wait_for_service("%s/trays_loaded" %(robot_id))
+            rospy.loginfo("farm connected to service %s/trays_loaded" %(robot_id))
 
         # action client
         self.robot_collection_clients = {}
@@ -115,11 +115,15 @@ class Farm(object):
         The assigned robot's id is sent as response to the picker
         """
         self.robot_info_response.robot_id = None
-        for robot_id in self.robot_ids:
-            if self.assigned_robot_picker[robot_id] is None:
-                self.assign_robot_to_picker(robot_id, srv.picker_id) # by sending action goal to the robot
-                self.robot_info_response.robot_id = robot_id
-                break
+        robot_assigned = False
+        while not robot_assigned:
+            for robot_id in self.robot_ids:
+                if self.assigned_robot_picker[robot_id] is None:
+                    self.assign_robot_to_picker(robot_id, srv.picker_id) # by sending action goal to the robot
+                    self.robot_info_response.robot_id = robot_id
+                    robot_assigned = True
+                    break
+            rospy.sleep(0.001)
         rospy.loginfo("%s, %s" %(srv.picker_id, self.robot_info_response.robot_id))
         return self.robot_info_response
 
@@ -130,8 +134,8 @@ class Farm(object):
         self.trays_full_picker_nodes[srv.picker_id] = srv.curr_node
         return self.trays_full_response
 
-    def trays_unload(self, srv):
-        """callback function for trays_unload service"""
+    def trays_unloaded(self, srv):
+        """callback function for trays_unloaded service"""
         # picker is calling this only from row nodes
         if self.n_robots > 0:
             # if there is a robot assigned to the picker, call its trays_loaded service
@@ -139,11 +143,10 @@ class Farm(object):
             request = rasberry_des.srv.Trays_FullRequest()
             request.picker_id = srv.picker_id
             request.n_trays = srv.n_trays
-            print "2", robot_id
-            self.robot_tray_loaded_clients[robot_id](request)
+            self.robot_trays_loaded_clients[robot_id](request)
         else:
             self.update_tray_counts(srv.picker_id, srv.n_trays)
-        return self.trays_unload_response
+        return self.trays_unloaded_response
 
     def update_tray_counts(self, picker_id, n_trays):
         """update tray counts after unloading"""
@@ -229,13 +232,11 @@ class Farm(object):
         collection_goal.picker_node = self.trays_full_picker_nodes[picker_id]
         collection_goal.local_storage_node = self.graph.local_storage_nodes[self.curr_picker_allocations[picker_id]]
         self.assigned_picker_robot[picker_id] = robot_id
-        print "3", robot_id
         self.assigned_robot_picker[robot_id] = picker_id
         self.robot_collection_clients[robot_id].send_goal(collection_goal, done_cb=self.collection_done)
 
     def collection_done(self, state, result):
         robot_id = result.robot_id
-        print "4", robot_id
         picker_id = self.assigned_robot_picker[robot_id]
         n_trays = self.trays_full_picker_n_trays[picker_id]
         self.update_tray_counts(picker_id, n_trays)
@@ -253,7 +254,7 @@ class Farm(object):
             1. do a periodic checking of completion status of rows
             2. allocate free pickers to one of the unallocated rows
         """
-
+        ns = rospy.get_namespace()
         while True:
             # when there are robots, assign them to collect
             if self.n_robots > 0:
@@ -282,6 +283,7 @@ class Farm(object):
                                                                                     self.row_finish_time[row_id]))
             if self.finished_picking():
                 # once all rows are picked finish the process
+                rospy.set_param(ns + "des_running", False)
                 break
 
             # allocate, if there are rows yet to be allocated

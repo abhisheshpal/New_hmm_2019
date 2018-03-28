@@ -106,13 +106,13 @@ class Picker(object):
         self.trays_full_request = rasberry_des.srv.Trays_FullRequest()
         self.trays_full_request.picker_id = self.picker_id
 
-        # client of farm service - trays_unload
-        rospy.loginfo("%s waiting for %s service" %(self.picker_id, "trays_unload"))
-        rospy.wait_for_service("trays_unload")
-        self.trays_unload_client = rospy.ServiceProxy("trays_unload", rasberry_des.srv.Trays_Full)
-        rospy.loginfo("%s conencted to %s service" %(self.picker_id, "trays_unload"))
-        self.trays_unload_request = rasberry_des.srv.Trays_FullRequest()
-        self.trays_unload_request.picker_id = self.picker_id
+        # client of farm service - trays_unloaded
+        rospy.loginfo("%s waiting for %s service" %(self.picker_id, "trays_unloaded"))
+        rospy.wait_for_service("trays_unloaded")
+        self.trays_unloaded_client = rospy.ServiceProxy("trays_unloaded", rasberry_des.srv.Trays_Full)
+        rospy.loginfo("%s conencted to %s service" %(self.picker_id, "trays_unloaded"))
+        self.trays_unloaded_request = rasberry_des.srv.Trays_FullRequest()
+        self.trays_unloaded_request.picker_id = self.picker_id
 
         # client of farm service - robot_info
         rospy.loginfo("%s waiting for %s service" %(self.picker_id, "robot_info"))
@@ -182,7 +182,7 @@ class Picker(object):
 
                     # if max_n_trays is reached
                     if self.n_trays == self.max_n_trays:
-                        # inform farm about trays_full, robot_info, trays_unload
+                        # inform farm about trays_full, robot_info, trays_unloaded
                         yield self.env.process(self.load_on_robot())
 
                         # if full rows, and at first or last row, and at the end node,
@@ -227,7 +227,7 @@ class Picker(object):
                         self.n_trays += 1
 
                         if self.n_trays == self.max_n_trays:
-                            # inform farm about trays_full, robot_info, trays_unload
+                            # inform farm about trays_full, robot_info, trays_unloaded
                             yield self.env.process(self.load_on_robot())
 
                             if self.curr_row is None:
@@ -513,10 +513,13 @@ class Picker(object):
         yield self.env.timeout(wait_time)
         self.publish_pose(position, orientation)
 
-        # call trays_unload service
+        # call trays_unloaded service
         # The farm will in turn call the robot service to indicate the loading on robot is complete
-        self.trays_unload_request.n_trays = self.n_trays
-        self.trays_unload_request.curr_node = self.curr_node
+        self.trays_unloaded_request.n_trays = self.max_n_trays
+        self.trays_unloaded_request.curr_node = self.curr_node
+        self.tot_trays += self.max_n_trays
+        self.n_trays -= self.max_n_trays
+        self.trays_unloaded_client(self.trays_unloaded_request)
 
         self.publish_pose(position, orientation)
 
@@ -530,7 +533,6 @@ class Picker(object):
 
     def dist_to_robot(self, robot_id):
         """return Eucledian distance between robot's pose and picker's pose"""
-        print robot_id, self.robot_poses[robot_id]
         robot_x = self.robot_poses[robot_id].position.x
         robot_y = self.robot_poses[robot_id].position.y
         curr_node_obj = self.graph.get_node(self.curr_node)
@@ -565,9 +567,11 @@ class Picker(object):
 
         # update tot_trays
         if item == "tray":
+            self.trays_unloaded_request.n_trays = self.max_n_trays
+            self.trays_unloaded_request.curr_node = self.curr_node
             self.tot_trays += self.max_n_trays
             self.n_trays -= self.max_n_trays
-            self.trays_unload_client(self.picker_id, self.n_trays)
+            self.trays_unloaded_client(self.trays_unloaded_request)
 
         elif item == "all":
             self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity

@@ -92,6 +92,9 @@ if __name__ == "__main__":
         raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
 
+    # param for picking_status
+    rospy.set_param(ns + "des_running", True)
+
     # assuming a fork graph with a head lane
     local_storages = [simpy.Resource(rasb_env, capacity=n_pickers) for i in range(n_local_storages)]
 
@@ -140,6 +143,9 @@ if __name__ == "__main__":
             if SHOW_VIS:
                 vis.plot_update()
         except simpy.core.EmptySchedule:
+            if SHOW_VIS:
+                vis.close_plot()
+            rospy.signal_shutdown("Quit")
             break
         except rospy.ROSInterruptException:
             break

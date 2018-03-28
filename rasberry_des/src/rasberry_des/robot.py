@@ -45,17 +45,16 @@ class Robot(object):
         self.prev_pub_time = 0.0
 
         # service / client
-        self.trays_loaded_service = rospy.Service("%s/tray_loaded" %(self.robot_id), rasberry_des.srv.Trays_Full, self.update_trays_loaded)
+        self.trays_loaded_service = rospy.Service("%s/trays_loaded" %(self.robot_id), rasberry_des.srv.Trays_Full, self.update_trays_loaded)
         rospy.loginfo("%s initialised service '%s/robot_info'" %(self.robot_id, self.robot_id))
         self.load_info = []
-        self.trays_loaded_reponse = rasberry_des.srv.Trays_FullResponse()
+        self.trays_loaded_response = rasberry_des.srv.Trays_FullResponse()
 
         # action server / client
         self.collection_action = actionlib.SimpleActionServer("%s/collection" %(self.robot_id),
                                                               rasberry_des.msg.Robot_CollectionAction,
                                                               execute_cb=self.collect_n_unload, auto_start=False)
         rospy.loginfo("%s initialised action server '%s/collection'" %(self.robot_id, self.robot_id))
-        self.collection_goal = rasberry_des.msg.Robot_CollectionGoal()
         self.collection_result = rasberry_des.msg.Robot_CollectionResult()
         self.collection_result.robot_id = self.robot_id
         self.collection_feedback = rasberry_des.msg.Robot_CollectionFeedback()
@@ -81,13 +80,14 @@ class Robot(object):
         self.action = self.env.process(self.normal_operation())
 
     def normal_operation(self, ):
+        ns = rospy.get_namespace()
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
         curr_node_obj = self.graph.get_node(self.curr_node)
         position[0] = curr_node_obj.pose.position.x
         position[1] = curr_node_obj.pose.position.y
 
-        while True:
+        while rospy.get_param(ns + "des_running"):
             now_time = self.env.now
             if now_time - self.prev_pub_time >= self.pub_delay:
                 self.publish_pose(position, orientation)
@@ -98,63 +98,148 @@ class Robot(object):
         self.n_empty_trays -= srv.n_trays
         self.n_full_trays += srv.n_trays
         self.loaded = True
-        return self.tray_loaded_resposnse()
+        return self.trays_loaded_response
 
     def collect_n_unload(self, goal):
         position = [0., 0., 0.]
         orientation = [0., 0., 0.]
 
-        self.collection_goal = goal
         self.mode = 1
 
         # feedbacks
-        _, _, distance_to_picker = self.graph.get_path_details(self.curr_node, self.collection_goal.picker_node)
+        _, _, distance_to_picker = self.graph.get_path_details(self.curr_node, goal.picker_node)
         self.collection_feedback.eta_picker_node = sum(distance_to_picker) / self.transportation_rate
-        _, _, distance_to_storage = self.graph.get_path_details(self.collection_goal.picker_node, self.collection_goal.local_storage_node)
+        _, _, distance_to_storage = self.graph.get_path_details(goal.picker_node, goal.local_storage_node)
         self.collection_feedback.eta_local_storage_node = sum(distance_to_storage) / self.transportation_rate
         self.collection_action.publish_feedback(self.collection_feedback)
 
-        if (not self.collection_action.is_active()) or (self.collection_action.is_preempt_requested()):
-            rospy.loginfo("%s's goal is inactive or pre-empted" %(self.robot_id))
-            return
+        stage = "go_to_picker" # "load_trays", "go_to_storage", "unload_trays"
+        while not rospy.is_shutdown():
+            if (not self.collection_action.is_active()) or (self.collection_action.is_preempt_requested()):
+                rospy.loginfo("%s's goal is inactive or pre-empted" %(self.robot_id))
+                return
 
-        # go to the picker_node
-        self.go_to_node_with_feedback(self.collection_goal.picker_node, "picker")
+            if stage == "go_to_picker":
+                # go to the picker_node
+                rospy.loginfo("%s started moving to %s" %(self.robot_id, goal.picker_node))
+                route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
+                                                                                    goal.picker_node)
+                for i in range(len(route_nodes) - 1):
+                    # move through each edge
+                    curr_node_obj = self.graph.get_node(route_nodes[i])
+                    next_node_obj = self.graph.get_node(route_nodes[i + 1])
 
-        # picker knows which robot is coming and when the robot's pose is his node, he will
-        # request the trays_unload service from farm, which in turn will call the service tray_loaded
-        # this will set self.loaded
-        while not self.loaded:
+                    position[0] = curr_node_obj.pose.position.x
+                    position[1] = curr_node_obj.pose.position.y
+                    self.publish_pose(position, orientation)
+
+                    edge_distance = route_distance[i]
+                    travel_time = edge_distance / self.transportation_rate
+
+                    eta = sum(route_distance[i:]) / self.transportation_rate
+                    self.collection_feedback.eta_picker_node = eta
+                    self.collection_action.publish_feedback(self.collection_feedback)
+
+                    # travel the node distance
+                    rospy.sleep(travel_time)
+
+                    self.curr_node = route_nodes[i + 1]
+                    position[0] = next_node_obj.pose.position.x
+                    position[1] = next_node_obj.pose.position.y
+                    self.publish_pose(position, orientation)
+
+                    eta = sum(route_distance[i + 1:]) / self.transportation_rate
+                    self.collection_feedback.eta_picker_node = eta
+                    self.collection_action.publish_feedback(self.collection_feedback)
+
+                self.publish_pose(position, orientation)
+                self.collection_feedback.eta_picker_node = 0.
+                self.collection_action.publish_feedback(self.collection_feedback)
+
+                rospy.loginfo("%s reached %s. waiting for the picker to load trays" %(self.robot_id, goal.picker_id))
+                stage = "load_trays"
+            elif stage == "load_trays":
+                # picker knows which robot is coming and when the robot's pose is his node, he will
+                # request the trays_unload service from farm, which in turn will call the service trays_loaded
+                # this will set self.loaded
+                if self.loaded:
+                    rospy.loginfo("Trays are loaded on %s" %(self.robot_id))
+                    stage = "go_to_storage"
+            elif stage == "go_to_storage":
+                # go to local storage node
+                # wait for unloading time
+                # send success
+                rospy.loginfo("%s going to local storage %s" %(self.robot_id, goal.local_storage_node))
+
+                route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
+                                                                                    goal.local_storage_node)
+                for i in range(len(route_nodes) - 1):
+                    # move through each edge
+                    curr_node_obj = self.graph.get_node(route_nodes[i])
+                    next_node_obj = self.graph.get_node(route_nodes[i + 1])
+
+                    position[0] = curr_node_obj.pose.position.x
+                    position[1] = curr_node_obj.pose.position.y
+                    self.publish_pose(position, orientation)
+
+                    edge_distance = route_distance[i]
+                    travel_time = edge_distance / self.transportation_rate
+
+                    eta = sum(route_distance[i:]) / self.transportation_rate
+                    self.collection_feedback.eta_local_storage_node = eta
+                    self.collection_action.publish_feedback(self.collection_feedback)
+
+                    # travel the node distance
+                    rospy.sleep(travel_time)
+
+                    self.curr_node = route_nodes[i + 1]
+                    position[0] = next_node_obj.pose.position.x
+                    position[1] = next_node_obj.pose.position.y
+                    self.publish_pose(position, orientation)
+
+                    eta = sum(route_distance[i + 1:]) / self.transportation_rate
+                    self.collection_feedback.eta_local_storage_node = eta
+                    self.collection_action.publish_feedback(self.collection_feedback)
+
+                self.publish_pose(position, orientation)
+                self.collection_feedback.eta_local_storage_node = 0.
+                self.collection_action.publish_feedback(self.collection_feedback)
+
+                rospy.loginfo("%s reached local storage %s" %(self.robot_id, goal.local_storage_node))
+                stage = "unload_trays"
+            elif stage == "unload_trays":
+                wait_time = self.unloading_time * self.n_full_trays
+                curr_node_obj = self.graph.get_node(self.curr_node)
+                position[0] = curr_node_obj.pose.position.x
+                position[1] = curr_node_obj.pose.position.y
+                self.publish_pose(position, orientation)
+
+                self.collection_feedback.eta_picker_node = 0.
+                self.collection_feedback.eta_local_storage_node = 0.
+                self.collection_action.publish_feedback(self.collection_feedback)
+
+                rospy.sleep(wait_time)
+
+                # update tray counts
+                self.tot_trays += self.n_full_trays
+                self.n_empty_trays += self.n_full_trays
+                self.n_full_trays = 0
+
+                self.loaded = False
+                self.mode = 0
+
+                # send success
+                self.collection_action.set_succeeded(self.collection_result)
+                rospy.loginfo("%s completed unloading trays at local storage" %(self.robot_id))
+                break
+
             curr_node_obj = self.graph.get_node(self.curr_node)
             position[0] = curr_node_obj.pose.position.x
             position[1] = curr_node_obj.pose.position.y
+
             if self.prev_pub_time - self.env.now >= self.pub_delay:
                 self.publish_pose(position, orientation)
                 self.collection_action.publish_feedback(self.collection_feedback)
-            pass
-
-        # publish pose and feedback
-        self.publish_pose(position, orientation)
-        self.collection_action.publish_feedback(self.collection_feedback)
-
-        # go to local storage node
-        # wait for unloading time
-        # send success
-        self.go_to_node_with_feedback(self.collection_goal.local_storage_node, "storage")
-        wait_time = self.unloading_time * self.n_full_trays
-        self.wait_with_feedback(wait_time)
-
-        # update tray counts
-        self.tot_trays += self.n_full_trays
-        self.n_empty_trays += self.n_full_trays
-        self.n_full_trays = 0
-
-        self.loaded = False
-        self.mode = 0
-
-        # send success
-#        self.collection_result.success = True
-        self.collection_action.set_succeeded(self.collection_result)
 
     def wait_with_feedback(self, wait_time):
         position = [0., 0., 0.]
@@ -164,7 +249,7 @@ class Robot(object):
         position[1] = curr_node_obj.pose.position.y
 
         self.collection_feedback.eta_picker_node = 0.
-        self.collection_feedback.eta_storage_node = 0.
+        self.collection_feedback.eta_local_storage_node = 0.
 
         yield self.env.timeout(wait_time)
         self.publish_pose(position, orientation)
@@ -176,6 +261,7 @@ class Robot(object):
         Keyword arguments:
         goal_node -- node to reach from current node
         """
+        rospy.loginfo("%s, %s, %s" %(self.robot_id, goal_node, stage))
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
         position = [0., 0., 0.]
@@ -196,7 +282,7 @@ class Robot(object):
             if stage == "picker":
                 self.collection_feedback.eta_picker_node = eta
             elif stage == "storage":
-                self.collection_feedback.eta_storage_node = eta
+                self.collection_feedback.eta_local_storage_node = eta
             self.collection_action.publish_feedback(self.collection_feedback)
 
             # travel the node distance
@@ -211,15 +297,16 @@ class Robot(object):
             if stage == "picker":
                 self.collection_feedback.eta_picker_node = eta
             elif stage == "storage":
-                self.collection_feedback.eta_storage_node = eta
+                self.collection_feedback.eta_local_storage_node = eta
             self.collection_action.publish_feedback(self.collection_feedback)
 
         self.publish_pose(position, orientation)
         if stage == "picker":
             self.collection_feedback.eta_picker_node = 0.
         elif stage == "storage":
-            self.collection_feedback.eta_storage_node = 0.
+            self.collection_feedback.eta_local_storage_node = 0.
         self.collection_action.publish_feedback(self.collection_feedback)
+        yield self.env.timeout(self.process_timeout)
 
     def publish_pose(self, position, orientation):
         """This method publishes the current position of the picker. Called only at nodes"""
