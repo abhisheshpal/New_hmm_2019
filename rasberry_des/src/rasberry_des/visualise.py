@@ -26,14 +26,14 @@ class Visualise_Agents(object):
         self.graph = topo_graph
 
         self.fig = matplotlib.pyplot.figure()
-        self.ax = self.fig.add_subplot(111)
+        self.ax = self.fig.add_subplot(111, frameon=False)
         self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'normal', 'size': 8,}
 
         self.static_lines = []
-        self.picker_position_lines = {}
-        self.picker_status_texts = {}
-        self.robot_position_lines = {}
-        self.robot_status_texts = {}
+        self.picker_position_lines = []
+        self.picker_status_texts = []
+        self.robot_position_lines = []
+        self.robot_status_texts = []
 
         self.init_plot()
 #        self.ani = matplotlib.animation.FuncAnimation(fig=self.fig, init_func=self.init_plot, func=self.update_plot)
@@ -42,6 +42,7 @@ class Visualise_Agents(object):
         matplotlib.pyplot.show(block=False)
 
     def close_plot(self, ):
+        self.ani.save("des.mp4")
         matplotlib.pyplot.close(self.fig)
 
     def init_plot(self, ):
@@ -113,8 +114,8 @@ class Visualise_Agents(object):
         # limits of the axes
         self.ax.set_xlim(min_x - 1, max_x + 1)
         self.ax.set_ylim(min_y - 1, max_y + 1)
-        self.fig.set_figheight(max_y - min_y + 2)
-        self.fig.set_figwidth(max_x - min_x + 2)
+#        self.fig.set_figheight(max_y - min_y + 2)
+#        self.fig.set_figwidth(max_x - min_x + 2)
 
         # static objects - nodes
         # nav_rows
@@ -134,7 +135,8 @@ class Visualise_Agents(object):
                      markeredgecolor="r", linestyle="none")[0])
         # dynamic objects - pickers and robots
         # pickers
-        for picker in self.pickers:
+        for i in range(self.n_pickers):
+            picker = self.pickers[i]
             picker_id = picker.picker_id
             if picker.curr_node is not None:
                 curr_node_obj = self.graph.get_node(picker.curr_node)
@@ -143,15 +145,16 @@ class Visualise_Agents(object):
             else:
                 x = y = 0.
 
-            self.picker_position_lines[picker_id] = self.ax.plot(x, y,
+            self.picker_position_lines.append(self.ax.plot(x, y,
                                                                  color="blue", marker="8",
                                                                  markersize=20,
                                                                  markeredgecolor="r",
-                                                                 linestyle="none")[0]
-            self.picker_status_texts[picker_id] = self.ax.text(x -0.75, y + 0.3,
-                                                               "P_%s" %(picker_id[-2:]), fontdict=self.font)
+                                                                 linestyle="none")[0])
+            self.picker_status_texts.append(self.ax.text(x -0.75, y + 0.3,
+                                                               "P_%s" %(picker_id[-2:]), fontdict=self.font))
         # robots
-        for robot in self.robots:
+        for i in range(self.n_robots):
+            robot = self.robots[i]
             robot_id = robot.robot_id
             if robot.curr_node is not None:
                 curr_node_obj = self.graph.get_node(robot.curr_node)
@@ -160,17 +163,19 @@ class Visualise_Agents(object):
             else:
                 x = y = 0.
 
-            self.robot_position_lines[robot_id] = self.ax.plot(x, y,
+            self.robot_position_lines.append(self.ax.plot(x, y,
                                                                  color="green", marker="*",
                                                                  markersize=20,
                                                                  markeredgecolor="r",
-                                                                 linestyle="none")[0]
-            self.robot_status_texts[robot_id] = self.ax.text(x - 0.75, y + 0.3,
-                                                                 "R_%s" %(robot_id[-2:]), fontdict=self.font)
+                                                                 linestyle="none")[0])
+            self.robot_status_texts.append(self.ax.text(x - 0.75, y + 0.3,
+                                                                 "R_%s" %(robot_id[-2:]), fontdict=self.font))
+        self.fig.canvas.draw()
+        return self.static_lines + self.picker_position_lines + self.picker_status_texts + self.robot_position_lines + self.robot_status_texts
 
     def update_plot(self, *args):
-        for picker in self.pickers:
-            picker_id = picker.picker_id
+        for i in range(self.n_pickers):
+            picker = self.pickers[i]
             if picker.curr_node is not None:
                 curr_node_obj = self.graph.get_node(picker.curr_node)
                 x = curr_node_obj.pose.position.x
@@ -178,18 +183,19 @@ class Visualise_Agents(object):
             else:
                 x = y = 0.
 
-            self.picker_position_lines[picker_id].set_data(x, y)
-            self.picker_status_texts[picker_id].set_position((x - 0.75, y + 0.3))
+            self.picker_position_lines[i].set_data(x, y)
+            self.picker_status_texts[i].set_position((x - 0.75, y + 0.3))
 
-        for robot in self.robots:
-            robot_id = robot.robot_id
+        for i in range(self.n_robots):
+            robot = self.robots[i]
             if robot.curr_node is not None:
                 curr_node_obj = self.graph.get_node(robot.curr_node)
                 x = curr_node_obj.pose.position.x
                 y = curr_node_obj.pose.position.y
             else:
                 x = y = 0.
-            self.robot_position_lines[robot_id].set_data(x, y)
-            self.robot_status_texts[robot_id].set_position((x - 0.75, y + 0.3))
+            self.robot_position_lines[i].set_data(x, y)
+            self.robot_status_texts[i].set_position((x - 0.75, y + 0.3))
 
         self.fig.canvas.draw()
+        return self.static_lines + self.picker_position_lines + self.picker_status_texts + self.robot_position_lines + self.robot_status_texts

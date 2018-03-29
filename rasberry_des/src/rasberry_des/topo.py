@@ -39,7 +39,7 @@ class TopologicalForkGraph(object):
         self.n_topo_nav_rows = n_topo_nav_rows
         self.head_nodes = {}        # {row_id:head_node}
         self.row_nodes = {}         # {row_id:[row_nodes]}
-        # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist]}
+        # row_info {row_id:[head_node, start_node, end_node, local_storage_node]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
         self.yield_at_node = {}
@@ -58,9 +58,8 @@ class TopologicalForkGraph(object):
                 break
 
         if self.topo_map:
-            self.get_row_info()
+            self.get_row_info(local_storages)
             self.set_node_yields(_node_yields)
-            self.set_local_storages(local_storages)
             self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
         else:
             rospy.ROSException(ns + "topological_map topic not received")
@@ -84,18 +83,33 @@ class TopologicalForkGraph(object):
                     self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
                 else:
                     # between the last two nodes, the distance could be smaller than node_dist
-                    row_node_dist = self.row_info[row_id][3]
-                    last_node_dist = self.row_info[row_id][4]
+                    row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
+                                                                self.row_nodes[row_id][1])
+                    last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
+                                                                 self.row_nodes[row_id][-1])
                     self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
 
-    def set_local_storages(self, local_storages):
-        """set_local_storages: set the local_storage_nodes {row_id:storage_node_id} and
-        local_storages {storage_node_id: simpy.Resource}
+    def get_row_info(self, local_storages):
+        """get_row_info: Get information about each row
+        {row_id: [head_node, start_node, end_node, local_storage_node]}
+
+        Also sets
+          head_nodes {row_id:head_node}
+          row_nodes {row_id:[row_nodes]}
+          local_storages = {local_storage_node:simpy.Resource}
 
         Keyword arguments:
 
         local_storages -- simpy.Resource objects, list
         """
+        # TODO: meta information is not queried from the db now.
+        # The row and head node names are hard coded now
+        # An ugly way to sort the nodes is implemented
+        # get_nodes in topological_utils.queries might be useful to get nodes with same tag
+        self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
+        self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
+
+        # set local storages
         n_local_storages = len(local_storages)
 
         storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
@@ -109,17 +123,6 @@ class TopologicalForkGraph(object):
                 self.local_storage_nodes["row-%02d" %(row)] = storage_row
             self.local_storages[storage_row] = local_storages[i]
 
-    def get_row_info(self, ):
-        """get_row_info: Get information about each row
-        {row_id: [head_node, start_node, end_node, node_dist, last_node_dist]}
-        """
-        # TODO: meta information is not queried from the db now.
-        # The row and head node names are hard coded now
-        # An ugly way to sort the nodes is implemented
-        # get_nodes in topological_utils.queries might be useful to get nodes with same tag
-        self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
-        self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
-
         for node in self.topo_map.nodes:
             for i in range(self.n_topo_nav_rows):
                 if "rn-%02d" %(i) in node.name:
@@ -127,26 +130,11 @@ class TopologicalForkGraph(object):
 
         for row_id in self.row_ids:
             self.row_nodes[row_id].sort()
-            n_row_nodes = len(self.row_nodes[row_id])
-            if n_row_nodes > 2:
-                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                self.row_nodes[row_id][1])
-
-                last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
-                                                                 self.row_nodes[row_id][-1])
-            elif n_row_nodes == 2:
-                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                self.row_nodes[row_id][1])
-
-                last_node_dist = row_node_dist
-            else:
-                row_node_dist = last_node_dist = 0.
 
             self.row_info[row_id] = [self.head_nodes[row_id],
                                      self.row_nodes[row_id][0],
                                      self.row_nodes[row_id][-1],
-                                     row_node_dist,
-                                     last_node_dist]
+                                     self.local_storage_nodes[row_id]]
 
     def get_path_details(self, start_node, goal_node):
         """get route_nodes, route_edges and route_distance from start_node to goal_node

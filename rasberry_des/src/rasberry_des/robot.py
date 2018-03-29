@@ -5,13 +5,7 @@
 # @date:
 # ----------------------------------
 
-import math
 import rospy
-import geometry_msgs.msg
-import rasberry_des.msg
-import tf
-import actionlib
-
 
 class Robot(object):
     """Robot class definition"""
@@ -25,24 +19,13 @@ class Robot(object):
         self.n_empty_trays = self.max_n_trays
         self.n_full_trays = 0
         self.tot_trays = 0
-
-        # publishers / subscribers
-        self.pose_pub = rospy.Publisher('/%s/pose' %(self.robot_id),
-                                        geometry_msgs.msg.Pose,
-                                        queue_size=10)
-        self.pose = geometry_msgs.msg.Pose()
-
-        self.status_pub = rospy.Publisher('/%s/status' %(self.robot_id),
-                                          rasberry_des.msg.Robot_Status,
-                                          queue_size=10)
-        self.status = rasberry_des.msg.Robot_Status()
-        self.status.robot_id = self.robot_id
-        self.status.transportation_rate = transportation_rate
         self.unloading_time = unloading_time
-        self.status.n_empty_trays = self.n_empty_trays
-        self.status.n_full_trays = self.n_full_trays
 
         self.prev_pub_time = 0.0
+
+        # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
+        # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
+        self.mode = 0
 
         # parameters to check utilisation
         self.time_spent_picking = 0.
@@ -50,26 +33,11 @@ class Robot(object):
         self.time_spent_idle = 0.
         self.time_spent_loading = 0.
         self.time_spent_unloading = 0.
+        self.time_spent_charging = 0.
+        self.time_spend_working = lambda :self.time_spent_loading + self.time_spent_transportation + self.time_spent_unloading
 
-        # service / client
-        self.trays_loaded_service = rospy.Service("%s/trays_loaded" %(self.robot_id), rasberry_des.srv.Trays_Full, self.update_trays_loaded)
-        rospy.loginfo("%s initialised service '%s/robot_info'" %(self.robot_id, self.robot_id))
-        self.load_info = []
-        self.trays_loaded_response = rasberry_des.srv.Trays_FullResponse()
-
-        # action server / client
-        self.collection_action = actionlib.SimpleActionServer("%s/collection" %(self.robot_id),
-                                                              rasberry_des.msg.Robot_CollectionAction,
-                                                              execute_cb=self.collect_n_unload, auto_start=False)
-        rospy.loginfo("%s initialised action server '%s/collection'" %(self.robot_id, self.robot_id))
-        self.collection_result = rasberry_des.msg.Robot_CollectionResult()
-        self.collection_result.robot_id = self.robot_id
-        self.collection_feedback = rasberry_des.msg.Robot_CollectionFeedback()
-        self.collection_feedback.robot_id = self.robot_id
-        self.collection_action.start()
-
-        self.mode = 0   # 0 - free, 1 - busy, 2 - charging
         self.loaded = False
+        self.picking_finished = False # this will be modified by farm
 
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
@@ -84,258 +52,192 @@ class Robot(object):
             self.process_timeout = 0.001
             self.loop_timeout = 0.1
 
-#        self.action = self.env.process(self.normal_operation())
-#
-#    def normal_operation(self, ):
-#        ns = rospy.get_namespace()
-#        position = [0., 0., 0.]
-#        orientation = [0., 0., 0.]
-#        curr_node_obj = self.graph.get_node(self.curr_node)
-#        position[0] = curr_node_obj.pose.position.x
-#        position[1] = curr_node_obj.pose.position.y
-#
-#        while rospy.get_param(ns + "des_running"):
-#            now_time = self.env.now
-#            if now_time - self.prev_pub_time >= self.pub_delay:
-#                self.publish_pose(position, orientation)
-#            yield self.env.timeout(self.process_timeout)
+        self.battery_charge = 100.0
 
-    def update_trays_loaded(self, srv):
-        self.load_info.append((srv.picker_id, srv.n_trays))
-        self.n_empty_trays -= srv.n_trays
-        self.n_full_trays += srv.n_trays
-        self.loaded = True
-        return self.trays_loaded_response
+        # parameters related to a picking operation
+        self.assigned_picker_id = None
+        self.assigned_picker_node = None
+        self.assgined_picker_loading_time = 0.
+        self.assigned_picker_n_trays = 0
+        self.assigned_local_storage_node = None
 
-    def collect_n_unload(self, goal):
-        """collection_action execute_cb"""
-        # TODO: check action server implementation
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
+        self.action = self.env.process(self.normal_operation())
 
-        self.mode = 1
-
-        # feedbacks
-        _, _, distance_to_picker = self.graph.get_path_details(self.curr_node, goal.picker_node)
-        self.collection_feedback.eta_picker_node = sum(distance_to_picker) / self.transportation_rate
-        _, _, distance_to_storage = self.graph.get_path_details(goal.picker_node, goal.local_storage_node)
-        self.collection_feedback.eta_local_storage_node = sum(distance_to_storage) / self.transportation_rate
-        self.collection_action.publish_feedback(self.collection_feedback)
-
-        stage = "go_to_picker" # "load_trays", "go_to_storage", "unload_trays"
-        while not rospy.is_shutdown():
-            if (not self.collection_action.is_active()) or (self.collection_action.is_preempt_requested()):
-                rospy.loginfo("%s's goal is inactive or pre-empted" %(self.robot_id))
-                return
-
-            if stage == "go_to_picker":
-                # go to the picker_node
-                rospy.loginfo("%s started moving to %s" %(self.robot_id, goal.picker_node))
-                route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
-                                                                                    goal.picker_node)
-                for i in range(len(route_nodes) - 1):
-                    # move through each edge
-                    curr_node_obj = self.graph.get_node(route_nodes[i])
-                    next_node_obj = self.graph.get_node(route_nodes[i + 1])
-
-                    position[0] = curr_node_obj.pose.position.x
-                    position[1] = curr_node_obj.pose.position.y
-                    self.publish_pose(position, orientation)
-
-                    edge_distance = route_distance[i]
-                    travel_time = edge_distance / self.transportation_rate
-
-                    eta = sum(route_distance[i:]) / self.transportation_rate
-                    self.collection_feedback.eta_picker_node = eta
-                    self.collection_action.publish_feedback(self.collection_feedback)
-
-                    # travel the node distance
-                    rospy.sleep(travel_time)
-
-                    self.curr_node = route_nodes[i + 1]
-                    position[0] = next_node_obj.pose.position.x
-                    position[1] = next_node_obj.pose.position.y
-                    self.publish_pose(position, orientation)
-
-                    eta = sum(route_distance[i + 1:]) / self.transportation_rate
-                    self.collection_feedback.eta_picker_node = eta
-                    self.collection_action.publish_feedback(self.collection_feedback)
-
-                self.publish_pose(position, orientation)
-                self.collection_feedback.eta_picker_node = 0.
-                self.collection_action.publish_feedback(self.collection_feedback)
-
-                rospy.loginfo("%s reached %s. waiting for the picker to load trays" %(self.robot_id, goal.picker_id))
-                stage = "load_trays"
-            elif stage == "load_trays":
-                # picker knows which robot is coming and when the robot's pose is his node, he will
-                # request the trays_unload service from farm, which in turn will call the service trays_loaded
-                # this will set self.loaded
-                if self.loaded:
-                    rospy.loginfo("Trays are loaded on %s" %(self.robot_id))
-                    stage = "go_to_storage"
-            elif stage == "go_to_storage":
-                # go to local storage node
-                # wait for unloading time
-                # send success
-                rospy.loginfo("%s going to local storage %s" %(self.robot_id, goal.local_storage_node))
-
-                route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
-                                                                                    goal.local_storage_node)
-                for i in range(len(route_nodes) - 1):
-                    # move through each edge
-                    curr_node_obj = self.graph.get_node(route_nodes[i])
-                    next_node_obj = self.graph.get_node(route_nodes[i + 1])
-
-                    position[0] = curr_node_obj.pose.position.x
-                    position[1] = curr_node_obj.pose.position.y
-                    self.publish_pose(position, orientation)
-
-                    edge_distance = route_distance[i]
-                    travel_time = edge_distance / self.transportation_rate
-
-                    eta = sum(route_distance[i:]) / self.transportation_rate
-                    self.collection_feedback.eta_local_storage_node = eta
-                    self.collection_action.publish_feedback(self.collection_feedback)
-
-                    # travel the node distance
-                    rospy.sleep(travel_time)
-
-                    self.curr_node = route_nodes[i + 1]
-                    position[0] = next_node_obj.pose.position.x
-                    position[1] = next_node_obj.pose.position.y
-                    self.publish_pose(position, orientation)
-
-                    eta = sum(route_distance[i + 1:]) / self.transportation_rate
-                    self.collection_feedback.eta_local_storage_node = eta
-                    self.collection_action.publish_feedback(self.collection_feedback)
-
-                self.publish_pose(position, orientation)
-                self.collection_feedback.eta_local_storage_node = 0.
-                self.collection_action.publish_feedback(self.collection_feedback)
-
-                rospy.loginfo("%s reached local storage %s" %(self.robot_id, goal.local_storage_node))
-                stage = "unload_trays"
-            elif stage == "unload_trays":
-                wait_time = self.unloading_time * self.n_full_trays
-                curr_node_obj = self.graph.get_node(self.curr_node)
-                position[0] = curr_node_obj.pose.position.x
-                position[1] = curr_node_obj.pose.position.y
-                self.publish_pose(position, orientation)
-
-                self.collection_feedback.eta_picker_node = 0.
-                self.collection_feedback.eta_local_storage_node = 0.
-                self.collection_action.publish_feedback(self.collection_feedback)
-
-                rospy.sleep(wait_time)
-
-                # update tray counts
-                self.tot_trays += self.n_full_trays
-                self.n_empty_trays += self.n_full_trays
-                self.n_full_trays = 0
-
-                self.loaded = False
-                self.mode = 0
-
-                # send success
-                self.collection_action.set_succeeded(self.collection_result)
-                rospy.loginfo("%s completed unloading trays at local storage" %(self.robot_id))
+    def normal_operation(self, ):
+        """normal operation sequences of the robot in different modes"""
+        self.idle_start_time = self.env.now
+        while True:
+            if rospy.is_shutdown():
                 break
 
-            curr_node_obj = self.graph.get_node(self.curr_node)
-            position[0] = curr_node_obj.pose.position.x
-            position[1] = curr_node_obj.pose.position.y
+            if self.picking_finished and (self.mode == 0 or self.mode == 5):
+                break
 
-            if self.prev_pub_time - self.env.now >= self.pub_delay:
-                self.publish_pose(position, orientation)
-                self.collection_action.publish_feedback(self.collection_feedback)
+            if self.mode == 0:
+                # check for assignments
+                if self.assigned_picker_id is not None:
+                    self.time_spent_idle += self.env.now - self.idle_start_time
+                    # change mode to transport to picker
+                    self.mode = 1
+                    rospy.loginfo("%s is assigned to %s" %(self.robot_id, self.assigned_picker_id))
 
-    def wait_with_feedback(self, wait_time):
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
-        curr_node_obj = self.graph.get_node(self.curr_node)
-        position[0] = curr_node_obj.pose.position.x
-        position[1] = curr_node_obj.pose.position.y
+                # TODO: idle state battery charge changes
+                if self.battery_charge <= 40:
+                    self.time_spent_idle += self.env.now - self.idle_start_time
+                    # change mode to charging
+                    self.mode = 5
 
-        self.collection_feedback.eta_picker_node = 0.
-        self.collection_feedback.eta_local_storage_node = 0.
+            elif self.mode == 1:
+                # farm assigns the robot to a picker by calling assign_robot_to_picker
+                # go to picker_node from curr_node
+                rospy.loginfo("%s going to %s" %(self.robot_id, self.assigned_picker_node))
+                yield self.env.process(self.go_to_node(self.assigned_picker_node))
+                rospy.loginfo("%s reached %s" %(self.robot_id, self.assigned_picker_node))
+                # change mode to waiting_for_loading
+                self.mode = 2
 
-        yield self.env.timeout(wait_time)
-        self.publish_pose(position, orientation)
-        self.collection_action.publish_feedback(self.collection_feedback)
+            elif self.mode == 2:
+                rospy.loginfo("%s is waiting for the trays to be loaded" %(self.robot_id))
+                yield self.env.process(self.wait_for_loading()) # this reset mode to 3
+                rospy.loginfo("trays are loaded on %s" %(self.robot_id))
+                # change mode to transporting to storage
+                self.mode = 3
 
-    def go_to_node_with_feedback(self, goal_node, stage):
-        """Simpy process to Mimic moving to the goal_node by publishing new position
+            elif self.mode == 3:
+                # go to local_storage_node from picker_node
+                rospy.loginfo("%s going to %s" %(self.robot_id, self.assigned_local_storage_node))
+                yield self.env.process(self.go_to_node(self.assigned_local_storage_node))
+                rospy.loginfo("%s reached %s" %(self.robot_id, self.assigned_local_storage_node))
+                # change mode to unloading
+                self.mode = 4
+
+            elif self.mode == 4:
+                # wait for unloading
+                rospy.loginfo("%s is waiting for the trays to be unloaded" %(self.robot_id))
+                yield self.env.process(self.wait_for_unloading()) # this reset mode to 0
+                rospy.loginfo("trays are unloaded from %s" %(self.robot_id))
+                # change mode to idle
+                self.mode = 0
+                self.idle_start_time = self.env.now
+
+            elif self.mode == 5:
+                yield self.env.process(self.charging_process())
+                # charging complete - now change mode to 0
+                self.mode = 0
+                self.idle_start_time = self.env.now
+
+            yield self.env.timeout(self.process_timeout)
+
+    def assign_robot_to_picker(self, picker_id, picker_node, loading_time, n_trays, local_storage_node):
+        """assign a picker to the robot, if it is idle - called by farm"""
+        assert self.mode == 0
+        self.assigned_picker_id = picker_id
+        self.assigned_picker_node = picker_node
+        self.assigned_picker_loading_time = loading_time
+        self.assigned_picker_n_trays = n_trays
+        self.assigned_local_storage_node = local_storage_node
+        self.time_spent_idle += self.env.now - self.idle_start_time
+
+    def go_to_node(self, goal_node):
+        """Simpy process to Mimic moving to the goal_node
 
         Keyword arguments:
         goal_node -- node to reach from current node
         """
-        rospy.loginfo("%s, %s, %s" %(self.robot_id, goal_node, stage))
+        start_time = self.env.now
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                     goal_node)
-        position = [0., 0., 0.]
-        orientation = [0., 0., 0.]
         for i in range(len(route_nodes) - 1):
             # move through each edge
-            curr_node_obj = self.graph.get_node(route_nodes[i])
-            next_node_obj = self.graph.get_node(route_nodes[i + 1])
-
-            position[0] = curr_node_obj.pose.position.x
-            position[1] = curr_node_obj.pose.position.y
-            self.publish_pose(position, orientation)
+            if rospy.is_shutdown():
+                break
 
             edge_distance = route_distance[i]
             travel_time = edge_distance / self.transportation_rate
 
-            eta = sum(route_distance[i:]) / self.transportation_rate
-            if stage == "picker":
-                self.collection_feedback.eta_picker_node = eta
-            elif stage == "storage":
-                self.collection_feedback.eta_local_storage_node = eta
-            self.collection_action.publish_feedback(self.collection_feedback)
-
             # travel the node distance
-            yield self.env.timeout(travel_time)
+            yield self.env.process(self.wait_out(travel_time))
 
             self.curr_node = route_nodes[i + 1]
-            position[0] = next_node_obj.pose.position.x
-            position[1] = next_node_obj.pose.position.y
-            self.publish_pose(position, orientation)
 
-            eta = sum(route_distance[i + 1:]) / self.transportation_rate
-            if stage == "picker":
-                self.collection_feedback.eta_picker_node = eta
-            elif stage == "storage":
-                self.collection_feedback.eta_local_storage_node = eta
-            self.collection_action.publish_feedback(self.collection_feedback)
-
-        self.publish_pose(position, orientation)
-        if stage == "picker":
-            self.collection_feedback.eta_picker_node = 0.
-        elif stage == "storage":
-            self.collection_feedback.eta_local_storage_node = 0.
-        self.collection_action.publish_feedback(self.collection_feedback)
+        self.time_spent_transportation += self.env.now - start_time
         yield self.env.timeout(self.process_timeout)
 
-    def publish_pose(self, position, orientation):
-        """This method publishes the current position of the picker. Called only at nodes"""
-        self.pose.position.x = position[0]
-        self.pose.position.y = position[1]
-        self.pose.position.z = position[2]
-        quaternion = tf.transformations.quaternion_from_euler(orientation[0], orientation[1],
-                                                              orientation[2])
-        self.pose.orientation.x = quaternion[0]
-        self.pose.orientation.y = quaternion[1]
-        self.pose.orientation.z = quaternion[2]
-        self.pose.orientation.w = quaternion[3]
-        self.pose_pub.publish(self.pose)
+    def wait_out(self, wait_time):
+        """wait for a given time"""
+        start_time = self.env.now
+        delta_time = self.env.now - start_time
+        while True:
+            if rospy.is_shutdown():
+                break
+            if delta_time >= wait_time:
+                break
+            else:
+                delta_time = self.env.now - start_time
+                yield self.env.timeout(self.loop_timeout)
+        self.env.timeout(self.process_timeout)
 
-        # status publisher
-        self.status.n_empty_trays = self.n_empty_trays
-        self.status.n_full_trays = self.n_full_trays
-        self.status.tot_trays = self.tot_trays
-        self.status.mode = self.mode
-        self.status.loaded = self.loaded
-        self.status_pub.publish(self.status)
+    def wait_for_loading(self, ):
+        """wait until picker loads trays and confirms it"""
+        start_time = self.env.now
+        while True:
+            # wait until picker calls loading_complete
+            if rospy.is_shutdown():
+                break
+            if self.loaded:
+                break
+            else:
+                # TODO: battery decay
+                yield self.env.timeout(self.loop_timeout)
+        self.time_spent_loading += self.env.now - start_time
 
-        self.prev_pub_time = self.env.now
+        yield self.env.timeout(self.process_timeout)
+
+    def trays_loaded(self, ):
+        """picker calls this to indicate the trays are loaded"""
+        self.n_empty_trays -= self.assigned_picker_n_trays
+        self.n_full_trays += self.assigned_picker_n_trays
+        self.loaded = True
+
+    def wait_for_unloading(self, ):
+        """wait for unloading the trays at the local storage"""
+        start_time = self.env.now
+        with self.graph.local_storages[self.assigned_local_storage_node].request as req:
+            # request to access local storage
+            yield req
+            # access to local storage is granted
+            unloading_time = self.unloading_time * self.assigned_picker_n_trays
+            yield self.env.process(self.wait_out(unloading_time))
+            self.time_spent_unloading += self.env.now - start_time
+        self.trays_unloaded()
+        yield self.env.timeout(self.process_timeout)
+
+    def trays_unloaded(self, ):
+        """update tray counts and assignments"""
+        self.n_empty_trays += self.assigned_picker_n_trays
+        self.n_full_trays -= self.assigned_picker_n_trays
+        self.assigned_picker_id = None
+        self.assigned_picker_node = None
+        self.assigned_picker_n_trays = 0
+        self.assigned_picker_loading_time = 0.
+        self.assigned_local_storage_node = None
+        self.loaded = False
+
+    def charging_process(self, ):
+        """charging process"""
+        start_time = self.env.now
+        while True:
+            if rospy.is_shutdown():
+                break
+            yield self.env.timeout(1)
+            self.battery_charge += 1
+
+            if self.battery_charge == 100.:
+                break
+
+        self.time_spent_charging += self.env.now - start_time
+        yield self.env.timeout(self.process_timeout)
+
+    def inform_picking_finished(self, ):
+        """called by farm - scheduler to indicate all rows are now picked"""
+        self.picking_finished = True
