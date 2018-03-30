@@ -10,18 +10,16 @@ import rospy
 class Robot(object):
     """Robot class definition"""
     def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env,
-                 topo_graph, des_env, sim_rt_factor=1.0):
+                 topo_graph, des_env):
         self.robot_id = robot_id
         self.env = env
         self.graph = topo_graph
-        self.transportation_rate = transportation_rate * sim_rt_factor
+        self.transportation_rate = transportation_rate
         self.max_n_trays = max_n_trays
         self.n_empty_trays = self.max_n_trays
         self.n_full_trays = 0
         self.tot_trays = 0
         self.unloading_time = unloading_time
-
-        self.prev_pub_time = 0.0
 
         # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
         # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
@@ -48,7 +46,7 @@ class Robot(object):
             self.process_timeout = 0.001
             self.loop_timeout = 1.0
         elif des_env == "ros":
-            self.pub_delay = max(0.25, 0.25 / sim_rt_factor)
+            self.pub_delay = 0.25
             self.process_timeout = 0.001
             self.loop_timeout = 0.1
 

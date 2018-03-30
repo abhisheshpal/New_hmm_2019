@@ -8,8 +8,6 @@
 
 import math
 import rospy
-import rasberry_des.msg
-import rasberry_des.srv
 
 
 class Picker(object):
@@ -21,23 +19,27 @@ class Picker(object):
 
         Keyword arguments:
         picker_id -- name/id of the picker
-        env -- simpy.Environment
-        farm -- provides the allocation and monitor process as well as a graph.
         try_capacity -- capacity of the tray picker is carrying
         max_n_trays -- number of trays with the picker
         picking_rate -- rate at which the picker moves while picking
         transportation_rate -- rate at which the picker moves while transporting
         unloading_time -- time the picker will spend at the local storage for unloading
+        env -- simpy.Environment
+        topo_graph -- TopologicalForkGraph object
+        des_env -- simpy environment
+        robots -- list of robot agents
         """
         self.picker_id = picker_id
         self.env = env
-        self.farm = farm
+
         self.robots = {}
         self.robot_ids = []
         self.n_robots = len(robots)
         for robot in robots:
             robot_id = robot.robot_id
+            self.robot_ids.append(robot_id)
             self.robots[robot_id] = robot
+
         self.n_rows = 0
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
@@ -78,8 +80,13 @@ class Picker(object):
         self.time_spent_idle = 0.
         self.time_spent_loading = 0.
         self.time_spent_unloading = 0.
-        self.time_spent_charging = 0.
         self.time_spend_working = lambda :self.time_spent_loading + self.time_spent_transportation + self.time_spent_unloading
+
+        self.picking_start_time = 0.
+        self.transportation_start_time = 0.
+        self.idle_start_time = 0.
+        self.loading_start_time = 0.
+        self.unloading_start_time = 0.
 
         if des_env == "simpy":
             self.pub_delay = 1.0
@@ -99,7 +106,7 @@ class Picker(object):
         else:
             self.action = self.env.process(self.pickers_with_robots())
 
-    def assign_row_to_picker(self, row_id):
+    def allocate_row_to_picker(self, row_id):
         assert self.mode == 0
         self.curr_row = row_id
         self.curr_row_info = self.graph.row_info[row_id]
@@ -153,7 +160,7 @@ class Picker(object):
 
     def dist_to_robot(self, ):
         """return Eucledian distance between robot's pose and picker's pose"""
-        robot_node = self.robots[self.assigned_robot].curr_node
+        robot_node = self.robots[self.assigned_robot_id].curr_node
 
         if robot_node == self.curr_node:
             return 0
@@ -168,6 +175,15 @@ class Picker(object):
             curr_y = curr_node_obj.pose.position.y
 
             return math.hypot((robot_x - curr_x), (robot_y - curr_y))
+
+    def update_trays_loaded(self, ):
+        self.tot_trays += self.n_trays
+        self.n_trays = 0
+
+    def reset_robot_assignment(self, ):
+        # To ensure the picker won't have a robot assigned, the next time the
+        # picker's trays are full and the current robot has not unloaded yet
+        self.assigned_robot_id = None
 
     def normal_operation(self, ):
         """ Picker's picking process when there are robots to carry full trays
@@ -200,7 +216,7 @@ class Picker(object):
                 elif self.curr_row is not None:
                     self.time_spent_idle += self.env.now - self.idle_start_time
                     self.mode = 1 # transporting to a row_node from curr_node
-                    rospy.loginfo("%s is assigned to %s" %(self.picker_id, self.curr_row))
+                    rospy.loginfo("%s is allocated to %s" %(self.picker_id, self.curr_row))
 
             elif self.mode == 1:
                 # from curr_node go to a row_node (self.goal_node) and continue picking
@@ -320,13 +336,15 @@ class Picker(object):
 
             elif self.mode == 5:
                 # wait for a robot for loading full trays
-                if self.assigned_robot is not None:
+                if self.assigned_robot_id is not None:
                     # wait for the robot to arrive
                     if self.dist_to_robot() == 0:
                         wait_time = self.unloading_time * self.n_trays
                         yield self.env.process(self.wait_out(wait_time))
                         self.time_spent_loading += self.env.now - self.loading_start_time
+                        self.robots[self.assigned_robot_id].trays_loaded()
                         self.update_trays_loaded()
+                        self.reset_robot_assignment() # reset only within this agent, farm monitors whether the robot completes the unloading
 
                         if self.curr_row is not None:
                             self.mode = 2
@@ -334,10 +352,6 @@ class Picker(object):
                         else:
                             self.mode = 0
                             self.idle_start_time = self.env.now
-
-    def update_trays_loaded(self, ):
-
-        self.loaded = True
 
     def go_to_node(self, goal_node, nav_speed):
         """Simpy process to Mimic moving to the goal_node by publishing new position based on speed
@@ -361,8 +375,6 @@ class Picker(object):
     def finished_row_routine(self, ):
         """Common things to do when picking along the allocated row is finished
         """
-        # trigger finished_rows event for the curr_row
-        self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
         # some attributes are reset
         self.picking_dir = None
         self.prev_row = "" + self.curr_row
@@ -370,7 +382,6 @@ class Picker(object):
         self.curr_row = None
         self.row_path = []
         self.n_rows += 1
-        self.mode = 0
 
     def inform_picking_finished(self, ):
         """called by farm - scheduler to indicate all rows are now picked"""
