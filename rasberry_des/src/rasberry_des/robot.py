@@ -9,8 +9,8 @@ import rospy
 
 class Robot(object):
     """Robot class definition"""
-    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time, env,
-                 topo_graph, des_env):
+    def __init__(self, robot_id, transportation_rate, max_n_trays, unloading_time,
+                 env, topo_graph):
         self.robot_id = robot_id
         self.env = env
         self.graph = topo_graph
@@ -32,30 +32,24 @@ class Robot(object):
         self.time_spent_loading = 0.
         self.time_spent_unloading = 0.
         self.time_spent_charging = 0.
-        self.time_spend_working = lambda :self.time_spent_loading + self.time_spent_transportation + self.time_spent_unloading
+        self.time_spent_working = lambda: self.time_spent_loading + self.time_spent_transportation + self.time_spent_unloading
 
         self.loaded = False
         self.picking_finished = False # this will be modified by farm
+        self.allocation_finished = False
 
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
         self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
 
-        if des_env == "simpy":
-            self.pub_delay = 1.0
-            self.process_timeout = 0.001
-            self.loop_timeout = 1.0
-        elif des_env == "ros":
-            self.pub_delay = 0.25
-            self.process_timeout = 0.001
-            self.loop_timeout = 0.1
+        self.process_timeout = 0.001
+        self.loop_timeout = 1.
 
         self.battery_charge = 100.0
 
         # parameters related to a picking operation
         self.assigned_picker_id = None
         self.assigned_picker_node = None
-        self.assgined_picker_loading_time = 0.
         self.assigned_picker_n_trays = 0
         self.assigned_local_storage_node = None
 
@@ -124,14 +118,14 @@ class Robot(object):
                 self.mode = 0
                 self.idle_start_time = self.env.now
 
-            yield self.env.timeout(self.process_timeout)
+            yield self.env.timeout(self.loop_timeout)
+        yield self.env.timeout(self.process_timeout)
 
-    def assign_robot_to_picker(self, picker_id, picker_node, loading_time, n_trays, local_storage_node):
-        """assign a picker to the robot, if it is idle - called by farm"""
+    def assign_robot_to_picker(self, picker_id, picker_node, n_trays, local_storage_node):
+        """assign a picker to the robot, if it is idle - called by scheduler"""
         assert self.mode == 0
         self.assigned_picker_id = picker_id
         self.assigned_picker_node = picker_node
-        self.assigned_picker_loading_time = loading_time
         self.assigned_picker_n_trays = n_trays
         self.assigned_local_storage_node = local_storage_node
         self.time_spent_idle += self.env.now - self.idle_start_time
@@ -142,9 +136,10 @@ class Robot(object):
         Keyword arguments:
         goal_node -- node to reach from current node
         """
+        rospy.loginfo("%s going to %s from %s" %(self.robot_id, goal_node, self.curr_node))
         start_time = self.env.now
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
-                                                                                    goal_node)
+                                                                               goal_node)
         for i in range(len(route_nodes) - 1):
             # move through each edge
             if rospy.is_shutdown():
@@ -159,6 +154,7 @@ class Robot(object):
             self.curr_node = route_nodes[i + 1]
 
         self.time_spent_transportation += self.env.now - start_time
+        rospy.loginfo("%s reached %s" %(self.robot_id, goal_node))
         yield self.env.timeout(self.process_timeout)
 
     def wait_out(self, wait_time):
@@ -200,7 +196,7 @@ class Robot(object):
     def wait_for_unloading(self, ):
         """wait for unloading the trays at the local storage"""
         start_time = self.env.now
-        with self.graph.local_storages[self.assigned_local_storage_node].request as req:
+        with self.graph.local_storages[self.assigned_local_storage_node].request() as req:
             # request to access local storage
             yield req
             # access to local storage is granted
@@ -217,7 +213,6 @@ class Robot(object):
         self.assigned_picker_id = None
         self.assigned_picker_node = None
         self.assigned_picker_n_trays = 0
-        self.assigned_picker_loading_time = 0.
         self.assigned_local_storage_node = None
         self.loaded = False
 
@@ -239,3 +234,7 @@ class Robot(object):
     def inform_picking_finished(self, ):
         """called by farm - scheduler to indicate all rows are now picked"""
         self.picking_finished = True
+
+    def inform_allocation_finished(self, ):
+        """called by farm - scheduler to indicate all rows are now allocated"""
+        self.allocation_finished = True

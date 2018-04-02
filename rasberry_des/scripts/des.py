@@ -43,7 +43,7 @@ if __name__ == "__main__":
     else:
         top_map = sys.argv[1]
 
-    rospy.init_node("pickers_only", anonymous=True)
+    rospy.init_node("des", anonymous=False)
     # required des config parameters
     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
 
@@ -92,9 +92,6 @@ if __name__ == "__main__":
         raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
 
-    # param for picking_status
-    rospy.set_param(ns + "des_running", True)
-
     # assuming a fork graph with a head lane
     local_storages = [simpy.Resource(rasb_env, capacity=n_pickers) for i in range(n_local_storages)]
 
@@ -108,31 +105,29 @@ if __name__ == "__main__":
         rasb_robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
                                                     robot_max_n_trays[robot_id],
                                                     robot_unloading_time[robot_id],
-                                                    rasb_env, topo_graph,
-                                                    des_env, SIM_RT_FACTOR))
-
-    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env, des_env,
-                                       n_topo_nav_rows, topo_graph,
-                                       picker_ids, robot_ids)
-
-    rasb_env.process(rasb_farm.scheduler_monitor())
+                                                    rasb_env, topo_graph))
 
     rasb_pickers = []
-
     for picker_id in picker_ids:
         rasb_pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
                                                        picker_max_n_trays[picker_id],
                                                        picking_rate[picker_id],
                                                        picker_transportation_rate[picker_id],
                                                        picker_unloading_time[picker_id],
-                                                       rasb_env, rasb_farm, topo_graph, des_env,
-                                                       rasb_robots, SIM_RT_FACTOR))
+                                                       rasb_env, topo_graph,
+                                                       rasb_robots))
+
+    # policy - "lexographical", "shortest_distance", "utilise_all"
+    rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env,
+                                       n_topo_nav_rows, topo_graph,
+                                       rasb_robots, rasb_pickers, "lexographical")
 
     SHOW_VIS = True
     SHOW_INFO = False
     if SHOW_VIS:
         vis = rasberry_des.visualise.Visualise_Agents(topo_graph, rasb_robots, rasb_pickers)
 
+#    rasb_env.run()
     while not rospy.is_shutdown():
         try:
             # instead of env.run() we should env.step() to have any control (Ctrl+c)
@@ -156,7 +151,7 @@ if __name__ == "__main__":
         # no ros related calls here to ensure printing even when the pickers_only node is killed
         # farm details
         print("-----------------\n----%s----\n-----------------" %(rasb_farm.name))
-        print("n_pickers: %d" %(len(rasb_farm.pickers_reported)))
+        print("n_pickers: %d" %(len(rasb_pickers)))
         print("n_farm_rows: %d" %(topo_graph.n_farm_rows))
         print("n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows))
         tot_yield = 0.
@@ -167,12 +162,12 @@ if __name__ == "__main__":
             row_start_y = topo_graph.get_node(row_start_node).pose.position.y
             row_end_y = topo_graph.get_node(row_end_node).pose.position.y
             row_length = row_end_y - row_start_y
-            node_dist = topo_graph.row_info[row_id][3]
+            node_dist = topo_graph.get_distance_between_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
             print("  row_length: %0.3f m" %(row_length))
             print("  node_dist: %0.3f m" %(node_dist))
             row_yield = 0.
             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-            if (not rasb_farm.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(topo_graph.n_topo_nav_rows)):
+            if (not topo_graph.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(topo_graph.n_topo_nav_rows)):
                 for i in range(n_row_nodes):
                     row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
             else:
