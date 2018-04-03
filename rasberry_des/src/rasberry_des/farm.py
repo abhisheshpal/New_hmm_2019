@@ -92,21 +92,27 @@ class Farm(object):
             2. allocate free pickers to one of the unallocated rows
         """
         inform_allocation_finished = False
+        inform_picking_finished = False
         while True:
             if rospy.is_shutdown():
                 break
-            print "waiting", self.waiting_for_robot_pickers
-            print "idle", self.idle_robots
-            print "assigned", self.assigned_robots
+#            print "waiting", self.waiting_for_robot_pickers
+#            print "idle", self.idle_robots
+#            print "assigned", self.assigned_robots
 
-            if self.finished_picking():
+            if self.finished_picking() and not inform_picking_finished:
+                inform_picking_finished = True
+                rospy.loginfo("all rows are picked")
                 for robot_id in self.robot_ids:
                     self.robots[robot_id].inform_picking_finished()
                 for picker_id in self.picker_ids:
                     self.pickers[picker_id].inform_picking_finished()
+                rospy.loginfo("all rows picked. scheduler exiting")
+                self.env.exit("all rows are picked")
                 break
 
             if self.finished_allocating() and not inform_allocation_finished:
+                rospy.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
                 for robot_id in self.robot_ids:
                     self.robots[robot_id].inform_allocation_finished()
@@ -121,6 +127,7 @@ class Farm(object):
                     # if previously assigned any row, update its status
                     row_id = self.curr_picker_allocations[picker_id]
                     self.finished_rows.append(row_id)
+                    self.n_finished_rows += 1
                     self.row_finish_time[row_id] = self.pickers[picker_id].row_finish_time
                     self.idle_pickers.append(picker_id)
                     self.allocated_pickers.remove(picker_id)
@@ -321,7 +328,7 @@ class Farm(object):
                 i = 0
                 for row_id in self.unallocated_rows:
                     # get shortest distance picker from the row
-                    start_node = self.farm.row_info[row_id][1]
+                    start_node = self.graph.row_info[row_id][1]
                     picker_distances = self.get_disatances_from_nodes_dict(picker_nodes, start_node)
                     sorted_pickers = sorted(picker_distances.items(), key=operator.itemgetter(1))
                     # allocate to the first picker in the sorted

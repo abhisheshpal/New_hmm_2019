@@ -42,7 +42,7 @@ class Visualise_Agents(object):
         matplotlib.pyplot.show(block=False)
 
     def close_plot(self, ):
-        self.ani.save("des.mp4")
+#        self.ani.save("des.mp4")
         matplotlib.pyplot.close(self.fig)
 
     def init_plot(self, ):
@@ -168,7 +168,7 @@ class Visualise_Agents(object):
                                                                  markersize=20,
                                                                  markeredgecolor="r",
                                                                  linestyle="none")[0])
-            self.robot_status_texts.append(self.ax.text(x - 0.75, y + 0.3,
+            self.robot_status_texts.append(self.ax.text(x - 0.75, y - 0.5,
                                                                  "R_%s" %(robot_id[-2:]), fontdict=self.font))
         self.fig.canvas.draw()
         return self.static_lines + self.picker_position_lines + self.picker_status_texts + self.robot_position_lines + self.robot_status_texts
@@ -195,7 +195,7 @@ class Visualise_Agents(object):
             else:
                 x = y = 0.
             self.robot_position_lines[i].set_data(x, y)
-            self.robot_status_texts[i].set_position((x - 0.75, y + 0.3))
+            self.robot_status_texts[i].set_position((x - 0.75, y - 0.5))
 
         self.fig.canvas.draw()
         return self.static_lines + self.picker_position_lines + self.picker_status_texts + self.robot_position_lines + self.robot_status_texts

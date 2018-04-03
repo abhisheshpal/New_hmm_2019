@@ -205,15 +205,16 @@ class Picker(object):
 
             if self.mode == 0:
                 # picker is idle. wait for a row allocation or picking_finished status
-                print self.picker_id, self.picking_finished, self.curr_row
                 if self.picking_finished:
                     # go to local storage and unload all trays
                     if self.curr_node == self.local_storage_node:
                         # if already at local storage - do nothing
+                        rospy.loginfo("%s is idle and at local storage" %(self.picker_id))
                         self.mode = 4
                         self.unloading_start_time = self.env.now
                     else:
                         # go to local storage node
+                        rospy.loginfo("%s is idle and going to local storage" %(self.picker_id))
                         self.goal_node = "" + self.local_storage_node
                         self.mode = 3
                         self.transportation_start_time = self.env.now
@@ -221,9 +222,10 @@ class Picker(object):
                     self.time_spent_idle += self.env.now - self.idle_start_time
 
                 elif self.curr_row is not None:
+                    # idle picker allocated to a new row
+                    rospy.loginfo("%s is allocated to %s" %(self.picker_id, self.curr_row))
                     self.time_spent_idle += self.env.now - self.idle_start_time
                     self.mode = 1 # transporting to a row_node from curr_node
-                    rospy.loginfo("%s is allocated to %s" %(self.picker_id, self.curr_row))
 
                 elif self.allocation_finished:
                     # all rows allocated and no assignment for the picker (if there
@@ -231,10 +233,12 @@ class Picker(object):
                     # go to local storage and unload all trays
                     if self.curr_node == self.local_storage_node:
                         # if already at local storage - do nothing
+                        rospy.loginfo("%s is idle and at local storage" %(self.picker_id))
                         self.mode = 4
                         self.unloading_start_time = self.env.now
                     else:
                         # go to local storage node
+                        rospy.loginfo("%s is idle and going to local storage" %(self.picker_id))
                         self.goal_node = "" + self.local_storage_node
                         self.mode = 3
                         self.transportation_start_time = self.env.now
@@ -243,9 +247,12 @@ class Picker(object):
 
             elif self.mode == 1:
                 # from curr_node go to a row_node (self.goal_node) and continue picking
+                # goal_node is set in allocate_row
+                rospy.loginfo("%s going to %s from %s" %(self.picker_id, self.goal_node, self.curr_node))
                 yield self.env.process(self.go_to_node(self.goal_node, self.transportation_rate))
                 self.time_spent_transportation += self.env.now - self.transportation_start_time
 
+                rospy.loginfo("%s will start picking now" %(self.picker_id))
                 self.mode = 2 # picking
                 self.picking_start_time = self.env.now
 
@@ -265,19 +272,23 @@ class Picker(object):
 
                 # decide what is the next mode of action
                 if self.n_trays >= self.max_n_trays:
+                    rospy.loginfo("%s has trays full" %(self.picker_id))
                     if self.n_robots == 0:
                         # picker should go to local storage to unload
-                        # but, should he return?
+                        # but, should s/he return?
                         if self.curr_node == row_end_node:
                             # inform row complete and go to local storage node and don't return
+                            rospy.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
                             self.finished_row_routine()
                             self.goal_node = "" + self.local_storage_node
                         elif self.curr_node == dir_change_node:
                             # forward -> reverse
+                            rospy.loginfo("%s changing direction to reverse" %(self.picker_id))
                             self.picking_dir = "reverse"
                             self.goal_node = "" + self.curr_node
                         else:
                             # row not finished, so come back to curr_node and continue in same dir
+                            rospy.loginfo("%s going to %s and will return to %s" %(self.picker_id, self.local_storage_node, self.curr_node))
                             self.goal_node = "" + self.curr_node
 
                         self.mode = 3
@@ -285,23 +296,28 @@ class Picker(object):
                     else:
                         if self.curr_node == row_end_node:
                             # inform row complete
+                            rospy.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
                             self.finished_row_routine()
                         elif self.curr_node == dir_change_node:
+                            rospy.loginfo("%s changing direction to reverse" %(self.picker_id))
                             self.picking_dir = "reverse"
 
                         # go to wait_and_load_on_robot mode (5)
+                        rospy.loginfo("%s waiting for a robot to collect the trays")
                         self.mode = 5
                         self.waiting_start_time = self.env.now
 
                 else:
                     # trays not full but has the row finished? if finished, wait for next allocation
                     if self.curr_node == row_end_node:
+                        rospy.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
                         self.finished_row_routine()
                         self.mode = 0
                         self.idle_start_time = self.env.now
 
                     elif self.curr_node == dir_change_node:
                         # forward -> reverse, continue picking
+                        rospy.loginfo("%s changing direction to reverse" %(self.picker_id))
                         self.picking_dir = "reverse"
                         self.mode = 2
                         self.picking_start_time = self.env.now
@@ -331,8 +347,10 @@ class Picker(object):
                         yield req
                         if self.n_robots == 0: # without robots
                             if self.picking_finished:
+                                rospy.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
                                 wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
                             else:
+                                rospy.loginfo("%s unloading full trays at %s" %(self.picker_id, self.local_storage_node))
                                 wait_time = self.unloading_time * self.n_trays
                             yield self.env.process(self.wait_out(wait_time))
                             self.time_spent_unloading += self.env.now - self.unloading_start_time
@@ -349,6 +367,9 @@ class Picker(object):
                                 self.transportation_start_time = self.env.now
 
                         else: # with robots
+                            # this unloading will happen if s/he finished picking the last allocated row
+                            # and tray is not full
+                            rospy.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
                             wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
                             yield self.env.process(self.wait_out(wait_time))
                             self.time_spent_unloading += self.env.now - self.unloading_start_time
@@ -357,19 +378,22 @@ class Picker(object):
                             self.mode = 0
                             self.idle_start_time = self.env.now
 
-                if self.picking_finished or self.allocation_finished:
-                    self.env.exit()
+                if self.picking_finished or (self.allocation_finished and self.mode == 0):
+                    rospy.loginfo("all rows picked. %s exiting" %(self.picker_id))
+                    self.env.exit("all rows picked and idle")
                     break
 
             elif self.mode == 5:
                 # wait for the robot to arrive
                 if self.assigned_robot_id is not None:
                     if self.dist_to_robot() == 0:
+                        rospy.loginfo("%s reached %s" %(self.assigned_robot_id, self.picker_id))
                         self.time_spent_waiting += self.env.now - self.waiting_start_time
                         # wait for loading on the assigned robot
                         self.loading_start_time = self.env.now
                         wait_time = self.unloading_time * self.n_trays
                         yield self.env.process(self.wait_out(wait_time))
+                        rospy.loginfo("%s loaded full trays on %s" %(self.picker_id, self.assigned_robot_id))
                         self.time_spent_loading += self.env.now - self.loading_start_time
                         self.robots[self.assigned_robot_id].trays_loaded()
                         self.update_trays_loaded()
@@ -378,9 +402,11 @@ class Picker(object):
                         self.reset_robot_assignment()
 
                         if self.curr_row is not None:
+                            rospy.loginfo("%s will continue picking %s" %(self.picker_id, self.curr_row))
                             self.mode = 2
                             self.picking_start_time = self.env.now
                         else:
+                            rospy.loginfo("%s does not have any rows allocated" %(self.picker_id))
                             self.mode = 0
                             self.idle_start_time = self.env.now
 

@@ -120,10 +120,12 @@ if __name__ == "__main__":
     # policy - "lexographical", "shortest_distance", "utilise_all"
     rasb_farm = rasberry_des.farm.Farm("RAS-Berry", rasb_env,
                                        n_topo_nav_rows, topo_graph,
-                                       rasb_robots, rasb_pickers, "lexographical")
+#                                       rasb_robots, rasb_pickers, "lexographical")
+#                                       rasb_robots, rasb_pickers, "shortest_distance")
+                                       rasb_robots, rasb_pickers, "utilise_all")
 
     SHOW_VIS = True
-    SHOW_INFO = False
+    SHOW_INFO = True
     if SHOW_VIS:
         vis = rasberry_des.visualise.Visualise_Agents(topo_graph, rasb_robots, rasb_pickers)
 

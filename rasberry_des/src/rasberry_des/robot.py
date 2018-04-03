@@ -63,6 +63,8 @@ class Robot(object):
                 break
 
             if self.picking_finished and (self.mode == 0 or self.mode == 5):
+                rospy.loginfo("all rows picked. %s exiting" %(self.robot_id))
+                self.env.exit("all rows picked and idle")
                 break
 
             if self.mode == 0:
@@ -75,6 +77,7 @@ class Robot(object):
 
                 # TODO: idle state battery charge changes
                 if self.battery_charge <= 40:
+                    rospy.loginfo("battery low on %s, going to charging mode" %(self.robot_id))
                     self.time_spent_idle += self.env.now - self.idle_start_time
                     # change mode to charging
                     self.mode = 5
@@ -169,7 +172,7 @@ class Robot(object):
             else:
                 delta_time = self.env.now - start_time
                 yield self.env.timeout(self.loop_timeout)
-        self.env.timeout(self.process_timeout)
+        yield self.env.timeout(self.process_timeout)
 
     def wait_for_loading(self, ):
         """wait until picker loads trays and confirms it"""
