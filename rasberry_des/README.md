@@ -1,11 +1,11 @@
 **rasberry_des**
 ------------
-A rospackage for running discrete event simulation of a strawberry farm, pickers and a basic job allocation processesusing SimPy. 
+A rospackage for running discrete event simulation of a strawberry farm, pickers, robots and a basic job allocation processesusing SimPy.
 
 A topological map is created and stored in mongodb with corresponding topics and services launched using the topological navigation nodes.
 
 # Nodes:
-  1. `pickers_only.py`
+  1. `des.py`
     Based on the configuration parameters set, run either a simpy or wall-clock discrete event simulation.
   2. `check_des_config_parameters.py`
     For checking whether all configuration parameters required for the DES are set.
@@ -15,16 +15,17 @@ A topological map is created and stored in mongodb with corresponding topics and
     Node to generate `fork_map`, a topological map in the mongodb. 
 
 # Launch files
-  1. `rasberry_des_config.launch`
-  2. `pickers_only.launch`
+  1. `config.launch`
+  2. `open_field_config.launch`
+  2. `des.launch`
 
 # How to run
 
 1. Launch the `mongodb_store` nodes
   `roslaunch mongodb_store mongodb_store.launch db:=<path_to_mongo_db_storage_dir>`
 2. Launch some preliminary nodes
-  * Edit the `config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
-  * `roslaunch rasbderry_des rasberry-des_config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
+  * Edit the `config/config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
+  * `roslaunch rasbderry_des config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
 3. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
   * Launch the `topological_navigation` nodes. This will create a `topological_map` with the given name in mongodb, and nodes, edges added to the map would be with the name of the map as `pointset`.
     `roslaunch topological_navigation topological_navigation_empty_map.launch map:="<tplg_map_dataset_name>"`
@@ -58,23 +59,19 @@ A topological map is created and stored in mongodb with corresponding topics and
 5. Discrete event simulation
   * Make sure all required DES configuration parameters are set.
     `rosrun rasberry_des check_des_config_parameters.py`
-    If any parameters are not set, edit the `des_config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.
-  * Run the `pickers_only` discrete event simulation. 
-    `roslaunch rasberry_des pickers_only.launch`
+    If any parameters are not set, edit the `config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.
+  * Run the `des.py` discrete event simulation. 
+    `roslaunch rasberry_des des.launch`
 
 # Main classes:
-A `Farm` class is defined in `farm.py`:
-  1. A topological fork like map, consisting of a head lane and many rows.
-  2. A set of local storages at the centre of the head lane. 
-  3. A variable number of nodes along each row. The yield at each node is mapped as a logistic distribution.
-  4. A group of pickers who report to work.
-  5. A `scheduler_monitor` method, which is run as a process in SimPy to monitor the row_completion events from the assigned pickers and to allocate the unallocated rows to free pickers. This process ends when there are no more rows to be picked.
+`TopologicalForkMap` in `topo.py`
+`Farm` in `farm.py`
+`Picker` in `picker.py`
+`Robot` in `robot.py`
+`VisualiseAgents` in `visualise.py`
 
-A `Picker` class is defined in `picker.py`:
-  1. `picking_process`: This process first reports the arrival of picker to the farm. If a row is allocated to the picker, this process first moves the picker to the start of the assigned row from current position. Picking involves moving forward along the nodes in the row and then returning to the start of the node (picking on the other side). When the current tray is full, moves it to his cart (`max_n_trays` > 1) and when `n_trays` reach `max_n_trays` initiate `transport_process` to unload trays to local storage.
-  2. `transport_process`: This may involve one navigation to local storage (final unloading) or two navigations (from a row node to local storage and return).
-  3. When there are no more rows to be allocated in the farm, the picker dumps all berries he has picked, since the last visit to local storage, at local storage.
-  4. Each picker publishes a `/<picker_name>/pose` topic when its position is updated (reaching a node).
+# Info:
+A fork like topological map created and stored in mongodb is accessed by `TopologicalForkMap`, which in turn used by all other agent classes. This map consists of one head lane and many topological navigation rows. The length of each row, node distances and yield per node distance can be different per row - this can be configured in the `config.yaml` file. The number of pickers and robots can also be changed along with their characteristic features such as picking rate, transportation rate, loading and unloading time etc can be configured through `config.yaml`. Three possible scheduling policies are implemented now - `"lexographical", "shortest_distance", "utilise_all"`, which can be configured in `des.py`. Visualisation and logging can be enabled or disabled in `des.py`.
 
 # Known Issues:
   1. `env.step` is used to step through the DES. 
@@ -84,14 +81,16 @@ A `Picker` class is defined in `picker.py`:
      - This delay does not seem to build up over time.
 
 # TODO:
-  1. Simulate robot processes
+  1. More complex map may be defined in future using this. For example, long rows with two head lanes at both ends. A row may be assigned to two pickers who will start from either end, with associated local storage on the head lane on that side.
+
+# These may not be implemented as part of DES
+  to make the simulations faster.
+  1. ROS based communication between agents
   2. Simulate humans and robots in gazebo, which move according to the actions in the DES.
-  3. More complex map may be defined in future using this. For example, long rows with two head lanes at both ends. A row may be assigned to two pickers who will start from either end, with associated local storage on the head lane on that side.
-  4. A definition of a scheduling interface (maybe inspired by strands, ROS msgs, and ROS action definitions to
+  3. A definition of a scheduling interface (maybe inspired by strands, ROS msgs, and ROS action definitions to
 
     request tasks
     cancel tasks
     monitor task execution
 
-  8. A fake scheduler that accepts tasks and hard-assigns them to a robot
 

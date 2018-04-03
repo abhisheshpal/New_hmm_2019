@@ -154,7 +154,8 @@ if __name__ == "__main__":
     finish_time_simpy = env.now
 
     if SAVE_STATS:
-        f_handle = open("/home/gdas/M%s_P%d_R%d.dat" %(map_name, n_pickers, n_robots), "w")
+        import os
+        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d.dat" %(map_name, n_pickers, n_robots), "w")
         # no ros related calls here to ensure printing even when the pickers_only node is killed
         # farm details
         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
