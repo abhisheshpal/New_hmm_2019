@@ -9,6 +9,7 @@ import rospy
 import strands_navigation_msgs.srv
 import geometry_msgs.msg
 import numpy
+import rasberry_des.config_utils
 
 
 def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_dist,
@@ -35,49 +36,16 @@ def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_di
 
     row_ids = ["row_%02d" %(i) for i in range(n_topo_nav_rows)]
 
-    if _head_row_node_dist.__class__ == list:
-        if len(_head_row_node_dist) == n_topo_nav_rows:
-            head_row_node_dist = {row_ids[i]:_head_row_node_dist[i] for i in range(n_topo_nav_rows)}
-        elif len(_head_row_node_dist) == 1:
-            head_row_node_dist = {row_ids[i]:_head_row_node_dist[0] for i in range(n_topo_nav_rows)}
-    else:
-        raise TypeError("head_row_node_dist must be list of length %d or 1" %(n_topo_nav_rows))
-
-    if _head_node_y.__class__ == list:
-        if len(_head_node_y) == n_topo_nav_rows:
-            head_node_y = {row_ids[i]:_head_node_y[i] for i in range(n_topo_nav_rows)}
-        elif len(_head_node_y) == 1:
-            head_node_y = {row_ids[i]:_head_node_y[0] for i in range(n_topo_nav_rows)}
-    else:
-        raise TypeError("head_node_y must be list of length %d or 1" %(n_topo_nav_rows))
-
-    if _row_node_dist.__class__ == list:
-        if len(_row_node_dist) == n_topo_nav_rows:
-            row_node_dist = {row_ids[i]:_row_node_dist[i] for i in range(n_topo_nav_rows)}
-        elif len(_row_node_dist) == 1:
-            row_node_dist = {row_ids[i]:_row_node_dist[0] for i in range(n_topo_nav_rows)}
-    else:
-        raise TypeError("row_node_dist must be list of length %d or 1" %(n_topo_nav_rows))
-
-    if _row_length.__class__ == list:
-        if len(_row_length) == n_topo_nav_rows:
-            row_length = {row_ids[i]:_row_length[i] for i in range(n_topo_nav_rows)}
-        elif len(_row_length) == 1:
-            row_length = {row_ids[i]:_row_length[0] for i in range(n_topo_nav_rows)}
-    else:
-        raise TypeError("row_length must be list of length %d or 1" %(n_topo_nav_rows))
-
-    if _row_spacing.__class__ == list:
-        if len(_row_spacing) == n_topo_nav_rows:
-            row_spacing = {row_ids[i]:_row_spacing[i] for i in range(n_topo_nav_rows)}
-        elif len(_row_spacing) == 1:
-            row_spacing = {row_ids[i]:_row_spacing[0] for i in range(n_topo_nav_rows)}
-    else:
-        raise TypeError("row_spacing must be list of length %d or 1" %(n_topo_nav_rows))
+    head_row_node_dist = rasberry_des.config_utils.param_list_to_dict("head_row_node_dist", _head_row_node_dist, row_ids)
+    head_node_y = rasberry_des.config_utils.param_list_to_dict("head_node_y", _head_node_y, row_ids)
+    row_node_dist = rasberry_des.config_utils.param_list_to_dict("row_node_dist", _row_node_dist, row_ids)
+    row_length = rasberry_des.config_utils.param_list_to_dict("row_length", _row_length, row_ids)
+    row_spacing = rasberry_des.config_utils.param_list_to_dict("row_spacing", _row_spacing, row_ids)
 
     # 1. create the nodes - head_nodes and row_nodes
     x = []
     for i in range(n_topo_nav_rows):
+        rospy.loginfo("generating nodes of row-%d / %d" %(i, n_topo_nav_rows))
         row_id = row_ids[i]
         # words in node names are separated with -
         # words in tags are separated with _

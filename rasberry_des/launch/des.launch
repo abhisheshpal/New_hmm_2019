@@ -2,7 +2,7 @@
 	<!-- declare arg to be passed in -->
 	<arg name="top_map" default="fork_map"/>
 	<group ns="/">
-		<node pkg="rasberry_des" type="pickers_only.py" name="pickers_only" args="$(arg top_map)" />
+		<node pkg="rasberry_des" type="des.py" name="des" args="$(arg top_map)" />
 	</group>
 
 </launch>
