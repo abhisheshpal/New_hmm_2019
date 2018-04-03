@@ -82,14 +82,16 @@ class TopologicalForkGraph(object):
                 node_id = self.row_nodes[row_id][j]
                 # yield from each row node to next row node
                 if j != n_row_nodes - 1:
-                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
+#                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
+                    self.yield_at_node[node_id] = node_yield_in_row[row_id]
                 else:
                     # between the last two nodes, the distance could be smaller than node_dist
                     row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
                                                                     self.row_nodes[row_id][1])
                     last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
                                                                      self.row_nodes[row_id][-1])
-                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
+#                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
+                    self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
 
     def get_row_info(self, local_storages):
         """get_row_info: Get information about each row

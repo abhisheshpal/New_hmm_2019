@@ -45,6 +45,7 @@ def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_di
     # 1. create the nodes - head_nodes and row_nodes
     x = []
     for i in range(n_topo_nav_rows):
+        rospy.loginfo("generating nodes of row-%d / %d" %(i, n_topo_nav_rows))
         row_id = row_ids[i]
         # words in node names are separated with -
         # words in tags are separated with _

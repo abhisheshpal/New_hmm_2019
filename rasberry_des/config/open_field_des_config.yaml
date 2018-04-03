@@ -1,0 +1,21 @@
+des_env: simpy # simpy or ros
+n_farm_rows: 29 # number of rows in the farm / poly-tunnel
+half_rows: false # whether the first and last rows are half (berries only on one side) or full rows (berries on both sides)
+head_row_node_dist: [1.0] # distance from head node to the first row node of each row (values for all rows, or single value to be copied)
+head_node_y: [1.0] # y coordinate of head nodes (values for all rows, or single value to be copied)
+row_node_dist: [2.0] # distance between two nodes in each row (values for all rows, or single value to be copied), m
+row_length: [120.0] # length of rows (values for all rows, or single value to be copied), m
+row_spacing: [1] # spacing between two rows in the farm (values for all rows, or single value to be copied), m
+n_pickers: 14 # number of pickers
+picking_rate: [0.3322,0.0037] # speed of pickers while picking (values for all pickers, or mu and sigma), m/s
+picker_transportation_rate: [1.0,0.04] # transportation speed of pickers (values for all pickers, or mu and sigma), m/s
+picker_max_n_trays: [1] # maximum number of trays that can be carried by each pickers (values for all pickers, or single value to be copied)
+picker_unloading_time: [110.0, 44.0] # time required by each picker to unload a tray at local storage / robot (values for all pickers, or mu and sigma), s
+tray_capacity: 1 # capacity of each tray, numbers
+yield_per_node: [0.025,0.] # yield at a topo_nav node (from the node to the next), per row (values for all rows, or mu and sigma), g
+n_local_storages: 30 # number of local storage stations
+n_robots: 0 # number of robots in the farm
+robot_transportation_rate: [2.0] # speed of a robot (values for all robots, or single value to be copied), m/s
+robot_max_n_trays: [4] # maximum number of trays that can be carried by the robot (values for all robots, or single value to be copied)
+robot_unloading_time: [10] # time required by the robot to unload a tray at local storage (values for all pickers, or single value to be copied), s
+
