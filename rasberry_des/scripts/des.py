@@ -38,11 +38,6 @@ if __name__ == "__main__":
 
     ns = rospy.get_namespace()
 
-    if len(sys.argv) < 2:
-        top_map = "fork_map"
-    else:
-        top_map = sys.argv[1]
-
     rospy.init_node("des", anonymous=False)
     # required des config parameters
     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
@@ -80,10 +75,11 @@ if __name__ == "__main__":
     robot_max_n_trays = rasberry_des.config_utils.param_list_to_dict("robot_max_n_trays", _robot_max_n_trays, robot_ids)
     robot_unloading_time = rasberry_des.config_utils.param_list_to_dict("robot_unloading_time", _robot_unloading_time, robot_ids)
 
+    start_time_ros = rospy.get_time()
+
     if des_env == "simpy":
         env = simpy.Environment()
     elif des_env == "ros":
-        start_time_ros = rospy.get_time()
         # RealtimeEnvironment can be enabled by uncommenting the line below.
         # The farm size and n_pickers given would take 420s to run
         # To vary the speed of RT sim, change 'factor'
@@ -160,8 +156,11 @@ if __name__ == "__main__":
         # farm details
         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
 
-        print >> f_handle, "simulation_start_time: %0.3f" %(start_time_simpy)
-        print >> f_handle, "simulation_finish_time: %0.3f" %(finish_time_simpy)
+        print >> f_handle, "simulation_start_time(sim): %0.3f" %(start_time_simpy)
+        print >> f_handle, "simulation_finish_time(sim): %0.3f" %(finish_time_simpy)
+
+        print >> f_handle, "simulation_start_time(clock): %0.3f" %(start_time_ros)
+        print >> f_handle, "simulation_finish_time(clock): %0.3f" %(finish_time_ros)
 
         print >> f_handle, "n_pickers: %d" %(n_pickers)
         print >> f_handle, "n_robots: %d" %(n_robots)
@@ -182,8 +181,8 @@ if __name__ == "__main__":
             print >> f_handle, "  node_dist: %0.3f m" %(node_dist)
             row_yield = 0.
             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-            if (not topo_graph.half_rows) and (row_id == "row-%02d" %(0) or row_id == "row-%02d" %(topo_graph.n_topo_nav_rows)):
-                for i in range(n_row_nodes - 1):
+            if (not topo_graph.half_rows) and (row_id == topo_graph.row_ids[0] or row_id == topo_graph.row_ids[-1]):
+                for i in range(1, n_row_nodes):
                     row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
             else:
                 for i in range(n_row_nodes):
@@ -203,6 +202,7 @@ if __name__ == "__main__":
             print >> f_handle, "picker_transportation_rate: %0.3f m/s" %(pickers[i].transportation_rate)
             print >> f_handle, "tray_capacity: %d g" %(pickers[i].tray_capacity)
             print >> f_handle, "picker_max_n_trays: %d" %(pickers[i].max_n_trays)
+            print >> f_handle, "picker_unloading_time(per tray): %d" %(pickers[i].unloading_time)
             print >> f_handle, "rows allocated: ", farm.picker_allocations[pickers[i].picker_id]
             for row_id in farm.picker_allocations[pickers[i].picker_id]:
                 alloc_time = farm.allocation_time[row_id]
@@ -216,9 +216,8 @@ if __name__ == "__main__":
             print >> f_handle, "picking_time: %0.3f" %(pickers[i].time_spent_picking)
             print >> f_handle, "transportation_time: %0.3f" %(pickers[i].time_spent_transportation)
             print >> f_handle, "idle_time: %0.3f" %(pickers[i].time_spent_idle)
-            if n_robots > 0:
-                print >> f_handle, "waiting_for_robot_time: %0.3f" %(pickers[i].time_spent_waiting)
-                print >> f_handle, "loading_on_robot_time: %0.3f" %(pickers[i].time_spent_loading)
+            print >> f_handle, "waiting_for_robot_time: %0.3f" %(pickers[i].time_spent_waiting)
+            print >> f_handle, "loading_on_robot_time: %0.3f" %(pickers[i].time_spent_loading)
             print >> f_handle, "unloading_time: %0.3f" %(pickers[i].time_spent_unloading)
             print >> f_handle, "total_working_time: %0.3f" %(pickers[i].time_spent_working())
             print >> f_handle, "-----------------\n"
@@ -228,6 +227,7 @@ if __name__ == "__main__":
                 print >> f_handle, "----%s----\n-----------------" %(robots[i].robot_id)
                 print >> f_handle, "robot_transportation_rate: %0.3f m/s" %(robots[i].transportation_rate)
                 print >> f_handle, "robot_max_n_trays: %d" %(robots[i].max_n_trays)
+                print >> f_handle, "robot_unloading_time(per tray): %d" %(robots[i].unloading_time)
                 print >> f_handle, "tot_trays: %0.3f" %(robots[i].tot_trays)
                 print >> f_handle, "picking_time: %0.3f" %(robots[i].time_spent_picking)
                 print >> f_handle, "transportation_time: %0.3f" %(robots[i].time_spent_transportation)

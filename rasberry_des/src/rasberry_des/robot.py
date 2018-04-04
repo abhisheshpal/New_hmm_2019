@@ -57,7 +57,12 @@ class Robot(object):
 
     def normal_operation(self, ):
         """normal operation sequences of the robot in different modes"""
-        self.idle_start_time = self.env.now
+        idle_start_time = self.env.now
+        transportation_start_time = 0.
+        loading_start_time = 0.
+        unloading_start_time = 0.
+        charging_start_time = 0.
+
         while True:
             if rospy.is_shutdown():
                 break
@@ -70,56 +75,66 @@ class Robot(object):
             if self.mode == 0:
                 # check for assignments
                 if self.assigned_picker_id is not None:
-                    self.time_spent_idle += self.env.now - self.idle_start_time
+                    self.time_spent_idle += self.env.now - idle_start_time
                     # change mode to transport to picker
                     self.mode = 1
+                    transportation_start_time = self.env.now
                     rospy.loginfo("%s is assigned to %s" %(self.robot_id, self.assigned_picker_id))
 
                 # TODO: idle state battery charge changes
                 if self.battery_charge <= 40:
                     rospy.loginfo("battery low on %s, going to charging mode" %(self.robot_id))
-                    self.time_spent_idle += self.env.now - self.idle_start_time
+                    self.time_spent_idle += self.env.now - idle_start_time
                     # change mode to charging
                     self.mode = 5
+                    charging_start_time = self.env.now
 
             elif self.mode == 1:
                 # farm assigns the robot to a picker by calling assign_robot_to_picker
                 # go to picker_node from curr_node
                 rospy.loginfo("%s going to %s" %(self.robot_id, self.assigned_picker_node))
                 yield self.env.process(self.go_to_node(self.assigned_picker_node))
+                self.time_spent_transportation += self.env.now - transportation_start_time
                 rospy.loginfo("%s reached %s" %(self.robot_id, self.assigned_picker_node))
                 # change mode to waiting_for_loading
                 self.mode = 2
+                loading_start_time = self.env.now
 
             elif self.mode == 2:
                 rospy.loginfo("%s is waiting for the trays to be loaded" %(self.robot_id))
                 yield self.env.process(self.wait_for_loading()) # this reset mode to 3
+                self.time_spent_loading += self.env.now - loading_start_time
                 rospy.loginfo("trays are loaded on %s" %(self.robot_id))
                 # change mode to transporting to storage
                 self.mode = 3
+                transportation_start_time = self.env.now
 
             elif self.mode == 3:
                 # go to local_storage_node from picker_node
                 rospy.loginfo("%s going to %s" %(self.robot_id, self.assigned_local_storage_node))
                 yield self.env.process(self.go_to_node(self.assigned_local_storage_node))
+                self.time_spent_transportation += self.env.now - transportation_start_time
                 rospy.loginfo("%s reached %s" %(self.robot_id, self.assigned_local_storage_node))
                 # change mode to unloading
                 self.mode = 4
+                unloading_start_time = self.env.now
 
             elif self.mode == 4:
                 # wait for unloading
                 rospy.loginfo("%s is waiting for the trays to be unloaded" %(self.robot_id))
                 yield self.env.process(self.wait_for_unloading()) # this reset mode to 0
+                self.time_spent_unloading += self.env.now - unloading_start_time
                 rospy.loginfo("trays are unloaded from %s" %(self.robot_id))
                 # change mode to idle
                 self.mode = 0
-                self.idle_start_time = self.env.now
+                idle_start_time = self.env.now
 
             elif self.mode == 5:
                 yield self.env.process(self.charging_process())
+                self.time_spent_charging += self.env.now - charging_start_time
                 # charging complete - now change mode to 0
                 self.mode = 0
-                self.idle_start_time = self.env.now
+                idle_start_time = self.env.now
 
             yield self.env.timeout(self.loop_timeout)
         yield self.env.timeout(self.process_timeout)
@@ -131,7 +146,6 @@ class Robot(object):
         self.assigned_picker_node = picker_node
         self.assigned_picker_n_trays = n_trays
         self.assigned_local_storage_node = local_storage_node
-        self.time_spent_idle += self.env.now - self.idle_start_time
 
     def go_to_node(self, goal_node):
         """Simpy process to Mimic moving to the goal_node
@@ -140,7 +154,6 @@ class Robot(object):
         goal_node -- node to reach from current node
         """
         rospy.loginfo("%s going to %s from %s" %(self.robot_id, goal_node, self.curr_node))
-        start_time = self.env.now
         route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
                                                                                goal_node)
         for i in range(len(route_nodes) - 1):
@@ -156,7 +169,6 @@ class Robot(object):
 
             self.curr_node = route_nodes[i + 1]
 
-        self.time_spent_transportation += self.env.now - start_time
         rospy.loginfo("%s reached %s" %(self.robot_id, goal_node))
         yield self.env.timeout(self.process_timeout)
 
@@ -176,7 +188,6 @@ class Robot(object):
 
     def wait_for_loading(self, ):
         """wait until picker loads trays and confirms it"""
-        start_time = self.env.now
         while True:
             # wait until picker calls loading_complete
             if rospy.is_shutdown():
@@ -186,7 +197,6 @@ class Robot(object):
             else:
                 # TODO: battery decay
                 yield self.env.timeout(self.loop_timeout)
-        self.time_spent_loading += self.env.now - start_time
 
         yield self.env.timeout(self.process_timeout)
 
@@ -198,14 +208,12 @@ class Robot(object):
 
     def wait_for_unloading(self, ):
         """wait for unloading the trays at the local storage"""
-        start_time = self.env.now
         with self.graph.local_storages[self.assigned_local_storage_node].request() as req:
             # request to access local storage
             yield req
             # access to local storage is granted
             unloading_time = self.unloading_time * self.assigned_picker_n_trays
             yield self.env.process(self.wait_out(unloading_time))
-            self.time_spent_unloading += self.env.now - start_time
         self.trays_unloaded()
         yield self.env.timeout(self.process_timeout)
 
@@ -221,7 +229,6 @@ class Robot(object):
 
     def charging_process(self, ):
         """charging process"""
-        start_time = self.env.now
         while True:
             if rospy.is_shutdown():
                 break
@@ -231,7 +238,6 @@ class Robot(object):
             if self.battery_charge == 100.:
                 break
 
-        self.time_spent_charging += self.env.now - start_time
         yield self.env.timeout(self.process_timeout)
 
     def inform_picking_finished(self, ):
