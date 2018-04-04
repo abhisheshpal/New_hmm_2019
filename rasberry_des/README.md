@@ -15,8 +15,8 @@ A topological map is created and stored in mongodb with corresponding topics and
     Node to generate `fork_map`, a topological map in the mongodb. 
 
 # Launch files
-  1. `config.launch`
-  2. `open_field_config.launch`
+  1. `des_config.launch`
+  2. `open_field_des_config.launch`
   2. `des.launch`
 
 # How to run
@@ -24,8 +24,8 @@ A topological map is created and stored in mongodb with corresponding topics and
 1. Launch the `mongodb_store` nodes
   `roslaunch mongodb_store mongodb_store.launch db:=<path_to_mongo_db_storage_dir>`
 2. Launch some preliminary nodes
-  * Edit the `config/config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
-  * `roslaunch rasbderry_des config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
+  * Edit the `config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
+  * `roslaunch rasbderry_des des_config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
 3. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
   * Launch the `topological_navigation` nodes. This will create a `topological_map` with the given name in mongodb, and nodes, edges added to the map would be with the name of the map as `pointset`.
     `roslaunch topological_navigation topological_navigation_empty_map.launch map:="<tplg_map_dataset_name>"`
@@ -59,7 +59,7 @@ A topological map is created and stored in mongodb with corresponding topics and
 5. Discrete event simulation
   * Make sure all required DES configuration parameters are set.
     `rosrun rasberry_des check_des_config_parameters.py`
-    If any parameters are not set, edit the `config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.
+    If any parameters are not set, edit the `des_config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.
   * Run the `des.py` discrete event simulation. 
     `roslaunch rasberry_des des.launch`
 
@@ -71,7 +71,7 @@ A topological map is created and stored in mongodb with corresponding topics and
 `VisualiseAgents` in `visualise.py`
 
 # Info:
-A fork like topological map created and stored in mongodb is accessed by `TopologicalForkMap`, which in turn used by all other agent classes. This map consists of one head lane and many topological navigation rows. The length of each row, node distances and yield per node distance can be different per row - this can be configured in the `config.yaml` file. The number of pickers and robots can also be changed along with their characteristic features such as picking rate, transportation rate, loading and unloading time etc can be configured through `config.yaml`. Three possible scheduling policies are implemented now - `"lexographical", "shortest_distance", "utilise_all"`, which can be configured in `des.py`. Visualisation and logging can be enabled or disabled in `des.py`.
+A fork like topological map created and stored in mongodb is accessed by `TopologicalForkMap`, which in turn used by all other agent classes. This map consists of one head lane and many topological navigation rows. The length of each row, node distances and yield per node distance can be different per row - this can be configured in the `des_config.yaml` file. The number of pickers and robots can also be changed along with their characteristic features such as picking rate, transportation rate, loading and unloading time etc can be configured through `des_config.yaml`. Three possible scheduling policies are implemented now - `"lexographical", "shortest_distance", "utilise_all"`, which can be configured in `des.py`. Visualisation and logging can be enabled or disabled in `des.py`.
 
 # Known Issues:
   1. `env.step` is used to step through the DES. 
