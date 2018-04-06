@@ -11,7 +11,7 @@ import rospy
 
 class Farm(object):
     """Farm class definition"""
-    def __init__(self, name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy):
+    def __init__(self, name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, verbose):
         """Create a Farm object
 
         Keyword arguments:
@@ -44,6 +44,8 @@ class Farm(object):
 
         # topological map based graph ()
         self.graph = topo_graph
+
+        self.verbose = verbose
 
         # related to picker finishing a row
         # finished_rows
@@ -78,8 +80,6 @@ class Farm(object):
 
         self.scheduler_policy = policy
 
-        rospy.loginfo("%s here" %(self.name))
-
         self.action = self.env.process(self.scheduler_monitor())
 
     def scheduler_monitor(self, ):
@@ -96,29 +96,27 @@ class Farm(object):
         while True:
             if rospy.is_shutdown():
                 break
-#            print "waiting", self.waiting_for_robot_pickers
-#            print "idle", self.idle_robots
-#            print "assigned", self.assigned_robots
 
             if self.finished_picking() and not inform_picking_finished:
                 inform_picking_finished = True
-                rospy.loginfo("all rows are picked")
+                self.loginfo("all rows are picked")
                 for robot_id in self.robot_ids:
                     self.robots[robot_id].inform_picking_finished()
                 for picker_id in self.picker_ids:
                     self.pickers[picker_id].inform_picking_finished()
-                rospy.loginfo("all rows picked. scheduler exiting")
+                self.loginfo("all rows picked. scheduler exiting")
                 self.env.exit("all rows are picked")
                 break
 
             if self.finished_allocating() and not inform_allocation_finished:
-                rospy.loginfo("all rows are allocated")
+                self.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
                 for robot_id in self.robot_ids:
                     self.robots[robot_id].inform_allocation_finished()
                 for picker_id in self.picker_ids:
                     self.pickers[picker_id].inform_allocation_finished()
 
+            to_remove_pickers = []
             # update modes of pickers already assigned to a row
             for picker_id in self.allocated_pickers:
                 picker = self.pickers[picker_id]
@@ -129,21 +127,38 @@ class Farm(object):
                     self.finished_rows.append(row_id)
                     self.n_finished_rows += 1
                     self.row_finish_time[row_id] = self.pickers[picker_id].row_finish_time
-                    self.idle_pickers.append(picker_id)
-                    self.allocated_pickers.remove(picker_id)
+                    to_remove_pickers.append(picker_id)
+
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif picker.mode == 1:
                     # moving to a row_node possibly from the previous node
                     # this can heppen either after a trip to a storage or after a new row allocation
                     # picker will be in picking mode (2) soon
-                    pass
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif picker.mode == 2:
                     # picking now
-                    pass
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif picker.mode == 3 or picker.mode == 4:
                     # picker transporting to storage or waiting for unloading at storage
                     # if the current row is finished, the picker's mode will be changed
                     # to idle (0) soon, which will be taken care of in next loop
-                    pass
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif picker.mode == 5:
                     # waiting for a robot to arrive
                     # if a robot is not assigned, assign one
@@ -153,73 +168,32 @@ class Farm(object):
                         if self.assigned_picker_robot[picker_id] is not None:
                             # a robot have been already assigned to this picker
                             # and that robot must be on its way
-                            # this could be a new call, if picker.assigned_robot_id == None
-                            # check whether previous robot has completed, if this is a new call
-                            if self.pickers[picker_id].assigned_robot_id is None:
-                                # a new call can happen only after previous robot was loaded
-                                # possible states of previous robot - 0, 3, 4, 5
-                                prev_robot_id = self.assigned_picker_robot[picker_id]
-                                robot = self.robots[prev_robot_id]
-                                if robot.mode == 0:
-                                    # robot completed the unloading at storage, idle now
-                                    # remove current assignments and add to idle_robots
-                                    self.assigned_robot_picker[prev_robot_id] = None
-                                    self.assigned_picker_robot[picker_id] = None
-                                    self.assigned_robots.remove(prev_robot_id)
-                                    self.idle_robots.append(prev_robot_id)
-                                elif robot.mode == 1 or robot.mode == 2:
-                                    # 1- transporting to the picker node
-                                    # 2- waiting for the picker to load
-                                    pass
-                                elif robot.mode == 3 or robot.mode == 4:
-                                    # 3 - transporting to local storage
-                                    # 4 - waiting to unload
-                                    pass
-                                elif robot.mode == 5:
-                                    # charging - after transporting and becoming idle
-                                    # schduler missed the idle mode
-                                    self.assigned_robot_picker[prev_robot_id] = None
-                                    self.assigned_picker_robot[picker_id] = None
-                                    self.assigned_robots.remove(prev_robot_id)
-                                    self.charging_robots.append(prev_robot_id)
+                            # check whether trays are loaded on the robot
+                            # if loaded, remove picker from waiting_for_robot_pickers
+                            robot_id = self.assigned_picker_robot[picker_id]
+                            if self.robots[robot_id].loaded:
+                                self.robots[robot_id].proceed_with_transporting()
+                                self.pickers[picker_id].proceed_with_picking()
+                                self.waiting_for_robot_pickers.remove(picker_id)
+                            else:
+                                # robot has not reached the picker yet
+                                pass
                         else:
-                            # no robot has been assigned. assign one
-                            # as already in waiting_for_robot_pickers, scheduler
+                            # no robot has been assigned. scheduler
                             # will try to assign one in this round
                             pass
                     else:
-                        # this is a new request for a robot, which should be assigned to this picker
-                        self.waiting_for_robot_pickers.append(picker_id)
+                        if self.assigned_picker_robot[picker_id] is None:
+                            # this is a new request for a robot, which should be assigned to this picker
+                            self.waiting_for_robot_pickers.append(picker_id)
 
-            # update modes of all pickers waiting for a robot
-            # a picker is removed from waitinf_for_robot after loading the robot
-            for picker_id in self.waiting_for_robot_pickers:
-                # check for change in mode
-                picker = self.pickers[picker_id]
-                if picker.mode == 0:
-                    # loaded tray, continued picking and completed row
-                    # as waiting_for_robot_pickers is a subset of allocated_pickers,
-                    # it might have already added to idle_pickers
-                    if picker_id not in self.idle_pickers:
-                        self.idle_pickers.append(picker_id)
-                        self.allocated_pickers.remove(picker_id)
-                    self.waiting_for_robot_pickers.remove(picker_id)
-                elif picker.mode == 1:
-                    # robot arrived and trays loaded. started picking, now
-                    # going to a row_node
-                    self.waiting_for_robot_pickers.remove(picker_id)
-                elif picker.mode == 2:
-                    # robot arrived and trays loaded. now picking
-                    self.waiting_for_robot_pickers.remove(picker_id)
-                elif picker.mode == 3 or picker.mode == 4:
-                    # robot arrived and loaded trays. completed the assigned row
-                    # and returned to the local storage for unloading
-                    self.waiting_for_robot_pickers.remove(picker_id)
-                elif picker.mode == 5:
-                    # waiting for robot to arrive
-                    pass
+            for picker_id in to_remove_pickers:
+                self.allocated_pickers.remove(picker_id)
+                if self.pickers[picker_id].mode == 0:
+                    self.idle_pickers.append(picker_id)
 
             # update modes of all assigned robots
+            to_remove_robots = []
             for robot_id in self.assigned_robots:
                 robot = self.robots[robot_id]
                 if robot.mode == 0:
@@ -227,57 +201,62 @@ class Farm(object):
                     # remove current assignments and add to idle_robots
                     picker_id = self.assigned_robot_picker[robot_id]
                     self.assigned_robot_picker[robot_id] = None
-                    # a robot may have more than one robot assigned with
-                    # the newest robot_id in assigned_picker_robot
-                    # remove picker from waiting_for_robot_pickers only in this case
-                    if self.assigned_picker_robot[picker_id] == robot_id:
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
                         self.assigned_picker_robot[picker_id] = None
-                        if picker_id in self.waiting_for_robot_pickers:
-                            self.waiting_for_robot_pickers.remove(picker_id)
-                    self.assigned_robots.remove(robot_id)
-                    self.idle_robots.append(robot_id)
+
+                    to_remove_robots.append(robot_id)
+
                 elif robot.mode == 1:
                     # transporting to the picker node
                     pass
                 elif robot.mode == 2:
                     # waiting for the picker to load
-                    pass
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    if robot.loaded and picker_id in self.waiting_for_robot_pickers:
+                        # trays loaded and scheduler not yet acknowledged
+                        picker_id = self.assigned_robot_picker[robot_id]
+                        self.robots[robot_id].proceed_with_transporting()
+                        self.pickers[picker_id].proceed_with_picking()
+                        self.waiting_for_robot_pickers.remove(picker_id)
+                    else:
+                        # not loaded yet
+                        pass
                 elif robot.mode == 3:
                     # transporting to local storage
-                    # picker has loaded the trays on the robot remove picker
-                    # from waitin_for_robot_pickers, if not done so already
                     picker_id = self.assigned_robot_picker[robot_id]
-                    # a robot may have more than one robot assigned with
-                    # the newest robot_id in assigned_picker_robot
-                    # remove picker from waiting_for_robot_pickers only in this case
-                    if self.assigned_picker_robot[picker_id] == robot_id:
-                        if picker_id in self.waiting_for_robot_pickers:
-                            self.waiting_for_robot_pickers.remove(picker_id)
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif robot.mode == 4:
                     # waiting to unload
-                    # picker has loaded the trays on the robot remove picker
-                    # from waitin_for_robot_pickers, if not done so already
                     picker_id = self.assigned_robot_picker[robot_id]
-                    # a robot may have more than one robot assigned with
-                    # the newest robot_id in assigned_picker_robot
-                    # remove picker from waiting_for_robot_pickers only in this case
-                    if self.assigned_picker_robot[picker_id] == robot_id:
-                        if picker_id in self.waiting_for_robot_pickers:
-                            self.waiting_for_robot_pickers.remove(picker_id)
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
                 elif robot.mode == 5:
                     # charging - after transporting and becoming idle
-                    # schduler missed the idle mode
+                    # schdeuler missed the idle mode
                     picker_id = self.assigned_robot_picker[robot_id]
                     self.assigned_robot_picker[robot_id] = None
-                    # a robot may have more than one robot assigned with
-                    # the newest robot_id in assigned_picker_robot
-                    # remove picker from waiting_for_robot_pickers only in this case
                     if self.assigned_picker_robot[picker_id] == robot_id:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
                         self.assigned_picker_robot[picker_id] = None
-                        if picker_id in self.waiting_for_robot_pickers:
-                            self.waiting_for_robot_pickers.remove(picker_id)
 
-                    self.assigned_robots.remove(robot_id)
+                    to_remove_robots.append(robot_id)
+
+            # modify assigned_robots list
+            for robot_id in to_remove_robots:
+                self.assigned_robots.remove(robot_id)
+                if self.robots[robot_id].mode == 0:
+                    self.idle_robots.append(robot_id)
+                elif self.robots[robot_id].mode == 5:
                     self.charging_robots.append(robot_id)
 
             # charging robots to idle robots
@@ -303,6 +282,7 @@ class Farm(object):
         n_idle_pickers = len(self.idle_pickers)
         if n_idle_pickers > 0:
             allocated_rows = []
+
             # "lexographical", "shortest_distance", "utilise_all"
             if self.scheduler_policy == "lexographical":
                 # allocate in the order of name
@@ -319,18 +299,20 @@ class Farm(object):
 
             elif self.scheduler_policy == "shortest_distance":
                 # allocate in the order of distance to the row_id
-                # get picker nodes
-                picker_nodes = {}
-                for picker_id in self.idle_pickers:
-                    picker_nodes[picker_id] = self.pickers[picker_id].curr_node
 
                 # max possible allocations is n_idle_pickers
                 i = 0
                 for row_id in self.unallocated_rows:
+                    # get picker nodes of remaining idle_pickers
+                    picker_nodes = {}
+                    for picker_id in self.idle_pickers:
+                        picker_nodes[picker_id] = self.pickers[picker_id].curr_node
+
                     # get shortest distance picker from the row
                     start_node = self.graph.row_info[row_id][1]
                     picker_distances = self.get_disatances_from_nodes_dict(picker_nodes, start_node)
                     sorted_pickers = sorted(picker_distances.items(), key=operator.itemgetter(1))
+
                     # allocate to the first picker in the sorted
                     picker_id = sorted_pickers[0][0]
                     self.allocate(row_id, picker_id)
@@ -345,17 +327,18 @@ class Farm(object):
 
             elif self.scheduler_policy == "utilise_all":
                 # improve utilisation by allocating row to least used picker
-                # get picker utilisation (time_spent_working)
-                picker_utilisation = {}
-                for picker_id in self.idle_pickers:
-                    picker_utilisation[picker_id] = self.pickers[picker_id].time_spent_working()
-                sorted_pickers = sorted(picker_utilisation.items(), key=operator.itemgetter(1))
 
                 # max possible allocations is n_idle_pickers
                 i = 0
                 for row_id in self.unallocated_rows:
+                    # get picker utilisation (time_spent_working) of remaining idle_pickers
+                    picker_utilisation = {}
+                    for picker_id in self.idle_pickers:
+                        picker_utilisation[picker_id] = self.pickers[picker_id].time_spent_working()
+                    sorted_pickers = sorted(picker_utilisation.items(), key=operator.itemgetter(1))
+
                     # allocate to the first picker in the sorted
-                    picker_id = sorted_pickers[i][0]
+                    picker_id = sorted_pickers[0][0]
                     self.allocate(row_id, picker_id)
                     allocated_rows.append(row_id)
                     # do a max of n_idle_pickers allocations
@@ -363,6 +346,7 @@ class Farm(object):
                         break
                     else:
                         i += 1
+
             for row_id in allocated_rows:
                 self.unallocated_rows.remove(row_id)
 
@@ -388,7 +372,7 @@ class Farm(object):
 
         self.allocation_time[row_id] = self.env.now
 
-        rospy.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
+        self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
                                                          row_id,
                                                          self.allocation_time[row_id]))
 
@@ -397,6 +381,7 @@ class Farm(object):
         n_idle_robots = len(self.idle_robots)
         if n_idle_robots > 0:
             assigned_pickers = []
+
             # "lexographical", "shortest_distance", "utilise_all"
             if self.scheduler_policy == "lexographical":
                 # allocate in the order of name
@@ -414,17 +399,20 @@ class Farm(object):
 
             elif self.scheduler_policy == "shortest_distance":
                 # allocate in the order of distance to the picker_node
-                robot_nodes = {}
-                for robot_id in self.idle_robots:
-                    robot_nodes[robot_id] = self.robots[robot_id].curr_node
 
                 # max possible allocations is n_idle_robots
                 i = 0
                 for picker_id in self.waiting_for_robot_pickers:
                     if self.pickers[picker_id].assigned_robot_id is None:
+                        # get robot nodes of remaining idle_robots
+                        robot_nodes = {}
+                        for robot_id in self.idle_robots:
+                            robot_nodes[robot_id] = self.robots[robot_id].curr_node
+
                         picker_node = self.pickers[picker_id].curr_node
                         robot_distances = self.get_disatances_from_nodes_dict(robot_nodes, picker_node)
                         sorted_robots = sorted(robot_distances.items(), key=operator.itemgetter(1))
+
                         # allocate to the first picker in the sorted
                         robot_id = sorted_robots[0][0]
                         self.assign(picker_id, robot_id)
@@ -439,18 +427,19 @@ class Farm(object):
 
             elif self.scheduler_policy == "utilise_all":
                 # improve utilisation by allocating row to least used picker
-                # get picker utilisation (time_spent_working)
-                robot_utilisation = {}
-                for robot_id in self.idle_robots:
-                    robot_utilisation[robot_id] = self.robots[robot_id].time_spent_working()
-                sorted_robots = sorted(robot_utilisation.items(), key=operator.itemgetter(1))
 
                 # max possible allocations is n_idle_robots
                 i = 0
                 for picker_id in self.waiting_for_robot_pickers:
                     if self.pickers[picker_id].assigned_robot_id is None:
+                        # get robot utilisation (time_spent_working) of remaining idle_robots
+                        robot_utilisation = {}
+                        for robot_id in self.idle_robots:
+                            robot_utilisation[robot_id] = self.robots[robot_id].time_spent_working()
+                        sorted_robots = sorted(robot_utilisation.items(), key=operator.itemgetter(1))
+
                         # allocate to the first picker in the sorted
-                        robot_id = sorted_robots[i][0]
+                        robot_id = sorted_robots[0][0]
                         self.assign(picker_id, robot_id)
                         assigned_pickers.append(picker_id)
                         # do a max of n_idle_pickers allocations
@@ -473,3 +462,8 @@ class Farm(object):
         self.robots[robot_id].assign_robot_to_picker(picker_id, picker_node,
                                                      picker_n_trays,
                                                      picker_local_storage_node)
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)

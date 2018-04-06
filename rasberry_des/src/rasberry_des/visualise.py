@@ -36,13 +36,12 @@ class Visualise_Agents(object):
         self.robot_status_texts = []
 
         self.init_plot()
-#        self.ani = matplotlib.animation.FuncAnimation(fig=self.fig, init_func=self.init_plot, func=self.update_plot)
 
         # show the plot
         matplotlib.pyplot.show(block=False)
 
     def close_plot(self, ):
-#        self.ani.save("des.mp4")
+        """close plot"""
         matplotlib.pyplot.close(self.fig)
 
     def init_plot(self, ):

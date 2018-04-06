@@ -20,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, _node_yields, local_storages):
+    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -30,7 +30,6 @@ class TopologicalForkGraph(object):
         n_topo_nav_row -- number of toplogical navigation rows, int
         row_ids -- identifications of the navigation rows, list of size n_topo_nav_rows
         _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
-        local_storages -- simpy.Resource objects, list
         """
         ns = rospy.get_namespace()
         self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
@@ -47,6 +46,8 @@ class TopologicalForkGraph(object):
         self.local_storages = {}
         self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
 
+        self.verbose = verbose
+
         for i in range(10):
             try:
                 self.topo_map = rospy.wait_for_message(ns + "topological_map", strands_navigation_msgs.msg.TopologicalMap, timeout=10)
@@ -54,11 +55,12 @@ class TopologicalForkGraph(object):
                 rospy.logerr(ns + "topological_map topic is not published?")
                 rospy.sleep(0.1)
             else:
-                rospy.loginfo("TopologicalForkGraph object ready")
+                self.loginfo("TopologicalForkGraph object ready")
                 break
 
         if self.topo_map:
-            self.get_row_info(local_storages)
+            self.get_row_info()
+            # local storages should be set by calling set_local_storages externally
             self.set_node_yields(_node_yields)
             self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
         else:
@@ -93,7 +95,24 @@ class TopologicalForkGraph(object):
 #                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
                     self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
 
-    def get_row_info(self, local_storages):
+    def set_local_storages(self, local_storages):
+        n_local_storages = len(local_storages)
+        # set local storage nodes
+        storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
+
+        for i in range(n_local_storages):
+            start_row = storage_row_groups[i][0]
+            end_row = storage_row_groups[i][-1]
+            storage_row = "hn-%02d" %(start_row + int((end_row - start_row) / 2))
+
+            for row in storage_row_groups[i]:
+                self.local_storage_nodes["row-%02d" %(row)] = storage_row
+            self.local_storages[storage_row] = local_storages[i]
+
+        for row_id in self.row_ids:
+            self.row_info[row_id][3] = self.local_storage_nodes[row_id]
+
+    def get_row_info(self, ):
         """get_row_info: Get information about each row
         {row_id: [head_node, start_node, end_node, local_storage_node]}
 
@@ -113,20 +132,6 @@ class TopologicalForkGraph(object):
         self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
         self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
 
-        # set local storages
-        n_local_storages = len(local_storages)
-
-        storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
-
-        for i in range(n_local_storages):
-            start_row = storage_row_groups[i][0]
-            end_row = storage_row_groups[i][-1]
-            storage_row = "hn-%02d" %(start_row + int((end_row - start_row) / 2))
-
-            for row in storage_row_groups[i]:
-                self.local_storage_nodes["row-%02d" %(row)] = storage_row
-            self.local_storages[storage_row] = local_storages[i]
-
         for node in self.topo_map.nodes:
             for i in range(self.n_topo_nav_rows):
                 if "rn-%02d" %(i) in node.name:
@@ -134,7 +139,7 @@ class TopologicalForkGraph(object):
 
         for row_id in self.row_ids:
             self.row_nodes[row_id].sort()
-
+            # local_storage_nodes should be modified by calling set_local_storages
             self.row_info[row_id] = [self.head_nodes[row_id],
                                      self.row_nodes[row_id][0],
                                      self.row_nodes[row_id][-1],
@@ -197,3 +202,8 @@ class TopologicalForkGraph(object):
         for edge in edges:
             edge_ids.append(edge.edge_id)
         return edge_ids
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)
