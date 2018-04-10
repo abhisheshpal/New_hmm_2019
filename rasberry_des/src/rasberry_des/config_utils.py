@@ -152,7 +152,7 @@ def get_fork_map_config_parameters():
 
     return config_params
 
-def get_des_config_parameters(map_from_db=False):
+def get_des_config_parameters(map_from_db=False, n_pickers = None, n_robots=None):
     """get_des_config_parameters: Get the parameters for configuring the discrete event simulation
     from the rosparam server
     """
@@ -177,7 +177,8 @@ def get_des_config_parameters(map_from_db=False):
 
     des_env = rospy.get_param(ns + "rasberry_des_config/des_env")
 
-    n_pickers = rospy.get_param(ns + "rasberry_des_config/n_pickers")
+    if n_pickers is None:
+        n_pickers = rospy.get_param(ns + "rasberry_des_config/n_pickers")
 
     _picking_rate = rospy.get_param(ns + "rasberry_des_config/picking_rate")
     picking_rate = des_param_list_check(ns + "rasberry_des_config/picking_rate", _picking_rate, n_pickers, "gauss")
@@ -198,7 +199,8 @@ def get_des_config_parameters(map_from_db=False):
 
     n_local_storages = rospy.get_param(ns + "rasberry_des_config/n_local_storages")
 
-    n_robots = rospy.get_param(ns + "rasberry_des_config/n_robots")
+    if n_robots is None:
+        n_robots = rospy.get_param(ns + "rasberry_des_config/n_robots")
 
     _robot_transportation_rate = rospy.get_param(ns + "rasberry_des_config/robot_transportation_rate")
     robot_transportation_rate = des_param_list_check(ns + "rasberry_des_config/robot_transportation_rate", _robot_transportation_rate, n_robots)
