@@ -1,4 +1,4 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # ----------------------------------
 # @author: gpdas
 # @email: pdasgautham@gmail.com
@@ -6,38 +6,60 @@
 # @info: Picker - a simple picker class
 # ----------------------------------
 
-import rospy
-import geometry_msgs.msg
-import tf
 import math
+import rospy
 
 
 class Picker(object):
     """Picker class definition"""
-    def __init__(self, name, env, farm, tray_capacity, max_n_trays,
-                 picking_rate, transport_rate, loading_time):
+    def __init__(self, picker_id, tray_capacity, max_n_trays,
+                 picking_rate, transportation_rate, unloading_time,
+                 env, topo_graph, robots, verbose):
         """Create a Picker object
 
         Keyword arguments:
-        name -- name/id of the picker
+        picker_id -- name/id of the picker
+        try_capacity -- capacity of the tray picker is carrying
+        max_n_trays -- number of trays with the picker
+        picking_rate -- rate at which the picker moves while picking
+        transportation_rate -- rate at which the picker moves while transporting
+        unloading_time -- time the picker will spend at the local storage for unloading
         env -- simpy.Environment
-        farm -- provides the allocation and monitor process as well as a graph.
+        topo_graph -- TopologicalForkGraph object
+        robots -- list of robot agents
         """
-        self.name = name
+        self.picker_id = picker_id
         self.env = env
-        self.farm = farm
+
+        self.robots = {}
+        self.robot_ids = []
+        self.n_robots = len(robots)
+        for robot in robots:
+            robot_id = robot.robot_id
+            self.robot_ids.append(robot_id)
+            self.robots[robot_id] = robot
+
+        self.verbose = verbose
+
+        self.n_rows = 0
         self.n_trays = 0     # current number of trays with the picker
         self.tot_trays = 0   # total number of trays by the picker
         self.tray_capacity = tray_capacity
         self.picking_rate = picking_rate
-        self.transport_rate = transport_rate
+        self.transportation_rate = transportation_rate
         self.max_n_trays = max_n_trays
-        self.max_wait_for_allocation = 5    # max time to wait before unloading everything
+        self.graph = topo_graph
 
-        self.loading_time = loading_time    # time spent at localStorage
-        self.assigned_row = None            # only for picking mode
+        # time/tray same for loading on robot or unloading at localStorage
+        self.unloading_time = unloading_time
 
-        self.mode = 0       # 0:free, 1:picking, 2:transporting, 3:finished_job
+        # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
+        # 4: waiting for unload at storage, 5: waiting for loading on robot
+        self.mode = 0
+
+        self.picking_finished = False
+        self.allocation_finished = False
+
         self.curr_node = None
         self.local_storage_node = None
         self.picking_dir = None     # "forward" or "reverse"
@@ -45,287 +67,409 @@ class Picker(object):
         self.curr_row = None
         self.prev_row = None
 
-        # [head_node, start_node, end_node, row_node_dist, last_node_dist, local_storage_node]
+        # [head_node, start_node, end_node, local_storage_node]
         self.curr_row_info = []
         self.prev_row_info = []
+
+        self.row_finish_time = 0. # time at which current row is completed
 
         self.row_path = []
 
         self.picking_progress = 0.  # percentage of tray_capacity
 
-        self.transport_progress = 0.
-        self.pose_pub = rospy.Publisher('/%s/pose' %(self.name), geometry_msgs.msg.Pose, queue_size=10)
-        self.pose = geometry_msgs.msg.Pose()
+        # parameters to check utilisation
+        self.time_spent_idle = 0.
+        self.time_spent_transportation = 0.
+        self.time_spent_picking = 0.
+        self.time_spent_unloading = 0.
+        self.time_spent_waiting = 0.
+        self.time_spent_loading = 0.
+        self.time_spent_working = lambda: self.time_spent_picking + self.time_spent_transportation + self.time_spent_unloading
 
-        self.action = self.env.process(self.picking_process())
+        self.process_timeout = 0.001
+        self.loop_timeout = 1.
 
-    def picking_process(self, ):
-        """ Picker's picking process
+        self.assigned_robot_id = None
+        self.continue_picking = True
+
+        # TODO: local storage node of the first row is assumed to be the starting loc
+        # After reaching another local storage, the robot can wait there
+        self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
+
+        self.action = self.env.process(self.normal_operation())
+
+    def allocate_row_to_picker(self, row_id):
+        """scheduler calls this to assign a row to the picker"""
+        try:
+            assert self.mode == 0
+        except AssertionError:
+            rospy.ROSException("Scheduler is trying to allocate %s to %s, but it is in %d" %(self.picker_id, row_id, self.mode))
+        self.curr_row = row_id
+        self.curr_row_info = self.graph.row_info[row_id]
+        self.local_storage_node = self.curr_row_info[3]
+        self.picking_dir = "forward"
+        self.row_path, _, _ = self.graph.get_path_details(self.curr_row_info[1],
+                                                          self.curr_row_info[2])
+        self.goal_node = "" + self.curr_row_info[1] # goal_node to reach from curr_node
+
+    def assign_robot_to_picker(self, robot_id):
+        """scheduler calls this to assign a robot to the picker"""
+        try:
+            assert self.mode == 5
+        except:
+            rospy.ROSException("Scheduler is trying to assign %s to %s, but picker is in %d" %(robot_id, self.picker_id, self.mode))
+        self.assigned_robot_id = robot_id
+
+    def proceed_with_picking(self, ):
+        """scheduler lets the picker continue picking after loading trays on robot.
+        this is just to make sure the scheduler is aware that the robot is loaded
         """
-        # 1. picker should report for duty first
-        self.farm.picker_report(self.name)
+        self.loginfo("%s can continue picking" %(self.picker_id))
+        self.continue_picking = True
+
+    def picking_node_to_node(self, ):
+        """mimic picking from one node to another"""
+        curr_node_index = self.row_path.index(self.curr_node)
+        if self.picking_dir == "forward":
+            next_node = self.row_path[curr_node_index + 1]
+        elif self.picking_dir == "reverse":
+            next_node = self.row_path[curr_node_index - 1]
+
+        # move to the next node
+        yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+
+        # update picking_progress and n_tray
+        self.picking_progress += self.graph.yield_at_node[self.curr_node]
+        if self.picking_progress >= self.tray_capacity:
+            self.n_trays += 1
+            self.picking_progress -= self.tray_capacity
+
+        yield self.env.timeout(self.process_timeout)
+
+    def update_trays_unloaded(self, ):
+        """update tray counts after unloading"""
+        # update trays unloaded
+        self.tot_trays += self.n_trays
+        self.n_trays = 0
+
+        if self.picking_finished or self.allocation_finished:
+            self.tot_trays += self.picking_progress / self.tray_capacity
+            self.picking_progress = 0.
+
+    def dist_to_robot(self, ):
+        """return Eucledian distance between robot's pose and picker's pose"""
+        robot_node = self.robots[self.assigned_robot_id].curr_node
+
+        if robot_node == self.curr_node:
+            return 0
+
+        else:
+            robot_node_obj = self.graph.get_node(robot_node)
+            robot_x = robot_node_obj.pose.position.x
+            robot_y = robot_node_obj.pose.position.y
+
+            curr_node_obj = self.graph.get_node(self.curr_node)
+            curr_x = curr_node_obj.pose.position.x
+            curr_y = curr_node_obj.pose.position.y
+
+            return math.hypot((robot_x - curr_x), (robot_y - curr_y))
+
+    def update_trays_loaded(self, ):
+        """update tray_counts after loading on a robot"""
+        self.tot_trays += self.n_trays
+        self.n_trays = 0
+
+    def reset_robot_assignment(self, ):
+        """reset the assigned robot info after loading"""
+        # To ensure the picker won't have a robot assigned, the next time the
+        # picker's trays are full and the current robot has not unloaded yet
+        self.assigned_robot_id = None
+
+    def normal_operation(self, ):
+        """ Picker's picking process when there are robots to carry full trays
+        """
+        idle_start_time = self.env.now
+        transportation_start_time = 0.
+        picking_start_time = 0.
+        unloading_start_time = 0.
+        waiting_start_time = 0.
+        loading_start_time = 0.
+
         while True:
-            # 2. If the picker is assigned a row,
-            #   a. continue picking
-            #   b. yield along each row_node_dist
-            #   c. check tray_cap,
-            #       i. if tray_cap is reached, increment n_trays
-            #       ii. if n_trays reach max_n_trays, start the transport_process
-            #       ii. if not move to the next row_node in the next iter
-            if self.mode == 1:
-                # move along each node in the assigned row
-                # the picker is at the curr_node
-                # move to the node next to curr_node in the row_path
-                if self.picking_dir is "forward":
-                    curr_node_index = self.row_path.index(self.curr_node)
-                    next_node = self.row_path[curr_node_index + 1]
-                    if curr_node_index != len(self.row_path) - 2:
-                        node_dist = self.curr_row_info[3]
-                    else:
-                        node_dist = self.curr_row_info[4]
+            if rospy.is_shutdown():
+                break
 
-                    time_to_pick = node_dist / self.picking_rate
-                    yield self.env.timeout(time_to_pick)
-
-                    # update the picking progress
-                    self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
-                    print("%s reached %s from %s at %0.3f" %(self.name, next_node,
-                                                              self.curr_node,
-                                                              self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
-                                                                                        self.tot_trays,
-                                                                                        self.n_trays,
-                                                                                        self.picking_progress))
-                    self.curr_node = "" + next_node
-                    # publish pose
-                    self.publish_pose(self.curr_node, 0.)
-
-                    if self.curr_node == self.row_path[-1]:
-                        self.picking_dir = "reverse"
-                        print("%s changing to reverse along %s at %0.3f" %(self.name,
-                                                                            self.curr_row,
-                                                                            self.env.now))
-
-                    # if the tray capacity is reached, increment n_trays
-                    if self.picking_progress >= self.tray_capacity:
-                        self.n_trays += 1
-                        self.picking_progress -= self.tray_capacity
-
-                    # if max_n_trays is reached
-                    if self.n_trays == self.max_n_trays:
-                        # transport to local storage and return
-                        trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
-                                                                                       self.local_storage_node)
-                        time_to_transport = trans_path_dist / self.transport_rate
-                        self.mode = 2
-                        print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
-                                                                                        self.max_n_trays,
-                                                                                        self.env.now))
-                        print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
-                                                                                            self.tot_trays,
-                                                                                            self.n_trays,
-                                                                                            self.picking_progress))
-                        yield self.env.process(self.transport_process(time_to_transport, 2))
-                        print("%s returned from local storage at %0.3f" %(self.name,
-                                                                           self.env.now))
-
-                        # resume picking
-                        self.tot_trays += self.max_n_trays
-                        self.n_trays -= self.max_n_trays
-                        self.mode = 1
-
-                elif self.picking_dir is "reverse":
-                    # work with negative indices
-                    curr_node_index = self.row_path.index(self.curr_node) - len(self.row_path)
-                    next_node = self.row_path[curr_node_index - 1]
-                    if curr_node_index != -1:
-                        node_dist = self.curr_row_info[3]
-                    else:
-                        node_dist = self.curr_row_info[4]
-
-                    time_to_pick = node_dist / self.picking_rate
-                    yield self.env.timeout(time_to_pick)
-
-                    # update the picking progress
-                    self.picking_progress += self.farm.graph.nodes[self.curr_node].yield_at_node
-                    print("%s reached %s from %s at %0.3f" %(self.name, next_node,
-                                                              self.curr_node,
-                                                              self.env.now))
-                    print("%s : tot_trays: %02d, n_trays: %02d, pick_progress: %0.3f" %(self.name,
-                                                                                        self.tot_trays,
-                                                                                        self.n_trays,
-                                                                                        self.picking_progress))
-
-                    self.curr_node = "" + next_node
-                    # publish pose
-                    self.publish_pose(self.curr_node, math.pi/2)
-
-                    if self.curr_node == self.row_path[0]:
-                        # row is finished
-                        self.farm.finished_rows[self.curr_row].succeed(value=self.env.now)
-
-                        self.picking_dir = None
-                        self.prev_row = "" + self.curr_row
-                        self.prev_row_info = [] + self.curr_row_info
-                        self.curr_row = None
-                        self.row_path = []
-
-                    # check picking progress
-                    if self.picking_progress >= self.tray_capacity:
-                        self.picking_progress -= self.tray_capacity
-                        self.n_trays += 1
-
-                        if self.n_trays == self.max_n_trays:
-                            if self.curr_row is None:
-                                # transport to local storage. no need to return as row is finished
-                                trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
-                                                                                               self.local_storage_node)
-                                time_to_transport = trans_path_dist / self.transport_rate
-                                self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
-                                                                                                self.max_n_trays,
-                                                                                                self.env.now))
-                                yield self.env.process(self.transport_process(time_to_transport, 1))
-                                # finished the allocated row and transported all berries
-                                # now at local_storage_node
-                                # no current allocation - change mode to zero
-                                self.tot_trays += self.max_n_trays
-                                self.n_trays -= self.max_n_trays
-                                self.curr_node = "" + self.local_storage_node
-                                self.mode = 0
-                            else:
-                                # transport to local storage and return
-                                trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
-                                                                                               self.local_storage_node)
-                                time_to_transport = trans_path_dist / self.transport_rate
-                                self.mode = 2
-                                print("%s reached %d trays. going to local storage at %0.3f" %(self.name,
-                                                                                                self.max_n_trays,
-                                                                                                self.env.now))
-                                yield self.env.process(self.transport_process(time_to_transport, 2))
-                                print("%s returned from local storage at %0.3f" %(self.name,
-                                                                                   self.env.now))
-
-                                # resume picking
-                                self.tot_trays += self.max_n_trays
-                                self.n_trays -= self.max_n_trays
-                                self.mode = 1
-                    else:
-                        # picking_progress != tray_capacity : go to not allocated mode
-                        if self.curr_row is None:
-                            # no current allcoations
-                            self.mode = 0
-
-            # 3. If in mode free, check if there is any new assignments
-            #       If there is no new assignment and no rows left to be assigned, finish picking
-            #       If there is a new assignment
-            #           a. Move to the start node of the path
-            #           b. Get the path from the current loc to start_node of new row
-            #           c. Move at transport_rate to start_node
-            #           d. Continue/Start picking along the new row by changing mode to picking
-            elif self.mode == 0:
-                row_id = self.farm.curr_picker_allocations[self.name]
-                row_id = None if row_id == self.prev_row else row_id
-
-                if (row_id is None) and (len(self.farm.unallocated_rows) == 0):
+            if self.mode == 0:
+                # picker is idle. wait for a row allocation or picking_finished status
+                if self.picking_finished:
+                    # go to local storage and unload all trays
                     if self.curr_node == self.local_storage_node:
-                        # at local storage after unloading max_n_trays
-                        # if there is anything left, unload those and leave the picking process
-                        if (self.n_trays > 0) or (self.picking_progress > 0.):
-                            self.env.process(self.transport_process(0, 1))
-                            self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
-                            self.n_trays = 0
-                            self.picking_progress = 0
+                        # if already at local storage - do nothing
+                        self.loginfo("%s is idle and at local storage" %(self.picker_id))
+                        self.mode = 4
+                        unloading_start_time = self.env.now
+                    else:
+                        # go to local storage node
+                        self.loginfo("%s is idle and going to local storage" %(self.picker_id))
+                        self.goal_node = "" + self.local_storage_node
                         self.mode = 3
-                    elif self.curr_node is not None:
-                        # not the first allocation, meaning the picker is at some node already
-                        if (self.n_trays > 0) or (self.picking_progress > 0.):
-                            trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
-                                                                                           self.local_storage_node)
-                            time_to_transport = trans_path_dist / self.transport_rate
-                            self.mode = 2
-                            self.env.process(self.transport_process(time_to_transport, 1))
-                            self.tot_trays += self.n_trays + self.picking_progress / self.tray_capacity
-                            self.n_trays = 0
-                            self.picking_progress = 0
+                        transportation_start_time = self.env.now
+
+                    # mode changed from idle
+                    self.time_spent_idle += self.env.now - idle_start_time
+
+                elif self.curr_row is not None:
+                    # idle picker allocated to a new row
+                    self.loginfo("%s is allocated to %s" %(self.picker_id, self.curr_row))
+                    self.time_spent_idle += self.env.now - idle_start_time
+                    self.mode = 1 # transporting to a row_node from curr_node
+                    transportation_start_time = self.env.now
+
+                elif self.allocation_finished:
+                    # all rows allocated and no assignment for the picker (if there
+                    # was any, previous condition would have been satisfied.)
+                    # go to local storage and unload all trays
+                    if self.curr_node == self.local_storage_node:
+                        # if already at local storage - do nothing
+                        self.loginfo("%s is idle and at local storage" %(self.picker_id))
+                        self.mode = 4
+                        unloading_start_time = self.env.now
+                    else:
+                        # go to local storage node
+                        self.loginfo("%s is idle and going to local storage" %(self.picker_id))
+                        self.goal_node = "" + self.local_storage_node
+                        self.mode = 3
+                        transportation_start_time = self.env.now
+
+                    # mode changed from idle
+                    self.time_spent_idle += self.env.now - idle_start_time
+
+                # mode remains idle - not updating self.time_spent_idle now
+                pass
+
+            elif self.mode == 1:
+                # from curr_node go to a row_node (self.goal_node) and continue picking
+                # goal_node is set in allocate_row
+                self.loginfo("%s going to %s from %s" %(self.picker_id, self.goal_node, self.curr_node))
+                yield self.env.process(self.go_to_node(self.goal_node, self.transportation_rate))
+                self.time_spent_transportation += self.env.now - transportation_start_time
+
+                self.loginfo("%s will start picking now" %(self.picker_id))
+                self.mode = 2 # picking
+                picking_start_time = self.env.now
+
+            elif self.mode == 2:
+                # at curr_node, pick through a node_dist to next_node
+                yield self.env.process(self.picking_node_to_node())
+                self.time_spent_picking += self.env.now - picking_start_time
+
+                if ((not self.graph.half_rows) and
+                        ((self.curr_row == self.graph.row_ids[0]) or
+                         (self.curr_row == self.graph.row_ids[-1]))):
+                    # row_end and dir_change nodes are the same
+                    row_end_node = self.curr_row_info[2]
+                    dir_change_node = self.curr_row_info[2]
+                else:
+                    row_end_node = self.curr_row_info[1]
+                    dir_change_node = self.curr_row_info[2]
+
+                # decide what is the next mode of action
+                if self.n_trays >= self.max_n_trays:
+                    self.loginfo("%s has trays full" %(self.picker_id))
+                    if self.n_robots == 0:
+                        # picker should go to local storage to unload
+                        # but, should s/he return?
+                        if self.curr_node == row_end_node:
+                            # inform row complete and go to local storage node and don't return
+                            self.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
+                            self.finished_row_routine()
+                            self.goal_node = "" + self.local_storage_node
+                        elif self.curr_node == dir_change_node:
+                            # forward -> reverse
+                            self.loginfo("%s changing direction to reverse" %(self.picker_id))
+                            self.picking_dir = "reverse"
+                            self.goal_node = "" + self.curr_node
+                        else:
+                            # row not finished, so come back to curr_node and continue in same dir
+                            self.loginfo("%s going to %s and will return to %s" %(self.picker_id, self.local_storage_node, self.curr_node))
+                            self.goal_node = "" + self.curr_node
 
                         self.mode = 3
-                    # finish the picking process
-                    print("%s finishing picking process. all rows are assigned" %(self.name))
+                        transportation_start_time = self.env.now
+                    else:
+                        if self.curr_node == row_end_node:
+                            # inform row complete
+                            self.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
+                            self.finished_row_routine()
+                        elif self.curr_node == dir_change_node:
+                            self.loginfo("%s changing direction to reverse" %(self.picker_id))
+                            self.picking_dir = "reverse"
+
+                        # go to wait_and_load_on_robot mode (5)
+                        self.loginfo("%s waiting for a robot to collect the trays" %(self.picker_id))
+                        self.continue_picking = False
+                        self.mode = 5
+                        waiting_start_time = self.env.now
+
+                else:
+                    # trays not full but has the row finished? if finished, wait for next allocation
+                    if self.curr_node == row_end_node:
+                        self.loginfo("%s finished %s" %(self.picker_id, self.curr_row))
+                        self.finished_row_routine()
+                        self.mode = 0
+                        idle_start_time = self.env.now
+
+                    elif self.curr_node == dir_change_node:
+                        # forward -> reverse, continue picking
+                        self.loginfo("%s changing direction to reverse" %(self.picker_id))
+                        self.picking_dir = "reverse"
+                        self.mode = 2
+                        picking_start_time = self.env.now
+
+                    else:
+                        # in-between node continue picking
+                        self.mode = 2
+                        picking_start_time = self.env.now
+
+            elif self.mode == 3:
+                # go to local storage node and change mode to 4
+                yield self.env.process(self.go_to_node(self.local_storage_node,
+                                                       self.transportation_rate))
+                self.time_spent_transportation += self.env.now - transportation_start_time
+
+                self.mode = 4
+                unloading_start_time = self.env.now
+
+            elif self.mode == 4:
+                # wait and unload at local storage node
+                # a picker can be in this mode in both cases - with and without robots
+                # with robots it could happen only at the end
+                # without robots, it could be at the end or when trays are full
+
+                if self.n_trays > 0 or self.picking_progress > 0:
+                    with self.graph.local_storages[self.local_storage_node].request() as req:
+                        yield req
+                        if self.n_robots == 0: # without robots
+                            if self.picking_finished:
+                                self.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
+                                wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
+                            else:
+                                self.loginfo("%s unloading full trays at %s" %(self.picker_id, self.local_storage_node))
+                                wait_time = self.unloading_time * self.n_trays
+                            yield self.env.timeout(wait_time)
+                            self.time_spent_unloading += self.env.now - unloading_start_time
+                            self.update_trays_unloaded()
+
+                            # if picking is finished or not, if there are no
+                            # current allocations, stay here
+                            if self.curr_row is None:
+                                self.mode = 0
+                                idle_start_time = self.env.now
+                            else:
+                                # go back to previous node
+                                self.mode = 1
+                                transportation_start_time = self.env.now
+
+                        else: # with robots
+                            # this unloading will happen if s/he finished picking the last allocated row
+                            # and tray is not full
+                            self.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
+                            wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
+                            yield self.env.timeout(wait_time)
+                            self.time_spent_unloading += self.env.now - unloading_start_time
+                            self.update_trays_unloaded()
+
+                            self.mode = 0
+                            idle_start_time = self.env.now
+
+                if self.picking_finished or (self.allocation_finished and self.mode == 0):
+                    self.loginfo("all rows picked. %s exiting" %(self.picker_id))
+                    self.env.exit("all rows picked and idle")
                     break
 
-                elif row_id is not None: # if there is a row assigned to the picker
-                    self.curr_row = row_id
-                    self.curr_row_info = self.farm.row_info[self.curr_row]
+            elif self.mode == 5:
+                # wait for the robot to arrive
+                if self.assigned_robot_id is not None:
+                    if self.dist_to_robot() == 0:
+                        self.loginfo("%s reached %s" %(self.assigned_robot_id, self.picker_id))
+                        self.time_spent_waiting += self.env.now - waiting_start_time
 
-                    # set local storage as curr_node if never assigned before
-                    if self.curr_node is None:
-                        self.curr_node = self.curr_row_info[5]
-                        self.local_storage_node = self.curr_row_info[5]
-                        
-                        # publish pose
-                        self.publish_pose(self.curr_node, 0.)
+                        # wait for loading on the assigned robot
+                        loading_start_time = self.env.now
+                        wait_time = self.unloading_time * self.n_trays
+                        yield self.env.timeout(wait_time)
+                        self.loginfo("%s loaded full trays on %s" %(self.picker_id, self.assigned_robot_id))
+                        self.time_spent_loading += self.env.now - loading_start_time
 
-                    print("%s is moving to the start of %s at %0.3f" %(self.name,
-                                                                        self.curr_row,
-                                                                        self.env.now))
-                    # transport to the start_node of the row
-                    trans_path, trans_path_dist = self.farm.graph.get_path_details(self.curr_node,
-                                                                                   self.curr_row_info[1])
-                    time_to_transport = trans_path_dist / self.transport_rate
-                    yield self.env.timeout(time_to_transport)
+                        self.robots[self.assigned_robot_id].trays_loaded()
+                        self.update_trays_loaded()
+                        # wait for the scheduler to give go ahead
+                        while True:
+                            if rospy.is_shutdown():
+                                break
+                            if self.continue_picking:
+                                break
+                            yield self.env.timeout(self.loop_timeout)
 
-                    # picker moved to the start_node of the row (yield above)
-                    self.curr_node = self.curr_row_info[1]
-                    self.row_path = self.farm.graph.get_path(self.curr_node, self.curr_row_info[2])
+                        # reset only within this agent, farm monitors whether
+                        # the robot completes the unloading
+                        self.reset_robot_assignment()
 
-                    # publish pose
-                    self.publish_pose(self.curr_node, 0.)
+                        if self.curr_row is not None:
+                            self.loginfo("%s will continue picking %s" %(self.picker_id, self.curr_row))
+                            self.mode = 2
+                            picking_start_time = self.env.now
+                        else:
+                            self.loginfo("%s does not have any rows allocated" %(self.picker_id))
+                            self.mode = 0
+                            idle_start_time = self.env.now
 
-                    print("%s started forward picking on %s at %0.3f" %(self.name, row_id, self.env.now))
-                    # change current mode to picking
-                    self.mode = 1 # picking mode
+            yield self.env.timeout(self.loop_timeout)
 
-                    self.picking_dir = "forward"
+        yield self.env.timeout(self.process_timeout)
 
-            yield self.env.timeout(0.001)
+    def go_to_node(self, goal_node, nav_speed):
+        """Simpy process to Mimic moving to the goal_node by publishing new position based on speed
 
-    def transport_process(self, time_to_transport, n_times):
-        """Picker's transportation process
+        Keyword arguments:
+        goal_node -- node to reach from current node
+        nav_speed -- navigation speed (picking / transportation rate)
         """
-        # This node should ideally implement picker's transportation to the local storage
-        # and return if needed.
-        # Only a timeout implementation is done now.
-        #   1. move along the path (yield timeout(time_to_travel_path))
-        yield self.env.timeout(time_to_transport)
-        # publish pose
-        self.publish_pose(self.local_storage_node, 0.0)
-        #   2. request for the local storage access
-        #   3. wait further for unloading (yield timeout(loading_time))
-        print("%s requesting for local_storage resource at %0.3f" %(self.name, self.env.now))
-        with self.farm.local_storages[self.local_storage_node].request() as req:
-            yield req
-            print("%s got access to local_storage resource at %0.3f" %(self.name, self.env.now))
-            yield self.env.timeout(self.loading_time)
+        self.loginfo("%s going to %s from %s" %(self.picker_id, goal_node, self.curr_node))
+        route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
+                                                                               goal_node)
+        for i in range(len(route_nodes) - 1):
+            # move through each edge
+            edge_distance = route_distance[i]
+            travel_time = edge_distance / nav_speed
+            yield self.env.timeout(travel_time)
 
-            print("%s spent %0.3f for unloading at the local_staorage" %(self.name, self.loading_time))
-        # if needed, return to previous node
-        if n_times == 2:
-            yield self.env.timeout(time_to_transport)
-            # publish pose
-            if self.picking_dir is "forward":
-                self.publish_pose(self.curr_node, 0.)
-            else:
-                self.publish_pose(self.curr_node, math.pi/2)
+            self.curr_node = route_nodes[i + 1]
 
-    def publish_pose(self, node, z_orientation):
-        """This method publishes the current position of the picker. Called only at nodes"""
-        self.pose.position.x = self.farm.graph.nodes[node].x
-        self.pose.position.y = self.farm.graph.nodes[node].y
-        self.pose.position.z = 0.0
-        quaternion = tf.transformations.quaternion_from_euler(0., 0., z_orientation)
-        self.pose.orientation.x = quaternion[0]
-        self.pose.orientation.y = quaternion[1]
-        self.pose.orientation.z = quaternion[2]
-        self.pose.orientation.w = quaternion[3]
-        self.pose_pub.publish(self.pose)
+        self.loginfo("%s reached %s" %(self.picker_id, goal_node))
+        yield self.env.timeout(self.process_timeout)
+
+    def finished_row_routine(self, ):
+        """Common things to do when picking along the allocated row is finished
+        """
+        # some attributes are reset
+        self.picking_dir = None
+        self.prev_row = "" + self.curr_row
+        self.prev_row_info = [] + self.curr_row_info
+        self.curr_row = None
+        self.row_path = []
+        self.row_finish_time = self.env.now
+        self.n_rows += 1
+
+    def inform_picking_finished(self, ):
+        """called by farm - scheduler to indicate all rows are now picked"""
+        self.picking_finished = True
+
+    def inform_allocation_finished(self, ):
+        """called by farm - scheduler to indicate all rows are now allocated"""
+        self.allocation_finished = True
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)

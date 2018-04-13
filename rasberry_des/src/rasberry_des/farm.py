@@ -1,88 +1,86 @@
-#! /usr/bin/env python
+#!/usr/bin/env python
 # ----------------------------------
 # @author: gpdas
 # @email: pdasgautham@gmail.com
 # @date:
 # ----------------------------------
 
-import simpy
-import numpy
-import topo
+import operator
+import rospy
 
 
 class Farm(object):
     """Farm class definition"""
-    def __init__(self, name, env):
+    def __init__(self, name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, verbose):
         """Create a Farm object
 
         Keyword arguments:
         name -- name of farm/poly-tunnel
         env -- simpy.Environment
+        n_topo_nav_rows -- navigational rows in topological map
+        topo_map -- TopologicalForkMap object
+        robots - robot agent objects
+        pickers -- picker agent objects
+        policy -- "lexographical", "shortest_distance", "utilise_all"
         """
         self.name = name
         self.env = env
 
-        # pickers should report for duty.
-        # could be useful in future to take breaks or late arrivals
-        self.pickers_reported = []
+        self.n_topo_nav_rows = n_topo_nav_rows
 
-        self.rows = []              # can be a row name / id
-        self.n_rows = 0
+        self.pickers = {}
+        self.picker_ids = []
+        self.n_pickers = len(pickers)
+        for picker in pickers:
+            self.picker_ids.append(picker.picker_id)
+            self.pickers[picker.picker_id] = picker
 
-        self.head_node_names = []   # [head_node_names]
-        self.row_node_names = {}    # {row_id:[row_node_names]}
+        self.robots = {}
+        self.robot_ids = []
+        self.n_robots = len(robots)
+        for robot in robots:
+            self.robot_ids.append(robot.robot_id)
+            self.robots[robot.robot_id] = robot
 
-        # {"hn":row_spacing, row_id:[head_node, start_node, end_node,
-        # row_node_dist, last_node_dist, local_storage]}
-        self.row_info = {}
+        # topological map based graph ()
+        self.graph = topo_graph
+
+        self.verbose = verbose
 
         # related to picker finishing a row
-        self.finished_rows = {}     # a dict of simpy.Events. picker triggers
+        # finished_rows
+        self.finished_rows = []
         self.n_finished_rows = 0
-        self.row_finish_time = {}   # {row_id: finish time}
+        self.row_finish_time = {row_id:None for row_id in self.graph.row_ids} # {row_id: finish time}
 
         # related to allocation
-        self.unallocated_rows = []          # a list of unallocated rows
-        self.allocations = {}               # {row_ids: picker_id}
-        self.allocation_time = {}           # {row_id: allocation time}
-        self.picker_allocations = {}        # {picker_id:[row_ids]}
-        self.curr_picker_allocations = {}   # {picker_id:row_id} row=None if free
+        self.unallocated_rows = [] + self.graph.row_ids                       # a list of unallocated rows
+        self.allocations = {row_id:None for row_id in self.graph.row_ids}     # {row_ids: picker_id}
+        self.allocation_time = {row_id:None for row_id in self.graph.row_ids} # {row_id: allocation time}
 
-        self.graph = None
+        self.picker_allocations = {picker_id:[] for picker_id in self.picker_ids}        # {picker_id:[row_ids]}
+        self.curr_picker_allocations = {picker_id:None for picker_id in self.picker_ids}   # {picker_id:row_id} row=None if free
 
-        self.local_storages = {}  # simpy.Resource objects
-        self.local_storage_nodes = []     # local storage node
+        self.process_timeout = 0.001
+        self.loop_timeout = 1.
 
-        print("""Initialise the farm-path graph using
-                "init_graph" or "init_graph_fork"
-        """)
+        self.finished_picking = lambda: True if self.n_finished_rows == self.n_topo_nav_rows else False
+        self.finished_allocating = lambda: False if self.unallocated_rows else True
 
-    def picker_report(self, picker_id):
-        """Method a picker should call when he reports to work
+        self.idle_pickers = [] + self.picker_ids  # for next assignment
+        self.allocated_pickers = [] # for monitoring row_finish
+        self.waiting_for_robot_pickers = [] # for assigning a robot to the picker
 
-        Keyword arguments:
-        picker_id -- picker's unique id
-        """
-        if picker_id not in self.pickers_reported:
-            self.picker_allocations[picker_id] = []
-            self.curr_picker_allocations[picker_id] = None
-            self.pickers_reported.append(picker_id)
-            print("%s reporting at %0.3f" %(picker_id, self.env.now))
+        self.assigned_picker_robot = {picker_id:None for picker_id in self.picker_ids}
+        self.assigned_robot_picker = {robot_id:None for robot_id in self.robot_ids}
 
-    def finished_picking(self, ):
-        """Method to check whether all allocated rows are finished"""
-        # method to check whether all rows are picked.
-        # return True or False, based on picking is finished or not
-        if self.n_finished_rows == self.n_rows:
-            return True
-        return False
+        self.idle_robots = [] + self.robot_ids   # for assigning to a picker
+        self.assigned_robots = []   # for monitoring transportation progress
+        self.charging_robots = []   # ignored for assignments
 
-    def finished_allocating(self, ):
-        """Method to check whether all rows are allocated"""
-        # method to check whether all rows are allocated.
-        if self.unallocated_rows:
-            return False
-        return True
+        self.scheduler_policy = policy
+
+        self.action = self.env.process(self.scheduler_monitor())
 
     def scheduler_monitor(self, ):
         """A process to allocate rows to the pickers.
@@ -90,219 +88,382 @@ class Farm(object):
         when a picker becomes free, it should be allocated automatically.
 
         A simple implementation:
-            external: picker triggers the finishedRows[row_id] event,
-                        when the allocated row is completed
             1. do a periodic checking of completion status of rows
             2. allocate free pickers to one of the unallocated rows
         """
+        inform_allocation_finished = False
+        inform_picking_finished = False
         while True:
-            # check for any completion update of any rows
-            for i in range(len(self.pickers_reported)):
-                picker_id = self.pickers_reported[i]
-                if self.curr_picker_allocations[picker_id] is not None:
-                    # check if there is a row allocated to the picker
-                    row_id = self.curr_picker_allocations[picker_id]
-                    if self.finished_rows[row_id].triggered:
-                        # this row is finished
-                        self.n_finished_rows += 1
-                        # TODO: there could be slight delay in this time
-                        print ("%s reported finish-row at %0.3f and now time is %0.3f" %(picker_id,
-                                                                                           self.finished_rows[row_id].value,
-                                                                                           self.env.now))
-                        self.row_finish_time[row_id] = self.finished_rows[row_id].value
-                        # relieve the picker
-                        self.curr_picker_allocations[picker_id] = None
-                        print("%s reported completion of row %s at %0.3f" %(picker_id,
-                                                                             row_id,
-                                                                             self.row_finish_time[row_id]))
-            if self.finished_picking():
-                # once all rows are picked finish the process
+            if rospy.is_shutdown():
                 break
 
-            # allocate, if there are rows yet to be allocated
-            if not self.finished_allocating():
-                for picker_id in self.pickers_reported:
-                    if not self.curr_picker_allocations[picker_id]:
-                        # allocate if picker is free
-                        # get the first free row
-                        row_id = self.unallocated_rows.pop(0)
-                        # allocate row_id to the picker
-                        self.allocations[row_id] = picker_id
-                        self.picker_allocations[picker_id].append(row_id)
-                        self.allocation_time[row_id] = self.env.now
-                        # the value picker checks is updated last
-                        self.curr_picker_allocations[picker_id] = row_id
-                        print("%s is allocated to %s at %0.3f" %(picker_id,
-                                                                  row_id,
-                                                                  self.allocation_time[row_id]))
+            if self.finished_picking() and not inform_picking_finished:
+                inform_picking_finished = True
+                self.loginfo("all rows are picked")
+                for robot_id in self.robot_ids:
+                    self.robots[robot_id].inform_picking_finished()
+                for picker_id in self.picker_ids:
+                    self.pickers[picker_id].inform_picking_finished()
+                self.loginfo("all rows picked. scheduler exiting")
+                self.env.exit("all rows are picked")
+                break
 
-                    # check if all rows are allocated after each allocation
-                    if self.finished_allocating():
-                        break
+            if self.finished_allocating() and not inform_allocation_finished:
+                self.loginfo("all rows are allocated")
+                inform_allocation_finished = True # do it only once
+                for robot_id in self.robot_ids:
+                    self.robots[robot_id].inform_allocation_finished()
+                for picker_id in self.picker_ids:
+                    self.pickers[picker_id].inform_allocation_finished()
 
-            # take a short break after each allocation loop
-            yield self.env.timeout(0.1)
+            to_remove_pickers = []
+            # update modes of pickers already assigned to a row
+            for picker_id in self.allocated_pickers:
+                picker = self.pickers[picker_id]
+                if picker.mode == 0:
+                    # finished the assigned row and are idle now
+                    # if previously assigned any row, update its status
+                    row_id = self.curr_picker_allocations[picker_id]
+                    self.finished_rows.append(row_id)
+                    self.n_finished_rows += 1
+                    self.row_finish_time[row_id] = self.pickers[picker_id].row_finish_time
+                    to_remove_pickers.append(picker_id)
 
-    def init_graph(self, f_name=None):
-        """Generate a graph from the given file"""
-        # TODO: fill here with code to read the file and generate the graph
-        pass
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
 
-    def init_graph_fork(self, n_rows, row_node_dist, row_length,
-                        row_spacing, yield_per_node, local_storages):
-        """Initialise a fork shaped graph
+                elif picker.mode == 1:
+                    # moving to a row_node possibly from the previous node
+                    # this can heppen either after a trip to a storage or after a new row allocation
+                    # picker will be in picking mode (2) soon
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
 
-        Keyword arguments:
-        n_rows -- number of rows
-        row_node_dist -- distance between two row_nodes in each row.
-                        can be a list in the order of row_id, a float or an int
-        row_length -- length of each row.
-                        can be list in the order of row_id, a float or an int
-        row_spacing -- spacing between two rows
-        yield_per_node -- float in g/m
-        """
-        self.n_rows = n_rows
-        self.row_info["hn"] = row_spacing
+                elif picker.mode == 2:
+                    # picking now
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
 
-        self.rows = ["row-%02d" %(i) for i in range(self.n_rows)]   # can be a row name / id
-        self.unallocated_rows = [] + self.rows
+                elif picker.mode == 3 or picker.mode == 4:
+                    # picker transporting to storage or waiting for unloading at storage
+                    # if the current row is finished, the picker's mode will be changed
+                    # to idle (0) soon, which will be taken care of in next loop
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
 
-        self.finished_rows = {row_id:simpy.Event(self.env) for row_id in self.rows}
-        self.row_finish_time = {row_id:None for row_id in self.rows}
+                elif picker.mode == 5:
+                    # waiting for a robot to arrive
+                    # if a robot is not assigned, assign one
+                    if picker_id in self.waiting_for_robot_pickers:
+                        # this is an existing request and robot has been assigned or
+                        # has not reached yet
+                        if self.assigned_picker_robot[picker_id] is not None:
+                            # a robot have been already assigned to this picker
+                            # and that robot must be on its way
+                            # check whether trays are loaded on the robot
+                            # if loaded, remove picker from waiting_for_robot_pickers
+                            robot_id = self.assigned_picker_robot[picker_id]
+                            if self.robots[robot_id].loaded:
+                                self.robots[robot_id].proceed_with_transporting()
+                                self.pickers[picker_id].proceed_with_picking()
+                                self.waiting_for_robot_pickers.remove(picker_id)
+                            else:
+                                # robot has not reached the picker yet
+                                pass
+                        else:
+                            # no robot has been assigned. scheduler
+                            # will try to assign one in this round
+                            pass
+                    else:
+                        if self.assigned_picker_robot[picker_id] is None:
+                            # this is a new request for a robot, which should be assigned to this picker
+                            self.waiting_for_robot_pickers.append(picker_id)
 
-        self.allocations = {row_id:None for row_id in self.rows}
-        self.allocation_time = {row_id:None for row_id in self.rows}
+            for picker_id in to_remove_pickers:
+                self.allocated_pickers.remove(picker_id)
+                if self.pickers[picker_id].mode == 0:
+                    self.idle_pickers.append(picker_id)
 
-        if row_node_dist.__class__ == list:
-            row_node_dist = {self.rows[i]:row_node_dist[i] for i in range(self.n_rows)}
-        elif (row_node_dist.__class__ == float) or (row_node_dist.__class__ == int):
-            row_node_dist = {row_id:float(row_node_dist) for row_id in self.rows}
-        else:
-            raise TypeError("row_node_dist must be list, float or int")
+            # update modes of all assigned robots
+            to_remove_robots = []
+            for robot_id in self.assigned_robots:
+                robot = self.robots[robot_id]
+                if robot.mode == 0:
+                    # robot completed the unloading at storage, idle now
+                    # remove current assignments and add to idle_robots
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    self.assigned_robot_picker[robot_id] = None
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
 
-        if row_length.__class__ == list:
-            pass
-        elif (row_length.__class__ == float) or (row_length.__class__ == int):
-            row_length = {row_id:float(row_length) for row_id in self.rows}
-        else:
-            raise TypeError("row_length must be list, float or int")
+                    to_remove_robots.append(robot_id)
 
-        last_node_dist = {row_id:0. for row_id in self.rows}
-
-        self.graph = topo.BiGraph()
-
-        row_nodes = {}
-        head_nodes = {}
-
-        # TODO: There can be more than one local storage nodes
-        # As there are no guidelines about this at this stage, only one storage node is added
-        # It is assumed that there is only one simpy.Resource object in local_storages
-        # Place it at int(n_rows/2)
-        self.local_storage_nodes.append("hn-%02d" %(int(round(self.n_rows / 2))))
-        self.local_storages[self.local_storage_nodes[0]] = local_storages[0]
-
-        # 1. create the nodes - head_nodes and row_nodes
-        i = 0   # head node counter: one head node per row
-        for row_id in self.rows:
-            # All head nodes are Node objects with zero yield
-            # All row nodes are Node objects with a yield_at_node
-            x = i * row_spacing
-            y = -5
-            head_node_name = "hn-%02d" %(i)
-            head_nodes[head_node_name] = topo.Node(head_node_name, x, y)
-
-            self.head_node_names.append(head_node_name)
-            self.row_node_names[row_id] = []
-
-            # row length can be different for different rows
-            # 1 is for the end node, which is not produced in numpy.arange
-            n_row_nodes = len(numpy.arange(0, row_length[row_id], row_node_dist[row_id])) + 1
-            for j in range(n_row_nodes):
-                # row_length may not be an exact multiple of row_node_dist
-                y = j * row_node_dist[row_id] if (j != n_row_nodes - 1) else row_length[row_id]
-                # yield from each row node to next row node
-                if j != n_row_nodes - 1:
-                    yield_at_node = numpy.random.logistic(yield_per_node)
-                else:
-                    # between the last two nodes, the distance could be smaller than node_dist
-                    last_node_dist[row_id] = row_length[row_id] - (row_node_dist[row_id] * (j-1))
-                    yield_at_node = numpy.random.logistic((yield_per_node *
-                                                           last_node_dist[row_id]) / row_node_dist[row_id])
-                row_node_name = "rn-%02d-%02d" %(i, j)
-                row_nodes[row_node_name] = topo.Node(row_node_name, x, y, yield_at_node)
-                self.row_node_names[row_id].append(row_node_name)
-
-            # info about the row - for assigned picker
-            self.row_info[row_id] = [head_node_name,
-                                     self.row_node_names[row_id][0],
-                                     self.row_node_names[row_id][-1],
-                                     row_node_dist[row_id],
-                                     last_node_dist[row_id],
-                                     self.local_storage_nodes[-1]]
-            # increment head node counter
-            i += 1
-
-        # 2. find the neighbours of each node
-        # 3. add nodes to the graph with corresponding edges
-
-        # for each row, head node first and then the row nodes in that row
-        i = 0   # head node counter
-        for row_id in self.rows:
-            # neighbours of head nodes
-            head_node_neighbours = []
-            row_node_neighbour = []
-
-            head_node_name = "hn-%02d" %(i)
-            # neighbouring head nodes
-            head_node_neighbours = []
-            if (i == 0) and (self.n_rows == 1):
-                # if the only head node, there are no head node neighbours
-                pass
-            elif (i == 0) and (self.n_rows != 1):
-                # more than one head node, add the next head node
-                head_node_neighbours.append(head_nodes["hn-%02d" %(i + 1)])
-            elif i == self.n_rows - 1:
-                # for the last node (there would be at least 2 head nodes, bcz of conditions above)
-                head_node_neighbours.append(head_nodes["hn-%02d" %(i - 1)])
-            else:
-                # for any other head node, add the previous and next head nodes as neighbours
-                head_node_neighbours.append(head_nodes["hn-%02d" %(i - 1)])
-                head_node_neighbours.append(head_nodes["hn-%02d" %(i + 1)])
-            # row node neighbours
-            # there would be only one row node as neighbour to the head node of the row
-            row_node_neighbour = [row_nodes["rn-%02d-%02d" %(i, 0)]]
-            # add i-th head nodes
-            self.graph.add_node(head_nodes[head_node_name],
-                                head_node_neighbours + row_node_neighbour)
-
-            # neighbours of row nodes
-            head_node_neighbour = []
-            row_node_neighbours = []
-
-            # row_length and row_node_dist can be different for different rows
-            n_row_nodes = len(numpy.arange(0, row_length[row_id], row_node_dist[row_id])) + 1
-            # add row nodes of i-th head node
-            for j in range(n_row_nodes):
-                row_node_name = "rn-%02d-%02d" %(i, j)
-                # only one head node neighbour - the head node of the row
-                head_node_neighbour = [head_nodes[head_node_name]]
-                row_node_neighbours = []
-                # other row nodes
-                if (j == 0) and (n_row_nodes == 1):
-                    # only one row node, no row node neighbours
+                elif robot.mode == 1:
+                    # transporting to the picker node
                     pass
-                elif (j == 0) and (n_row_nodes != 1):
-                    # more than one row nodes, but the first one
-                    row_node_neighbours.append(row_nodes["rn-%02d-%02d" %(i, j + 1)])
-                elif j == n_row_nodes - 1:
-                    # for the last node (there would be at least 2 head nodes)
-                    row_node_neighbours.append(row_nodes["rn-%02d-%02d" %(i, j - 1)])
-                else:
-                    # for any other node
-                    row_node_neighbours.append(row_nodes["rn-%02d-%02d" %(i, j - 1)])
-                    row_node_neighbours.append(row_nodes["rn-%02d-%02d" %(i, j + 1)])
-                # add j-th row node of i-th row / head node
-                self.graph.add_node(row_nodes[row_node_name],
-                                    head_node_neighbour + row_node_neighbours)
-            # increment head node counter
-            i += 1
+                elif robot.mode == 2:
+                    # waiting for the picker to load
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    if robot.loaded and picker_id in self.waiting_for_robot_pickers:
+                        # trays loaded and scheduler not yet acknowledged
+                        picker_id = self.assigned_robot_picker[robot_id]
+                        self.robots[robot_id].proceed_with_transporting()
+                        self.pickers[picker_id].proceed_with_picking()
+                        self.waiting_for_robot_pickers.remove(picker_id)
+                    else:
+                        # not loaded yet
+                        pass
+                elif robot.mode == 3:
+                    # transporting to local storage
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
+                elif robot.mode == 4:
+                    # waiting to unload
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
+                elif robot.mode == 5:
+                    # charging - after transporting and becoming idle
+                    # schdeuler missed the idle mode
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    self.assigned_robot_picker[robot_id] = None
+                    if self.assigned_picker_robot[picker_id] == robot_id:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
+                    to_remove_robots.append(robot_id)
+
+            # modify assigned_robots list
+            for robot_id in to_remove_robots:
+                self.assigned_robots.remove(robot_id)
+                if self.robots[robot_id].mode == 0:
+                    self.idle_robots.append(robot_id)
+                elif self.robots[robot_id].mode == 5:
+                    self.charging_robots.append(robot_id)
+
+            # charging robots to idle robots
+            for robot_id in self.charging_robots:
+                robot = self.robots[robot_id]
+                if robot.mode == 0:
+                    self.charging_robots.remove(robot_id)
+                    self.idle_robot.append(robot_id)
+
+            # row allocation to idle_pickers
+            self.allocate_rows_to_pickers()
+
+            # assign robots
+            if self.n_robots > 0:
+                self.assign_robots_to_pickers()
+
+            yield self.env.timeout(self.loop_timeout)
+
+        yield self.env.timeout(self.process_timeout)
+
+    def allocate_rows_to_pickers(self, ):
+        """allocate unallocated_rows to idle_pickers based on scheduler_policy"""
+        n_idle_pickers = len(self.idle_pickers)
+        if n_idle_pickers > 0:
+            allocated_rows = []
+
+            # "lexographical", "shortest_distance", "utilise_all"
+            if self.scheduler_policy == "lexographical":
+                # allocate in the order of name
+                self.idle_pickers.sort()
+                i = 0
+                for row_id in self.unallocated_rows:
+                    picker_id = self.idle_pickers[0]
+                    self.allocate(row_id, picker_id)
+                    allocated_rows.append(row_id)
+                    if i == n_idle_pickers - 1:
+                        break
+                    else:
+                        i += 1
+
+            elif self.scheduler_policy == "shortest_distance":
+                # allocate in the order of distance to the row_id
+
+                # max possible allocations is n_idle_pickers
+                i = 0
+                for row_id in self.unallocated_rows:
+                    # get picker nodes of remaining idle_pickers
+                    picker_nodes = {}
+                    for picker_id in self.idle_pickers:
+                        picker_nodes[picker_id] = self.pickers[picker_id].curr_node
+
+                    # get shortest distance picker from the row
+                    start_node = self.graph.row_info[row_id][1]
+                    picker_distances = self.get_disatances_from_nodes_dict(picker_nodes, start_node)
+                    sorted_pickers = sorted(picker_distances.items(), key=operator.itemgetter(1))
+
+                    # allocate to the first picker in the sorted
+                    picker_id = sorted_pickers[0][0]
+                    self.allocate(row_id, picker_id)
+                    allocated_rows.append(row_id)
+                    # remove the picker_node from future allocations
+                    del picker_nodes[picker_id]
+                    # do a max of n_idle_pickers allocations
+                    if i == n_idle_pickers - 1:
+                        break
+                    else:
+                        i += 1
+
+            elif self.scheduler_policy == "utilise_all":
+                # improve utilisation by allocating row to least used picker
+
+                # max possible allocations is n_idle_pickers
+                i = 0
+                for row_id in self.unallocated_rows:
+                    # get picker utilisation (time_spent_working) of remaining idle_pickers
+                    picker_utilisation = {}
+                    for picker_id in self.idle_pickers:
+                        picker_utilisation[picker_id] = self.pickers[picker_id].time_spent_working()
+                    sorted_pickers = sorted(picker_utilisation.items(), key=operator.itemgetter(1))
+
+                    # allocate to the first picker in the sorted
+                    picker_id = sorted_pickers[0][0]
+                    self.allocate(row_id, picker_id)
+                    allocated_rows.append(row_id)
+                    # do a max of n_idle_pickers allocations
+                    if i == n_idle_pickers - 1:
+                        break
+                    else:
+                        i += 1
+
+            for row_id in allocated_rows:
+                self.unallocated_rows.remove(row_id)
+
+    def get_disatances_from_nodes_dict(self, nodes_dict, goal_node):
+        """get distance to a goal_node from nodes given in a dict"""
+        node_distances = {}
+        for key in nodes_dict:
+            _, _, route_distance = self.graph.get_path_details(nodes_dict[key], goal_node)
+            node_distances[key] = sum(route_distance)
+        return node_distances
+
+    def allocate(self, row_id, picker_id):
+        """allocate a picker to a row"""
+        # allocate row_id to the picker
+        self.allocations[row_id] = picker_id
+        self.picker_allocations[picker_id].append(row_id)
+        self.curr_picker_allocations[picker_id] = row_id
+
+        self.idle_pickers.remove(picker_id)
+        self.allocated_pickers.append(picker_id)
+
+        self.pickers[picker_id].allocate_row_to_picker(row_id)
+
+        self.allocation_time[row_id] = self.env.now
+
+        self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
+                                                         row_id,
+                                                         self.allocation_time[row_id]))
+
+    def assign_robots_to_pickers(self, ):
+        """assign idle_robots to waiting_for_robot_pickers based on scheduler_policy"""
+        n_idle_robots = len(self.idle_robots)
+        if n_idle_robots > 0:
+            assigned_pickers = []
+
+            # "lexographical", "shortest_distance", "utilise_all"
+            if self.scheduler_policy == "lexographical":
+                # allocate in the order of name
+                self.idle_robots.sort()
+                i = 0
+                for picker_id in self.waiting_for_robot_pickers:
+                    if self.pickers[picker_id].assigned_robot_id is None:
+                        robot_id = self.idle_robots[0]
+                        self.assign(picker_id, robot_id)
+                        assigned_pickers.append(picker_id)
+                        if i == n_idle_robots - 1:
+                            break
+                        else:
+                            i += 1
+
+            elif self.scheduler_policy == "shortest_distance":
+                # allocate in the order of distance to the picker_node
+
+                # max possible allocations is n_idle_robots
+                i = 0
+                for picker_id in self.waiting_for_robot_pickers:
+                    if self.pickers[picker_id].assigned_robot_id is None:
+                        # get robot nodes of remaining idle_robots
+                        robot_nodes = {}
+                        for robot_id in self.idle_robots:
+                            robot_nodes[robot_id] = self.robots[robot_id].curr_node
+
+                        picker_node = self.pickers[picker_id].curr_node
+                        robot_distances = self.get_disatances_from_nodes_dict(robot_nodes, picker_node)
+                        sorted_robots = sorted(robot_distances.items(), key=operator.itemgetter(1))
+
+                        # allocate to the first picker in the sorted
+                        robot_id = sorted_robots[0][0]
+                        self.assign(picker_id, robot_id)
+                        assigned_pickers.append(picker_id)
+                        # remove the picker_node from future allocations
+                        del robot_nodes[robot_id]
+                        # do a max of n_idle_pickers allocations
+                        if i == n_idle_robots - 1:
+                            break
+                        else:
+                            i += 1
+
+            elif self.scheduler_policy == "utilise_all":
+                # improve utilisation by allocating row to least used picker
+
+                # max possible allocations is n_idle_robots
+                i = 0
+                for picker_id in self.waiting_for_robot_pickers:
+                    if self.pickers[picker_id].assigned_robot_id is None:
+                        # get robot utilisation (time_spent_working) of remaining idle_robots
+                        robot_utilisation = {}
+                        for robot_id in self.idle_robots:
+                            robot_utilisation[robot_id] = self.robots[robot_id].time_spent_working()
+                        sorted_robots = sorted(robot_utilisation.items(), key=operator.itemgetter(1))
+
+                        # allocate to the first picker in the sorted
+                        robot_id = sorted_robots[0][0]
+                        self.assign(picker_id, robot_id)
+                        assigned_pickers.append(picker_id)
+                        # do a max of n_idle_pickers allocations
+                        if i == n_idle_robots - 1:
+                            break
+                        else:
+                            i += 1
+
+    def assign(self, picker_id, robot_id):
+        """assign a robot to a picker waiting will full trays"""
+        self.idle_robots.remove(robot_id)
+        self.assigned_robots.append(robot_id)
+        picker_node = self.pickers[picker_id].curr_node
+        picker_n_trays = self.pickers[picker_id].n_trays
+        picker_local_storage_node = self.pickers[picker_id].local_storage_node
+
+        self.assigned_picker_robot[picker_id] = robot_id
+        self.assigned_robot_picker[robot_id] = picker_id
+        self.pickers[picker_id].assign_robot_to_picker(robot_id)
+        self.robots[robot_id].assign_robot_to_picker(picker_id, picker_node,
+                                                     picker_n_trays,
+                                                     picker_local_storage_node)
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)
