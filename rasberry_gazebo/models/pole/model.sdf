@@ -27,8 +27,8 @@
         <shader type='vertex'>
           <normal_map>__default__</normal_map>
         </shader>
-        <ambient>0.75 0.75 0.75 1</ambient>
-        <diffuse>0.075 0.075 0.075 1</diffuse>
+        <ambient>0.9 0.9 0.9 1</ambient>
+        <diffuse>0.09 0.09 0.09 1</diffuse>
         <specular>0.01 0.01 0.01 1</specular>
         <emissive>0 0 0 1</emissive>
       </material>

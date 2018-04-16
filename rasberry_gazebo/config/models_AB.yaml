@@ -1,20 +1,20 @@
 # Author: Adam Binch
 # email: adambinch@gmail.com
 
-# include       you can turn a model on or off by setting include: 1 or include: 0, respectively
+# include:     you can turn a model on or off by setting include: 1 or include: 0, respectively
 
 # The following parameters are in meter units:
-# pole_nx       number of poles aligned with the x-axis
-# pole_ny       number of poles aligned with the y-axis (keep fixed at pole_ny: 3 if you want the canopy to fit)
-# pole_dx       distance between poles aligned with the x-axis
-# pole_dy       distance between poles aligned with the y-axis (keep fixed at pole_dy: 1.35 if you want the canopy to fit)
-# pole_xoffset       sets the position of the poles along the x-axis
-# pole_yoffset       sets the position of the poles along the y-axis
-# arch_nx       number of arches 
-# arch_dx       distance between arches
-# arch_xoffset       sets the position of the arches along the x-axis
+# pole_nx                     number of poles aligned with the x-axis
+# pole_ny                     number of poles aligned with the y-axis (keep fixed at pole_ny: 5, if you want the canopy to fit)
+# pole_dx                     distance between poles aligned with the x-axis
+# pole_dy                     distance between poles aligned with the y-axis (keep fixed at pole_dy: 1.35, if you want the canopy to fit)
+# pole_xoffset                sets the position of the poles along the x-axis
+# pole_yoffset                sets the position of the poles along the y-axis
+# arch_nx                     number of arches 
+# arch_dx                     distance between arches
+# arch_xoffset                sets the position of the arches along the x-axis
 
-# note:       if you don't want the polytunnel to have a canopy set arch_dx: 0
+# note: if you don't want the polytunnel to have a canopy set arch_dx: 0
 
 
 - world_name: 'thorvald_AB.world'     

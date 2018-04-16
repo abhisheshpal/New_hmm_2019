@@ -3,10 +3,10 @@ email: adambinch@gmail.com
 
 This package allows the generation of a Gazebo world with polytunnels and human models ('actors').
 You can generate n polytunnels of arbitrary length positioned wherever you like in the Gazebo world.
-The constraint is that the polytunnels are always aligned with the x-axis. Also, the polytunnel arches are of a set width.
+The constraint is that the polytunnels are always aligned with the x-axis. Also, the polytunnel canopy is of a set width.
 The package also permits the inclusion of n actors moving between user specified waypoints.
 
-Open ./models_AB.yaml for an example polytunnel configuration (there are a couple of other models you can include as well as the polytunnels).
+Open ./models_AB.yaml for an example polytunnel configuration (there are a couple of other models that you can include as well as the polytunnels).
 Open ./actors_AB.yaml for an example of how to include moving actors in the Gazebo world.
 You can make your own .yaml files.
 
@@ -25,7 +25,7 @@ export GAZEBO_MODEL_PATH=~/rasberry_ws/src/RASberry/rasberry_gazebo/models:$GAZE
 
 You will probably need a mid range GPU or better to run this simulation properly.
 
-I am currently spawing Thorvald into the world using the following (probably outdated) method. 
+I am currently spawing Thorvald into the world using the following (possibly outdated) method. 
 Open a second terminal:
 $ roslaunch thorvald_bringup thorvald_ii_4wd4ws_slim_sim.launch
 Open a third terminal:

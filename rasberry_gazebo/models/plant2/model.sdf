@@ -3,14 +3,14 @@
 
 <model name="plant2">
 <static>1</static>
-<pose>0.0 0.0 0.0 0 0.0 0</pose>
+<pose>0.0 0.0 0.0 1.5707 0.0 0.0</pose>
 
   <link name="link">
 
     <collision name="collision">
       <geometry>
         <mesh>
-          <uri>model://plant2/plant2.dae</uri>
+          <uri>model://plant2/plant2.stl</uri>
         </mesh>
       </geometry>
     </collision>
@@ -18,7 +18,7 @@
     <visual name="visual">
       <geometry>
         <mesh>
-          <uri>model://plant2/plant2.dae</uri>
+          <uri>model://plant2/plant2.stl</uri>
         </mesh>
       </geometry>
       <material>

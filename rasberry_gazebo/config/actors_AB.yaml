@@ -1,25 +1,25 @@
 # Author: Adam Binch
 # email: adambinch@gmail.com
 
-# include       you can turn an actor on or off by setting include: 1 or include: 0, respectively
+# include:     you can turn an actor on or off by setting include: 1 or include: 0, respectively
 
 # The following animations are available:
-# moonwalk.dae
-# run.dae
-# sit_down.dae
-# sitting.dae
-# stand_up.dae
-# stand.dae
-# talk_a.dae
-# talk_b.dae
-# walk.dae
+     # moonwalk.dae
+     # run.dae
+     # sit_down.dae
+     # sitting.dae
+     # stand_up.dae
+     # stand.dae
+     # talk_a.dae
+     # talk_b.dae
+     # walk.dae
 
 - include: 1
   name: 'actor_00'
   animation: 'walk.dae'
   waypoints:
   - time: 0
-    pose: 0 2.025 0 0 0 0
+    pose: 5 2.025 0 0 0 0
   - time: 5
     pose: 15 2.025 0 0 0 0
 
@@ -30,4 +30,4 @@
   - time: 0
     pose: 15 2.025 0 0 0 0
   - time: 5
-    pose: 30 2.025 0 0 0 0
+    pose: 25 2.025 0 0 0 0

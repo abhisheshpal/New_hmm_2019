@@ -86,7 +86,7 @@ class AddtoWorld(object):
             plant2_id = plant2_count+i
             cpy= plant2_d['sdf']['model']
             cpy['@name'] = u'plant2_' + str(plant2_id)
-            posstr = str("%.3f %.3f 1.467 0.0 0.0 0.0"%(plant2_poses[i][0], plant2_poses[i][1]))
+            posstr = str("%.3f %.3f 1.467 1.5707 0.0 0.0"%(plant2_poses[i][0], plant2_poses[i][1]))
             cpy['pose']=posstr
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))                             
             
