@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+    <model name="dummy_arch">
+        <static>1</static>
+        <pose>0.0 0.0 0.0 1.570796 0.0 1.570796</pose>
+        <link name="link">
+                <collision name="collision">
+                        <geometry>
+                            <mesh>
+                                <uri>model://dummy_arch/dummy_arch.stl</uri>
+                            </mesh>
+                        </geometry>
+                </collision>
+                <visual name="visual">
+                        <geometry>
+                            <mesh>
+                                <uri>model://dummy_arch/dummy_arch.stl</uri>
+                            </mesh>
+                        </geometry>
+                        <material>
+                                <script>
+                                        <uri>file://media/materials/scripts/gazebo.material</uri>
+                                        <name>Gazebo/Grey</name>
+                                </script>
+                        </material>
+                </visual>
+        </link>
+    </model>
+</sdf>
+
