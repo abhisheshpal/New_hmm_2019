@@ -30,3 +30,15 @@ Open a second terminal:
 $ roslaunch thorvald_bringup thorvald_ii_4wd4ws_slim_sim.launch
 Open a third terminal:
 $ rosrun gazebo_ros spawn_model -urdf -param /robot_description -model thorvald_ii
+
+
+Python package dependencies:
+	argparse
+	xmltodict
+	rospkg
+	numpy
+	itertools
+	copy
+	json
+	yaml
+	
