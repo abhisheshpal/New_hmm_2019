@@ -133,9 +133,6 @@ class VisualiseAgents(object):
                 cold_storage_x = node_obj.pose.position.x
                 cold_storage_y = node_obj.pose.position.y
 
-        print farm_rows_x
-        print farm_rows_y
-
         if not self.show_cold_storage:
             # TODO: assuming there is at least two rows are present
             min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]))
