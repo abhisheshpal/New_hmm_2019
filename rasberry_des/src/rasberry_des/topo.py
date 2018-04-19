@@ -45,6 +45,10 @@ class TopologicalForkGraph(object):
         # local storage nodes
         self.local_storages = {}
         self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
+        self.cold_storage = None
+        self.cold_storage_node = None
+
+        self.use_local_storage = True # if False, store at cold storage
 
         self.verbose = verbose
 
@@ -96,6 +100,16 @@ class TopologicalForkGraph(object):
                     self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
 
     def set_local_storages(self, local_storages):
+        """set local_storage_nodes and local_storages
+
+        Keyword arguments:
+
+        local_storages -- simpy.Resource object list
+        """
+        # reset
+        self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
+        self.local_storages = {}
+
         n_local_storages = len(local_storages)
         # set local storage nodes
         storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
@@ -111,6 +125,17 @@ class TopologicalForkGraph(object):
 
         for row_id in self.row_ids:
             self.row_info[row_id][3] = self.local_storage_nodes[row_id]
+
+    def set_cold_storage(self, cold_storage):
+        """set cold_storage_node and cold_storage
+
+        Keyword arguments:
+
+        cold_storage -- simpy.Resource object
+        """
+        self.cold_storage_node = "cold_storage"
+        self.cold_storage = cold_storage
+        self.use_local_storage = False
 
     def get_row_info(self, ):
         """get_row_info: Get information about each row

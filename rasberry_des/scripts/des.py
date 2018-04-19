@@ -14,6 +14,7 @@
 # ----------------------------------
 
 import random
+import os
 import simpy
 import numpy
 import rospy
@@ -26,13 +27,9 @@ import rasberry_des.topo
 
 RANDOM_SEED = 1111
 SHOW_VIS = True
-DETAILED_VIS = False
-SAVE_STATS = True
-SIM_RT_FACTOR = 10.0
+SAVE_STATS = False
+SIM_RT_FACTOR = 5.0
 VERBOSE = False
-
-if not VERBOSE:
-    SHOW_VIS = False
 
 random.seed(RANDOM_SEED)
 numpy.random.seed(RANDOM_SEED)
@@ -55,15 +52,17 @@ if __name__ == "__main__":
 
     _yield_per_node = config_params["yield_per_node"]
 
+    n_local_storages = config_params["n_local_storages"]
+
     topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, half_rows,
                                                         n_topo_nav_rows, _yield_per_node, VERBOSE)
 
-    n_trials = 10
+    n_trials = 1
     min_n_pickers = 1
     max_n_pickers = n_topo_nav_rows + 1
     min_n_robots = 0
-    max_n_robots = max_n_pickers
-    n_local_storages = n_topo_nav_rows
+    max_n_robots = 1#n_pickers#max_n_pickers
+#    n_local_storages = n_topo_nav_rows
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -71,14 +70,12 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexographical", "shortest_distance", "utilise_all"]:
+            for scheduling_policy in ["lexographical"]:#["lexographical", "shortest_distance", "utilise_all"]:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
                     if rospy.is_shutdown():
                         break
-
-                    print n_pickers, n_robots, scheduling_policy, trial,
 
                     # some config parameters need to be re-read with the n_robots and n_pickers
                     # as these parameters are returned as a list of size n_robots and n_pickers
@@ -116,40 +113,46 @@ if __name__ == "__main__":
                         # To vary the speed of RT sim, change 'factor'
                         env = simpy.RealtimeEnvironment(initial_time=0., factor=SIM_RT_FACTOR, strict=False)
                     else:
-                        raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
                         rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
+                        raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
 
                     start_time_simpy = env.now
 
                     # assuming a fork graph with a head lane
-                    local_storages = [simpy.Resource(env, capacity=n_pickers) for i in range(n_local_storages)]
+                    local_storages = [simpy.Resource(env, capacity=n_pickers+n_robots) for i in range(n_local_storages)]
                     topo_graph.set_local_storages(local_storages)
+                    cold_storage = simpy.Resource(env, capacity=n_pickers+n_robots)
+                    topo_graph.set_cold_storage(cold_storage)
 
                     robots = []
                     for robot_id in robot_ids:
                         robots.append(rasberry_des.robot.Robot(robot_id, robot_transportation_rate[robot_id],
-                                                                    robot_max_n_trays[robot_id],
-                                                                    robot_unloading_time[robot_id],
-                                                                    env, topo_graph, VERBOSE))
+                                                               robot_max_n_trays[robot_id],
+                                                               robot_unloading_time[robot_id],
+                                                               env, topo_graph, VERBOSE))
 
                     pickers = []
                     for picker_id in picker_ids:
                         pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
-                                                                       picker_max_n_trays[picker_id],
-                                                                       picking_rate[picker_id],
-                                                                       picker_transportation_rate[picker_id],
-                                                                       picker_unloading_time[picker_id],
-                                                                       env, topo_graph,
-                                                                       robots, VERBOSE))
+                                                                  picker_max_n_trays[picker_id],
+                                                                  picking_rate[picker_id],
+                                                                  picker_transportation_rate[picker_id],
+                                                                  picker_unloading_time[picker_id],
+                                                                  env, topo_graph,
+                                                                  robots, VERBOSE))
 
-                    map_name = "open_field"     # "fork_map" or "open_field"
-    #                scheduling_policy = "lexographical"     # "lexographical", "shortest_distance", "utilise_all"
+                    map_name = "fork_map"     # "fork_map" or "open_field"
+
                     farm = rasberry_des.farm.Farm(map_name,
-                                                  env, n_topo_nav_rows, topo_graph, robots, pickers,
-                                                  scheduling_policy, VERBOSE)
+                                                  env, n_topo_nav_rows, topo_graph, robots,
+                                                  pickers, scheduling_policy, VERBOSE)
 
                     if SHOW_VIS:
-                        vis = rasberry_des.visualise.Visualise_Agents(topo_graph, robots, pickers)
+                        vis = rasberry_des.visualise.VisualiseAgents(topo_graph, robots,
+                                                                     pickers, scheduling_policy,
+                                                                     show_cs=True,
+                                                                     save_random=False,
+                                                                     trial=trial)
 
                     while not rospy.is_shutdown():
                         try:
@@ -174,11 +177,10 @@ if __name__ == "__main__":
                     finish_time_ros = rospy.get_time()
                     finish_time_simpy = env.now
 
-                    print finish_time_ros - start_time_ros
+                    print n_pickers, n_robots, scheduling_policy, trial, finish_time_ros - start_time_ros
 
                     if SAVE_STATS:
-                        import os
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, rospy.get_time()), "w")
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, rospy.get_time()*1000000), "w")
                         # no ros related calls here to ensure printing even when the pickers_only node is killed
                         # farm details
                         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
@@ -232,11 +234,11 @@ if __name__ == "__main__":
                                 alloc_time = farm.allocation_time[row_id]
                                 finish_time = farm.row_finish_time[row_id]
                                 print >> f_handle, "  %s allocation time: %0.3f" %(row_id,
-                                                                      alloc_time if alloc_time is not None else float("inf"))
+                                                                                   alloc_time if alloc_time is not None else float("inf"))
                                 print >> f_handle, "  %s completion time: %0.3f" %(row_id,
-                                                                      finish_time if finish_time is not None else float("inf"))
+                                                                                   finish_time if finish_time is not None else float("inf"))
                             print >> f_handle, "tot_trays: %0.3f (%0.3f g)" %(pickers[i].tot_trays,
-                                                                 pickers[i].tot_trays * pickers[i].tray_capacity)
+                                                                              pickers[i].tot_trays * pickers[i].tray_capacity)
                             print >> f_handle, "picking_time: %0.3f" %(pickers[i].time_spent_picking)
                             print >> f_handle, "transportation_time: %0.3f" %(pickers[i].time_spent_transportation)
                             print >> f_handle, "idle_time: %0.3f" %(pickers[i].time_spent_idle)
@@ -263,12 +265,3 @@ if __name__ == "__main__":
                             print >> f_handle, "-----------------\n"
 
                         f_handle.close()
-
-                    for picker in pickers:
-                        del picker
-                    del pickers
-                    for robot in robots:
-                        del robot
-                    del robots
-                    del farm
-                    del env

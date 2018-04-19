@@ -150,8 +150,9 @@ class Farm(object):
                         # remove it from self.assigned_picker_robot[picker_id]
                         self.assigned_picker_robot[picker_id] = None
 
-                elif picker.mode == 3 or picker.mode == 4:
-                    # picker transporting to storage or waiting for unloading at storage
+                elif picker.mode == 3 or picker.mode == 4 or picker.mode == 6:
+                    # picker transporting to storage or unloading at storage
+                    # or transporting to local storage from cold storage
                     # if the current row is finished, the picker's mode will be changed
                     # to idle (0) soon, which will be taken care of in next loop
                     if self.assigned_picker_robot[picker_id] is not None:
@@ -232,7 +233,7 @@ class Farm(object):
                         self.assigned_picker_robot[picker_id] = None
 
                 elif robot.mode == 4:
-                    # waiting to unload
+                    # unloading
                     picker_id = self.assigned_robot_picker[robot_id]
                     if self.assigned_picker_robot[picker_id] is not None:
                         # if there is a robot assigned to the picker, loading has been completed
@@ -251,6 +252,14 @@ class Farm(object):
 
                     to_remove_robots.append(robot_id)
 
+                elif robot.mode == 6:
+                    # transporting back to local storage after unloading at cold storage
+                    picker_id = self.assigned_robot_picker[robot_id]
+                    if self.assigned_picker_robot[picker_id] is not None:
+                        # if there is a robot assigned to the picker, loading has been completed
+                        # remove it from self.assigned_picker_robot[picker_id]
+                        self.assigned_picker_robot[picker_id] = None
+
             # modify assigned_robots list
             for robot_id in to_remove_robots:
                 self.assigned_robots.remove(robot_id)
@@ -264,7 +273,7 @@ class Farm(object):
                 robot = self.robots[robot_id]
                 if robot.mode == 0:
                     self.charging_robots.remove(robot_id)
-                    self.idle_robot.append(robot_id)
+                    self.idle_robots.append(robot_id)
 
             # row allocation to idle_pickers
             self.allocate_rows_to_pickers()
@@ -373,8 +382,8 @@ class Farm(object):
         self.allocation_time[row_id] = self.env.now
 
         self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
-                                                         row_id,
-                                                         self.allocation_time[row_id]))
+                                                        row_id,
+                                                        self.allocation_time[row_id]))
 
     def assign_robots_to_pickers(self, ):
         """assign idle_robots to waiting_for_robot_pickers based on scheduler_policy"""
