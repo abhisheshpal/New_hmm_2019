@@ -22,8 +22,8 @@ def check_fork_map_config():
         missing_params.append("rasberry_des_config/half_rows")
     if not rospy.has_param(ns + "rasberry_des_config/head_row_node_dist"):
         missing_params.append("rasberry_des_config/head_row_node_dist")
-    if not rospy.has_param(ns + "rasberry_des_config/head_node_y"):
-        missing_params.append("rasberry_des_config/head_node_y")
+    if not rospy.has_param(ns + "rasberry_des_config/head_node_x"):
+        missing_params.append("rasberry_des_config/head_node_x")
     if not rospy.has_param(ns + "rasberry_des_config/row_node_dist"):
         missing_params.append("rasberry_des_config/row_node_dist")
     if not rospy.has_param(ns + "rasberry_des_config/row_length"):
@@ -120,8 +120,8 @@ def get_fork_map_config_parameters():
     _head_row_node_dist = rospy.get_param(ns + "rasberry_des_config/head_row_node_dist")
     head_row_node_dist = des_param_list_check(ns + "rasberry_des_config/head_row_node_dist", _head_row_node_dist, n_topo_nav_rows)
 
-    _head_node_y = rospy.get_param(ns + "rasberry_des_config/head_node_y")
-    head_node_y = des_param_list_check(ns + "rasberry_des_config/head_node_y", _head_node_y, n_topo_nav_rows)
+    _head_node_x = rospy.get_param(ns + "rasberry_des_config/head_node_x")
+    head_node_x = des_param_list_check(ns + "rasberry_des_config/head_node_x", _head_node_x, n_topo_nav_rows)
 
     _row_node_dist = rospy.get_param(ns + "rasberry_des_config/row_node_dist")
     row_node_dist = des_param_list_check(ns + "rasberry_des_config/row_node_dist", _row_node_dist, n_topo_nav_rows)
@@ -140,15 +140,20 @@ def get_fork_map_config_parameters():
     _row_spacing = rospy.get_param(ns + "rasberry_des_config/row_spacing")
     row_spacing = des_param_list_check(ns + "rasberry_des_config/row_spacing", _row_spacing, n_topo_nav_rows)
 
+    if rospy.has_param(ns + "rasberry_des_config/dist_to_cold_storage"):
+        dist_to_cold_storage = rospy.get_param(ns + "rasberry_des_config/dist_to_cold_storage")
+
     config_params = {}
     config_params["n_farm_rows"] = n_farm_rows
     config_params["half_rows"] = half_rows
     config_params["n_topo_nav_rows"] = n_topo_nav_rows
     config_params["head_row_node_dist"] = head_row_node_dist
-    config_params["head_node_y"] = head_node_y
+    config_params["head_node_x"] = head_node_x
     config_params["row_node_dist"] = row_node_dist
     config_params["row_length"] = row_length
     config_params["row_spacing"] = row_spacing
+    if rospy.has_param(ns + "rasberry_des_config/dist_to_cold_storage"):
+        config_params["dist_to_cold_storage"] = dist_to_cold_storage
 
     return config_params
 

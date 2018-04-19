@@ -96,29 +96,30 @@ class VisualiseAgents(object):
                 head_lane_x.append(head_node.pose.position.x)
                 head_lane_y.append(head_node.pose.position.y)
 
+            # farm rows - assuming aligned with x axis
             if self.graph.half_rows:
                 if i == 0:
-                    farm_rows_x.append((0., 0.))
-                    farm_rows_y.append((start_node.pose.position.y, last_node.pose.position.y))
+                    farm_rows_y.append((0., 0.))
+                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
 
                 # from start_row_node to last_row_node
-                start_node_x = 2 * start_node.pose.position.x - farm_rows_x[-1][0]
-                last_node_x = 2 * last_node.pose.position.x - farm_rows_x[-1][1]
-                farm_rows_x.append((start_node_x, last_node_x))
-                farm_rows_y.append((start_node.pose.position.y, last_node.pose.position.y))
+                start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
+                last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
+                farm_rows_y.append((start_node_y, last_node_y))
+                farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
 
             else:
                 # from start_row_node to last_row_node
                 if i == 0:
-                    start_node_x = 2 * start_node.pose.position.x
-                    last_node_x = 2 * last_node.pose.position.x
+                    start_node_y = 2 * start_node.pose.position.y
+                    last_node_y = 2 * last_node.pose.position.y
                 else:
-                    start_node_x = 2 * start_node.pose.position.x - farm_rows_x[-1][0]
-                    last_node_x = 2 * last_node.pose.position.x - farm_rows_x[-1][1]
+                    start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
+                    last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
 
                 if i != self.graph.n_topo_nav_rows - 1:
-                    farm_rows_x.append((start_node_x, last_node_x))
-                    farm_rows_y.append((start_node.pose.position.y, last_node.pose.position.y))
+                    farm_rows_y.append((start_node_y, last_node_y))
+                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
 
             if self.graph.local_storage_nodes[row_id] not in local_storage_nodes:
                 local_storage_nodes.append(self.graph.local_storage_nodes[row_id])
@@ -131,6 +132,9 @@ class VisualiseAgents(object):
                 node_obj = self.graph.get_node(cold_storage_node)
                 cold_storage_x = node_obj.pose.position.x
                 cold_storage_y = node_obj.pose.position.y
+
+        print farm_rows_x
+        print farm_rows_y
 
         if not self.show_cold_storage:
             # TODO: assuming there is at least two rows are present

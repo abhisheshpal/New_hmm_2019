@@ -2,7 +2,7 @@ des_env: simpy # simpy or ros
 n_farm_rows: 29 # number of rows in the farm / poly-tunnel
 half_rows: true # whether the first and last rows are half (berries only on one side) or full rows (berries on both sides)
 head_row_node_dist: [1.5] # distance from head node to the first row node of each row (values for all rows, or single value to be copied)
-head_node_y: [1.0] # y coordinate of head nodes (values for all rows, or single value to be copied)
+head_node_x: [1.0] # x coordinate of head nodes (values for all rows, or single value to be copied)
 row_node_dist: [5.0] # distance between two nodes in each row (values for all rows, or single value to be copied), m
 row_length: [120.0] # length of rows (values for all rows, or single value to be copied), m
 row_spacing: [1.5] # spacing between two rows in the farm (values for all rows, or single value to be copied), m
@@ -18,4 +18,4 @@ n_robots: 0 # number of robots in the farm
 robot_transportation_rate: [1.0] # speed of a robot (values for all robots, or single value to be copied), m/s
 robot_max_n_trays: [4] # maximum number of trays that can be carried by the robot (values for all robots, or single value to be copied)
 robot_unloading_time: [110.] # time required by the robot to unload a tray at local storage (values for all pickers, or single value to be copied), s
-
+dist_to_cold_storage: 1.5 # distance to the cold storage from the zeroth row head, m (optional)
