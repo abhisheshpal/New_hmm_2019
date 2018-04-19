@@ -15,7 +15,7 @@ tray_capacity: 3000 # capacity of each tray, g
 yield_per_node: [200.0,5.0] # yield at a topo_nav node (from the node to the next), per row (values for all rows, or mu and sigma), g
 n_local_storages: 1 # number of local storage stations
 n_robots: 3 # number of robots in the farm
-robot_transportation_rate: [2.0] # speed of a robot (values for all robots, or single value to be copied), m/s
+robot_transportation_rate: [1.0] # speed of a robot (values for all robots, or single value to be copied), m/s
 robot_max_n_trays: [4] # maximum number of trays that can be carried by the robot (values for all robots, or single value to be copied)
 robot_unloading_time: [10] # time required by the robot to unload a tray at local storage (values for all pickers, or single value to be copied), s
 

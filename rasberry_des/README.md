@@ -1,6 +1,6 @@
 **rasberry_des**
 ------------
-A rospackage for running discrete event simulation of a strawberry farm, pickers, robots and a basic job allocation processesusing SimPy.
+A rospackage for running discrete event simulation of a strawberry farm, pickers, robots and a basic job allocation processes using SimPy.
 
 A topological map is created and stored in mongodb with corresponding topics and services launched using the topological navigation nodes.
 
@@ -22,11 +22,19 @@ A topological map is created and stored in mongodb with corresponding topics and
 # How to run
 
 1. Launch the `mongodb_store` nodes
-  `roslaunch mongodb_store mongodb_store.launch db:=<path_to_mongo_db_storage_dir>`
+  `roslaunch mongodb_store mongodb_store.launch db_path:=<path_to_mongo_db_storage_dir>`
 2. Launch some preliminary nodes
   * Edit the `config/des_config.yaml` with the required configuration parameters for the discrete event simulation, or prepare a yaml file with the same keys.
   * `roslaunch rasbderry_des des_config.launch [config_file:="<path_to_config_file>"] [map:="<path_to_metric_map.yaml>]`
-3. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
+  * Check whether the pointset you want is loaded in mongodb
+    `rosrun topological_utils list_maps`
+    If the pointset is loaded, go to Step 3.
+    If the pointset is not loaded and you don't have a tmap/yaml file of the pointset, go to Step 4.
+    If the pointset is not loaded and you have a tmap/yaml file of the pointset, go to Step 5.
+3. * Launch the `topological_navigation` nodes. 
+     `roslaunch topological_navigation topological_navigation.launch map:="<tplg_map_dataset_name>`
+   * Go to Step 6
+4. If no maps are available: generate a topological fork_map (in future, it can be done through rviz)
   * Launch the `topological_navigation` nodes. This will create a `topological_map` with the given name in mongodb, and nodes, edges added to the map would be with the name of the map as `pointset`.
     `roslaunch topological_navigation topological_navigation_empty_map.launch map:="<tplg_map_dataset_name>"`
   * Check whether all des fork_map config parameters are loaded by running
@@ -45,7 +53,8 @@ A topological map is created and stored in mongodb with corresponding topics and
       `rosrun topological_utils topological_map_update.py`
       Add `MarkerArray` element with topic `/topological_map_visualisation`
       The `/topological_map` topic is also being published
-4. If you already have a map (as a waypoint, yaml or tmap file), load topological_navigation nodes
+    * Go to Step 6
+5. If you already have a map (as a waypoint, yaml or tmap file), load topological_navigation nodes
   * If the topological map nodes are not in the mongodb, store them in mongodb first
     * if only a waypoint file is available, create tmap and yaml files and load any of them to the mongodb.
       `rosrun topological_utils waypoints_to_yaml_tmap.py <input_file.txt> <outfile> <tplg_map_dataset_name> <tplg_map_name> [max_dist_connect]`
@@ -56,7 +65,8 @@ A topological map is created and stored in mongodb with corresponding topics and
   * Launch the `topological_navigation` nodes. 
     `roslaunch topological_navigation topological_navigation.launch map:="<tplg_map_dataset_name>`
   * Update the ros parameters corresponding to the topological_map
-5. Discrete event simulation
+    * Go to Step 6
+6. Discrete event simulation
   * Make sure all required DES configuration parameters are set.
     `rosrun rasberry_des check_des_config_parameters.py`
     If any parameters are not set, edit the `des_config.yaml` file mentioned in Step 2 and relaunch the `topological_navigation` nodes.

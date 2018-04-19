@@ -74,6 +74,7 @@ class Picker(object):
         self.row_finish_time = 0. # time at which current row is completed
 
         self.row_path = []
+        self.goal_node = None
 
         self.picking_progress = 0.  # percentage of tray_capacity
 
@@ -95,6 +96,10 @@ class Picker(object):
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
         self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
+
+        self.use_local_storage = self.graph.use_local_storage # if False, store at cold storage
+
+        self.cold_storage_node = self.graph.cold_storage_node
 
         self.action = self.env.process(self.normal_operation())
 
@@ -245,7 +250,6 @@ class Picker(object):
                     self.time_spent_idle += self.env.now - idle_start_time
 
                 # mode remains idle - not updating self.time_spent_idle now
-                pass
 
             elif self.mode == 1:
                 # from curr_node go to a row_node (self.goal_node) and continue picking
@@ -332,39 +336,61 @@ class Picker(object):
                         picking_start_time = self.env.now
 
             elif self.mode == 3:
+
+                storage_node = self.local_storage_node if self.use_local_storage else self.cold_storage_node
+
                 # go to local storage node and change mode to 4
-                yield self.env.process(self.go_to_node(self.local_storage_node,
+                yield self.env.process(self.go_to_node(storage_node,
                                                        self.transportation_rate))
                 self.time_spent_transportation += self.env.now - transportation_start_time
 
-                self.mode = 4
+                self.mode = 4   # unload at local or cold storage
                 unloading_start_time = self.env.now
 
             elif self.mode == 4:
-                # wait and unload at local storage node
+                # wait and unload at local / cold storage
                 # a picker can be in this mode in both cases - with and without robots
                 # with robots it could happen only at the end
                 # without robots, it could be at the end or when trays are full
 
                 if self.n_trays > 0 or self.picking_progress > 0:
-                    with self.graph.local_storages[self.local_storage_node].request() as req:
+                    if self.use_local_storage:
+                        storage = self.graph.local_storages[self.local_storage_node]
+                        storage_node = self.local_storage_node
+                    else:
+                        storage = self.graph.cold_storage
+                        storage_node = self.cold_storage_node
+
+                    with storage.request() as req:
                         yield req
                         if self.n_robots == 0: # without robots
                             if self.picking_finished:
-                                self.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
+                                self.loginfo("%s unloading all trays at %s" %(self.picker_id, storage_node))
                                 wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
                             else:
-                                self.loginfo("%s unloading full trays at %s" %(self.picker_id, self.local_storage_node))
+                                self.loginfo("%s unloading full trays at %s" %(self.picker_id, storage_node))
                                 wait_time = self.unloading_time * self.n_trays
                             yield self.env.timeout(wait_time)
                             self.time_spent_unloading += self.env.now - unloading_start_time
                             self.update_trays_unloaded()
 
-                            # if picking is finished or not, if there are no
-                            # current allocations, stay here
                             if self.curr_row is None:
-                                self.mode = 0
-                                idle_start_time = self.env.now
+                                # current row is finished. what next?
+                                if self.use_local_storage:
+                                    # local storage
+                                    # if there are no current allocation, stay here
+                                    self.mode = 0
+                                    idle_start_time = self.env.now
+                                else:
+                                    # cold storage
+                                    if self.allocation_finished:
+                                        # all rows allocated stay here
+                                        self.mode = 0
+                                        idle_start_time = self.env.now
+                                    else:
+                                        # still unallocated rows, go to local storage of previous
+                                        self.mode = 6
+                                        transportation_start_time = self.env.now
                             else:
                                 # go back to previous node
                                 self.mode = 1
@@ -424,6 +450,23 @@ class Picker(object):
                             self.mode = 0
                             idle_start_time = self.env.now
 
+            elif self.mode == 6:
+                # go back to previous row's local storage node
+                # from curr_node go to local_storage_node and stay idle
+                waiting_node = self.prev_row_info[3]
+                self.loginfo("%s going to %s from %s" %(self.picker_id, self.goal_node, waiting_node))
+                yield self.env.process(self.go_to_node(waiting_node, self.transportation_rate))
+                self.time_spent_transportation += self.env.now - transportation_start_time
+
+                self.loginfo("%s is idle now" %(self.picker_id))
+                self.mode = 0 # picking
+                idle_start_time = self.env.now
+
+                if self.picking_finished or (self.allocation_finished and self.mode == 0):
+                    self.loginfo("all rows picked. %s exiting" %(self.picker_id))
+                    self.env.exit("all rows picked and idle")
+                    break
+
             yield self.env.timeout(self.loop_timeout)
 
         yield self.env.timeout(self.process_timeout)
@@ -436,8 +479,7 @@ class Picker(object):
         nav_speed -- navigation speed (picking / transportation rate)
         """
         self.loginfo("%s going to %s from %s" %(self.picker_id, goal_node, self.curr_node))
-        route_nodes, route_edges, route_distance = self.graph.get_path_details(self.curr_node,
-                                                                               goal_node)
+        route_nodes, _, route_distance = self.graph.get_path_details(self.curr_node, goal_node)
         for i in range(len(route_nodes) - 1):
             # move through each edge
             edge_distance = route_distance[i]

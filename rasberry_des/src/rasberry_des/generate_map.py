@@ -13,7 +13,7 @@ import rasberry_des.config_utils
 
 
 def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_dist,
-                      _head_node_y, _row_node_dist, _row_length, _row_spacing):
+                      _head_node_y, _row_node_dist, _row_length, _row_spacing, dist_to_cold_storage=None):
     """generate fork map by creating nodes and edges. Use fork_map_generator
     node to call this function.
     """
@@ -103,3 +103,15 @@ def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_di
             add_edges(curr_node, next_node, "move_base", "edge_%02d_%02d_%02d" %(i, j, j+1))
             add_edges(next_node, curr_node, "move_base", "edge_%02d_%02d_%02d" %(i, j+1, j))
 
+    # a cold storage node will be added at a given distance from a corner head node
+    if dist_to_cold_storage is not None:
+        x_cs = x[0] # same as row_00
+        y_cs = -dist_to_cold_storage
+        pose.position.x = x_cs
+        pose.position.y = y_cs
+        cs_node = "cold_storage"
+        add_node(cs_node, pose)
+        add_node_tag("cold_storage", [cs_node])
+        prev_node = "hn-%02d" %(0)
+        add_edges(prev_node, cs_node, "move_base", "edge_head_cold_storage")
+        add_edges(cs_node, prev_node, "move_base", "edge_cold_storage_head")
