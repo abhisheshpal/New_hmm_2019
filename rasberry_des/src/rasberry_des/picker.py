@@ -267,9 +267,7 @@ class Picker(object):
                 yield self.env.process(self.picking_node_to_node())
                 self.time_spent_picking += self.env.now - picking_start_time
 
-                if ((not self.graph.half_rows) and
-                        ((self.curr_row == self.graph.row_ids[0]) or
-                         (self.curr_row == self.graph.row_ids[-1]))):
+                if self.curr_row in self.graph.half_rows:
                     # row_end and dir_change nodes are the same
                     row_end_node = self.curr_row_info[2]
                     dir_change_node = self.curr_row_info[2]

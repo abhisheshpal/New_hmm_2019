@@ -43,7 +43,6 @@ if __name__ == "__main__":
     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
 
     n_farm_rows = config_params["n_farm_rows"]
-    half_rows = config_params["half_rows"]
     n_topo_nav_rows = config_params["n_topo_nav_rows"]
 
     des_env = config_params["des_env"]
@@ -54,14 +53,14 @@ if __name__ == "__main__":
 
     n_local_storages = config_params["n_local_storages"]
 
-    topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, half_rows,
-                                                        n_topo_nav_rows, _yield_per_node, VERBOSE)
+    topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, n_topo_nav_rows,
+                                                        _yield_per_node, VERBOSE)
 
     n_trials = 1
     min_n_pickers = 1
     max_n_pickers = n_topo_nav_rows + 1
     min_n_robots = 0
-    max_n_robots = 1#n_pickers#max_n_pickers
+    max_n_robots = max_n_pickers
 #    n_local_storages = n_topo_nav_rows
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
@@ -207,7 +206,7 @@ if __name__ == "__main__":
                             print >> f_handle, "  node_dist: %0.3f m" %(node_dist)
                             row_yield = 0.
                             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-                            if (not topo_graph.half_rows) and (row_id == topo_graph.row_ids[0] or row_id == topo_graph.row_ids[-1]):
+                            if row_id in topo_graph.half_rows:
                                 for i in range(1, n_row_nodes):
                                     row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
                             else:

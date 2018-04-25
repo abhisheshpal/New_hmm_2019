@@ -1,6 +1,5 @@
 des_env: simpy # simpy or ros
-n_farm_rows: 29 # number of rows in the farm / poly-tunnel
-half_rows: true # whether the first and last rows are half (berries only on one side) or full rows (berries on both sides)
+n_farm_rows: 28 # number of rows in the farm / poly-tunnel
 head_row_node_dist: [1.5] # distance from head node to the first row node of each row (values for all rows, or single value to be copied)
 head_node_x: [1.0] # x coordinate of head nodes (values for all rows, or single value to be copied)
 row_node_dist: [5.0] # distance between two nodes in each row (values for all rows, or single value to be copied), m

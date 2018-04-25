@@ -20,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, _node_yields, verbose):
+    def __init__(self, n_farm_rows, n_topo_nav_rows, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -34,8 +34,9 @@ class TopologicalForkGraph(object):
         ns = rospy.get_namespace()
         self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
         self.n_farm_rows = n_farm_rows
-        self.half_rows = half_rows
         self.n_topo_nav_rows = n_topo_nav_rows
+        # half_rows: rows requiring picking in one direction
+        self.half_rows = set((self.row_ids[0], self.row_ids[-1]))
         self.head_nodes = {}        # {row_id:head_node}
         self.row_nodes = {}         # {row_id:[row_nodes]}
         # row_info {row_id:[head_node, start_node, end_node, local_storage_node]}

@@ -18,8 +18,6 @@ def check_fork_map_config():
     missing_params = []
     if not rospy.has_param(ns + "rasberry_des_config/n_farm_rows"):
         missing_params.append("rasberry_des_config/n_farm_rows")
-    if not rospy.has_param(ns + "rasberry_des_config/half_rows"):
-        missing_params.append("rasberry_des_config/half_rows")
     if not rospy.has_param(ns + "rasberry_des_config/head_row_node_dist"):
         missing_params.append("rasberry_des_config/head_row_node_dist")
     if not rospy.has_param(ns + "rasberry_des_config/head_node_x"):
@@ -113,9 +111,7 @@ def get_fork_map_config_parameters():
     # If half rows, n_rows-1 picking rows are needed, all forward and reverse
     # If full rows, n_rows+1 picking rows are needed, all except first and last
     # rows are forward and reverse. first and last are forward/reverse only
-    half_rows = rospy.get_param(ns + "rasberry_des_config/half_rows")
-
-    n_topo_nav_rows = n_farm_rows - 1 if half_rows else n_farm_rows + 1
+    n_topo_nav_rows = n_farm_rows + 1
 
     _head_row_node_dist = rospy.get_param(ns + "rasberry_des_config/head_row_node_dist")
     head_row_node_dist = des_param_list_check(ns + "rasberry_des_config/head_row_node_dist", _head_row_node_dist, n_topo_nav_rows)
@@ -145,7 +141,6 @@ def get_fork_map_config_parameters():
 
     config_params = {}
     config_params["n_farm_rows"] = n_farm_rows
-    config_params["half_rows"] = half_rows
     config_params["n_topo_nav_rows"] = n_topo_nav_rows
     config_params["head_row_node_dist"] = head_row_node_dist
     config_params["head_node_x"] = head_node_x
@@ -165,7 +160,7 @@ def get_des_config_parameters(map_from_db=False, n_pickers = None, n_robots=None
     config_params = {}
 
     if not map_from_db:
-        # n_rows, half_rows, n_topo_nav_rows, row_node_dist,
+        # n_rows, n_topo_nav_rows, row_node_dist,
         # row_length, row_spacing, head_row_node_dist
         config_params = get_fork_map_config_parameters()
 

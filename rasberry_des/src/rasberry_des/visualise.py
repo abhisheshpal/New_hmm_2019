@@ -97,29 +97,17 @@ class VisualiseAgents(object):
                 head_lane_y.append(head_node.pose.position.y)
 
             # farm rows - assuming aligned with x axis
-            if self.graph.half_rows:
-                if i == 0:
-                    farm_rows_y.append((0., 0.))
-                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
-
-                # from start_row_node to last_row_node
+            # from start_row_node to last_row_node
+            if i == 0:
+                start_node_y = 2 * start_node.pose.position.y
+                last_node_y = 2 * last_node.pose.position.y
+            else:
                 start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
                 last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
+
+            if i != self.graph.n_topo_nav_rows - 1:
                 farm_rows_y.append((start_node_y, last_node_y))
                 farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
-
-            else:
-                # from start_row_node to last_row_node
-                if i == 0:
-                    start_node_y = 2 * start_node.pose.position.y
-                    last_node_y = 2 * last_node.pose.position.y
-                else:
-                    start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
-                    last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
-
-                if i != self.graph.n_topo_nav_rows - 1:
-                    farm_rows_y.append((start_node_y, last_node_y))
-                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
 
             if self.graph.local_storage_nodes[row_id] not in local_storage_nodes:
                 local_storage_nodes.append(self.graph.local_storage_nodes[row_id])

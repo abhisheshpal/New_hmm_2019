@@ -156,6 +156,7 @@ class Robot(object):
                     self.mode = 0
                     idle_start_time = self.env.now
                 else:
+                    # picking_finished is not considered here to make sure no picker is stranded
                     # change to transportation back to local storage of the picker's assigned row
                     self.mode = 6
                     transportation_start_time = self.env.now
