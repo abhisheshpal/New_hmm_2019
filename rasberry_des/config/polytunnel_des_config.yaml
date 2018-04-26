@@ -1,5 +1,5 @@
 des_env: simpy # simpy or ros
-n_polytunnels: 0 # 0 - open farm, n - n polytunnels
+n_polytunnels: 2 # 0 - open farm, n - n polytunnels
 n_farm_rows: 5 # number of rows in the farm (n_polytunnels == 0) or in a polytunnel (n_polytunnels >= 1)
 head_row_node_dist: [5.0] # distance from head node to the first row node of each row (values for all rows or polytunnels, or single value to be copied)
 head_row_node_dist_func: copy # function to be used while making dict of values - none, copy

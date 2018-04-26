@@ -20,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_farm_rows, n_topo_nav_rows, _node_yields, verbose):
+    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -33,10 +33,25 @@ class TopologicalForkGraph(object):
         """
         ns = rospy.get_namespace()
         self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
+        self.n_polytunnels = n_polytunnels
         self.n_farm_rows = n_farm_rows
         self.n_topo_nav_rows = n_topo_nav_rows
+
         # half_rows: rows requiring picking in one direction
-        self.half_rows = set((self.row_ids[0], self.row_ids[-1]))
+        self.half_rows = set()
+        if self.n_polytunnels == 0 or self.n_polytunnels == 1:
+            self.half_rows.add(self.row_ids[0])
+            self.half_rows.add(self.row_ids[-1])
+        else:
+            row_num = 0
+            for i in range(self.n_polytunnels):
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += self.n_farm_rows
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += 1
+
         self.head_nodes = {}        # {row_id:head_node}
         self.row_nodes = {}         # {row_id:[row_nodes]}
         # row_info {row_id:[head_node, start_node, end_node, local_storage_node]}

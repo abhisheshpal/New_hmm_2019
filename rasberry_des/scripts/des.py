@@ -42,6 +42,7 @@ if __name__ == "__main__":
     # required des config parameters
     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
 
+    n_polytunnels = config_params["n_polytunnels"]
     n_farm_rows = config_params["n_farm_rows"]
     n_topo_nav_rows = config_params["n_topo_nav_rows"]
 
@@ -53,8 +54,8 @@ if __name__ == "__main__":
 
     n_local_storages = config_params["n_local_storages"]
 
-    topo_graph = rasberry_des.topo.TopologicalForkGraph(n_farm_rows, n_topo_nav_rows,
-                                                        _yield_per_node, VERBOSE)
+    topo_graph = rasberry_des.topo.TopologicalForkGraph(n_polytunnels, n_farm_rows,
+                                                        n_topo_nav_rows, _yield_per_node, VERBOSE)
 
     n_trials = 1
     min_n_pickers = 1
@@ -80,7 +81,7 @@ if __name__ == "__main__":
                     # as these parameters are returned as a list of size n_robots and n_pickers
                     config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False, n_pickers=n_pickers, n_robots=n_robots)
 
-                    _picking_rate = config_params["picking_rate"]
+                    _picker_picking_rate = config_params["picker_picking_rate"]
                     _picker_transportation_rate = config_params["picker_transportation_rate"]
                     _picker_max_n_trays = config_params["picker_max_n_trays"]
                     _picker_unloading_time = config_params["picker_unloading_time"]
@@ -91,7 +92,7 @@ if __name__ == "__main__":
 
                     picker_ids = ["picker_%02d" %(i) for i in range(n_pickers)]
 
-                    picking_rate = rasberry_des.config_utils.param_list_to_dict("picking_rate", _picking_rate, picker_ids)
+                    picker_picking_rate = rasberry_des.config_utils.param_list_to_dict("picker_picking_rate", _picker_picking_rate, picker_ids)
                     picker_transportation_rate = rasberry_des.config_utils.param_list_to_dict("picker_transportation_rate", _picker_transportation_rate, picker_ids)
                     picker_max_n_trays = rasberry_des.config_utils.param_list_to_dict("picker_max_n_trays", _picker_max_n_trays, picker_ids)
                     picker_unloading_time = rasberry_des.config_utils.param_list_to_dict("picker_unloading_time", _picker_unloading_time, picker_ids)
@@ -134,7 +135,7 @@ if __name__ == "__main__":
                     for picker_id in picker_ids:
                         pickers.append(rasberry_des.picker.Picker(picker_id, tray_capacity,
                                                                   picker_max_n_trays[picker_id],
-                                                                  picking_rate[picker_id],
+                                                                  picker_picking_rate[picker_id],
                                                                   picker_transportation_rate[picker_id],
                                                                   picker_unloading_time[picker_id],
                                                                   env, topo_graph,
@@ -190,6 +191,7 @@ if __name__ == "__main__":
                         print >> f_handle, "n_pickers: %d" %(n_pickers)
                         print >> f_handle, "n_robots: %d" %(n_robots)
 
+                        print >> f_handle, "n_polytunnels: %d" %(topo_graph.n_polytunnels)
                         print >> f_handle, "n_farm_rows: %d" %(topo_graph.n_farm_rows)
                         print >> f_handle, "n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
 
@@ -223,7 +225,7 @@ if __name__ == "__main__":
                         # picker details
                         for i in range(n_pickers):
                             print >> f_handle, "----%s----\n-----------------" %(pickers[i].picker_id)
-                            print >> f_handle, "picking_rate: %0.3f m/s" %(pickers[i].picking_rate)
+                            print >> f_handle, "picker_picking_rate: %0.3f m/s" %(pickers[i].picking_rate)
                             print >> f_handle, "picker_transportation_rate: %0.3f m/s" %(pickers[i].transportation_rate)
                             print >> f_handle, "tray_capacity: %d g" %(pickers[i].tray_capacity)
                             print >> f_handle, "picker_max_n_trays: %d" %(pickers[i].max_n_trays)
