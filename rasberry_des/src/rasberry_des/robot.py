@@ -188,7 +188,8 @@ class Robot(object):
         try:
             assert self.mode == 0
         except AssertionError:
-            rospy.ROSException("Scheduler is trying to assign %s to %s, but robot is in %d" %(self.robot_id, picker_id, self.mode))
+            raise Exception("Scheduler is trying to assign %s to %s, but robot is in %d" %(self.robot_id, picker_id, self.mode))
+
         self.assigned_picker_id = picker_id
         self.assigned_picker_node = picker_node
         self.assigned_picker_n_trays = n_trays

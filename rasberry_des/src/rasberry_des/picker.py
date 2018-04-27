@@ -108,7 +108,8 @@ class Picker(object):
         try:
             assert self.mode == 0
         except AssertionError:
-            rospy.ROSException("Scheduler is trying to allocate %s to %s, but it is in %d" %(self.picker_id, row_id, self.mode))
+            raise Exception("Scheduler is trying to allocate %s to %s, but it is in %d" %(self.picker_id, row_id, self.mode))
+
         self.curr_row = row_id
         self.curr_row_info = self.graph.row_info[row_id]
         self.local_storage_node = self.curr_row_info[3]
@@ -121,8 +122,9 @@ class Picker(object):
         """scheduler calls this to assign a robot to the picker"""
         try:
             assert self.mode == 5
-        except:
-            rospy.ROSException("Scheduler is trying to assign %s to %s, but picker is in %d" %(robot_id, self.picker_id, self.mode))
+        except AssertionError:
+            raise Exception("Scheduler is trying to assign %s to %s, but picker is in %d" %(robot_id, self.picker_id, self.mode))
+
         self.assigned_robot_id = robot_id
 
     def proceed_with_picking(self, ):

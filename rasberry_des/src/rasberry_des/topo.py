@@ -47,7 +47,7 @@ class TopologicalForkGraph(object):
             for i in range(self.n_polytunnels):
                 row_id = "row-%02d" %(row_num)
                 self.half_rows.add(row_id)
-                row_num += self.n_farm_rows
+                row_num += self.n_farm_rows[i]
                 row_id = "row-%02d" %(row_num)
                 self.half_rows.add(row_id)
                 row_num += 1
@@ -78,13 +78,16 @@ class TopologicalForkGraph(object):
                 self.loginfo("TopologicalForkGraph object ready")
                 break
 
-        if self.topo_map:
-            self.get_row_info()
-            # local storages should be set by calling set_local_storages externally
-            self.set_node_yields(_node_yields)
-            self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
-        else:
-            rospy.ROSException(ns + "topological_map topic not received")
+        if not self.topo_map:
+            raise Exception(ns + "topological_map topic not received")
+
+        if len(self.topo_map.nodes) == 0:
+            raise Exception("No nodes in topo_map. Try relaunching topological_navigation nodes.")
+
+        self.get_row_info()
+        # local storages should be set by calling set_local_storages externally
+        self.set_node_yields(_node_yields)
+        self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
 
     def set_node_yields(self, _node_yields):
         """set_node_yields: Set the yields at each node from the node yields

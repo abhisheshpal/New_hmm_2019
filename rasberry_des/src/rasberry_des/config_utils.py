@@ -20,6 +20,8 @@ def check_fork_map_config():
         missing_params.append("rasberry_des_config/n_polytunnels")
     if not rospy.has_param(ns + "rasberry_des_config/n_farm_rows"):
         missing_params.append("rasberry_des_config/n_farm_rows")
+    if not rospy.has_param(ns + "rasberry_des_config/n_farm_rows_func"):
+        missing_params.append("rasberry_des_config/n_farm_rows_func")
     if not rospy.has_param(ns + "rasberry_des_config/head_row_node_dist"):
         missing_params.append("rasberry_des_config/head_row_node_dist")
     if not rospy.has_param(ns + "rasberry_des_config/head_row_node_dist_func"):
@@ -60,6 +62,8 @@ def check_des_config():
         missing_params.append("rasberry_des_config/picker_transportation_rate_func")
     if not rospy.has_param(ns + "rasberry_des_config/picker_max_n_trays"):
         missing_params.append("rasberry_des_config/picker_max_n_trays")
+    if not rospy.has_param(ns + "rasberry_des_config/picker_max_n_trays_func"):
+        missing_params.append("rasberry_des_config/picker_max_n_trays_func")
     if not rospy.has_param(ns + "rasberry_des_config/picker_unloading_time"):
         missing_params.append("rasberry_des_config/picker_unloading_time")
     if not rospy.has_param(ns + "rasberry_des_config/picker_unloading_time_func"):
@@ -74,10 +78,14 @@ def check_des_config():
         missing_params.append(ns + "rasberry_des_config/n_local_storages")
     if not rospy.has_param(ns + "rasberry_des_config/n_robots"):
         missing_params.append(ns + "rasberry_des_config/n_robots")
+    # if n_robots is zero, these parameters may not be needed. But considered as needed as
+    # the simulation may have to be run in a loop
     if not rospy.has_param(ns + "rasberry_des_config/robot_transportation_rate"):
         missing_params.append(ns + "rasberry_des_config/robot_transportation_rate")
     if not rospy.has_param(ns + "rasberry_des_config/robot_max_n_trays"):
         missing_params.append(ns + "rasberry_des_config/robot_max_n_trays")
+    if not rospy.has_param(ns + "rasberry_des_config/robot_max_n_trays_func"):
+        missing_params.append(ns + "rasberry_des_config/robot_max_n_trays_func")
     if not rospy.has_param(ns + "rasberry_des_config/robot_unloading_time"):
         missing_params.append(ns + "rasberry_des_config/robot_unloading_time")
 
@@ -93,14 +101,13 @@ def param_list_to_dict(list_name, list_object, keys):
     keys -- list of keys to be used in dict (len same as that of list_object)
     """
     ideal_len = len(keys)
-    if list_object.__class__ == list:
-        if len(list_object) == ideal_len:
-            dict_object = {keys[i]:list_object[i] for i in range(ideal_len)}
-            return dict_object
-        else:
-            rospy.ROSException("%s must be a list of size %d" %(list_name, ideal_len))
-    else:
-        rospy.ROSException("%s must be a list of size %d" %(list_name, ideal_len))
+    if list_object.__class__ != list:
+        raise Exception("%s must be a list of size %d" %(list_name, ideal_len))
+
+    if len(list_object) != ideal_len:
+        raise Exception("%s must be a list of size %d" %(list_name, ideal_len))
+    dict_object = {keys[i]:list_object[i] for i in range(ideal_len)}
+    return dict_object
 
 def des_param_list_check(param, list_object, ideal_list_len, func="copy"):
     """check the size of a list of values (list_object) of parameter (param) and extend to a
@@ -114,32 +121,27 @@ def des_param_list_check(param, list_object, ideal_list_len, func="copy"):
     func -- func to be used to extend list_object to len ideal_list_len (none, copy or gauss)
     """
     if list_object.__class__ != list:
-        rospy.ROSException("%s must either be an array" %(param))
+        raise Exception("%s must be a list" %(param))
 
-    new_list = []
     if func == "none":
         # there must be required number of values
-        if len(list_object) == ideal_list_len:
-            new_list = list_object
-        else:
-            rospy.ROSException("%s must be an array of size %d for\
-                                func='none'" %(param, ideal_list_len))
+        if len(list_object) != ideal_list_len:
+            raise Exception("%s must be a list of size %d for func='none'" %(param, ideal_list_len))
+        new_list = list_object
+
     elif func == "copy":
         # copy single value for ideal_list_len
         if len(list_object) != 1:
-            rospy.ROSException("%s must be an array of size 1 \
-                                for func='copy'" %(param))
+            raise Exception("%s must be a list of size 1 for func='copy'" %(param))
         new_list = [list_object[0] for i in range(ideal_list_len)]
+
     elif func == "gauss":
         if len(list_object) != 2:
-            rospy.ROSException("%s must be an array of size 2 \
-                                for func='gauss'" %(param))
-        new_list = [random.gauss(list_object[0], list_object[1])
-                        for i in range(ideal_list_len)]
+            raise Exception("%s must be a list of size 2 for func='gauss'" %(param))
+        new_list = [random.gauss(list_object[0], list_object[1]) for i in range(ideal_list_len)]
+
     else:
-        rospy.ROSException("%s must be an array of (size %d & func='none'), \
-                            (size 1 & func='copy') or (size 2 & func='gauss')" %(
-                                param, ideal_list_len))
+        raise Exception("%s must be a list of (size %d & func='none'), (size 1 & func='copy') or (size 2 & func='gauss')" %(param, ideal_list_len))
     return new_list
 
 def graph_param_list_check(param, list_object, n_polytunnels, n_farm_rows,
@@ -149,12 +151,11 @@ def graph_param_list_check(param, list_object, n_polytunnels, n_farm_rows,
     """
     # head_row_dose_dist, head_node_x, row_node_dist, row_length, row_spacing, yield_per_node
     if list_object.__class__ != list:
-        rospy.ROSException("%s must either be an array" %(param))
+        raise Exception("%s must be a list" %(param))
 
     if func == "none":
         if len(list_object) != n_topo_nav_rows:
-            rospy.ROSException("%s must be an array of size %d for\
-                                func='none'" %(param, n_topo_nav_rows))
+            raise Exception("%s must be a list of size %d for func='none'" %(param, n_topo_nav_rows))
         return des_param_list_check(param, list_object, n_topo_nav_rows, func="none")
 
     elif func == "copy":
@@ -164,19 +165,49 @@ def graph_param_list_check(param, list_object, n_polytunnels, n_farm_rows,
             # same value for all rows of one polytunnel
             # get the list for each polytunnel and append them
             new_list = []
-            n_rows = n_farm_rows + 1    # same number of rows are assumed for all polytunnels
+
             for i in range(n_polytunnels):
+                n_rows = n_farm_rows[i] + 1
                 new_list += des_param_list_check(param, [list_object[i]], n_rows, func)
             return new_list
 
     elif func == "gauss":
         if len(list_object) != 2:
-            rospy.ROSException("%s must be an array of size 2 \
-                                for func='gauss'" %(param))
+            raise Exception("%s must be a list of size 2 for func='gauss'" %(param))
         return des_param_list_check(param, list_object, n_topo_nav_rows, func)
 
     else:
-        rospy.ROSException("func must be none, copy or gauss")
+        raise Exception("func must be none, copy or gauss")
+
+def graph_param_to_poly_list(param, list_object, n_polytunnels, func):
+    """convert a given list of values to a list of size n_polytunnels
+
+    Keyword arguments:
+
+    param -- string name of parameter
+    list_object -- original list
+    n_polytunnels -- number of polytunnels
+    func -- function to be used for extending to n_polytunnels values
+    """
+    if list_object.__class__ != list:
+        raise Exception("%s must either be a list" %(param))
+
+    if n_polytunnels == 0 or n_polytunnels == 1:
+        # func can be ignored as only one value is necessary
+        if len(list_object) != 1:
+            raise Exception("%s must be a list of size 1 for n_polytunnels = %d" %(param, n_polytunnels))
+        return list_object
+
+    else:
+        if func == "none":
+            if len(list_object) != n_polytunnels:
+                raise Exception("%s must be a list of size %d for func 'none'" %(param, n_polytunnels))
+            return list_object
+
+        elif func == "copy":
+            if len(list_object) != 1:
+                raise Exception("%s must be a list of size 1 for func 'copy'" %(param))
+            return [list_object[0] for i in range(n_polytunnels)]
 
 def get_fork_map_config_parameters():
     """get_fork_map_config_parameters: get the configuration parameters requried for
@@ -186,14 +217,20 @@ def get_fork_map_config_parameters():
     ns = rospy.get_namespace()
 
     n_polytunnels = rospy.get_param(ns + "rasberry_des_config/n_polytunnels")
-    n_farm_rows = rospy.get_param(ns + "rasberry_des_config/n_farm_rows")
+
+    n_farm_rows_func = rospy.get_param(ns + "rasberry_des_config/n_farm_rows_func")
+    _n_farm_rows = rospy.get_param(ns + "rasberry_des_config/n_farm_rows")
+    n_farm_rows = graph_param_to_poly_list(ns + "rasberry_des_config/n_farm_rows", _n_farm_rows,
+                                           n_polytunnels, n_farm_rows_func)
 
     # n_rows+1 picking rows are needed, all except first and last (in a polytunnel)
     # rows are forward and reverse. first and last are forward/reverse only
     if n_polytunnels == 0:
-        n_topo_nav_rows = n_farm_rows + 1
+        n_topo_nav_rows = n_farm_rows[0] + 1
     else:
-        n_topo_nav_rows = n_polytunnels * (n_farm_rows + 1)
+        n_topo_nav_rows = 0
+        for i in range(n_polytunnels):
+            n_topo_nav_rows += n_farm_rows[i] + 1
 
     head_row_node_dist_func = rospy.get_param(ns + "rasberry_des_config/head_row_node_dist_func")
     _head_row_node_dist = rospy.get_param(ns + "rasberry_des_config/head_row_node_dist")
@@ -267,7 +304,7 @@ def get_des_config_parameters(map_from_db=False, n_pickers=None, n_robots=None):
         pass
 
     if not config_params:
-        rospy.ROSException("topo_map config parameters missing")
+        raise Exception("topo_map config parameters missing")
 
     n_polytunnels = config_params["n_polytunnels"]
     n_farm_rows = config_params["n_farm_rows"]
@@ -294,9 +331,11 @@ def get_des_config_parameters(map_from_db=False, n_pickers=None, n_robots=None):
                                                       _picker_transportation_rate, n_pickers,
                                                       picker_transportation_rate_func)
 
+    picker_max_n_trays_func = rospy.get_param(ns + "rasberry_des_config/picker_max_n_trays_func")
     _picker_max_n_trays = rospy.get_param(ns + "rasberry_des_config/picker_max_n_trays")
     picker_max_n_trays = des_param_list_check(ns + "rasberry_des_config/picker_max_n_trays",
-                                              _picker_max_n_trays, n_pickers)
+                                              _picker_max_n_trays, n_pickers,
+                                              picker_max_n_trays_func)
 
     picker_unloading_time_func = rospy.get_param(ns + "rasberry_des_config/picker_unloading_time_func")
     _picker_unloading_time = rospy.get_param(ns + "rasberry_des_config/picker_unloading_time")
@@ -323,9 +362,11 @@ def get_des_config_parameters(map_from_db=False, n_pickers=None, n_robots=None):
     robot_transportation_rate = des_param_list_check(ns + "rasberry_des_config/robot_transportation_rate",
                                                      _robot_transportation_rate, n_robots)
 
+    robot_max_n_trays_func = rospy.get_param(ns + "rasberry_des_config/robot_max_n_trays_func")
     _robot_max_n_trays = rospy.get_param(ns + "rasberry_des_config/robot_max_n_trays")
     robot_max_n_trays = des_param_list_check(ns + "rasberry_des_config/robot_max_n_trays",
-                                             _robot_max_n_trays, n_robots)
+                                             _robot_max_n_trays, n_robots,
+                                             robot_max_n_trays_func)
 
     _robot_unloading_time = rospy.get_param(ns + "rasberry_des_config/robot_unloading_time")
     robot_unloading_time = des_param_list_check(ns + "rasberry_des_config/robot_unloading_time",

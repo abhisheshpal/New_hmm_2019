@@ -695,6 +695,13 @@
       node: rn-11-00
       recovery_behaviours_config: ''
       top_vel: 0.55
+    - action: move_base
+      edge_id: hn-11_hn-12
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-12
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     localise_by_topic: ''
     map: polytunnel
     name: hn-11
@@ -708,6 +715,173 @@
       position:
         x: 1.0
         y: 23.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: hn-12_hn-11
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-12_rn-12-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-12_hn-13
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-13
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: hn-12
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 1.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: hn-13_hn-12
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-12
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-13_rn-13-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-13_hn-14
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-14
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: hn-13
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 1.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: hn-14_hn-13
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-13
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-14_rn-14-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: hn-14
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 1.0
+        y: 29.0
         z: 0.0
     verts:
     - x: 0.69
@@ -4296,6 +4470,903 @@
       position:
         x: 16.0
         y: 23.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-00_hn-12
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-12
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-12-00_rn-12-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-00
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-01_rn-12-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-12-01_rn-12-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-01
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-02_rn-12-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-12-02_rn-12-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-02
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-03_rn-12-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-12-03_rn-12-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-03
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 12.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-04_rn-12-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-12-04_rn-12-05
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-04
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 14.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-12-05_rn-12-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-12-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-12-05
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 25.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-00_hn-13
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-13
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-13-00_rn-13-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-00
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-01_rn-13-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-13-01_rn-13-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-01
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-02_rn-13-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-13-02_rn-13-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-02
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-03_rn-13-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-13-03_rn-13-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-03
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 12.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-04_rn-13-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-13-04_rn-13-05
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-04
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 14.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-13-05_rn-13-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-13-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-13-05
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 27.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-00_hn-14
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: hn-14
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-14-00_rn-14-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-00
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 6.0
+        y: 29.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-01_rn-14-00
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-14-01_rn-14-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-01
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 8.0
+        y: 29.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-02_rn-14-01
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-14-02_rn-14-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-02
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 29.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-03_rn-14-02
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-14-03_rn-14-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-03
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 12.0
+        y: 29.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-04_rn-14-03
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-14-04_rn-14-05
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-04
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 14.0
+        y: 29.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polytunnel
+    node: cold_storage
+    pointset: polytunnel
+- - edges:
+    - action: move_base
+      edge_id: rn-14-05_rn-14-04
+      inflation_radius: 0.0
+      map_2d: polytunnel
+      node: rn-14-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polytunnel
+    name: rn-14-05
+    pointset: polytunnel
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 29.0
         z: 0.0
     verts:
     - x: 0.69

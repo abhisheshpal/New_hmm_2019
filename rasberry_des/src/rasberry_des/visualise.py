@@ -46,7 +46,7 @@ class VisualiseAgents(object):
 
         self.ax = self.fig.add_subplot(111, frameon=True)
 
-        self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'bold', 'size': 12,}
+        self.font = {'family': 'serif', 'color':  'red', 'weight': 'bold', 'size': 12,}
 
         self.static_lines = []
         self.picker_position_lines = []
