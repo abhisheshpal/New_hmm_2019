@@ -12,8 +12,9 @@ import numpy
 import rasberry_des.config_utils
 
 
-def generate_fork_map(n_farm_rows, half_rows, n_topo_nav_rows, _head_row_node_dist,
-                      _head_node_x, _row_node_dist, _row_length, _row_spacing, dist_to_cold_storage=None):
+def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
+                      _head_node_x, _row_node_dist, _row_length, _row_spacing,
+                      dist_to_cold_storage=None):
     """generate fork map by creating nodes and edges. Use fork_map_generator
     node to call this function.
     """

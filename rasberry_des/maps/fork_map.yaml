@@ -1,5 +1,49 @@
 - - edges:
     - action: move_base
+      edge_id: cold_storage_hn-00
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: fork_map
+    name: cold_storage
+    pointset: fork_map
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: -1.5
+        y: 1.0
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: fork_map
+    node: rn-03-05
+    pointset: fork_map
+- - edges:
+    - action: move_base
       edge_id: hn-00_rn-00-00
       inflation_radius: 0.0
       map_2d: fork_map
@@ -11,6 +55,13 @@
       inflation_radius: 0.0
       map_2d: fork_map
       node: hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: hn-00_cold_storage
+      inflation_radius: 0.0
+      map_2d: fork_map
+      node: cold_storage
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -47,7 +98,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -82,8 +133,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 1.0
+        x: 1.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -105,7 +156,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -140,8 +191,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 1.0
+        x: 1.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -163,7 +214,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -198,8 +249,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 1.0
+        x: 1.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -221,7 +272,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -256,8 +307,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 1.0
+        x: 1.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -279,7 +330,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -307,8 +358,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 1.0
+        x: 1.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -330,7 +381,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -358,8 +409,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 6.0
+        x: 6.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -381,7 +432,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -409,8 +460,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 8.0
+        x: 8.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -432,7 +483,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -460,8 +511,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 10.0
+        x: 10.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -483,7 +534,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -511,8 +562,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 12.0
+        x: 12.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -534,7 +585,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -562,8 +613,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 14.0
+        x: 14.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -585,7 +636,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -606,8 +657,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 1.0
-        y: 16.0
+        x: 16.0
+        y: 1.0
         z: 0.0
     verts:
     - x: 0.69
@@ -629,7 +680,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -657,8 +708,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 6.0
+        x: 6.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -680,7 +731,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -708,8 +759,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 8.0
+        x: 8.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -731,7 +782,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -759,8 +810,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 10.0
+        x: 10.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -782,7 +833,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -810,8 +861,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 12.0
+        x: 12.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -833,7 +884,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -861,8 +912,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 14.0
+        x: 14.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -884,7 +935,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -905,8 +956,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 3.0
-        y: 16.0
+        x: 16.0
+        y: 3.0
         z: 0.0
     verts:
     - x: 0.69
@@ -928,7 +979,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -956,8 +1007,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 6.0
+        x: 6.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -979,7 +1030,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1007,8 +1058,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 8.0
+        x: 8.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1030,7 +1081,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1058,8 +1109,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 10.0
+        x: 10.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1081,7 +1132,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1109,8 +1160,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 12.0
+        x: 12.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1132,7 +1183,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1160,8 +1211,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 14.0
+        x: 14.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1183,7 +1234,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1204,8 +1255,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 5.0
-        y: 16.0
+        x: 16.0
+        y: 5.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1227,7 +1278,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1255,8 +1306,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 6.0
+        x: 6.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1278,7 +1329,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1306,8 +1357,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 8.0
+        x: 8.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1329,7 +1380,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1357,8 +1408,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 10.0
+        x: 10.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1380,7 +1431,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1408,8 +1459,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 12.0
+        x: 12.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1431,7 +1482,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1459,8 +1510,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 14.0
+        x: 14.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1482,7 +1533,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1503,8 +1554,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 7.0
-        y: 16.0
+        x: 16.0
+        y: 7.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1526,7 +1577,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1554,8 +1605,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 6.0
+        x: 6.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1577,7 +1628,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1605,8 +1656,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 8.0
+        x: 8.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1628,7 +1679,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1656,8 +1707,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 10.0
+        x: 10.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1679,7 +1730,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1707,8 +1758,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 12.0
+        x: 12.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1730,7 +1781,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1758,8 +1809,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 14.0
+        x: 14.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1781,7 +1832,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1802,8 +1853,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 9.0
-        y: 16.0
+        x: 16.0
+        y: 9.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1825,7 +1876,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1853,8 +1904,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 6.0
+        x: 6.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1876,7 +1927,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1904,8 +1955,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 8.0
+        x: 8.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1927,7 +1978,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -1955,8 +2006,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 10.0
+        x: 10.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -1978,7 +2029,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -2006,8 +2057,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 12.0
+        x: 12.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -2029,7 +2080,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -2057,8 +2108,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 14.0
+        x: 14.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -2080,7 +2131,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map
 - - edges:
     - action: move_base
@@ -2101,8 +2152,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 11.0
-        y: 16.0
+        x: 16.0
+        y: 11.0
         z: 0.0
     verts:
     - x: 0.69
@@ -2124,5 +2175,5 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: fork_map
-    node: rn-05-05
+    node: rn-03-05
     pointset: fork_map

@@ -20,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_farm_rows, half_rows, n_topo_nav_rows, _node_yields, verbose):
+    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -33,9 +33,25 @@ class TopologicalForkGraph(object):
         """
         ns = rospy.get_namespace()
         self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
+        self.n_polytunnels = n_polytunnels
         self.n_farm_rows = n_farm_rows
-        self.half_rows = half_rows
         self.n_topo_nav_rows = n_topo_nav_rows
+
+        # half_rows: rows requiring picking in one direction
+        self.half_rows = set()
+        if self.n_polytunnels == 0 or self.n_polytunnels == 1:
+            self.half_rows.add(self.row_ids[0])
+            self.half_rows.add(self.row_ids[-1])
+        else:
+            row_num = 0
+            for i in range(self.n_polytunnels):
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += self.n_farm_rows[i]
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += 1
+
         self.head_nodes = {}        # {row_id:head_node}
         self.row_nodes = {}         # {row_id:[row_nodes]}
         # row_info {row_id:[head_node, start_node, end_node, local_storage_node]}
@@ -62,13 +78,16 @@ class TopologicalForkGraph(object):
                 self.loginfo("TopologicalForkGraph object ready")
                 break
 
-        if self.topo_map:
-            self.get_row_info()
-            # local storages should be set by calling set_local_storages externally
-            self.set_node_yields(_node_yields)
-            self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
-        else:
-            rospy.ROSException(ns + "topological_map topic not received")
+        if not self.topo_map:
+            raise Exception(ns + "topological_map topic not received")
+
+        if len(self.topo_map.nodes) == 0:
+            raise Exception("No nodes in topo_map. Try relaunching topological_navigation nodes.")
+
+        self.get_row_info()
+        # local storages should be set by calling set_local_storages externally
+        self.set_node_yields(_node_yields)
+        self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
 
     def set_node_yields(self, _node_yields):
         """set_node_yields: Set the yields at each node from the node yields

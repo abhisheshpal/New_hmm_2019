@@ -108,7 +108,8 @@ class Picker(object):
         try:
             assert self.mode == 0
         except AssertionError:
-            rospy.ROSException("Scheduler is trying to allocate %s to %s, but it is in %d" %(self.picker_id, row_id, self.mode))
+            raise Exception("Scheduler is trying to allocate %s to %s, but it is in %d" %(self.picker_id, row_id, self.mode))
+
         self.curr_row = row_id
         self.curr_row_info = self.graph.row_info[row_id]
         self.local_storage_node = self.curr_row_info[3]
@@ -121,8 +122,9 @@ class Picker(object):
         """scheduler calls this to assign a robot to the picker"""
         try:
             assert self.mode == 5
-        except:
-            rospy.ROSException("Scheduler is trying to assign %s to %s, but picker is in %d" %(robot_id, self.picker_id, self.mode))
+        except AssertionError:
+            raise Exception("Scheduler is trying to assign %s to %s, but picker is in %d" %(robot_id, self.picker_id, self.mode))
+
         self.assigned_robot_id = robot_id
 
     def proceed_with_picking(self, ):
@@ -267,9 +269,7 @@ class Picker(object):
                 yield self.env.process(self.picking_node_to_node())
                 self.time_spent_picking += self.env.now - picking_start_time
 
-                if ((not self.graph.half_rows) and
-                        ((self.curr_row == self.graph.row_ids[0]) or
-                         (self.curr_row == self.graph.row_ids[-1]))):
+                if self.curr_row in self.graph.half_rows:
                     # row_end and dir_change nodes are the same
                     row_end_node = self.curr_row_info[2]
                     dir_change_node = self.curr_row_info[2]

@@ -46,7 +46,7 @@ class VisualiseAgents(object):
 
         self.ax = self.fig.add_subplot(111, frameon=True)
 
-        self.font = {'family': 'serif', 'color':  'darkred', 'weight': 'bold', 'size': 12,}
+        self.font = {'family': 'serif', 'color':  'red', 'weight': 'bold', 'size': 12,}
 
         self.static_lines = []
         self.picker_position_lines = []
@@ -73,6 +73,7 @@ class VisualiseAgents(object):
         local_storage_x, local_storage_y = [], []
         local_storage_nodes = []
         cold_storage_node = None
+
         for i in range(self.graph.n_topo_nav_rows):
             row_id = self.graph.row_ids[i]
             head_node = self.graph.get_node(self.graph.head_nodes[row_id])
@@ -96,30 +97,22 @@ class VisualiseAgents(object):
                 head_lane_x.append(head_node.pose.position.x)
                 head_lane_y.append(head_node.pose.position.y)
 
-            # farm rows - assuming aligned with x axis
-            if self.graph.half_rows:
-                if i == 0:
-                    farm_rows_y.append((0., 0.))
-                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
+            # farm rows
+            if i < self.graph.n_topo_nav_rows - 1:
+                curr_row_id = self.graph.row_ids[i]
+                next_row_id = self.graph.row_ids[i + 1]
+                if not (curr_row_id in self.graph.half_rows and next_row_id in self.graph.half_rows):
+                    curr_row_start_node = self.graph.get_node(self.graph.row_nodes[curr_row_id][0])
+                    curr_row_last_node = self.graph.get_node(self.graph.row_nodes[curr_row_id][-1])
+                    next_row_start_node = self.graph.get_node(self.graph.row_nodes[next_row_id][0])
+                    next_row_last_node = self.graph.get_node(self.graph.row_nodes[next_row_id][-1])
+                    start_node_x = curr_row_start_node.pose.position.x + 0.5 * (next_row_start_node.pose.position.x - curr_row_start_node.pose.position.x)
+                    start_node_y = curr_row_start_node.pose.position.y + 0.5 * (next_row_start_node.pose.position.y - curr_row_start_node.pose.position.y)
+                    last_node_x = curr_row_last_node.pose.position.x + 0.5 * (next_row_last_node.pose.position.x - curr_row_last_node.pose.position.x)
+                    last_node_y = curr_row_last_node.pose.position.y + 0.5 * (next_row_last_node.pose.position.y - curr_row_last_node.pose.position.y)
 
-                # from start_row_node to last_row_node
-                start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
-                last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
-                farm_rows_y.append((start_node_y, last_node_y))
-                farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
-
-            else:
-                # from start_row_node to last_row_node
-                if i == 0:
-                    start_node_y = 2 * start_node.pose.position.y
-                    last_node_y = 2 * last_node.pose.position.y
-                else:
-                    start_node_y = 2 * start_node.pose.position.y - farm_rows_y[-1][0]
-                    last_node_y = 2 * last_node.pose.position.y - farm_rows_y[-1][1]
-
-                if i != self.graph.n_topo_nav_rows - 1:
+                    farm_rows_x.append((start_node_x, last_node_x))
                     farm_rows_y.append((start_node_y, last_node_y))
-                    farm_rows_x.append((start_node.pose.position.x, last_node.pose.position.x))
 
             if self.graph.local_storage_nodes[row_id] not in local_storage_nodes:
                 local_storage_nodes.append(self.graph.local_storage_nodes[row_id])
@@ -134,7 +127,6 @@ class VisualiseAgents(object):
                 cold_storage_y = node_obj.pose.position.y
 
         if not self.show_cold_storage:
-            # TODO: assuming there is at least two rows are present
             min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]))
             max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]))
             min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]))
@@ -144,7 +136,6 @@ class VisualiseAgents(object):
             self.ax.set_xlim(min_x - 1, max_x + 1)
             self.ax.set_ylim(min_y - 1, max_y + 1)
         else:
-            # TODO: assuming there is at least two rows are present
             min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]), cold_storage_x)
             max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]), cold_storage_x)
             min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]), cold_storage_y)
@@ -165,26 +156,26 @@ class VisualiseAgents(object):
         # farm_rows
         for i, item in enumerate(zip(farm_rows_x, farm_rows_y)):
             self.static_lines.append(self.ax.plot(item[0], item[1],
-                                                  color="green", linewidth=16)[0])
+                                                  color="green", linewidth=4)[0])
         # head lane
         self.static_lines.append(self.ax.plot(head_lane_x, head_lane_y,
                                               color="black", linewidth=4)[0])
         # nav_row_nodes
         self.static_lines.append(self.ax.plot(nav_row_nodes_x, nav_row_nodes_y,
-                                              color="black", marker="o", markersize=12,
+                                              color="black", marker="o", markersize=6,
                                               linestyle="none")[0])
         # head_lane_nodes
         self.static_lines.append(self.ax.plot(head_nodes_x, head_nodes_y,
-                                              color="black", marker="o", markersize=12,
+                                              color="black", marker="o", markersize=6,
                                               linestyle="none")[0])
         # local storages
         self.static_lines.append(self.ax.plot(local_storage_x, local_storage_y,
-                                              color="black", marker="s", markersize=24,
+                                              color="black", marker="s", markersize=12,
                                               markeredgecolor="r", linestyle="none")[0])
         # cold_storage
         if self.show_cold_storage and cold_storage_node is not None:
             self.static_lines.append(self.ax.plot(cold_storage_x, cold_storage_y,
-                                                  color="black", marker="8", markersize=24,
+                                                  color="black", marker="8", markersize=12,
                                                   markeredgecolor="r", linestyle="none")[0])
             self.static_lines.append(self.ax.plot([head_nodes_x[0], cold_storage_x],
                                                   [head_nodes_y[0], cold_storage_y],

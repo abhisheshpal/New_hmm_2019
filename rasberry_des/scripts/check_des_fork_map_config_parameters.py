@@ -14,6 +14,6 @@ if __name__ == "__main__":
     missing_params = rasberry_des.config_utils.check_fork_map_config()
 
     if len(missing_params) != 0:
-        rospy.ROSException("Required DES configuration parameters missing")
+        raise Exception("Required DES configuration parameters missing")
     else:
         rospy.loginfo("All rasberry_des fork_map configuration parameters are present")
