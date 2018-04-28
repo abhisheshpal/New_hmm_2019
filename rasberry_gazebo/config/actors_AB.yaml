@@ -14,7 +14,7 @@
      # talk_b.dae
      # walk.dae
 
-- include: 1
+- include: 0
   name: 'actor_00'
   animation: 'walk.dae'
   waypoints:
@@ -23,7 +23,7 @@
   - time: 5
     pose: 15 2.025 0 0 0 0
 
-- include: 1
+- include: 0
   name: 'actor_01'
   animation: 'walk.dae'
   waypoints:
