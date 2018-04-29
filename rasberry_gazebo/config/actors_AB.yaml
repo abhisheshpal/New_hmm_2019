@@ -1,7 +1,12 @@
 # Author: Adam Binch
 # email: adambinch@gmail.com
 
-# include:     you can turn an actor on or off by setting include: 1 or include: 0, respectively
+# include:                    you can turn an actor on or off by setting include: 1 or include: 0, respectively
+# name:                       assign a name for the actor
+# animation:                  give the actor an animation (see list below)
+# waypoints:                  a set of waypoints that the actors move between
+# - time:                     the time (in seconds) it takes for the actoir to get to the waypoint
+# - pose:                     the pose the actor assumes at the waypoint
 
 # The following animations are available:
      # moonwalk.dae
@@ -14,20 +19,23 @@
      # talk_b.dae
      # walk.dae
 
-- include: 0
+
+- include: 1
   name: 'actor_00'
   animation: 'walk.dae'
   waypoints:
   - time: 0
-    pose: 5 2.025 0 0 0 0
-  - time: 5
-    pose: 15 2.025 0 0 0 0
+    pose: 5 -2.025 0 0 0 0
+  - time: 10
+    pose: 25 -2.025 0 0 0 0
 
 - include: 0
   name: 'actor_01'
   animation: 'walk.dae'
   waypoints:
   - time: 0
-    pose: 15 2.025 0 0 0 0
-  - time: 5
+    pose: 5 2.025 0 0 0 0
+  - time: 10
     pose: 25 2.025 0 0 0 0
+
+
