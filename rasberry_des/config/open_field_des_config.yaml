@@ -1,17 +1,20 @@
+map_name: open_field
 des_env: simpy # simpy or ros
 n_polytunnels: 0 # 0 - open farm, n - n polytunnels
 n_farm_rows: [28] # number of rows in the farm (n_polytunnels == 0) or in a polytunnel (n_polytunnels >= 1). list with one value for open farm, one (func = 'copy') or n_polytunnels (func = 'none') values for polytunnels
 n_farm_rows_func: copy # function to be used while making dict of values - none, copy
 head_row_node_dist: [1.5] # distance from head node to the first row node of each row (values for all rows (func = 'none') or for each polytunnels (func = 'copy'), or single value (func = 'copy'))
 head_row_node_dist_func: copy # function to be used while making dict of values - none, copy
-head_node_x: [1.0] # x coordinate of head nodes (values for all rows or polytunnels, or single value to be copied)
-head_node_x_func: copy # function to be used while making dict of values - none, copy
+x_offset: [2.5] # x coordinates of corner LHS edge of farm (single value) / each polytunnel (n_polytunnel values or single value to be copied to all polytunnels).
+x_offset_func: copy # function to be used while making dict of values - none, copy
+y_offset: 0. # y coordinate of corner LHS edge of farm / first polytunnel. All rows are assumed to be above (+Y) it. 
 row_node_dist: [5.0] # distance between two nodes in each row (values for all rows (func = 'none') or for each polytunnels (func = 'copy'), or single value (func = 'copy')), m
 row_node_dist_func: copy # function to be used while making dict of values - none, copy
 row_length: [120.0] # length of rows (values for all rows (func = 'none') or for each polytunnels (func = 'copy'), or single value (func = 'copy')), m
 row_length_func: copy # function to be used while making dict of values - none, copy
 row_spacing: [1.5] # spacing between two rows in the farm (values for all rows (func = 'none') or for each polytunnels (func = 'copy'), or single value (func = 'copy')), m
 row_spacing_func: copy # function to be used while making dict of values - none, copy
+second_head_lane: false # have another head lane at the other end of rows
 n_pickers: 14 # number of pickers
 picker_picking_rate: [0.0375, 0.0007] # 00speed of pickers while picking (values for all pickers, or mu and sigma), m/s
 picker_picking_rate_func: gauss # function to be used while making dict of values - none, copy, gauss

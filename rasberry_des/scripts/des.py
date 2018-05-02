@@ -17,6 +17,7 @@ import random
 import os
 import simpy
 import numpy
+import sys
 import rospy
 import rasberry_des.farm
 import rasberry_des.picker
@@ -36,17 +37,22 @@ numpy.random.seed(RANDOM_SEED)
 
 
 if __name__ == "__main__":
-    ns = rospy.get_namespace()
+    if len(sys.argv) <= 1:
+        raise Exception("Not enough arguments. Pass 'path to configuration file' as an argument.")
+    else:
+        config_file = sys.argv[1]
 
     rospy.init_node("des", anonymous=False)
     # required des config parameters
-    config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False)
+    config_params = rasberry_des.config_utils.get_des_config_parameters(config_file)
 
+    map_name = config_params["map_name"]
     n_polytunnels = config_params["n_polytunnels"]
     n_farm_rows = config_params["n_farm_rows"]
     n_topo_nav_rows = config_params["n_topo_nav_rows"]
 
     des_env = config_params["des_env"]
+    second_head_lane = config_params["second_head_lane"]
     n_pickers = config_params["n_pickers"]
     tray_capacity = config_params["tray_capacity"]
 
@@ -55,7 +61,8 @@ if __name__ == "__main__":
     n_local_storages = config_params["n_local_storages"]
 
     topo_graph = rasberry_des.topo.TopologicalForkGraph(n_polytunnels, n_farm_rows,
-                                                        n_topo_nav_rows, _yield_per_node, VERBOSE)
+                                                        n_topo_nav_rows, second_head_lane,
+                                                        _yield_per_node, VERBOSE)
 
     n_trials = 1
     min_n_pickers = 1
@@ -70,7 +77,7 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexographical"]:#["lexographical", "shortest_distance", "utilise_all"]:
+            for scheduling_policy in ["lexographical", "shortest_distance", "utilise_all"]:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
@@ -79,7 +86,7 @@ if __name__ == "__main__":
 
                     # some config parameters need to be re-read with the n_robots and n_pickers
                     # as these parameters are returned as a list of size n_robots and n_pickers
-                    config_params = rasberry_des.config_utils.get_des_config_parameters(map_from_db=False, n_pickers=n_pickers, n_robots=n_robots)
+                    config_params = rasberry_des.config_utils.get_des_config_parameters(config_file, n_pickers=n_pickers, n_robots=n_robots)
 
                     _picker_picking_rate = config_params["picker_picking_rate"]
                     _picker_transportation_rate = config_params["picker_transportation_rate"]
@@ -113,8 +120,7 @@ if __name__ == "__main__":
                         # To vary the speed of RT sim, change 'factor'
                         env = simpy.RealtimeEnvironment(initial_time=0., factor=SIM_RT_FACTOR, strict=False)
                     else:
-                        rospy.logerr("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
-                        raise ValueError("%srasberry_des_config/des_env must be either simpy or ros" %(ns))
+                        raise Exception("des_env must be either simpy or ros")
 
                     start_time_simpy = env.now
 
@@ -140,8 +146,6 @@ if __name__ == "__main__":
                                                                   picker_unloading_time[picker_id],
                                                                   env, topo_graph,
                                                                   robots, VERBOSE))
-
-                    map_name = "fork_map"     # "fork_map" or "open_field"
 
                     farm = rasberry_des.farm.Farm(map_name,
                                                   env, n_topo_nav_rows, topo_graph, robots,

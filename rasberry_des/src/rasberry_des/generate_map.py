@@ -13,8 +13,8 @@ import rasberry_des.config_utils
 
 
 def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
-                      _head_node_x, _row_node_dist, _row_length, _row_spacing,
-                      dist_to_cold_storage=None):
+                      _x_offset, y_offset, _row_node_dist, _row_length, _row_spacing,
+                      second_head_lane, dist_to_cold_storage=None):
     """generate fork map by creating nodes and edges. Use fork_map_generator
     node to call this function.
     """
@@ -38,6 +38,11 @@ def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
     row_ids = ["row_%02d" %(i) for i in range(n_topo_nav_rows)]
 
     head_row_node_dist = rasberry_des.config_utils.param_list_to_dict("head_row_node_dist", _head_row_node_dist, row_ids)
+    # populate head_node_x from x_offset and head_row_node_dist
+    _head_node_x = []
+    for i in range(n_topo_nav_rows):
+        _head_node_x.append(_x_offset[i] - _head_row_node_dist[i])
+
     head_node_x = rasberry_des.config_utils.param_list_to_dict("head_node_x", _head_node_x, row_ids)
     row_node_dist = rasberry_des.config_utils.param_list_to_dict("row_node_dist", _row_node_dist, row_ids)
     row_length = rasberry_des.config_utils.param_list_to_dict("row_length", _row_length, row_ids)
@@ -51,27 +56,34 @@ def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
         # words in node names are separated with -
         # words in tags are separated with _
         # words in edge_ids are separated with _
-        head_node = "hn-%02d" %(i)
 
+#==============================================================================
+#       primary head lane
+#==============================================================================
+        pri_head_node = "pri_hn-%02d" %(i)
+
+        x = head_node_x[row_id]
         if i == 0:
-            y.append(row_spacing[row_id] / 2.)
+            y.append(y_offset + row_spacing[row_id] / 2.)
         else:
             prev_row_id = row_ids[i - 1]
             y.append(y[-1] + row_spacing[prev_row_id] / 2. + row_spacing[row_id] / 2.)
-        x = head_node_x[row_id]
 
-        pose.position.y = y[-1]
         pose.position.x = x
+        pose.position.y = y[-1]
 
-        add_node(head_node, pose, True)
-        add_node_tag("head_%s" %(row_id), [head_node])
+        add_node(pri_head_node, pose, True)
+        add_node_tag("pri_head_%s" %(row_id), [pri_head_node])
 
         # add edges between head nodes
         if i > 0:
-            prev_head_node = "hn-%02d" %(i-1)
-            add_edges(prev_head_node, head_node, "move_base", "edge_heads_%02d_%02d" %(i - 1, i))
-            add_edges(head_node, prev_head_node, "move_base", "edge_heads_%02d_%02d" %(i, i - 1))
+            prev_pri_head_node = "pri_hn-%02d" %(i-1)
+            add_edges(prev_pri_head_node, pri_head_node, "move_base", "edge_pri_heads_%02d_%02d" %(i - 1, i))
+            add_edges(pri_head_node, prev_pri_head_node, "move_base", "edge_pri_heads_%02d_%02d" %(i, i - 1))
 
+#==============================================================================
+#       row nodes
+#==============================================================================
         # row length can be different for different rows
         # 1 is for the end node, which is not produced in numpy.arange
         if row_length[row_id] > 0.:
@@ -98,12 +110,44 @@ def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
             next_node = "rn-%02d-%02d" %(i, j+1)
 
             if j == 0:
-                add_edges(head_node, curr_node, "move_base", "edge_head_row_%02d" %(i))
-                add_edges(curr_node, head_node, "move_base", "edge_row_head_%02d" %(i))
+                add_edges(pri_head_node, curr_node, "move_base", "edge_pri_head_row_%02d" %(i))
+                add_edges(curr_node, pri_head_node, "move_base", "edge_row_pri_head_%02d" %(i))
 
             add_edges(curr_node, next_node, "move_base", "edge_%02d_%02d_%02d" %(i, j, j+1))
             add_edges(next_node, curr_node, "move_base", "edge_%02d_%02d_%02d" %(i, j+1, j))
 
+#==============================================================================
+#       secondary head lane
+#==============================================================================
+        if second_head_lane:
+            sec_head_node = "sec_hn-%02d" %(i)
+
+            x += head_row_node_dist[row_id]
+            pose.position.x = x
+
+            add_node(sec_head_node, pose, True)
+            add_node_tag("sec_head_%s" %(row_id), [sec_head_node])
+
+            # add edges between secondary head nodes
+            if i > 0:
+                prev_sec_head_node = "sec_hn-%02d" %(i-1)
+                add_edges(prev_sec_head_node, sec_head_node, "move_base", "edge_sec_heads_%02d_%02d" %(i - 1, i))
+                add_edges(sec_head_node, prev_sec_head_node, "move_base", "edge_sec_heads_%02d_%02d" %(i, i - 1))
+
+            # edges to last row node
+            if row_length[row_id] > 0.:
+                n_row_nodes = len(numpy.arange(0, row_length[row_id], row_node_dist[row_id])) + 1
+            else:
+                n_row_nodes = 0
+
+            if n_row_nodes > 0:
+                last_row_node = curr_node = "rn-%02d-%02d" %(i, n_row_nodes-1)
+                add_edges(sec_head_node, last_row_node, "move_base", "edge_pri_head_row_%02d" %(i))
+                add_edges(last_row_node, sec_head_node, "move_base", "edge_row_pri_head_%02d" %(i))
+
+#==============================================================================
+#   cold storage
+#==============================================================================
     # a cold storage node will be added at a given distance from a corner head node
     if dist_to_cold_storage is not None:
         rospy.loginfo("generating cold storage node")
@@ -114,6 +158,6 @@ def generate_fork_map(n_topo_nav_rows, _head_row_node_dist,
         cs_node = "cold_storage"
         add_node(cs_node, pose, True)
         add_node_tag("cold_storage", [cs_node])
-        prev_node = "hn-%02d" %(0)
-        add_edges(prev_node, cs_node, "move_base", "edge_head_cold_storage")
-        add_edges(cs_node, prev_node, "move_base", "edge_cold_storage_head")
+        pri_head_node = "pri_hn-%02d" %(0)
+        add_edges(pri_head_node, cs_node, "move_base", "edge_pri_head_cold_storage")
+        add_edges(cs_node, pri_head_node, "move_base", "edge_cold_storage_pri_head")
