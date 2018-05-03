@@ -10,12 +10,14 @@ import yaml
 
 
 def get_config_data(config_file):
+    """read data from the config yaml file"""
     f_handle = open(config_file, "r")
     config_data = yaml.load(f_handle)
     f_handle.close()
     return config_data
 
 def get_config_keys(config_file):
+    """read data from config yaml file and extract the keys"""
     config_data = get_config_data(config_file)
     keys = []
     for item in config_data:
@@ -28,10 +30,8 @@ def check_fork_map_config(config_file):
     # try to get the configuration parameters required for fork_map generation
     # and if any required parameter is not available throw an error
     config_keys = get_config_keys(config_file)
-    req_params = ["map_name", "n_polytunnels", "n_farm_rows", "n_farm_rows_func",
-                  "head_row_node_dist", "head_row_node_dist_func", "x_offset",
-                  "x_offset_func", "y_offset", "row_node_dist", "row_node_dist_func", "row_length",
-                  "row_length_func", "row_spacing", "row_spacing_func", "second_head_lane"]
+    req_params = ["map_name", "n_polytunnels", "n_farm_rows", "head_row_node_dist", "x_offset",
+                  "y_offset", "row_node_dist", "row_length", "row_spacing", "second_head_lane"]
 
     for key in config_keys:
         if key in req_params:
@@ -41,13 +41,10 @@ def check_fork_map_config(config_file):
 def check_des_config(config_file):
     """"Check whether all parameters required for the DES are available"""
     config_keys = get_config_keys(config_file)
-    req_params = ["des_env", "n_pickers", "picker_picking_rate", "picker_picking_rate_func",
-                  "picker_transportation_rate", "picker_transportation_rate_func",
-                  "picker_max_n_trays", "picker_max_n_trays_func",
-                  "picker_unloading_time", "picker_unloading_time_func",
-                  "tray_capacity", "yield_per_node", "yield_per_node_func",
+    req_params = ["des_env", "n_pickers", "picker_picking_rate", "picker_transportation_rate",
+                  "picker_max_n_trays", "picker_unloading_time", "tray_capacity", "yield_per_node",
                   "n_local_storages", "n_robots", "robot_transportation_rate",
-                  "robot_max_n_trays", "robot_max_n_trays_func", "robot_unloading_time"]
+                  "robot_max_n_trays", "robot_unloading_time"]
     for key in config_keys:
         if key in req_params:
             req_params.remove(key)
@@ -199,10 +196,10 @@ def get_fork_map_config_parameters(config_file):
     map_name = config_data["map_name"]
     n_polytunnels = config_data["n_polytunnels"]
 
-    n_farm_rows_func = config_data["n_farm_rows_func"]
-    _n_farm_rows = config_data["n_farm_rows"]
-    n_farm_rows = graph_param_to_poly_list("n_farm_rows", _n_farm_rows,
-                                           n_polytunnels, n_farm_rows_func)
+    n_farm_rows = graph_param_to_poly_list("n_farm_rows",
+                                           config_data["n_farm_rows"]["value"],
+                                           n_polytunnels,
+                                           config_data["n_farm_rows"]["func"])
 
     # n_rows+1 picking rows are needed, all except first and last (in a polytunnel)
     # rows are forward and reverse. first and last are forward/reverse only
@@ -213,45 +210,35 @@ def get_fork_map_config_parameters(config_file):
         for i in range(n_polytunnels):
             n_topo_nav_rows += n_farm_rows[i] + 1
 
-    head_row_node_dist_func = config_data["head_row_node_dist_func"]
-    _head_row_node_dist = config_data["head_row_node_dist"]
     head_row_node_dist = graph_param_list_check("head_row_node_dist",
-                                                _head_row_node_dist, n_polytunnels,
-                                                n_farm_rows, n_topo_nav_rows,
-                                                head_row_node_dist_func)
+                                                config_data["head_row_node_dist"]["value"],
+                                                n_polytunnels, n_farm_rows, n_topo_nav_rows,
+                                                config_data["head_row_node_dist"]["func"])
 
-    x_offset_func = config_data["x_offset_func"]
-    _x_offset = config_data["x_offset"]
     x_offset = graph_param_list_check("x_offset",
-                                         _x_offset, n_polytunnels,
-                                         n_farm_rows, n_topo_nav_rows,
-                                         x_offset_func)
+                                      config_data["x_offset"]["value"], n_polytunnels,
+                                      n_farm_rows, n_topo_nav_rows,
+                                      config_data["x_offset"]["func"])
 
     y_offset = config_data["y_offset"]
 
-    row_node_dist_func = config_data["row_node_dist_func"]
-    _row_node_dist = config_data["row_node_dist"]
     row_node_dist = graph_param_list_check("row_node_dist",
-                                           _row_node_dist, n_polytunnels,
+                                           config_data["row_node_dist"]["value"], n_polytunnels,
                                            n_farm_rows, n_topo_nav_rows,
-                                           row_node_dist_func)
+                                           config_data["row_node_dist"]["func"])
 
-    row_length_func = config_data["row_length_func"]
-    _row_length = config_data["row_length"]
     row_length = graph_param_list_check("row_length",
-                                        _row_length, n_polytunnels,
+                                        config_data["row_length"]["value"], n_polytunnels,
                                         n_farm_rows, n_topo_nav_rows,
-                                        row_length_func)
+                                        config_data["row_length"]["func"])
 
     # row_spacing is assumed to be the spacing between the
     # farm rows or between the edge and a row, or between two rows
     # navigation rows should be at the middle of this spacing.
-    row_spacing_func = config_data["row_spacing_func"]
-    _row_spacing = config_data["row_spacing"]
     row_spacing = graph_param_list_check("row_spacing",
-                                         _row_spacing, n_polytunnels,
+                                         config_data["row_spacing"]["value"], n_polytunnels,
                                          n_farm_rows, n_topo_nav_rows,
-                                         row_spacing_func)
+                                         config_data["row_spacing"]["func"])
 
     second_head_lane = config_data["second_head_lane"]
 
@@ -300,39 +287,33 @@ def get_des_config_parameters(config_file, n_pickers=None, n_robots=None):
         n_pickers = config_data["n_pickers"]
 
     # picker parameters - des parameters
-    picker_picking_rate_func = config_data["picker_picking_rate_func"]
-
-    _picker_picking_rate = config_data["picker_picking_rate"]
     picker_picking_rate = des_param_list_check("picker_picking_rate",
-                                               _picker_picking_rate, n_pickers,
-                                               picker_picking_rate_func)
+                                               config_data["picker_picking_rate"]["value"],
+                                               n_pickers,
+                                               config_data["picker_picking_rate"]["func"])
 
-    picker_transportation_rate_func = config_data["picker_transportation_rate_func"]
-    _picker_transportation_rate = config_data["picker_transportation_rate"]
     picker_transportation_rate = des_param_list_check("picker_transportation_rate",
-                                                      _picker_transportation_rate, n_pickers,
-                                                      picker_transportation_rate_func)
+                                                      config_data["picker_transportation_rate"]["value"],
+                                                      n_pickers,
+                                                      config_data["picker_transportation_rate"]["func"])
 
-    picker_max_n_trays_func = config_data["picker_max_n_trays_func"]
-    _picker_max_n_trays = config_data["picker_max_n_trays"]
     picker_max_n_trays = des_param_list_check("picker_max_n_trays",
-                                              _picker_max_n_trays, n_pickers,
-                                              picker_max_n_trays_func)
+                                              config_data["picker_max_n_trays"]["value"],
+                                              n_pickers,
+                                              config_data["picker_max_n_trays"]["func"])
 
-    picker_unloading_time_func = config_data["picker_unloading_time_func"]
-    _picker_unloading_time = config_data["picker_unloading_time"]
     picker_unloading_time = des_param_list_check("picker_unloading_time",
-                                                 _picker_unloading_time, n_pickers,
-                                                 picker_unloading_time_func)
+                                                 config_data["picker_unloading_time"]["value"],
+                                                 n_pickers,
+                                                 config_data["picker_unloading_time"]["func"])
 
     tray_capacity = config_data["tray_capacity"]
 
     # yield - graph parameter
-    yield_per_node_func = config_data["yield_per_node_func"]
-    _yield_per_node = config_data["yield_per_node"]
     yield_per_node = graph_param_list_check("yield_per_node",
-                                            _yield_per_node, n_polytunnels, n_farm_rows,
-                                            n_topo_nav_rows, yield_per_node_func)
+                                            config_data["yield_per_node"]["value"], n_polytunnels,
+                                            n_farm_rows, n_topo_nav_rows,
+                                            config_data["yield_per_node"]["func"])
 
     n_local_storages = config_data["n_local_storages"]
 
@@ -340,19 +321,16 @@ def get_des_config_parameters(config_file, n_pickers=None, n_robots=None):
         n_robots = config_data["n_robots"]
 
     # robot parameters - des parameters
-    _robot_transportation_rate = config_data["robot_transportation_rate"]
     robot_transportation_rate = des_param_list_check("robot_transportation_rate",
-                                                     _robot_transportation_rate, n_robots)
+                                                     config_data["robot_transportation_rate"],
+                                                     n_robots)
 
-    robot_max_n_trays_func = config_data["robot_max_n_trays_func"]
-    _robot_max_n_trays = config_data["robot_max_n_trays"]
     robot_max_n_trays = des_param_list_check("robot_max_n_trays",
-                                             _robot_max_n_trays, n_robots,
-                                             robot_max_n_trays_func)
+                                             config_data["robot_max_n_trays"]["value"], n_robots,
+                                             config_data["robot_max_n_trays"]["func"])
 
-    _robot_unloading_time = config_data["robot_unloading_time"]
     robot_unloading_time = des_param_list_check("robot_unloading_time",
-                                                _robot_unloading_time, n_robots)
+                                                config_data["robot_unloading_time"], n_robots)
 
     config_params["des_env"] = des_env
     config_params["n_pickers"] = n_pickers
@@ -369,3 +347,10 @@ def get_des_config_parameters(config_file, n_pickers=None, n_robots=None):
     config_params["robot_unloading_time"] = robot_unloading_time
 
     return config_params
+
+if __name__ == "__main__":
+    import rospkg
+    rospack = rospkg.RosPack()
+    config_file = "../../config/des_config.yaml"
+
+    config_params = get_des_config_parameters(config_file)

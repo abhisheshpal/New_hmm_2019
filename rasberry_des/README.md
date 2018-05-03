@@ -1,19 +1,19 @@
 **rasberry_des**
 ------------
-A rospackage for running discrete event simulation of a strawberry farm, pickers, robots and a basic job allocation processes using SimPy.
+A rospackage for running discrete event simulation of a strawberry farm, pickers, robots and a basic job allocation processes using SimPy.  
 
 A topological map is created and stored in mongodb with corresponding topics and services launched using the topological navigation nodes.
 
 # Nodes:
-  1. `des.py`
+  1. `des.py`  
     Based on the configuration parameters set, run either a simpy or wall-clock discrete event simulation.
-  2. `check_des_config_parameters.py`
+  2. `check_des_config_parameters.py`  
     For checking whether all configuration parameters required for the DES are set.
-  3. `check_des_fork_map_config_parameters.py`
+  3. `check_des_fork_map_config_parameters.py`  
     For checking whether all configuration parameters required for generating the fork_map are set.
-  4. `fork_map_generator.py`
+  4. `fork_map_generator.py`  
     Node to generate `fork_map`, a topological map in the mongodb. 
-  5. `gazebo_polytunnel_map_generator.py`
+  5. `gazebo_polytunnel_map_generator.py`  
     Node to generate topological map for the gazebo configuration in `rasberry_gazebo`. The `config_file` to be used with this node is different from the `des_config` file.
 
 # Launch files
@@ -79,11 +79,11 @@ A topological map is created and stored in mongodb with corresponding topics and
     `rosrun rasberry_des des.py <path_to_des_config_file>`
 
 # Main classes:
-`TopologicalForkMap` in `topo.py`
-`Farm` in `farm.py`
-`Picker` in `picker.py`
-`Robot` in `robot.py`
-`VisualiseAgents` in `visualise.py`
+`TopologicalForkMap` in `topo.py`  
+`Farm` in `farm.py`  
+`Picker` in `picker.py`  
+`Robot` in `robot.py`  
+`VisualiseAgents` in `visualise.py`  
 
 # Info:
 A fork like topological map created and stored in mongodb is accessed by `TopologicalForkMap`, which in turn used by all other agent classes. This map consists of one head lane and many topological navigation rows. The length of each row, node distances and yield per node distance can be different per row - this can be configured in the `des_config.yaml` file. The number of pickers and robots can also be changed along with their characteristic features such as picking rate, transportation rate, loading and unloading time etc can be configured through `des_config.yaml`. Three possible scheduling policies are implemented now - `"lexographical", "shortest_distance", "utilise_all"`, which can be configured in `des.py`. Visualisation and logging can be enabled or disabled in `des.py`.
@@ -97,6 +97,7 @@ A fork like topological map created and stored in mongodb is accessed by `Topolo
 
 # TODO:
   1. More complex map may be defined in future using this. For example, long rows with two head lanes at both ends. A row may be assigned to two pickers who will start from either end, with associated local storage on the head lane on that side.
+  2. Anticipatory scheduling - Map the probability of when and where a picker may request for a robot assistant.
 
 # These may not be implemented as part of DES
   to make the simulations faster.
