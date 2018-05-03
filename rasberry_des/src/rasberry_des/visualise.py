@@ -68,17 +68,24 @@ class VisualiseAgents(object):
         farm_rows_x, farm_rows_y = [], []
         nav_rows_x, nav_rows_y = [], []
         nav_row_nodes_x, nav_row_nodes_y = [], []
-        head_lane_x, head_lane_y = [], []
-        head_nodes_x, head_nodes_y = [], []
+        pri_head_lane_x, pri_head_lane_y = [], []
+        pri_head_nodes_x, pri_head_nodes_y = [], []
+        if self.graph.second_head_lane:
+            sec_head_lane_x, sec_head_lane_y = [], []
+            sec_head_nodes_x, sec_head_nodes_y = [], []
         local_storage_x, local_storage_y = [], []
         local_storage_nodes = []
         cold_storage_node = None
 
         for i in range(self.graph.n_topo_nav_rows):
             row_id = self.graph.row_ids[i]
-            head_node = self.graph.get_node(self.graph.head_nodes[row_id])
-            head_nodes_x.append(head_node.pose.position.x)
-            head_nodes_y.append(head_node.pose.position.y)
+            pri_head_node = self.graph.get_node(self.graph.head_nodes[row_id][0])
+            pri_head_nodes_x.append(pri_head_node.pose.position.x)
+            pri_head_nodes_y.append(pri_head_node.pose.position.y)
+            if self.graph.second_head_lane:
+                sec_head_node = self.graph.get_node(self.graph.head_nodes[row_id][1])
+                sec_head_nodes_x.append(sec_head_node.pose.position.x)
+                sec_head_nodes_y.append(sec_head_node.pose.position.y)
             for j in range(len(self.graph.row_nodes[row_id])):
                 curr_node = self.graph.get_node(self.graph.row_nodes[row_id][j])
                 if j == 0:
@@ -88,14 +95,25 @@ class VisualiseAgents(object):
                 nav_row_nodes_x.append(curr_node.pose.position.x)
                 nav_row_nodes_y.append(curr_node.pose.position.y)
 
-            # from head_node to last_row_node of the row
-            nav_rows_x.append((head_node.pose.position.x, last_node.pose.position.x))
-            nav_rows_y.append((head_node.pose.position.y, last_node.pose.position.y))
+            if self.graph.second_head_lane:
+                # from head_node to last_row_node of the row
+                nav_rows_x.append((pri_head_node.pose.position.x, sec_head_node.pose.position.x))
+                nav_rows_y.append((pri_head_node.pose.position.y, sec_head_node.pose.position.y))
+            else:
+                # from head_node to last_row_node of the row
+                nav_rows_x.append((pri_head_node.pose.position.x, last_node.pose.position.x))
+                nav_rows_y.append((pri_head_node.pose.position.y, last_node.pose.position.y))
 
-            # head lane
-            if (i == 0) or (i == self.graph.n_topo_nav_rows - 1):
-                head_lane_x.append(head_node.pose.position.x)
-                head_lane_y.append(head_node.pose.position.y)
+            # primary head lane
+#            if (i == 0) or (i == self.graph.n_topo_nav_rows - 1):
+            pri_head_lane_x.append(pri_head_node.pose.position.x)
+            pri_head_lane_y.append(pri_head_node.pose.position.y)
+
+            # secondary head lane
+            if self.graph.second_head_lane:
+#                if (i == 0) or (i == self.graph.n_topo_nav_rows - 1):
+                sec_head_lane_x.append(sec_head_node.pose.position.x)
+                sec_head_lane_y.append(sec_head_node.pose.position.y)
 
             # farm rows
             if i < self.graph.n_topo_nav_rows - 1:
@@ -157,17 +175,26 @@ class VisualiseAgents(object):
         for i, item in enumerate(zip(farm_rows_x, farm_rows_y)):
             self.static_lines.append(self.ax.plot(item[0], item[1],
                                                   color="green", linewidth=4)[0])
-        # head lane
-        self.static_lines.append(self.ax.plot(head_lane_x, head_lane_y,
+        # primary head lane
+        self.static_lines.append(self.ax.plot(pri_head_lane_x, pri_head_lane_y,
                                               color="black", linewidth=4)[0])
+        # secondary head lane
+        if self.graph.second_head_lane:
+            self.static_lines.append(self.ax.plot(sec_head_lane_x, sec_head_lane_y,
+                                                  color="black", linewidth=4)[0])
         # nav_row_nodes
         self.static_lines.append(self.ax.plot(nav_row_nodes_x, nav_row_nodes_y,
                                               color="black", marker="o", markersize=6,
                                               linestyle="none")[0])
-        # head_lane_nodes
-        self.static_lines.append(self.ax.plot(head_nodes_x, head_nodes_y,
+        # pri_head_lane_nodes
+        self.static_lines.append(self.ax.plot(pri_head_nodes_x, pri_head_nodes_y,
                                               color="black", marker="o", markersize=6,
                                               linestyle="none")[0])
+        # sec_head_lane_nodes
+        if self.graph.second_head_lane:
+            self.static_lines.append(self.ax.plot(sec_head_nodes_x, sec_head_nodes_y,
+                                                  color="black", marker="o", markersize=6,
+                                                  linestyle="none")[0])
         # local storages
         self.static_lines.append(self.ax.plot(local_storage_x, local_storage_y,
                                               color="black", marker="s", markersize=12,
@@ -177,8 +204,8 @@ class VisualiseAgents(object):
             self.static_lines.append(self.ax.plot(cold_storage_x, cold_storage_y,
                                                   color="black", marker="8", markersize=12,
                                                   markeredgecolor="r", linestyle="none")[0])
-            self.static_lines.append(self.ax.plot([head_nodes_x[0], cold_storage_x],
-                                                  [head_nodes_y[0], cold_storage_y],
+            self.static_lines.append(self.ax.plot([pri_head_nodes_x[0], cold_storage_x],
+                                                  [pri_head_nodes_y[0], cold_storage_y],
                                                   color="black", linewidth=4)[0])
 
         # dynamic objects - pickers and robots

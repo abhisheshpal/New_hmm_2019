@@ -20,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, _node_yields, verbose):
+    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, second_head_lane, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -36,6 +36,7 @@ class TopologicalForkGraph(object):
         self.n_polytunnels = n_polytunnels
         self.n_farm_rows = n_farm_rows
         self.n_topo_nav_rows = n_topo_nav_rows
+        self.second_head_lane = second_head_lane
 
         # half_rows: rows requiring picking in one direction
         self.half_rows = set()
@@ -52,9 +53,9 @@ class TopologicalForkGraph(object):
                 self.half_rows.add(row_id)
                 row_num += 1
 
-        self.head_nodes = {}        # {row_id:head_node}
+        self.head_nodes = {}        # {row_id:[pri_head_node, sec_head_node]}
         self.row_nodes = {}         # {row_id:[row_nodes]}
-        # row_info {row_id:[head_node, start_node, end_node, local_storage_node]}
+        # row_info {row_id:[pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
         self.yield_at_node = {}
@@ -84,7 +85,7 @@ class TopologicalForkGraph(object):
         if len(self.topo_map.nodes) == 0:
             raise Exception("No nodes in topo_map. Try relaunching topological_navigation nodes.")
 
-        self.get_row_info()
+        self.set_row_info()
         # local storages should be set by calling set_local_storages externally
         self.set_node_yields(_node_yields)
         self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
@@ -136,7 +137,7 @@ class TopologicalForkGraph(object):
         for i in range(n_local_storages):
             start_row = storage_row_groups[i][0]
             end_row = storage_row_groups[i][-1]
-            storage_row = "hn-%02d" %(start_row + int((end_row - start_row) / 2))
+            storage_row = "pri_hn-%02d" %(start_row + int((end_row - start_row) / 2))
 
             for row in storage_row_groups[i]:
                 self.local_storage_nodes["row-%02d" %(row)] = storage_row
@@ -156,24 +157,24 @@ class TopologicalForkGraph(object):
         self.cold_storage = cold_storage
         self.use_local_storage = False
 
-    def get_row_info(self, ):
-        """get_row_info: Get information about each row
-        {row_id: [head_node, start_node, end_node, local_storage_node]}
+    def set_row_info(self, ):
+        """set_row_info: Set information about each row
+        {row_id: [pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
 
         Also sets
-          head_nodes {row_id:head_node}
+          head_nodes {row_id:[pri_head_node, sec_head_node]}
           row_nodes {row_id:[row_nodes]}
-          local_storages = {local_storage_node:simpy.Resource}
-
-        Keyword arguments:
-
-        local_storages -- simpy.Resource objects, list
         """
         # TODO: meta information is not queried from the db now.
         # The row and head node names are hard coded now
         # An ugly way to sort the nodes is implemented
         # get_nodes in topological_utils.queries might be useful to get nodes with same tag
-        self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
+        self.head_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
+        for i in range(self.n_topo_nav_rows):
+            self.head_nodes["row-%02d" %(i)].append("pri_hn-%02d" %(i))
+            if self.second_head_lane:
+                self.head_nodes["row-%02d" %(i)].append("sec_hn-%02d" %(i))
+
         self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
 
         for node in self.topo_map.nodes:
@@ -184,10 +185,12 @@ class TopologicalForkGraph(object):
         for row_id in self.row_ids:
             self.row_nodes[row_id].sort()
             # local_storage_nodes should be modified by calling set_local_storages
-            self.row_info[row_id] = [self.head_nodes[row_id],
+            self.row_info[row_id] = [self.head_nodes[row_id][0],
                                      self.row_nodes[row_id][0],
                                      self.row_nodes[row_id][-1],
                                      self.local_storage_nodes[row_id]]
+            if self.second_head_lane:
+                self.row_info[row_id].append(self.head_nodes[row_id][1])
 
     def get_path_details(self, start_node, goal_node):
         """get route_nodes, route_edges and route_distance from start_node to goal_node

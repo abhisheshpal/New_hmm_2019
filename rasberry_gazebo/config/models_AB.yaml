@@ -26,7 +26,7 @@
     pole_dx: 3
     pole_dy: 1.35
     pole_xoffset: 7
-    pole_yoffset: 1.35
+    pole_yoffset: -6.75
     arch_nx: 7
     arch_dx: 4.333
     arch_xoffset: 6
@@ -37,7 +37,7 @@
     pole_dx: 3
     pole_dy: 1.35
     pole_xoffset: 7
-    pole_yoffset: -6.75
+    pole_yoffset: 1.35
     arch_nx: 7
     arch_dx: 4.333
     arch_xoffset: 6

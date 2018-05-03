@@ -1,9 +1,9 @@
 - - edges:
     - action: move_base
-      edge_id: cold_storage_hn-00
+      edge_id: cold_storage_pri_hn-00
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-00
+      node: pri_hn-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -40,25 +40,25 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-00_rn-00-00
+      edge_id: pri_hn-00_rn-00-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-00-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-00_hn-01
+      edge_id: pri_hn-00_pri_hn-01
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-01
+      node: pri_hn-01
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-00_cold_storage
+      edge_id: pri_hn-00_cold_storage
       inflation_radius: 0.0
       map_2d: open_field
       node: cold_storage
@@ -66,7 +66,7 @@
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-00
+    name: pri_hn-00
     pointset: open_field
     pose:
       orientation:
@@ -98,33 +98,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-01_hn-00
+      edge_id: pri_hn-01_pri_hn-00
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-00
+      node: pri_hn-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-01_rn-01-00
+      edge_id: pri_hn-01_rn-01-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-01-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-01_hn-02
+      edge_id: pri_hn-01_pri_hn-02
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-02
+      node: pri_hn-02
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-01
+    name: pri_hn-01
     pointset: open_field
     pose:
       orientation:
@@ -156,33 +156,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-02_hn-01
+      edge_id: pri_hn-02_pri_hn-01
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-01
+      node: pri_hn-01
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-02_rn-02-00
+      edge_id: pri_hn-02_rn-02-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-02-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-02_hn-03
+      edge_id: pri_hn-02_pri_hn-03
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-03
+      node: pri_hn-03
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-02
+    name: pri_hn-02
     pointset: open_field
     pose:
       orientation:
@@ -214,33 +214,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-03_hn-02
+      edge_id: pri_hn-03_pri_hn-02
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-02
+      node: pri_hn-02
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-03_rn-03-00
+      edge_id: pri_hn-03_rn-03-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-03-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-03_hn-04
+      edge_id: pri_hn-03_pri_hn-04
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-04
+      node: pri_hn-04
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-03
+    name: pri_hn-03
     pointset: open_field
     pose:
       orientation:
@@ -272,33 +272,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-04_hn-03
+      edge_id: pri_hn-04_pri_hn-03
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-03
+      node: pri_hn-03
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-04_rn-04-00
+      edge_id: pri_hn-04_rn-04-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-04-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-04_hn-05
+      edge_id: pri_hn-04_pri_hn-05
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-05
+      node: pri_hn-05
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-04
+    name: pri_hn-04
     pointset: open_field
     pose:
       orientation:
@@ -330,33 +330,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-05_hn-04
+      edge_id: pri_hn-05_pri_hn-04
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-04
+      node: pri_hn-04
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-05_rn-05-00
+      edge_id: pri_hn-05_rn-05-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-05-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-05_hn-06
+      edge_id: pri_hn-05_pri_hn-06
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-06
+      node: pri_hn-06
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-05
+    name: pri_hn-05
     pointset: open_field
     pose:
       orientation:
@@ -388,33 +388,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-06_hn-05
+      edge_id: pri_hn-06_pri_hn-05
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-05
+      node: pri_hn-05
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-06_rn-06-00
+      edge_id: pri_hn-06_rn-06-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-06-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-06_hn-07
+      edge_id: pri_hn-06_pri_hn-07
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-07
+      node: pri_hn-07
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-06
+    name: pri_hn-06
     pointset: open_field
     pose:
       orientation:
@@ -446,33 +446,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-07_hn-06
+      edge_id: pri_hn-07_pri_hn-06
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-06
+      node: pri_hn-06
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-07_rn-07-00
+      edge_id: pri_hn-07_rn-07-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-07-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-07_hn-08
+      edge_id: pri_hn-07_pri_hn-08
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-08
+      node: pri_hn-08
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-07
+    name: pri_hn-07
     pointset: open_field
     pose:
       orientation:
@@ -504,33 +504,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-08_hn-07
+      edge_id: pri_hn-08_pri_hn-07
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-07
+      node: pri_hn-07
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-08_rn-08-00
+      edge_id: pri_hn-08_rn-08-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-08-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-08_hn-09
+      edge_id: pri_hn-08_pri_hn-09
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-09
+      node: pri_hn-09
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-08
+    name: pri_hn-08
     pointset: open_field
     pose:
       orientation:
@@ -562,33 +562,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-09_hn-08
+      edge_id: pri_hn-09_pri_hn-08
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-08
+      node: pri_hn-08
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-09_rn-09-00
+      edge_id: pri_hn-09_rn-09-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-09-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-09_hn-10
+      edge_id: pri_hn-09_pri_hn-10
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-10
+      node: pri_hn-10
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-09
+    name: pri_hn-09
     pointset: open_field
     pose:
       orientation:
@@ -620,33 +620,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-10_hn-09
+      edge_id: pri_hn-10_pri_hn-09
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-09
+      node: pri_hn-09
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-10_rn-10-00
+      edge_id: pri_hn-10_rn-10-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-10-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-10_hn-11
+      edge_id: pri_hn-10_pri_hn-11
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-11
+      node: pri_hn-11
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-10
+    name: pri_hn-10
     pointset: open_field
     pose:
       orientation:
@@ -678,33 +678,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-11_hn-10
+      edge_id: pri_hn-11_pri_hn-10
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-10
+      node: pri_hn-10
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-11_rn-11-00
+      edge_id: pri_hn-11_rn-11-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-11-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-11_hn-12
+      edge_id: pri_hn-11_pri_hn-12
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-12
+      node: pri_hn-12
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-11
+    name: pri_hn-11
     pointset: open_field
     pose:
       orientation:
@@ -736,33 +736,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-12_hn-11
+      edge_id: pri_hn-12_pri_hn-11
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-11
+      node: pri_hn-11
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-12_rn-12-00
+      edge_id: pri_hn-12_rn-12-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-12-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-12_hn-13
+      edge_id: pri_hn-12_pri_hn-13
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-13
+      node: pri_hn-13
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-12
+    name: pri_hn-12
     pointset: open_field
     pose:
       orientation:
@@ -794,33 +794,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-13_hn-12
+      edge_id: pri_hn-13_pri_hn-12
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-12
+      node: pri_hn-12
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-13_rn-13-00
+      edge_id: pri_hn-13_rn-13-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-13-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-13_hn-14
+      edge_id: pri_hn-13_pri_hn-14
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-14
+      node: pri_hn-14
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-13
+    name: pri_hn-13
     pointset: open_field
     pose:
       orientation:
@@ -852,33 +852,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-14_hn-13
+      edge_id: pri_hn-14_pri_hn-13
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-13
+      node: pri_hn-13
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-14_rn-14-00
+      edge_id: pri_hn-14_rn-14-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-14-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-14_hn-15
+      edge_id: pri_hn-14_pri_hn-15
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-15
+      node: pri_hn-15
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-14
+    name: pri_hn-14
     pointset: open_field
     pose:
       orientation:
@@ -910,33 +910,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-15_hn-14
+      edge_id: pri_hn-15_pri_hn-14
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-14
+      node: pri_hn-14
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-15_rn-15-00
+      edge_id: pri_hn-15_rn-15-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-15-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-15_hn-16
+      edge_id: pri_hn-15_pri_hn-16
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-16
+      node: pri_hn-16
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-15
+    name: pri_hn-15
     pointset: open_field
     pose:
       orientation:
@@ -968,33 +968,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-16_hn-15
+      edge_id: pri_hn-16_pri_hn-15
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-15
+      node: pri_hn-15
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-16_rn-16-00
+      edge_id: pri_hn-16_rn-16-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-16-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-16_hn-17
+      edge_id: pri_hn-16_pri_hn-17
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-17
+      node: pri_hn-17
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-16
+    name: pri_hn-16
     pointset: open_field
     pose:
       orientation:
@@ -1026,33 +1026,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-17_hn-16
+      edge_id: pri_hn-17_pri_hn-16
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-16
+      node: pri_hn-16
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-17_rn-17-00
+      edge_id: pri_hn-17_rn-17-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-17-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-17_hn-18
+      edge_id: pri_hn-17_pri_hn-18
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-18
+      node: pri_hn-18
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-17
+    name: pri_hn-17
     pointset: open_field
     pose:
       orientation:
@@ -1084,33 +1084,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-18_hn-17
+      edge_id: pri_hn-18_pri_hn-17
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-17
+      node: pri_hn-17
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-18_rn-18-00
+      edge_id: pri_hn-18_rn-18-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-18-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-18_hn-19
+      edge_id: pri_hn-18_pri_hn-19
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-19
+      node: pri_hn-19
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-18
+    name: pri_hn-18
     pointset: open_field
     pose:
       orientation:
@@ -1142,33 +1142,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-19_hn-18
+      edge_id: pri_hn-19_pri_hn-18
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-18
+      node: pri_hn-18
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-19_rn-19-00
+      edge_id: pri_hn-19_rn-19-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-19-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-19_hn-20
+      edge_id: pri_hn-19_pri_hn-20
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-20
+      node: pri_hn-20
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-19
+    name: pri_hn-19
     pointset: open_field
     pose:
       orientation:
@@ -1200,33 +1200,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-20_hn-19
+      edge_id: pri_hn-20_pri_hn-19
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-19
+      node: pri_hn-19
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-20_rn-20-00
+      edge_id: pri_hn-20_rn-20-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-20-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-20_hn-21
+      edge_id: pri_hn-20_pri_hn-21
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-21
+      node: pri_hn-21
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-20
+    name: pri_hn-20
     pointset: open_field
     pose:
       orientation:
@@ -1258,33 +1258,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-21_hn-20
+      edge_id: pri_hn-21_pri_hn-20
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-20
+      node: pri_hn-20
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-21_rn-21-00
+      edge_id: pri_hn-21_rn-21-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-21-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-21_hn-22
+      edge_id: pri_hn-21_pri_hn-22
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-22
+      node: pri_hn-22
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-21
+    name: pri_hn-21
     pointset: open_field
     pose:
       orientation:
@@ -1316,33 +1316,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-22_hn-21
+      edge_id: pri_hn-22_pri_hn-21
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-21
+      node: pri_hn-21
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-22_rn-22-00
+      edge_id: pri_hn-22_rn-22-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-22-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-22_hn-23
+      edge_id: pri_hn-22_pri_hn-23
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-23
+      node: pri_hn-23
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-22
+    name: pri_hn-22
     pointset: open_field
     pose:
       orientation:
@@ -1374,33 +1374,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-23_hn-22
+      edge_id: pri_hn-23_pri_hn-22
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-22
+      node: pri_hn-22
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-23_rn-23-00
+      edge_id: pri_hn-23_rn-23-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-23-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-23_hn-24
+      edge_id: pri_hn-23_pri_hn-24
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-24
+      node: pri_hn-24
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-23
+    name: pri_hn-23
     pointset: open_field
     pose:
       orientation:
@@ -1432,33 +1432,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-24_hn-23
+      edge_id: pri_hn-24_pri_hn-23
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-23
+      node: pri_hn-23
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-24_rn-24-00
+      edge_id: pri_hn-24_rn-24-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-24-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-24_hn-25
+      edge_id: pri_hn-24_pri_hn-25
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-25
+      node: pri_hn-25
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-24
+    name: pri_hn-24
     pointset: open_field
     pose:
       orientation:
@@ -1490,33 +1490,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-25_hn-24
+      edge_id: pri_hn-25_pri_hn-24
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-24
+      node: pri_hn-24
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-25_rn-25-00
+      edge_id: pri_hn-25_rn-25-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-25-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-25_hn-26
+      edge_id: pri_hn-25_pri_hn-26
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-26
+      node: pri_hn-26
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-25
+    name: pri_hn-25
     pointset: open_field
     pose:
       orientation:
@@ -1548,33 +1548,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-26_hn-25
+      edge_id: pri_hn-26_pri_hn-25
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-25
+      node: pri_hn-25
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-26_rn-26-00
+      edge_id: pri_hn-26_rn-26-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-26-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-26_hn-27
+      edge_id: pri_hn-26_pri_hn-27
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-27
+      node: pri_hn-27
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-26
+    name: pri_hn-26
     pointset: open_field
     pose:
       orientation:
@@ -1606,33 +1606,33 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-27_hn-26
+      edge_id: pri_hn-27_pri_hn-26
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-26
+      node: pri_hn-26
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-27_rn-27-00
+      edge_id: pri_hn-27_rn-27-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-27-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-27_hn-28
+      edge_id: pri_hn-27_pri_hn-28
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-28
+      node: pri_hn-28
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-27
+    name: pri_hn-27
     pointset: open_field
     pose:
       orientation:
@@ -1664,18 +1664,18 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: hn-28_hn-27
+      edge_id: pri_hn-28_pri_hn-27
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-27
+      node: pri_hn-27
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: hn-28_rn-28-00
+      edge_id: pri_hn-28_rn-28-00
       inflation_radius: 0.0
       map_2d: open_field
       node: rn-28-00
@@ -1683,7 +1683,7 @@
       top_vel: 0.55
     localise_by_topic: ''
     map: open_field
-    name: hn-28
+    name: pri_hn-28
     pointset: open_field
     pose:
       orientation:
@@ -1715,14 +1715,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-00-00_hn-00
+      edge_id: rn-00-00_pri_hn-00
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-00
+      node: pri_hn-00
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -1766,7 +1766,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -1817,7 +1817,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -1868,7 +1868,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -1919,7 +1919,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -1970,7 +1970,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2021,7 +2021,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2072,7 +2072,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2123,7 +2123,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2174,7 +2174,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2225,7 +2225,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2276,7 +2276,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2327,7 +2327,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2378,7 +2378,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2429,7 +2429,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2480,7 +2480,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2531,7 +2531,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2582,7 +2582,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2633,7 +2633,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2684,7 +2684,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2735,7 +2735,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2786,7 +2786,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2837,7 +2837,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2888,7 +2888,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2939,7 +2939,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -2983,14 +2983,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-01-00_hn-01
+      edge_id: rn-01-00_pri_hn-01
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-01
+      node: pri_hn-01
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -3034,7 +3034,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3085,7 +3085,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3136,7 +3136,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3187,7 +3187,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3238,7 +3238,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3289,7 +3289,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3340,7 +3340,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3391,7 +3391,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3442,7 +3442,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3493,7 +3493,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3544,7 +3544,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3595,7 +3595,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3646,7 +3646,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3697,7 +3697,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3748,7 +3748,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3799,7 +3799,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3850,7 +3850,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3901,7 +3901,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -3952,7 +3952,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4003,7 +4003,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4054,7 +4054,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4105,7 +4105,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4156,7 +4156,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4207,7 +4207,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4251,14 +4251,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-02-00_hn-02
+      edge_id: rn-02-00_pri_hn-02
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-02
+      node: pri_hn-02
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -4302,7 +4302,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4353,7 +4353,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4404,7 +4404,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4455,7 +4455,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4506,7 +4506,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4557,7 +4557,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4608,7 +4608,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4659,7 +4659,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4710,7 +4710,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4761,7 +4761,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4812,7 +4812,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4863,7 +4863,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4914,7 +4914,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -4965,7 +4965,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5016,7 +5016,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5067,7 +5067,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5118,7 +5118,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5169,7 +5169,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5220,7 +5220,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5271,7 +5271,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5322,7 +5322,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5373,7 +5373,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5424,7 +5424,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5475,7 +5475,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5519,14 +5519,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-03-00_hn-03
+      edge_id: rn-03-00_pri_hn-03
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-03
+      node: pri_hn-03
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -5570,7 +5570,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5621,7 +5621,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5672,7 +5672,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5723,7 +5723,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5774,7 +5774,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5825,7 +5825,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5876,7 +5876,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5927,7 +5927,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -5978,7 +5978,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6029,7 +6029,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6080,7 +6080,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6131,7 +6131,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6182,7 +6182,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6233,7 +6233,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6284,7 +6284,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6335,7 +6335,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6386,7 +6386,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6437,7 +6437,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6488,7 +6488,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6539,7 +6539,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6590,7 +6590,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6641,7 +6641,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6692,7 +6692,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6743,7 +6743,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6787,14 +6787,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-04-00_hn-04
+      edge_id: rn-04-00_pri_hn-04
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-04
+      node: pri_hn-04
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -6838,7 +6838,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6889,7 +6889,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6940,7 +6940,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -6991,7 +6991,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7042,7 +7042,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7093,7 +7093,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7144,7 +7144,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7195,7 +7195,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7246,7 +7246,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7297,7 +7297,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7348,7 +7348,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7399,7 +7399,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7450,7 +7450,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7501,7 +7501,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7552,7 +7552,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7603,7 +7603,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7654,7 +7654,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7705,7 +7705,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7756,7 +7756,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7807,7 +7807,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7858,7 +7858,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7909,7 +7909,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -7960,7 +7960,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8011,7 +8011,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8055,14 +8055,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-05-00_hn-05
+      edge_id: rn-05-00_pri_hn-05
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-05
+      node: pri_hn-05
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -8106,7 +8106,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8157,7 +8157,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8208,7 +8208,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8259,7 +8259,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8310,7 +8310,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8361,7 +8361,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8412,7 +8412,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8463,7 +8463,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8514,7 +8514,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8565,7 +8565,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8616,7 +8616,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8667,7 +8667,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8718,7 +8718,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8769,7 +8769,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8820,7 +8820,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8871,7 +8871,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8922,7 +8922,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -8973,7 +8973,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9024,7 +9024,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9075,7 +9075,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9126,7 +9126,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9177,7 +9177,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9228,7 +9228,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9279,7 +9279,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9323,14 +9323,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-06-00_hn-06
+      edge_id: rn-06-00_pri_hn-06
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-06
+      node: pri_hn-06
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -9374,7 +9374,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9425,7 +9425,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9476,7 +9476,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9527,7 +9527,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9578,7 +9578,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9629,7 +9629,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9680,7 +9680,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9731,7 +9731,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9782,7 +9782,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9833,7 +9833,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9884,7 +9884,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9935,7 +9935,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -9986,7 +9986,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10037,7 +10037,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10088,7 +10088,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10139,7 +10139,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10190,7 +10190,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10241,7 +10241,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10292,7 +10292,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10343,7 +10343,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10394,7 +10394,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10445,7 +10445,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10496,7 +10496,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10547,7 +10547,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10591,14 +10591,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-07-00_hn-07
+      edge_id: rn-07-00_pri_hn-07
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-07
+      node: pri_hn-07
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -10642,7 +10642,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10693,7 +10693,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10744,7 +10744,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10795,7 +10795,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10846,7 +10846,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10897,7 +10897,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10948,7 +10948,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -10999,7 +10999,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11050,7 +11050,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11101,7 +11101,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11152,7 +11152,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11203,7 +11203,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11254,7 +11254,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11305,7 +11305,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11356,7 +11356,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11407,7 +11407,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11458,7 +11458,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11509,7 +11509,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11560,7 +11560,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11611,7 +11611,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11662,7 +11662,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11713,7 +11713,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11764,7 +11764,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11815,7 +11815,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11859,14 +11859,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-08-00_hn-08
+      edge_id: rn-08-00_pri_hn-08
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-08
+      node: pri_hn-08
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -11910,7 +11910,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -11961,7 +11961,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12012,7 +12012,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12063,7 +12063,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12114,7 +12114,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12165,7 +12165,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12216,7 +12216,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12267,7 +12267,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12318,7 +12318,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12369,7 +12369,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12420,7 +12420,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12471,7 +12471,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12522,7 +12522,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12573,7 +12573,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12624,7 +12624,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12675,7 +12675,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12726,7 +12726,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12777,7 +12777,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12828,7 +12828,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12879,7 +12879,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12930,7 +12930,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -12981,7 +12981,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13032,7 +13032,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13083,7 +13083,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13127,14 +13127,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-09-00_hn-09
+      edge_id: rn-09-00_pri_hn-09
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-09
+      node: pri_hn-09
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -13178,7 +13178,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13229,7 +13229,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13280,7 +13280,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13331,7 +13331,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13382,7 +13382,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13433,7 +13433,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13484,7 +13484,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13535,7 +13535,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13586,7 +13586,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13637,7 +13637,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13688,7 +13688,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13739,7 +13739,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13790,7 +13790,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13841,7 +13841,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13892,7 +13892,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13943,7 +13943,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -13994,7 +13994,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14045,7 +14045,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14096,7 +14096,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14147,7 +14147,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14198,7 +14198,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14249,7 +14249,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14300,7 +14300,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14351,7 +14351,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14395,14 +14395,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-10-00_hn-10
+      edge_id: rn-10-00_pri_hn-10
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-10
+      node: pri_hn-10
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -14446,7 +14446,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14497,7 +14497,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14548,7 +14548,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14599,7 +14599,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14650,7 +14650,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14701,7 +14701,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14752,7 +14752,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14803,7 +14803,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14854,7 +14854,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14905,7 +14905,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -14956,7 +14956,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15007,7 +15007,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15058,7 +15058,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15109,7 +15109,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15160,7 +15160,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15211,7 +15211,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15262,7 +15262,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15313,7 +15313,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15364,7 +15364,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15415,7 +15415,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15466,7 +15466,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15517,7 +15517,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15568,7 +15568,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15619,7 +15619,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15663,14 +15663,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-11-00_hn-11
+      edge_id: rn-11-00_pri_hn-11
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-11
+      node: pri_hn-11
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -15714,7 +15714,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15765,7 +15765,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15816,7 +15816,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15867,7 +15867,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15918,7 +15918,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -15969,7 +15969,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16020,7 +16020,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16071,7 +16071,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16122,7 +16122,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16173,7 +16173,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16224,7 +16224,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16275,7 +16275,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16326,7 +16326,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16377,7 +16377,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16428,7 +16428,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16479,7 +16479,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16530,7 +16530,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16581,7 +16581,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16632,7 +16632,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16683,7 +16683,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16734,7 +16734,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16785,7 +16785,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16836,7 +16836,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16887,7 +16887,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -16931,14 +16931,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-12-00_hn-12
+      edge_id: rn-12-00_pri_hn-12
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-12
+      node: pri_hn-12
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -16982,7 +16982,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17033,7 +17033,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17084,7 +17084,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17135,7 +17135,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17186,7 +17186,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17237,7 +17237,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17288,7 +17288,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17339,7 +17339,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17390,7 +17390,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17441,7 +17441,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17492,7 +17492,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17543,7 +17543,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17594,7 +17594,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17645,7 +17645,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17696,7 +17696,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17747,7 +17747,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17798,7 +17798,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17849,7 +17849,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17900,7 +17900,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -17951,7 +17951,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18002,7 +18002,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18053,7 +18053,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18104,7 +18104,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18155,7 +18155,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18199,14 +18199,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-13-00_hn-13
+      edge_id: rn-13-00_pri_hn-13
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-13
+      node: pri_hn-13
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -18250,7 +18250,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18301,7 +18301,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18352,7 +18352,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18403,7 +18403,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18454,7 +18454,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18505,7 +18505,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18556,7 +18556,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18607,7 +18607,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18658,7 +18658,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18709,7 +18709,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18760,7 +18760,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18811,7 +18811,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18862,7 +18862,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18913,7 +18913,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -18964,7 +18964,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19015,7 +19015,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19066,7 +19066,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19117,7 +19117,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19168,7 +19168,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19219,7 +19219,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19270,7 +19270,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19321,7 +19321,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19372,7 +19372,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19423,7 +19423,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19467,14 +19467,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-14-00_hn-14
+      edge_id: rn-14-00_pri_hn-14
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-14
+      node: pri_hn-14
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -19518,7 +19518,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19569,7 +19569,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19620,7 +19620,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19671,7 +19671,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19722,7 +19722,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19773,7 +19773,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19824,7 +19824,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19875,7 +19875,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19926,7 +19926,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -19977,7 +19977,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20028,7 +20028,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20079,7 +20079,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20130,7 +20130,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20181,7 +20181,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20232,7 +20232,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20283,7 +20283,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20334,7 +20334,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20385,7 +20385,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20436,7 +20436,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20487,7 +20487,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20538,7 +20538,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20589,7 +20589,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20640,7 +20640,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20691,7 +20691,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20735,14 +20735,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-15-00_hn-15
+      edge_id: rn-15-00_pri_hn-15
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-15
+      node: pri_hn-15
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -20786,7 +20786,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20837,7 +20837,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20888,7 +20888,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20939,7 +20939,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -20990,7 +20990,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21041,7 +21041,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21092,7 +21092,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21143,7 +21143,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21194,7 +21194,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21245,7 +21245,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21296,7 +21296,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21347,7 +21347,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21398,7 +21398,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21449,7 +21449,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21500,7 +21500,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21551,7 +21551,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21602,7 +21602,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21653,7 +21653,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21704,7 +21704,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21755,7 +21755,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21806,7 +21806,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21857,7 +21857,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21908,7 +21908,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -21959,7 +21959,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22003,14 +22003,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-16-00_hn-16
+      edge_id: rn-16-00_pri_hn-16
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-16
+      node: pri_hn-16
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -22054,7 +22054,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22105,7 +22105,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22156,7 +22156,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22207,7 +22207,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22258,7 +22258,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22309,7 +22309,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22360,7 +22360,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22411,7 +22411,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22462,7 +22462,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22513,7 +22513,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22564,7 +22564,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22615,7 +22615,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22666,7 +22666,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22717,7 +22717,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22768,7 +22768,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22819,7 +22819,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22870,7 +22870,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22921,7 +22921,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -22972,7 +22972,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23023,7 +23023,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23074,7 +23074,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23125,7 +23125,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23176,7 +23176,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23227,7 +23227,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23271,14 +23271,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-17-00_hn-17
+      edge_id: rn-17-00_pri_hn-17
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-17
+      node: pri_hn-17
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -23322,7 +23322,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23373,7 +23373,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23424,7 +23424,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23475,7 +23475,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23526,7 +23526,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23577,7 +23577,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23628,7 +23628,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23679,7 +23679,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23730,7 +23730,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23781,7 +23781,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23832,7 +23832,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23883,7 +23883,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23934,7 +23934,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -23985,7 +23985,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24036,7 +24036,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24087,7 +24087,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24138,7 +24138,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24189,7 +24189,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24240,7 +24240,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24291,7 +24291,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24342,7 +24342,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24393,7 +24393,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24444,7 +24444,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24495,7 +24495,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24539,14 +24539,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-18-00_hn-18
+      edge_id: rn-18-00_pri_hn-18
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-18
+      node: pri_hn-18
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -24590,7 +24590,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24641,7 +24641,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24692,7 +24692,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24743,7 +24743,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24794,7 +24794,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24845,7 +24845,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24896,7 +24896,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24947,7 +24947,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -24998,7 +24998,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25049,7 +25049,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25100,7 +25100,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25151,7 +25151,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25202,7 +25202,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25253,7 +25253,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25304,7 +25304,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25355,7 +25355,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25406,7 +25406,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25457,7 +25457,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25508,7 +25508,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25559,7 +25559,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25610,7 +25610,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25661,7 +25661,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25712,7 +25712,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25763,7 +25763,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25807,14 +25807,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-19-00_hn-19
+      edge_id: rn-19-00_pri_hn-19
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-19
+      node: pri_hn-19
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -25858,7 +25858,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25909,7 +25909,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -25960,7 +25960,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26011,7 +26011,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26062,7 +26062,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26113,7 +26113,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26164,7 +26164,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26215,7 +26215,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26266,7 +26266,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26317,7 +26317,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26368,7 +26368,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26419,7 +26419,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26470,7 +26470,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26521,7 +26521,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26572,7 +26572,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26623,7 +26623,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26674,7 +26674,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26725,7 +26725,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26776,7 +26776,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26827,7 +26827,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26878,7 +26878,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26929,7 +26929,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -26980,7 +26980,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27031,7 +27031,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27075,14 +27075,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-20-00_hn-20
+      edge_id: rn-20-00_pri_hn-20
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-20
+      node: pri_hn-20
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -27126,7 +27126,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27177,7 +27177,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27228,7 +27228,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27279,7 +27279,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27330,7 +27330,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27381,7 +27381,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27432,7 +27432,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27483,7 +27483,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27534,7 +27534,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27585,7 +27585,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27636,7 +27636,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27687,7 +27687,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27738,7 +27738,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27789,7 +27789,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27840,7 +27840,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27891,7 +27891,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27942,7 +27942,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -27993,7 +27993,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28044,7 +28044,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28095,7 +28095,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28146,7 +28146,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28197,7 +28197,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28248,7 +28248,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28299,7 +28299,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28343,14 +28343,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-21-00_hn-21
+      edge_id: rn-21-00_pri_hn-21
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-21
+      node: pri_hn-21
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -28394,7 +28394,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28445,7 +28445,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28496,7 +28496,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28547,7 +28547,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28598,7 +28598,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28649,7 +28649,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28700,7 +28700,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28751,7 +28751,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28802,7 +28802,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28853,7 +28853,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28904,7 +28904,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -28955,7 +28955,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29006,7 +29006,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29057,7 +29057,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29108,7 +29108,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29159,7 +29159,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29210,7 +29210,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29261,7 +29261,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29312,7 +29312,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29363,7 +29363,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29414,7 +29414,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29465,7 +29465,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29516,7 +29516,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29567,7 +29567,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29611,14 +29611,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-22-00_hn-22
+      edge_id: rn-22-00_pri_hn-22
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-22
+      node: pri_hn-22
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -29662,7 +29662,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29713,7 +29713,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29764,7 +29764,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29815,7 +29815,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29866,7 +29866,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29917,7 +29917,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -29968,7 +29968,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30019,7 +30019,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30070,7 +30070,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30121,7 +30121,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30172,7 +30172,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30223,7 +30223,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30274,7 +30274,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30325,7 +30325,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30376,7 +30376,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30427,7 +30427,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30478,7 +30478,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30529,7 +30529,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30580,7 +30580,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30631,7 +30631,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30682,7 +30682,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30733,7 +30733,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30784,7 +30784,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30835,7 +30835,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30879,14 +30879,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-23-00_hn-23
+      edge_id: rn-23-00_pri_hn-23
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-23
+      node: pri_hn-23
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -30930,7 +30930,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -30981,7 +30981,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31032,7 +31032,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31083,7 +31083,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31134,7 +31134,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31185,7 +31185,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31236,7 +31236,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31287,7 +31287,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31338,7 +31338,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31389,7 +31389,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31440,7 +31440,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31491,7 +31491,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31542,7 +31542,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31593,7 +31593,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31644,7 +31644,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31695,7 +31695,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31746,7 +31746,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31797,7 +31797,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31848,7 +31848,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31899,7 +31899,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -31950,7 +31950,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32001,7 +32001,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32052,7 +32052,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32103,7 +32103,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32147,14 +32147,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-24-00_hn-24
+      edge_id: rn-24-00_pri_hn-24
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-24
+      node: pri_hn-24
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -32198,7 +32198,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32249,7 +32249,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32300,7 +32300,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32351,7 +32351,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32402,7 +32402,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32453,7 +32453,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32504,7 +32504,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32555,7 +32555,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32606,7 +32606,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32657,7 +32657,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32708,7 +32708,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32759,7 +32759,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32810,7 +32810,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32861,7 +32861,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32912,7 +32912,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -32963,7 +32963,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33014,7 +33014,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33065,7 +33065,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33116,7 +33116,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33167,7 +33167,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33218,7 +33218,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33269,7 +33269,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33320,7 +33320,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33371,7 +33371,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33415,14 +33415,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-25-00_hn-25
+      edge_id: rn-25-00_pri_hn-25
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-25
+      node: pri_hn-25
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -33466,7 +33466,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33517,7 +33517,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33568,7 +33568,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33619,7 +33619,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33670,7 +33670,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33721,7 +33721,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33772,7 +33772,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33823,7 +33823,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33874,7 +33874,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33925,7 +33925,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -33976,7 +33976,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34027,7 +34027,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34078,7 +34078,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34129,7 +34129,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34180,7 +34180,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34231,7 +34231,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34282,7 +34282,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34333,7 +34333,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34384,7 +34384,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34435,7 +34435,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34486,7 +34486,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34537,7 +34537,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34588,7 +34588,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34639,7 +34639,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34683,14 +34683,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-26-00_hn-26
+      edge_id: rn-26-00_pri_hn-26
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-26
+      node: pri_hn-26
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -34734,7 +34734,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34785,7 +34785,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34836,7 +34836,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34887,7 +34887,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34938,7 +34938,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -34989,7 +34989,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35040,7 +35040,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35091,7 +35091,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35142,7 +35142,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35193,7 +35193,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35244,7 +35244,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35295,7 +35295,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35346,7 +35346,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35397,7 +35397,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35448,7 +35448,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35499,7 +35499,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35550,7 +35550,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35601,7 +35601,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35652,7 +35652,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35703,7 +35703,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35754,7 +35754,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35805,7 +35805,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35856,7 +35856,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35907,7 +35907,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -35951,14 +35951,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-27-00_hn-27
+      edge_id: rn-27-00_pri_hn-27
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-27
+      node: pri_hn-27
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -36002,7 +36002,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36053,7 +36053,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36104,7 +36104,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36155,7 +36155,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36206,7 +36206,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36257,7 +36257,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36308,7 +36308,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36359,7 +36359,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36410,7 +36410,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36461,7 +36461,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36512,7 +36512,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36563,7 +36563,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36614,7 +36614,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36665,7 +36665,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36716,7 +36716,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36767,7 +36767,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36818,7 +36818,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36869,7 +36869,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36920,7 +36920,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -36971,7 +36971,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37022,7 +37022,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37073,7 +37073,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37124,7 +37124,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37175,7 +37175,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37219,14 +37219,14 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
-      edge_id: rn-28-00_hn-28
+      edge_id: rn-28-00_pri_hn-28
       inflation_radius: 0.0
       map_2d: open_field
-      node: hn-28
+      node: pri_hn-28
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -37270,7 +37270,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37321,7 +37321,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37372,7 +37372,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37423,7 +37423,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37474,7 +37474,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37525,7 +37525,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37576,7 +37576,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37627,7 +37627,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37678,7 +37678,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37729,7 +37729,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37780,7 +37780,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37831,7 +37831,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37882,7 +37882,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37933,7 +37933,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -37984,7 +37984,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38035,7 +38035,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38086,7 +38086,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38137,7 +38137,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38188,7 +38188,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38239,7 +38239,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38290,7 +38290,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38341,7 +38341,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38392,7 +38392,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38443,7 +38443,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
 - - edges:
     - action: move_base
@@ -38487,5 +38487,5 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
   - map: open_field
-    node: cold_storage
+    node: rn-05-12
     pointset: open_field
