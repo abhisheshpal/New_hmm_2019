@@ -168,7 +168,7 @@ for model in model_config:
 # ACTORS
 
 
-actor_f = base_dir + '/models/actor/actor'
+actor_f = base_dir + '/scripts/actor'
 actor_d = load_data_from_xml(actor_f)
 for actor in actor_config:
     if actor['include']:

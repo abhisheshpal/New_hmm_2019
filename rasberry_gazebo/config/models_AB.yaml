@@ -1,20 +1,19 @@
 # Author: Adam Binch
 # email: adambinch@gmail.com
 
-# include:     you can turn a model on or off by setting include: 1 or include: 0, respectively
-
-# The following parameters are in meter units:
+# include:                    you can turn a model on or off by setting include: 1 or include: 0, respectively
 # pole_nx                     number of poles aligned with the x-axis
 # pole_ny                     number of poles aligned with the y-axis (keep fixed at pole_ny: 5, if you want the canopy to fit)
-# pole_dx                     distance between poles aligned with the x-axis
-# pole_dy                     distance between poles aligned with the y-axis (keep fixed at pole_dy: 1.35, if you want the canopy to fit)
-# pole_xoffset                sets the position of the poles along the x-axis
-# pole_yoffset                sets the position of the poles along the y-axis
+# pole_dx                     distance between poles aligned with the x-axis (meters)
+# pole_dy                     distance between poles aligned with the y-axis (meters) (keep fixed at pole_dy: 1.35, if you want the canopy to fit)
+# pole_xoffset                sets the position of the poles along the x-axis (meters)
+# pole_yoffset                sets the position of the poles along the y-axis (meters)
 # arch_nx                     number of arches 
-# arch_dx                     distance between arches
-# arch_xoffset                sets the position of the arches along the x-axis
+# arch_dx                     distance between arches (meters)
+# arch_xoffset                sets the position of the arches along the x-axis (meters)
 
-# note: if you don't want the polytunnel to have a canopy set arch_dx: 0
+# note: if you don't want the polytunnel to have a canopy set arch_nx: 0
+# note: if you change the world name you will also have to change it in the launch file ../launch/thorvald_world_AB.launch (or make another launch file).
 
 
 - world_name: 'thorvald_AB.world'     
@@ -51,3 +50,5 @@
   - include: 1
     xpose: -8.9 
     ypose: -1.16
+
+

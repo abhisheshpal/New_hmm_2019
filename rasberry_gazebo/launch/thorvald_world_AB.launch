@@ -1,7 +1,48 @@
+<?xml version="1.0" ?>
 <launch>
-  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" value="$(find rasberry_gazebo)/worlds/thorvald_AB.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+
+
+  <!-- Start gazebo and load the world -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" value="$(find rasberry_gazebo)/worlds/thorvald_AB.world"/>
-    <!-- more default parameters can be changed here -->
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
   </include>
+
+
+  <!-- Get the model -->
+  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rasberry_gazebo)/urdf/actor.xacro'" />
+  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="30.0" />
+  </node>
+
+
+  <!-- FOR THE USER: Spawn your actors here -->
+
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	<!-- First actor -->
+    <arg name="actor_name" value="actor00" />
+    <arg name="start_pose_y" value="2" />
+  </include>
+
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	<!-- Second actor -->
+    <arg name="actor_name" value="actor01" />
+    <arg name="start_pose_x" value="8" />
+    <arg name="start_pose_y" value="4.75" />
+    <arg name="start_pose_z" value="0" />
+    <arg name="start_pose_R" value="0" />
+    <arg name="start_pose_P" value="0" />
+    <arg name="start_pose_Y" value="1.5707" />
+  </include>
+
 </launch>
