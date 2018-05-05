@@ -22,6 +22,7 @@ base_dir = rospack.get_path('rasberry_gazebo')
 world_f = base_dir + '/worlds/empty_grass.world'
 world_d = load_data_from_xml(world_f)
 world = AddtoWorld(world_d)
+world_name = 'thorvald_AB.world' # default
 
 default_model_config = base_dir + '/config/models_AB.yaml'
 default_actor_config = base_dir + '/config/actors_AB.yaml'
@@ -45,31 +46,40 @@ for model in model_config:
         pole_f = base_dir + '/models/pole/model.sdf'
         tray_f = base_dir + '/models/tray/model.sdf'
         trayp2_f = base_dir + '/models/tray_part2/model.sdf'
+        pot_array_f = base_dir + '/models/pot_array/model.sdf'
+        pot_f = base_dir + '/models/pot/model.sdf'
+        #plant_f = base_dir + '/models/plant/model.sdf'
+        plant_array_f = base_dir + '/models/plant_array/model.sdf'
+        plant2_f = base_dir + '/models/plant2/model.sdf'
         arch_f = base_dir + '/models/dummy_arch/model.sdf'
         canopy_f = base_dir + '/models/canopy/model.sdf'
-        pot_f = base_dir + '/models/pot/model.sdf'
-        plant_f = base_dir + '/models/plant/model.sdf'
-        plant2_f = base_dir + '/models/plant2/model.sdf'
+        canopy_small_f = base_dir + '/models/canopy_small/model.sdf'
         
         
         pole_d = load_data_from_xml(pole_f)    
         tray_d = load_data_from_xml(tray_f)    
         trayp2_d = load_data_from_xml(trayp2_f)
-        arch_d = load_data_from_xml(arch_f)
-        canopy_d = load_data_from_xml(canopy_f)
+        pot_array_d = load_data_from_xml(pot_array_f)
         pot_d = load_data_from_xml(pot_f)
-        plant_d = load_data_from_xml(plant_f)
+        #plant_d = load_data_from_xml(plant_f)
+        plant_array_d = load_data_from_xml(plant_array_f)
         plant2_d = load_data_from_xml(plant2_f)
+        arch_d = load_data_from_xml(arch_f)
+        canopy_d = load_data_from_xml(canopy_f)        
+        canopy_small_d = load_data_from_xml(canopy_small_f) 
         
         
         pole_count = 0
         tray_count = 0
         trayp2_count = 0  
         pot_count = 0
-        plant_count = 0
+        pot_array_count = 0
+        #plant_count = 0
+        plant_array_count = 0
         plant2_count = 0
         arch_count = 0
         canopy_count = 0   
+        canopy_small_count = 0
         
         
         polytunnels = model['polytunnel']
@@ -102,13 +112,20 @@ for model in model_config:
                     world.add_traysp2(trayp2_d, trayp2_poses, tray_length, trayp2_count)                 
                     trayp2_count += len(trayp2_poses)
                 
-                    pot_poses, pot_xposes = get_pot_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes) 
+                    pot_array_poses, pot_array_max_length = get_pot_array_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
+                    world.add_pot_arrays(pot_array_d, pot_array_poses, pot_array_count)  
+                    pot_array_count += len(pot_array_poses)
+                    
+                    pot_poses, pot_xposes = get_pot_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot_array_max_length) 
                     world.add_pots(pot_d, pot_poses, pot_count)
                     pot_count += len(pot_poses)
                 
                     #plant_poses = get_plant_poses(pot_xposes, pole_yposes)
                     #world.add_plants(plant_d, plant_poses, plant_count)  
                     #plant_count += len(plant_poses)
+                    
+                    world.add_plant_array(plant_array_d, pot_array_poses, plant_array_count)  
+                    plant_array_count += len(pot_array_poses)
                     
                     world.add_plants2(plant2_d, pot_poses, plant2_count)  
                     plant2_count += len(pot_poses)
@@ -119,10 +136,13 @@ for model in model_config:
                     world.add_arches(arch_d, arch_poses, arch_count)
                     arch_count += len(arch_poses)                    
                     
-                    canopy_poses, canopy_xposes, canopy_yposes = get_canopy_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
+                    canopy_poses, canopy_max_length = get_canopy_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
                     world.add_canopy(canopy_d, canopy_poses, canopy_count)
                     canopy_count += len(canopy_poses)
-    
+
+                    canopy_small_poses = get_canopy_small_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy, canopy_max_length)
+                    world.add_canopy_small(canopy_small_d, canopy_small_poses, canopy_small_count)
+                    canopy_small_count += len(canopy_small_poses)    
    
    
     if model.keys()[0] == 'riseholme_enclosure':
@@ -158,8 +178,6 @@ for model in model_config:
                             
     if model.keys()[0] == 'world_name':  
         world_name = model['world_name']              
-    else:
-        world_name = 'thorvald_AB.world' # default
 ################################################################################
 
 

@@ -42,12 +42,27 @@ def get_trayp2_poses(tray_length, pole_xoffset, pole_ny, pole_yposes):
         b[i] = pole_yposes[i] + 0.075
     trayp2_yposes = np.hstack((a, b))            
     return to_list(trayp2_xposes, trayp2_yposes)
+
+
     
+def get_pot_array_poses(pole_xposes, pole_yposes):      
+    pot_array_length = 4
+    row_length = pole_xposes[-1] - pole_xposes[0]
+    remainder = np.mod(row_length, pot_array_length)
+    pot_array_max_length = row_length - remainder
     
+    xposes = np.arange(pole_xposes[0], pot_array_max_length+pot_array_length, pot_array_length)
+    poses = []
+    for i, j in list(product(range(len(xposes)), range(len(pole_yposes)))):
+        pose = [xposes[i]-0.07, pole_yposes[j]-0.07]
+        poses.append(pose)
+    return poses, pot_array_max_length
     
-def get_pot_poses(pole_xposes, pole_yposes):
+
+    
+def get_pot_poses(pole_xposes, pole_yposes, pot_array_max_length):
     pot_dx = 0.5
-    pot_xposes = np.arange(pole_xposes[0]+0.024, pole_xposes[1], pot_dx)
+    pot_xposes = np.arange(pole_xposes[0]+pot_array_max_length+0.024, pole_xposes[1], pot_dx)
     pot_poses = []
     for i, j in list(product(range(len(pot_xposes)), range(len(pole_yposes)))):
         pot_pose = [pot_xposes[i], pole_yposes[j]]
@@ -78,7 +93,19 @@ def get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes):
     
 
 def get_canopy_poses(arch_xposes, arch_ypose, pole_dy):
-    canopy_xposes = np.arange(arch_xposes[0], arch_xposes[1], 0.5)
+    canopy_length = 4
+    arch_length = arch_xposes[1] - arch_xposes[0]
+    remainder = np.mod(arch_length, canopy_length)
+    canopy_max_length = arch_length - remainder    
+    
+    canopy_xposes = np.arange(arch_xposes[0], canopy_max_length+canopy_length, canopy_length)
     canopy_yposes = np.zeros(len(canopy_xposes)) + arch_ypose + (3*pole_dy) + 0.017
-    return to_list(canopy_xposes, canopy_yposes), canopy_xposes, canopy_yposes
+    return to_list(canopy_xposes, canopy_yposes), canopy_max_length
+    
+    
+def get_canopy_small_poses(arch_xposes, arch_ypose, pole_dy, canopy_max_length):
+    canopy_length = 0.5    
+    canopy_xposes = np.arange(arch_xposes[0]+canopy_max_length, arch_xposes[1], canopy_length)
+    canopy_yposes = np.zeros(len(canopy_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    return to_list(canopy_xposes, canopy_yposes)   
 ################################################################################

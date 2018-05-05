@@ -68,6 +68,17 @@ class AddtoWorld(object):
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))
             
             
+    def add_pot_arrays(self, pot_array_d, pot_array_poses, pot_array_count=0):
+        n = len(pot_array_poses)
+        for i in range(n):
+            pot_array_id = pot_array_count+i
+            cpy= pot_array_d['sdf']['model']
+            cpy['@name'] = u'pot_array_' + str(pot_array_id)
+            posstr = str("%.3f %.3f 1.382 1.5707 0.0 1.5707"%(pot_array_poses[i][0], pot_array_poses[i][1]))
+            cpy['pose'] = posstr
+            self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))           
+            
+            
     def add_plants(self, plant_d, plant_poses, plant_count=0):
         n = len(plant_poses)
         for i in range(n):
@@ -88,6 +99,17 @@ class AddtoWorld(object):
             cpy['@name'] = u'plant2_' + str(plant2_id)
             posstr = str("%.3f %.3f 1.467 1.5707 0.0 0.0"%(plant2_poses[i][0], plant2_poses[i][1]))
             cpy['pose']=posstr
+            self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))
+
+
+    def add_plant_array(self, plant_array_d, plant_array_poses, plant_array_count=0):
+        n = len(plant_array_poses)
+        for i in range(n):
+            plant_array_id = plant_array_count+i
+            cpy= plant_array_d['sdf']['model']
+            cpy['@name'] = u'plant_array_' + str(plant_array_id)
+            posstr = str("%.3f %.3f 1.502 1.5707 0.0 1.5707"%(plant_array_poses[i][0]-0.15, plant_array_poses[i][1]-0.15))
+            cpy['pose'] = posstr
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))                             
             
 
@@ -110,7 +132,18 @@ class AddtoWorld(object):
             cpy['@name'] = u'canopy_' + str(canopy_id)
             posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(canopy_poses[i][0], canopy_poses[i][1]))
             cpy['pose']=posstr
-            self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))            
+            self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))  
+            
+            
+    def add_canopy_small(self, canopy_small_d, canopy_small_poses, canopy_small_count=0):
+        n = len(canopy_small_poses)
+        for i in range(n):
+            canopy_small_id = canopy_small_count+i
+            cpy= canopy_small_d['sdf']['model']
+            cpy['@name'] = u'canopy_small_' + str(canopy_small_id)
+            posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(canopy_small_poses[i][0], canopy_small_poses[i][1]))
+            cpy['pose']=posstr
+            self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))     
             
             
     def add_riseholme_enclosure(self, riseholme_enclosure_d, pose, j=0):
