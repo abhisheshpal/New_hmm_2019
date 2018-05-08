@@ -42,44 +42,59 @@ def get_trayp2_poses(tray_length, pole_xoffset, pole_ny, pole_yposes):
         b[i] = pole_yposes[i] + 0.075
     trayp2_yposes = np.hstack((a, b))            
     return to_list(trayp2_xposes, trayp2_yposes)
-
-
     
-def get_pot_array_poses(pole_xposes, pole_yposes):      
-    pot_array_length = 4
+    
+    
+def get_pot21_poses(pole_xposes, pole_yposes):      
+    pot21_length = 10
     row_length = pole_xposes[-1] - pole_xposes[0]
-    remainder = np.mod(row_length, pot_array_length)
-    pot_array_max_length = row_length - remainder
+    remainder = np.mod(row_length, pot21_length)
+    pot21_max_length = row_length - remainder
     
-    xposes = np.arange(pole_xposes[0], pot_array_max_length+pot_array_length, pot_array_length)
+    xposes = np.arange(pole_xposes[0], pole_xposes[0]+pot21_max_length, pot21_length)
     poses = []
     for i, j in list(product(range(len(xposes)), range(len(pole_yposes)))):
         pose = [xposes[i]-0.07, pole_yposes[j]-0.07]
         poses.append(pose)
-    return poses, pot_array_max_length
+    return poses, pot21_max_length    
+
+
+    
+def get_pot9_poses(pole_xposes, pole_yposes, pot21_max_length):      
+    pot9_length = 4
+    row_length = (pole_xposes[-1] - pole_xposes[0]) - pot21_max_length
+    remainder = np.mod(row_length, pot9_length)
+    pot9_max_length = row_length - remainder
+    
+    xposes = np.arange(pole_xposes[0]+pot21_max_length, pole_xposes[0]+pot21_max_length+pot9_max_length, pot9_length)
+    poses = []
+    for i, j in list(product(range(len(xposes)), range(len(pole_yposes)))):
+        pose = [xposes[i]-0.07, pole_yposes[j]-0.07]
+        poses.append(pose)
+    return poses, pot9_max_length
     
 
     
-def get_pot_poses(pole_xposes, pole_yposes, pot_array_max_length):
-    pot_dx = 0.5
-    pot_xposes = np.arange(pole_xposes[0]+pot_array_max_length+0.024, pole_xposes[1], pot_dx)
-    pot_poses = []
-    for i, j in list(product(range(len(pot_xposes)), range(len(pole_yposes)))):
-        pot_pose = [pot_xposes[i], pole_yposes[j]]
-        pot_poses.append(pot_pose)
-    return pot_poses, pot_xposes
+def get_pot1_poses(pole_xposes, pole_yposes, pot21_max_length, pot9_max_length):
+    pot1_dx = 0.5
+    pot1_xposes = np.arange(pole_xposes[0]+pot21_max_length+pot9_max_length, pole_xposes[1], pot1_dx)
+    pot1_poses = []
+    for i, j in list(product(range(len(pot1_xposes)), range(len(pole_yposes)))):
+        pot1_pose = [pot1_xposes[i], pole_yposes[j]]
+        pot1_poses.append(pot1_pose)
+    return pot1_poses, pot1_xposes
     
     
     
-def get_plant_poses(pot_xposes, pot_yposes):
+def get_plant_poses(pot1_xposes, pot1_yposes):
     plant1_poses = []
-    for i, j in list(product(range(len(pot_xposes)), range(len(pot_yposes)))):
-        plant1_pose = [pot_xposes[i]-0.005, pot_yposes[j]-0.38, 1.282, 0.785]
+    for i, j in list(product(range(len(pot1_xposes)), range(len(pot1_yposes)))):
+        plant1_pose = [pot1_xposes[i]-0.005, pot1_yposes[j]-0.38, 1.282, 0.785]
         plant1_poses.append(plant1_pose)
     
     plant2_poses = []
-    for i, j in list(product(range(len(pot_xposes)), range(len(pot_yposes)))):
-        plant2_pose = [pot_xposes[i]-0.2725, pot_yposes[j]-0.2645, 1.408, 0.000]
+    for i, j in list(product(range(len(pot1_xposes)), range(len(pot1_yposes)))):
+        plant2_pose = [pot1_xposes[i]-0.2725, pot1_yposes[j]-0.2645, 1.408, 0.000]
         plant2_poses.append(plant2_pose)    
     return plant1_poses + plant2_poses
     
@@ -91,21 +106,34 @@ def get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes):
     return to_list(arch_xposes, arch_yposes), arch_xposes, arch_yposes
     
     
-
-def get_canopy_poses(arch_xposes, arch_ypose, pole_dy):
-    canopy_length = 4
+    
+def get_canopy10m_poses(arch_xposes, arch_ypose, pole_dy):
+    canopy10m_length = 10
     arch_length = arch_xposes[1] - arch_xposes[0]
-    remainder = np.mod(arch_length, canopy_length)
-    canopy_max_length = arch_length - remainder    
+    remainder = np.mod(arch_length, canopy10m_length)
+    canopy10m_max_length = arch_length - remainder    
     
-    canopy_xposes = np.arange(arch_xposes[0], canopy_max_length+canopy_length, canopy_length)
-    canopy_yposes = np.zeros(len(canopy_xposes)) + arch_ypose + (3*pole_dy) + 0.017
-    return to_list(canopy_xposes, canopy_yposes), canopy_max_length
+    canopy10m_xposes = np.arange(arch_xposes[0], arch_xposes[0]+canopy10m_max_length, canopy10m_length)
+    canopy10m_yposes = np.zeros(len(canopy10m_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    return to_list(canopy10m_xposes, canopy10m_yposes), canopy10m_max_length    
     
     
-def get_canopy_small_poses(arch_xposes, arch_ypose, pole_dy, canopy_max_length):
-    canopy_length = 0.5    
-    canopy_xposes = np.arange(arch_xposes[0]+canopy_max_length, arch_xposes[1], canopy_length)
-    canopy_yposes = np.zeros(len(canopy_xposes)) + arch_ypose + (3*pole_dy) + 0.017
-    return to_list(canopy_xposes, canopy_yposes)   
+
+def get_canopy4m_poses(arch_xposes, arch_ypose, pole_dy, canopy10m_max_length):
+    canopy4m_length = 4
+    arch_length = (arch_xposes[1] - arch_xposes[0]) - canopy10m_max_length
+    remainder = np.mod(arch_length, canopy4m_length)
+    canopy4m_max_length = arch_length - remainder    
+    
+    canopy4m_xposes = np.arange(arch_xposes[0]+canopy10m_max_length, arch_xposes[0]+canopy10m_max_length+canopy4m_length, canopy4m_length)
+    canopy4m_yposes = np.zeros(len(canopy4m_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    return to_list(canopy4m_xposes, canopy4m_yposes), canopy4m_max_length
+    
+    
+    
+def get_canopyhalfm_poses(arch_xposes, arch_ypose, pole_dy, canopy10m_max_length, canopy4m_max_length):
+    canopyhalfm_length = 0.5    
+    canopyhalfm_xposes = np.arange(arch_xposes[0]+canopy10m_max_length+canopy4m_max_length, arch_xposes[1], canopyhalfm_length)
+    canopyhalfm_yposes = np.zeros(len(canopyhalfm_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    return to_list(canopyhalfm_xposes, canopyhalfm_yposes)   
 ################################################################################

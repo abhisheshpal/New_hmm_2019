@@ -2116,21 +2116,21 @@
 				<pose frame="">19.000 -1.275 1.424 1.5707 0.0 0.0</pose>
 			</link>
 		</model>
-		<model name="pot_array_0">
+		<model name="pot21_0">
 			<static>1</static>
 			<pose>6.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2147,21 +2147,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_1">
+		<model name="pot21_1">
 			<static>1</static>
 			<pose>6.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2178,21 +2178,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_2">
+		<model name="pot21_2">
 			<static>1</static>
 			<pose>6.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2209,21 +2209,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_3">
+		<model name="pot21_3">
 			<static>1</static>
 			<pose>6.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2240,21 +2240,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_4">
+		<model name="pot21_4">
 			<static>1</static>
 			<pose>6.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2271,21 +2271,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_5">
+		<model name="pot21_5">
 			<static>1</static>
-			<pose>10.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2302,21 +2302,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_6">
+		<model name="pot21_6">
 			<static>1</static>
-			<pose>10.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2333,21 +2333,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_7">
+		<model name="pot21_7">
 			<static>1</static>
-			<pose>10.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2364,21 +2364,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_8">
+		<model name="pot21_8">
 			<static>1</static>
-			<pose>10.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2395,21 +2395,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_9">
+		<model name="pot21_9">
 			<static>1</static>
-			<pose>10.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2426,486 +2426,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_10">
-			<static>1</static>
-			<pose>14.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_11">
-			<static>1</static>
-			<pose>14.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_12">
-			<static>1</static>
-			<pose>14.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_13">
-			<static>1</static>
-			<pose>14.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_14">
-			<static>1</static>
-			<pose>14.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_15">
-			<static>1</static>
-			<pose>18.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_16">
-			<static>1</static>
-			<pose>18.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_17">
-			<static>1</static>
-			<pose>18.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_18">
-			<static>1</static>
-			<pose>18.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_19">
-			<static>1</static>
-			<pose>18.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_20">
-			<static>1</static>
-			<pose>22.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_21">
-			<static>1</static>
-			<pose>22.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_22">
-			<static>1</static>
-			<pose>22.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_23">
-			<static>1</static>
-			<pose>22.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_24">
-			<static>1</static>
-			<pose>22.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_25">
+		<model name="pot9_0">
 			<static>1</static>
 			<pose>26.930 -6.820 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2922,21 +2457,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_26">
+		<model name="pot9_1">
 			<static>1</static>
 			<pose>26.930 -5.470 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2953,21 +2488,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_27">
+		<model name="pot9_2">
 			<static>1</static>
 			<pose>26.930 -4.120 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2984,21 +2519,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_28">
+		<model name="pot9_3">
 			<static>1</static>
 			<pose>26.930 -2.770 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3015,21 +2550,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_29">
+		<model name="pot9_4">
 			<static>1</static>
 			<pose>26.930 -1.420 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3046,21 +2581,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_0">
+		<model name="plant21_0">
 			<static>1</static>
-			<pose>6.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 -6.970 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3077,21 +2605,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_1">
+		<model name="plant21_1">
 			<static>1</static>
-			<pose>6.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 -5.620 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3108,21 +2629,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_2">
+		<model name="plant21_2">
 			<static>1</static>
-			<pose>6.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 -4.270 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3139,21 +2653,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_3">
+		<model name="plant21_3">
 			<static>1</static>
-			<pose>6.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 -2.920 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3170,21 +2677,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_4">
+		<model name="plant21_4">
 			<static>1</static>
-			<pose>6.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 -1.570 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3201,21 +2701,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_5">
+		<model name="plant21_5">
 			<static>1</static>
-			<pose>10.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 -6.970 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3232,21 +2725,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_6">
+		<model name="plant21_6">
 			<static>1</static>
-			<pose>10.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 -5.620 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3263,21 +2749,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_7">
+		<model name="plant21_7">
 			<static>1</static>
-			<pose>10.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 -4.270 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3294,21 +2773,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_8">
+		<model name="plant21_8">
 			<static>1</static>
-			<pose>10.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 -2.920 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3325,21 +2797,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_9">
+		<model name="plant21_9">
 			<static>1</static>
-			<pose>10.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 -1.570 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3356,21 +2821,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_10">
+		<model name="plant9_0">
 			<static>1</static>
-			<pose>14.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 -6.970 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3387,21 +2845,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_11">
+		<model name="plant9_1">
 			<static>1</static>
-			<pose>14.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 -5.620 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3418,21 +2869,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_12">
+		<model name="plant9_2">
 			<static>1</static>
-			<pose>14.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 -4.270 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3449,21 +2893,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_13">
+		<model name="plant9_3">
 			<static>1</static>
-			<pose>14.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 -2.920 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -3480,486 +2917,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_14">
+		<model name="plant9_4">
 			<static>1</static>
-			<pose>14.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 -1.570 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_15">
-			<static>1</static>
-			<pose>18.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_16">
-			<static>1</static>
-			<pose>18.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_17">
-			<static>1</static>
-			<pose>18.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_18">
-			<static>1</static>
-			<pose>18.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_19">
-			<static>1</static>
-			<pose>18.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_20">
-			<static>1</static>
-			<pose>22.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_21">
-			<static>1</static>
-			<pose>22.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_22">
-			<static>1</static>
-			<pose>22.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_23">
-			<static>1</static>
-			<pose>22.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_24">
-			<static>1</static>
-			<pose>22.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_25">
-			<static>1</static>
-			<pose>26.780 -6.970 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_26">
-			<static>1</static>
-			<pose>26.780 -5.620 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_27">
-			<static>1</static>
-			<pose>26.780 -4.270 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_28">
-			<static>1</static>
-			<pose>26.780 -2.920 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_29">
-			<static>1</static>
-			<pose>26.780 -1.570 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -4158,210 +3123,147 @@
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_0">
+		<model name="canopy10m_0">
 			<static>1</static>
 			<pose>6.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_1">
+		<model name="canopy10m_1">
 			<static>1</static>
-			<pose>10.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
+			<pose>16.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_2">
-			<static>1</static>
-			<pose>14.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_3">
-			<static>1</static>
-			<pose>18.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_4">
-			<static>1</static>
-			<pose>22.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_5">
+		<model name="canopy4m_0">
 			<static>1</static>
 			<pose>26.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy4m/canopy4m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy4m/canopy4m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_0">
+		<model name="canopyhalfm_0">
 			<static>1</static>
 			<pose>30.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_1">
+		<model name="canopyhalfm_1">
 			<static>1</static>
 			<pose>30.500 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_2">
+		<model name="canopyhalfm_2">
 			<static>1</static>
 			<pose>31.000 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_3">
+		<model name="canopyhalfm_3">
 			<static>1</static>
 			<pose>31.500 -4.033 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
@@ -6483,21 +5385,21 @@
 				<pose frame="">19.000 6.825 1.424 1.5707 0.0 0.0</pose>
 			</link>
 		</model>
-		<model name="pot_array_30">
+		<model name="pot21_10">
 			<static>1</static>
 			<pose>6.930 1.280 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6514,21 +5416,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_31">
+		<model name="pot21_11">
 			<static>1</static>
 			<pose>6.930 2.630 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6545,21 +5447,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_32">
+		<model name="pot21_12">
 			<static>1</static>
 			<pose>6.930 3.980 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6576,21 +5478,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_33">
+		<model name="pot21_13">
 			<static>1</static>
 			<pose>6.930 5.330 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6607,21 +5509,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_34">
+		<model name="pot21_14">
 			<static>1</static>
 			<pose>6.930 6.680 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6638,21 +5540,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_35">
+		<model name="pot21_15">
 			<static>1</static>
-			<pose>10.930 1.280 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 1.280 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6669,21 +5571,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_36">
+		<model name="pot21_16">
 			<static>1</static>
-			<pose>10.930 2.630 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 2.630 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6700,21 +5602,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_37">
+		<model name="pot21_17">
 			<static>1</static>
-			<pose>10.930 3.980 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 3.980 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6731,21 +5633,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_38">
+		<model name="pot21_18">
 			<static>1</static>
-			<pose>10.930 5.330 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 5.330 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6762,21 +5664,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_39">
+		<model name="pot21_19">
 			<static>1</static>
-			<pose>10.930 6.680 1.382 1.5707 0.0 1.5707</pose>
+			<pose>16.930 6.680 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot21/pot21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -6793,486 +5695,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_40">
-			<static>1</static>
-			<pose>14.930 1.280 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_41">
-			<static>1</static>
-			<pose>14.930 2.630 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_42">
-			<static>1</static>
-			<pose>14.930 3.980 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_43">
-			<static>1</static>
-			<pose>14.930 5.330 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_44">
-			<static>1</static>
-			<pose>14.930 6.680 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_45">
-			<static>1</static>
-			<pose>18.930 1.280 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_46">
-			<static>1</static>
-			<pose>18.930 2.630 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_47">
-			<static>1</static>
-			<pose>18.930 3.980 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_48">
-			<static>1</static>
-			<pose>18.930 5.330 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_49">
-			<static>1</static>
-			<pose>18.930 6.680 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_50">
-			<static>1</static>
-			<pose>22.930 1.280 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_51">
-			<static>1</static>
-			<pose>22.930 2.630 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_52">
-			<static>1</static>
-			<pose>22.930 3.980 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_53">
-			<static>1</static>
-			<pose>22.930 5.330 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_54">
-			<static>1</static>
-			<pose>22.930 6.680 1.382 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0 0 0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.2 0.2 0.2 1</ambient>
-						<diffuse>0.02 0.02 0.02 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="pot_array_55">
+		<model name="pot9_5">
 			<static>1</static>
 			<pose>26.930 1.280 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7289,21 +5726,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_56">
+		<model name="pot9_6">
 			<static>1</static>
 			<pose>26.930 2.630 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7320,21 +5757,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_57">
+		<model name="pot9_7">
 			<static>1</static>
 			<pose>26.930 3.980 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7351,21 +5788,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_58">
+		<model name="pot9_8">
 			<static>1</static>
 			<pose>26.930 5.330 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7382,21 +5819,21 @@
 				</visual>
 			</link>
 		</model>
-		<model name="pot_array_59">
+		<model name="pot9_9">
 			<static>1</static>
 			<pose>26.930 6.680 1.382 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://pot_array/pot_array.stl</uri>
+							<uri>model://pot9/pot9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7413,21 +5850,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_30">
+		<model name="plant21_10">
 			<static>1</static>
-			<pose>6.780 1.130 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 1.130 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7444,21 +5874,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_31">
+		<model name="plant21_11">
 			<static>1</static>
-			<pose>6.780 2.480 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 2.480 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7475,21 +5898,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_32">
+		<model name="plant21_12">
 			<static>1</static>
-			<pose>6.780 3.830 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 3.830 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7506,21 +5922,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_33">
+		<model name="plant21_13">
 			<static>1</static>
-			<pose>6.780 5.180 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 5.180 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7537,21 +5946,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_34">
+		<model name="plant21_14">
 			<static>1</static>
-			<pose>6.780 6.530 1.502 1.5707 0.0 1.5707</pose>
+			<pose>6.780 6.530 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7568,21 +5970,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_35">
+		<model name="plant21_15">
 			<static>1</static>
-			<pose>10.780 1.130 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 1.130 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7599,21 +5994,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_36">
+		<model name="plant21_16">
 			<static>1</static>
-			<pose>10.780 2.480 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 2.480 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7630,21 +6018,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_37">
+		<model name="plant21_17">
 			<static>1</static>
-			<pose>10.780 3.830 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 3.830 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7661,21 +6042,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_38">
+		<model name="plant21_18">
 			<static>1</static>
-			<pose>10.780 5.180 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 5.180 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7692,21 +6066,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_39">
+		<model name="plant21_19">
 			<static>1</static>
-			<pose>10.780 6.530 1.502 1.5707 0.0 1.5707</pose>
+			<pose>16.780 6.530 1.3 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant21/plant21.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7723,21 +6090,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_40">
+		<model name="plant9_5">
 			<static>1</static>
-			<pose>14.780 1.130 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 1.130 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7754,21 +6114,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_41">
+		<model name="plant9_6">
 			<static>1</static>
-			<pose>14.780 2.480 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 2.480 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7785,21 +6138,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_42">
+		<model name="plant9_7">
 			<static>1</static>
-			<pose>14.780 3.830 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 3.830 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7816,21 +6162,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_43">
+		<model name="plant9_8">
 			<static>1</static>
-			<pose>14.780 5.180 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 5.180 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -7847,486 +6186,14 @@
 				</visual>
 			</link>
 		</model>
-		<model name="plant_array_44">
+		<model name="plant9_9">
 			<static>1</static>
-			<pose>14.780 6.530 1.502 1.5707 0.0 1.5707</pose>
+			<pose>26.780 6.530 1.475 1.5707 0.0 1.5707</pose>
 			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_45">
-			<static>1</static>
-			<pose>18.780 1.130 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_46">
-			<static>1</static>
-			<pose>18.780 2.480 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_47">
-			<static>1</static>
-			<pose>18.780 3.830 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_48">
-			<static>1</static>
-			<pose>18.780 5.180 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_49">
-			<static>1</static>
-			<pose>18.780 6.530 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_50">
-			<static>1</static>
-			<pose>22.780 1.130 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_51">
-			<static>1</static>
-			<pose>22.780 2.480 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_52">
-			<static>1</static>
-			<pose>22.780 3.830 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_53">
-			<static>1</static>
-			<pose>22.780 5.180 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_54">
-			<static>1</static>
-			<pose>22.780 6.530 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_55">
-			<static>1</static>
-			<pose>26.780 1.130 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_56">
-			<static>1</static>
-			<pose>26.780 2.480 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_57">
-			<static>1</static>
-			<pose>26.780 3.830 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_58">
-			<static>1</static>
-			<pose>26.780 5.180 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<emissive>0 0 0 1</emissive>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<specular>0.0 0.01 0.0 1</specular>
-						<lighting>1</lighting>
-						<ambient>0.0 0.5 0.0 1</ambient>
-						<diffuse>0.0 0.05 0.0 1</diffuse>
-					</material>
-					<cast_shadows>0</cast_shadows>
-				</visual>
-			</link>
-		</model>
-		<model name="plant_array_59">
-			<static>1</static>
-			<pose>26.780 6.530 1.502 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://plant_array/plant_array.stl</uri>
+							<uri>model://plant9/plant9.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -8525,210 +6392,147 @@
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_6">
+		<model name="canopy10m_2">
 			<static>1</static>
 			<pose>6.000 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_7">
+		<model name="canopy10m_3">
 			<static>1</static>
-			<pose>10.000 4.067 0.0 1.5707 0.0 1.5707</pose>
+			<pose>16.000 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy10m/Canopy10m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_8">
-			<static>1</static>
-			<pose>14.000 4.067 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_9">
-			<static>1</static>
-			<pose>18.000 4.067 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_10">
-			<static>1</static>
-			<pose>22.000 4.067 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
-						</mesh>
-					</geometry>
-					<transparency>0.65</transparency>
-				</visual>
-			</link>
-		</model>
-		<model name="canopy_11">
+		<model name="canopy4m_1">
 			<static>1</static>
 			<pose>26.000 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy4m/canopy4m.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy/Canopy.stl</uri>
+							<uri>model://canopy4m/canopy4m.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_4">
+		<model name="canopyhalfm_4">
 			<static>1</static>
 			<pose>30.000 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_5">
+		<model name="canopyhalfm_5">
 			<static>1</static>
 			<pose>30.500 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_6">
+		<model name="canopyhalfm_6">
 			<static>1</static>
 			<pose>31.000 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>
 				</visual>
 			</link>
 		</model>
-		<model name="canopy_small_7">
+		<model name="canopyhalfm_7">
 			<static>1</static>
 			<pose>31.500 4.067 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://canopy_small/Canopy_small.stl</uri>
+							<uri>model://canopyhalfm/canopyhalfm.stl</uri>
 						</mesh>
 					</geometry>
 					<transparency>0.65</transparency>

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
 
-<model name="canopy_small">
+<model name="canopy10m">
 <static>1</static>
 <pose>0.0 0.0 0.0 1.5707 0.0 1.5707</pose>
 
@@ -10,7 +10,7 @@
     <collision name="collision">
       <geometry>
         <mesh>
-          <uri>model://canopy_small/Canopy_small.stl</uri>
+          <uri>model://canopy10m/Canopy10m.stl</uri>
         </mesh>
       </geometry>
     </collision>
@@ -18,7 +18,7 @@
     <visual name="visual">
       <geometry>
         <mesh>
-          <uri>model://canopy_small/Canopy_small.stl</uri>
+          <uri>model://canopy10m/Canopy10m.stl</uri>
         </mesh>
       </geometry>
     <transparency>0.65</transparency>

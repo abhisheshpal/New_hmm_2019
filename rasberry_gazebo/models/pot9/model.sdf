@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
 
-<model name="plant_array">
+<model name="pot9">
 <static>1</static>
 <pose>0.0 0.0 0.0 1.5707 0.0 1.5707</pose>
 
@@ -10,7 +10,7 @@
     <collision name="collision">
       <geometry>
         <mesh>
-          <uri>model://plant_array/plant_array.stl</uri>
+          <uri>model://pot9/pot9.stl</uri>
         </mesh>
       </geometry>
     </collision>
@@ -18,7 +18,7 @@
     <visual name="visual">
       <geometry>
         <mesh>
-          <uri>model://plant_array/plant_array.stl</uri>
+          <uri>model://pot9/pot9.stl</uri>
         </mesh>
       </geometry>
       <material>
@@ -26,9 +26,9 @@
         <shader type='vertex'>
           <normal_map>__default__</normal_map>
         </shader>
-        <ambient>0.0 0.5 0.0 1</ambient>
-        <diffuse>0.0 0.05 0.0 1</diffuse>
-        <specular>0.0 0.01 0.0 1</specular>
+        <ambient>0.2 0.2 0.2 1</ambient>
+        <diffuse>0.02 0.02 0.02 1</diffuse>
+        <specular>0 0 0 1</specular>
         <emissive>0 0 0 1</emissive>
       </material>
       <cast_shadows>0</cast_shadows>

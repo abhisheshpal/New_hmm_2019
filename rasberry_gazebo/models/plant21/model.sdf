@@ -1,24 +1,24 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
 
-<model name="plant2">
+<model name="plant21">
 <static>1</static>
-<pose>0.0 0.0 0.0 1.5707 0.0 0.0</pose>
+<pose>0.0 0.0 0.0 1.5707 0.0 1.5707</pose>
 
   <link name="link">
 
-    <collision name="collision">
+    <!--<collision name="collision">
       <geometry>
         <mesh>
-          <uri>model://plant2/plant2.stl</uri>
+          <uri>model://plant21/plant21.stl</uri>
         </mesh>
       </geometry>
-    </collision>
+    </collision>-->
 
     <visual name="visual">
       <geometry>
         <mesh>
-          <uri>model://plant2/plant2.stl</uri>
+          <uri>model://plant21/plant21.stl</uri>
         </mesh>
       </geometry>
       <material>

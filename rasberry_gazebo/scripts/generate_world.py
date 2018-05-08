@@ -46,40 +46,49 @@ for model in model_config:
         pole_f = base_dir + '/models/pole/model.sdf'
         tray_f = base_dir + '/models/tray/model.sdf'
         trayp2_f = base_dir + '/models/tray_part2/model.sdf'
-        pot_array_f = base_dir + '/models/pot_array/model.sdf'
-        pot_f = base_dir + '/models/pot/model.sdf'
+        pot21_f = base_dir + '/models/pot21/model.sdf'
+        pot9_f = base_dir + '/models/pot9/model.sdf'
+        pot1_f = base_dir + '/models/pot1/model.sdf'
         #plant_f = base_dir + '/models/plant/model.sdf'
-        plant_array_f = base_dir + '/models/plant_array/model.sdf'
-        plant2_f = base_dir + '/models/plant2/model.sdf'
+        plant21_f = base_dir + '/models/plant21/model.sdf'
+        plant9_f = base_dir + '/models/plant9/model.sdf'
+        plant1_f = base_dir + '/models/plant1/model.sdf'
         arch_f = base_dir + '/models/dummy_arch/model.sdf'
-        canopy_f = base_dir + '/models/canopy/model.sdf'
-        canopy_small_f = base_dir + '/models/canopy_small/model.sdf'
+        canopy10m_f = base_dir + '/models/canopy10m/model.sdf'
+        canopy4m_f = base_dir + '/models/canopy4m/model.sdf'
+        canopyhalfm_f = base_dir + '/models/canopyhalfm/model.sdf'
         
         
         pole_d = load_data_from_xml(pole_f)    
         tray_d = load_data_from_xml(tray_f)    
         trayp2_d = load_data_from_xml(trayp2_f)
-        pot_array_d = load_data_from_xml(pot_array_f)
-        pot_d = load_data_from_xml(pot_f)
+        pot21_d = load_data_from_xml(pot21_f)
+        pot9_d = load_data_from_xml(pot9_f)
+        pot1_d = load_data_from_xml(pot1_f)
         #plant_d = load_data_from_xml(plant_f)
-        plant_array_d = load_data_from_xml(plant_array_f)
-        plant2_d = load_data_from_xml(plant2_f)
+        plant21_d = load_data_from_xml(plant21_f)
+        plant9_d = load_data_from_xml(plant9_f)
+        plant1_d = load_data_from_xml(plant1_f)
         arch_d = load_data_from_xml(arch_f)
-        canopy_d = load_data_from_xml(canopy_f)        
-        canopy_small_d = load_data_from_xml(canopy_small_f) 
+        canopy10m_d = load_data_from_xml(canopy10m_f)        
+        canopy4m_d = load_data_from_xml(canopy4m_f)        
+        canopyhalfm_d = load_data_from_xml(canopyhalfm_f) 
         
         
         pole_count = 0
         tray_count = 0
-        trayp2_count = 0  
-        pot_count = 0
-        pot_array_count = 0
+        trayp2_count = 0
+        pot21_count = 0
+        pot9_count = 0
+        pot1_count = 0
         #plant_count = 0
-        plant_array_count = 0
-        plant2_count = 0
+        plant21_count = 0
+        plant9_count = 0
+        plant1_count = 0
         arch_count = 0
-        canopy_count = 0   
-        canopy_small_count = 0
+        canopy10m_count = 0   
+        canopy4m_count = 0   
+        canopyhalfm_count = 0
         
         
         polytunnels = model['polytunnel']
@@ -111,38 +120,50 @@ for model in model_config:
                     trayp2_poses = get_trayp2_poses(tray_length, pole_xoffset, pole_ny, pole_yposes)
                     world.add_traysp2(trayp2_d, trayp2_poses, tray_length, trayp2_count)                 
                     trayp2_count += len(trayp2_poses)
-                
-                    pot_array_poses, pot_array_max_length = get_pot_array_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
-                    world.add_pot_arrays(pot_array_d, pot_array_poses, pot_array_count)  
-                    pot_array_count += len(pot_array_poses)
                     
-                    pot_poses, pot_xposes = get_pot_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot_array_max_length) 
-                    world.add_pots(pot_d, pot_poses, pot_count)
-                    pot_count += len(pot_poses)
+                    pot21_poses, pot21_max_length = get_pot21_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
+                    world.add_pot21(pot21_d, pot21_poses, pot21_count)  
+                    pot21_count += len(pot21_poses)
                 
-                    #plant_poses = get_plant_poses(pot_xposes, pole_yposes)
+                    pot9_poses, pot9_max_length = get_pot9_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length)
+                    world.add_pot9(pot9_d, pot9_poses, pot9_count)  
+                    pot9_count += len(pot9_poses)
+                    
+                    pot1_poses, pot1_xposes = get_pot1_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length, pot9_max_length) 
+                    world.add_pot1(pot1_d, pot1_poses, pot1_count)
+                    pot1_count += len(pot1_poses)
+                
+                    #plant_poses = get_plant_poses(pot1_xposes, pole_yposes)
                     #world.add_plants(plant_d, plant_poses, plant_count)  
                     #plant_count += len(plant_poses)
                     
-                    world.add_plant_array(plant_array_d, pot_array_poses, plant_array_count)  
-                    plant_array_count += len(pot_array_poses)
+                    world.add_plant21(plant21_d, pot21_poses, plant21_count)  
+                    plant21_count += len(pot21_poses)                    
                     
-                    world.add_plants2(plant2_d, pot_poses, plant2_count)  
-                    plant2_count += len(pot_poses)
+                    world.add_plant9(plant9_d, pot9_poses, plant9_count)  
+                    plant9_count += len(pot9_poses)
+                    
+                    world.add_plant1(plant1_d, pot1_poses, plant1_count)  
+                    plant1_count += len(pot1_poses)
 
 
                 if (arch_nx * arch_dx) > 0:
                     arch_poses, arch_xposes, arch_yposes = get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes)
                     world.add_arches(arch_d, arch_poses, arch_count)
-                    arch_count += len(arch_poses)                    
+                    arch_count += len(arch_poses)    
                     
-                    canopy_poses, canopy_max_length = get_canopy_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
-                    world.add_canopy(canopy_d, canopy_poses, canopy_count)
-                    canopy_count += len(canopy_poses)
+                    canopy10m_poses, canopy10m_max_length = get_canopy10m_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
+                    world.add_canopy10m(canopy10m_d, canopy10m_poses, canopy10m_count)
+                    canopy10m_count += len(canopy10m_poses)
+                    
+                    canopy4m_poses, canopy4m_max_length = get_canopy4m_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy, canopy10m_max_length)
+                    world.add_canopy4m(canopy4m_d, canopy4m_poses, canopy4m_count)
+                    canopy4m_count += len(canopy4m_poses)
 
-                    canopy_small_poses = get_canopy_small_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy, canopy_max_length)
-                    world.add_canopy_small(canopy_small_d, canopy_small_poses, canopy_small_count)
-                    canopy_small_count += len(canopy_small_poses)    
+                    canopyhalfm_poses = get_canopyhalfm_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy, canopy10m_max_length, canopy4m_max_length)
+                    world.add_canopyhalfm(canopyhalfm_d, canopyhalfm_poses, canopyhalfm_count)
+                    canopyhalfm_count += len(canopyhalfm_poses)    
+   
    
    
     if model.keys()[0] == 'riseholme_enclosure':
