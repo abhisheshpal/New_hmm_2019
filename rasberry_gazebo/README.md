@@ -24,7 +24,7 @@ Note : you can subsitute `models_AB.yaml` and `actors_AB.yaml` in step 3 for you
 An issue with the actors (which we will call 'type-1 actors') generated using the config file `./config/actors_AB.yaml` is that they cannot be controlled during simulation time.
 Therefore another type of actor ('type-2 actor') is available in this package that can be controlled at runtime. These are robots with a human mesh, controlled with the standard 
 `libgazebo_ros_planar_move` plugin. Two examples are spawned in the launch file `./launch/thorvald_world_AB.launch`. Here you can set the actor's name `actor_name` and starting pose.
-After launching you can control the actor by issuing velcoity commands to the rostopic `/actor_name/cmd_vel`. Each actor also has an odometry topic `/actor_name/u_odom` and a laser scanner (with the visual turned off) with rostopic `/actor_name/scan`. 
+After launching you can control the actor by issuing velcoity commands to the rostopic `/actor_name/cmd_vel`. Each actor also has an odometry topic `/actor_name/odom` and a laser scanner (with the visual turned off) with rostopic `/actor_name/scan`. 
 
 
 # Info:

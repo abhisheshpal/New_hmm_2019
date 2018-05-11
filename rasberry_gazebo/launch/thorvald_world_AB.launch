@@ -21,21 +21,17 @@
   </include>
 
 
-  <!-- Get the model -->
-  <param name="robot_description" command="$(find xacro)/xacro --inorder '$(find rasberry_gazebo)/urdf/actor.xacro'" />
-  <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
-    <param name="publish_frequency" type="double" value="30.0" />
-  </node>
-
 
   <!-- FOR THE USER: Spawn your actors here -->
 
-  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	<!-- First actor -->
+  <!-- First actor -->
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">
     <arg name="actor_name" value="actor00" />
     <arg name="start_pose_y" value="2" />
   </include>
 
-  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	<!-- Second actor -->
+  <!-- Second actor -->
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	
     <arg name="actor_name" value="actor01" />
     <arg name="start_pose_x" value="8" />
     <arg name="start_pose_y" value="4.75" />

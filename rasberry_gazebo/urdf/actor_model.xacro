@@ -2,7 +2,7 @@
 
 <robot name="actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <link name="u_base_link">
+  <link name="$(arg tf_prefix)/base_link">
     <inertial>
       <pose>0 -0.1 0.95 0 0 0</pose>
       <mass value="80.0"/>
@@ -42,14 +42,31 @@
   </link>
 
 
-  <link name="u_base_footprint"/>
+  <link name="$(arg tf_prefix)/base_footprint"/>
 
 
   <!-- For odometry -->
-  <joint name="base_footprint_fixed" type="fixed">
+  <joint name="$(arg tf_prefix)/base_footprint_fixed" type="fixed">
     <origin xyz="0 0 0.09" rpy="0 0 0"/>
-    <parent link="u_base_footprint"/>
-    <child  link="u_base_link"/>
+    <parent link="$(arg tf_prefix)/base_footprint"/>
+    <child  link="$(arg tf_prefix)/base_link"/>
   </joint>
+
+
+  <gazebo reference="$(arg tf_prefix)/base_link">
+    <selfCollide>false</selfCollide>
+  </gazebo>
+
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>$(arg tf_prefix)/odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>$(arg tf_prefix)/base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
 
 </robot>

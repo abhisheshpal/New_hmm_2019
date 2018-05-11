@@ -3,7 +3,7 @@
 <robot name="laser" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- hokuyo -->
-  <gazebo reference="u_base_footprint">
+  <gazebo reference="$(arg tf_prefix)/base_footprint">
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 1 0 0 0</pose>
       <visualize>false</visualize>
@@ -30,7 +30,7 @@
       </ray>
       <plugin name="gazebo_ros_head_hokuyo_controller" filename="libgazebo_ros_laser.so">
         <topicName>scan</topicName>
-        <frameName>u_base_footprint</frameName>
+        <frameName>base_footprint</frameName>
       </plugin>
     </sensor>
   </gazebo>
