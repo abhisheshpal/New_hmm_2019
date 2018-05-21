@@ -2,8 +2,8 @@
 Changelog for package rasberry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2018-05-21)
+------------------
 * more deps
 * Merge branch 'master' of https://github.com/LCAS/RASberry into topo_nav
 * Contributors: Marc Hanheide, gpdas

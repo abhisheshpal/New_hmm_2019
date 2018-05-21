@@ -2,8 +2,8 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.2 (2018-05-21)
+------------------
 * Merge pull request `#51 <https://github.com/LCAS/RASberry/issues/51>`_ from adambinch/master (RT Factor improvements and TF tree fixes for multi actors)
   Tested.
   - RT Factor improved to 0.87~0.97 from earlier 0.17 by combining multiple plant pots into one model and thereby reducing the number of plant models in simulation.
