@@ -99,6 +99,8 @@ class Picker(object):
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
         self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
+        # update agent_nodes in topo_graph
+        self.graph.agent_nodes[self.picker_id] = self.curr_node
 
         self.use_local_storage = self.graph.use_local_storage # if False, store at cold storage
 
@@ -494,6 +496,9 @@ class Picker(object):
             yield self.env.timeout(travel_time)
 
             self.curr_node = route_nodes[i + 1]
+
+            # update agent_nodes in the topo_graph
+            self.graph.agent_nodes[self.picker_id] = self.curr_node
 
         self.loginfo("%s reached %s" %(self.picker_id, goal_node))
         yield self.env.timeout(self.process_timeout)

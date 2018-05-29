@@ -80,6 +80,8 @@ class Farm(object):
 
         self.scheduler_policy = policy
 
+        self.picker_previous_mode = {picker_id:0 for picker_id in self.picker_ids}
+
         self.action = self.env.process(self.scheduler_monitor())
 
     def scheduler_monitor(self, ):
@@ -120,6 +122,9 @@ class Farm(object):
             # update modes of pickers already assigned to a row
             for picker_id in self.allocated_pickers:
                 picker = self.pickers[picker_id]
+                # picker modes
+                # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
+                # 4: waiting for unload at storage, 5: waiting for loading on robot
                 if picker.mode == 0:
                     # finished the assigned row and are idle now
                     # if previously assigned any row, update its status
@@ -151,8 +156,8 @@ class Farm(object):
                         self.assigned_picker_robot[picker_id] = None
 
                 elif picker.mode == 3 or picker.mode == 4 or picker.mode == 6:
-                    # picker transporting to storage or unloading at storage
-                    # or transporting to local storage from cold storage
+                    # picker transporting to storage (3) or unloading at storage (4)
+                    # or transporting to local storage from cold storage (6)
                     # if the current row is finished, the picker's mode will be changed
                     # to idle (0) soon, which will be taken care of in next loop
                     if self.assigned_picker_robot[picker_id] is not None:
@@ -193,10 +198,20 @@ class Farm(object):
                 if self.pickers[picker_id].mode == 0:
                     self.idle_pickers.append(picker_id)
 
+            # update prev mode of all pickers
+            for picker_id in self.picker_ids:
+                picker = self.pickers[picker_id]
+                # update previous mode
+                if self.picker_previous_mode[picker_id] != picker.mode:
+                    self.picker_previous_mode[picker_id] = picker.mode
+
             # update modes of all assigned robots
             to_remove_robots = []
             for robot_id in self.assigned_robots:
                 robot = self.robots[robot_id]
+                # robot modes
+                # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
+                # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
                 if robot.mode == 0:
                     # robot completed the unloading at storage, idle now
                     # remove current assignments and add to idle_robots
@@ -292,69 +307,17 @@ class Farm(object):
         if n_idle_pickers > 0:
             allocated_rows = []
 
-            # "lexicographical", "shortest_distance", "uniform_utilisation"
-            if self.scheduler_policy == "lexicographical":
-                # allocate in the order of name
-                self.idle_pickers.sort()
-                i = 0
-                for row_id in self.unallocated_rows:
-                    picker_id = self.idle_pickers[0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
-
-            elif self.scheduler_policy == "shortest_distance":
-                # allocate in the order of distance to the row_id
-
-                # max possible allocations is n_idle_pickers
-                i = 0
-                for row_id in self.unallocated_rows:
-                    # get picker nodes of remaining idle_pickers
-                    picker_nodes = {}
-                    for picker_id in self.idle_pickers:
-                        picker_nodes[picker_id] = self.pickers[picker_id].curr_node
-
-                    # get shortest distance picker from the row
-                    start_node = self.graph.row_info[row_id][1]
-                    picker_distances = self.get_disatances_from_nodes_dict(picker_nodes, start_node)
-                    sorted_pickers = sorted(picker_distances.items(), key=operator.itemgetter(1))
-
-                    # allocate to the first picker in the sorted
-                    picker_id = sorted_pickers[0][0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    # remove the picker_node from future allocations
-                    del picker_nodes[picker_id]
-                    # do a max of n_idle_pickers allocations
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
-
-            elif self.scheduler_policy == "uniform_utilisation":
-                # improve utilisation by allocating row to least used picker
-
-                # max possible allocations is n_idle_pickers
-                i = 0
-                for row_id in self.unallocated_rows:
-                    # get picker utilisation (time_spent_working) of remaining idle_pickers
-                    picker_utilisation = {}
-                    for picker_id in self.idle_pickers:
-                        picker_utilisation[picker_id] = self.pickers[picker_id].time_spent_working()
-                    sorted_pickers = sorted(picker_utilisation.items(), key=operator.itemgetter(1))
-
-                    # allocate to the first picker in the sorted
-                    picker_id = sorted_pickers[0][0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    # do a max of n_idle_pickers allocations
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
+            # row allocation is assumed to be "lexicographical"
+            self.idle_pickers.sort()
+            i = 0
+            for row_id in self.unallocated_rows:
+                picker_id = self.idle_pickers[0]
+                self.allocate(row_id, picker_id)
+                allocated_rows.append(row_id)
+                if i == n_idle_pickers - 1:
+                    break
+                else:
+                    i += 1
 
             for row_id in allocated_rows:
                 self.unallocated_rows.remove(row_id)

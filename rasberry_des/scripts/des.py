@@ -65,11 +65,12 @@ if __name__ == "__main__":
                                                         _yield_per_node, VERBOSE)
 
     n_trials = 1
-    min_n_pickers = 1
-    max_n_pickers = n_topo_nav_rows + 1
-    min_n_robots = 0
-    max_n_robots = max_n_pickers
+    min_n_pickers = 3#1
+    max_n_pickers = 4#n_topo_nav_rows + 1
+    min_n_robots = 3#0
+    max_n_robots = 4#max_n_pickers
 #    n_local_storages = n_topo_nav_rows
+    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -77,7 +78,7 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexicographical", "shortest_distance", "uniform_utilisation"]:
+            for scheduling_policy in ["lexicographical"]: #policies:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
