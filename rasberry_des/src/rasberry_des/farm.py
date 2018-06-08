@@ -7,6 +7,7 @@
 
 import operator
 import rospy
+import rasberry_des.picker_predictor
 
 
 class Farm(object):
@@ -80,7 +81,8 @@ class Farm(object):
 
         self.scheduler_policy = policy
 
-        self.picker_previous_mode = {picker_id:0 for picker_id in self.picker_ids}
+        # picker predictor
+        self.predictors = {picker_id:rasberry_des.picker_predictor.PickerPredictor(picker_id, self.env, self.graph, self.n_pickers, self.n_robots, self.verbose) for picker_id in self.picker_ids}
 
         self.action = self.env.process(self.scheduler_monitor())
 
@@ -125,6 +127,7 @@ class Farm(object):
                 # picker modes
                 # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
                 # 4: waiting for unload at storage, 5: waiting for loading on robot
+                # 6: transporting to local storage from cold storage
                 if picker.mode == 0:
                     # finished the assigned row and are idle now
                     # if previously assigned any row, update its status
@@ -199,11 +202,17 @@ class Farm(object):
                     self.idle_pickers.append(picker_id)
 
             # update prev mode of all pickers
+            # TODO: Check whether any mode changes could be missed?
             for picker_id in self.picker_ids:
                 picker = self.pickers[picker_id]
-                # update previous mode
-                if self.picker_previous_mode[picker_id] != picker.mode:
-                    self.picker_previous_mode[picker_id] = picker.mode
+                # update mode in predictor
+                if picker.mode == 2:
+                    self.predictors[picker_id].update_mode_and_pose(picker.mode,
+                                                                    picker.curr_node,
+                                                                    picker.picking_dir)
+                else:
+                    self.predictors[picker_id].update_mode_and_pose(picker.mode,
+                                                                    picker.curr_node)
 
             # update modes of all assigned robots
             to_remove_robots = []

@@ -342,6 +342,13 @@ class TopologicalForkGraph(object):
 
         return (route_nodes, route_edges, route_distance)
 
+    def get_row_id_of_row_node(self, node):
+        """given a row_node, return the row_id"""
+        for row_id in self.row_ids:
+            if node in self.row_nodes[row_id]:
+                return row_id
+        return None
+
     def loginfo(self, msg):
         """log info based on a flag"""
         if self.verbose:

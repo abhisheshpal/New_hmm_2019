@@ -58,6 +58,7 @@ class Picker(object):
 
         # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
         # 4: waiting for unload at storage, 5: waiting for loading on robot
+        # 6: transporting to local storage from cold storage
         self.mode = 0
 
         self.picking_finished = False
