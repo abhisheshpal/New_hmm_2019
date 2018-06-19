@@ -17,7 +17,14 @@ To build a world open a terminal and do the following:
 1. `roscd rasberry_gazebo/`
 2. `chmod a+x ./scripts/generate_world.py`
 3. `./scripts/generate_world.py --model_file ./config/models_AB.yaml --actor_file ./config/actors_AB.yaml`
+
+If you have the Thorvald repo (https://github.com/LCAS/Thorvald) installed on your machine you can spawn the Thorvald robot model into the World you just built:
+
 4. `roslaunch rasberry_gazebo thorvald_world_AB.launch`
+
+If you do not then:
+
+5. `roslaunch rasberry_gazebo world_AB.launch`
 
 Note : you can subsitute `models_AB.yaml` and `actors_AB.yaml` in step 3 for your own config files.
 
@@ -36,11 +43,6 @@ following to your bashrc file: `export GAZEBO_MODEL_PATH=~/path_to_rasberry_gaze
 For my machine: `export GAZEBO_MODEL_PATH=~/rasberry_ws/src/RASberry/rasberry_gazebo/models:$GAZEBO_MODEL_PATH`.
 
 You will probably need a mid-range GPU or better to run this simulation properly.
-
-If you have the Thorvald repo (https://github.com/LCAS/Thorvald) installed on your machine you can also spawn Thorvald into the World. 
-I am doing this using the following (possibly outdated) method:
-1. Open a second terminal: `roslaunch thorvald_bringup thorvald_ii_4wd4ws_slim_sim.launch`.
-2. Open a third terminal: `rosrun gazebo_ros spawn_model -urdf -param /robot_description -model thorvald_ii`.
 
 Python package dependencies: argparse, xmltodict, rospkg, numpy, itertools, copy, json, yaml
 
