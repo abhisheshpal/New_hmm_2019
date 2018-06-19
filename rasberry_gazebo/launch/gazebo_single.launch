@@ -12,7 +12,8 @@
   <arg name="simple_sim" default="True" />
 
 
-  <include file="$(find rasberry_gazebo)/launch/polypoles.launch" />
+  <!--include file="$(find rasberry_gazebo)/launch/polypoles.launch" /-->
+  <include file="$(find rasberry_gazebo)/launch/thorvald_world_AB.launch" />
 
 
   <!-- model bringup -->
@@ -39,6 +40,9 @@
   		name="spawner" args="-urdf -param /robot_description -model thorvald_ii">
   </node>
 
+  <node pkg="tf" type="static_transform_publisher" name="odom_to_world" args="0 0 0 0 0 0 odom world 10"/>
+
+  <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 world map 10"/>
 </launch>
 
 
