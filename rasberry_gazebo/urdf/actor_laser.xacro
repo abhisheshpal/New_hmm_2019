@@ -3,9 +3,9 @@
 <robot name="laser" xmlns:xacro="http://www.ros.org/wiki/xacro">
 
   <!-- hokuyo -->
-  <gazebo reference="$(arg tf_prefix)/base_footprint">
+  <gazebo reference="$(arg tf_prefix)/hokuyo">
     <sensor type="ray" name="head_hokuyo_sensor">
-      <pose>0 0 1 0 0 0</pose>
+      <pose>0 0 0 0 0 0</pose>
       <visualize>false</visualize>
       <update_rate>40</update_rate>
       <ray>

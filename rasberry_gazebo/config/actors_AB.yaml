@@ -5,7 +5,7 @@
 # name:                       string: assign a name for the actor
 # animation:                  string: give the actor an animation (see list below)
 # waypoints:                  a set of waypoints that the actors move between
-# - time:                     float: the time (in seconds) it takes for the actoir to get to the waypoint
+# - time:                     float: the time (in seconds) it takes for the actor to get to the waypoint
 # - pose:                     list of floats: the pose the actor assumes at the waypoint
 
 # The following animations are available:
