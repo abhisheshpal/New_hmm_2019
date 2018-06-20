@@ -50,8 +50,8 @@ class Robot(object):
         # update agent_nodes in topo_graph
         self.graph.agent_nodes[self.robot_id] = self.curr_node
 
-        self.process_timeout = 0.001
-        self.loop_timeout = 1.
+        self.process_timeout = 0.10
+        self.loop_timeout = 0.10
 
         self.battery_charge = 100.0
 

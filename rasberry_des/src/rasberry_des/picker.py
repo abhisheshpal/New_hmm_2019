@@ -91,8 +91,8 @@ class Picker(object):
         self.time_spent_loading = 0.
         self.time_spent_working = lambda: self.time_spent_picking + self.time_spent_transportation + self.time_spent_unloading
 
-        self.process_timeout = 0.001
-        self.loop_timeout = 1.
+        self.process_timeout = 0.10
+        self.loop_timeout = 0.10
 
         self.assigned_robot_id = None
         self.continue_picking = True

@@ -18,6 +18,7 @@ import os
 import simpy
 import numpy
 import sys
+import time
 import rospy
 import rasberry_des.farm
 import rasberry_des.picker
@@ -27,8 +28,8 @@ import rasberry_des.robot
 import rasberry_des.topo
 
 RANDOM_SEED = 1111
-SHOW_VIS = True
-SAVE_STATS = False
+SHOW_VIS = False
+SAVE_STATS = True
 SIM_RT_FACTOR = 5.0
 VERBOSE = False
 
@@ -78,7 +79,7 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexicographical"]: #policies:
+            for scheduling_policy in ["uniform_utilisation"]: #policies:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
@@ -185,7 +186,21 @@ if __name__ == "__main__":
                     print n_pickers, n_robots, scheduling_policy, trial, finish_time_ros - start_time_ros
 
                     if SAVE_STATS:
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, rospy.get_time()*1000000), "w")
+                        time_now = time.time()*1000000
+                        # predictions log
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        for picker_id in picker_ids:
+                            print >> f_handle, picker_id
+                            predictions = farm.predictions[picker_id]
+                            for tray in range(1, farm.tray_counts[picker_id] + 1):
+    #                            f_handle.write(predictions[tray])
+                                print >> f_handle, "\t", tray, ":"
+                                for item in predictions[tray]:
+                                    print >> f_handle, "\t\t", item
+                        f_handle.close()
+
+                        # des logs
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         # no ros related calls here to ensure printing even when the pickers_only node is killed
                         # farm details
                         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
@@ -197,7 +212,8 @@ if __name__ == "__main__":
                         print >> f_handle, "n_robots: %d" %(n_robots)
 
                         print >> f_handle, "n_polytunnels: %d" %(topo_graph.n_polytunnels)
-                        print >> f_handle, "n_farm_rows: %d" %(topo_graph.n_farm_rows)
+                        for i in range(topo_graph.n_polytunnels):
+                            print >> f_handle, "n_farm_rows[tunnel-%d]: %d" %(i, topo_graph.n_farm_rows[i])
                         print >> f_handle, "n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
 
                         tot_yield = 0.
