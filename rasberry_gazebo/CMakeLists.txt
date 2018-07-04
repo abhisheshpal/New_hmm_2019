@@ -13,7 +13,15 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
   gazebo_plugins
   geometry_msgs
+  amcl
+  fake_localization
+  map_server
+  move_base
+  razor_imu_9dof
+  robot_localization
+  roscpp
   rospy
+  tf
   std_msgs
 )
 
@@ -186,6 +194,10 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+install(DIRECTORY config launch maps
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 #############
 ## Testing ##
