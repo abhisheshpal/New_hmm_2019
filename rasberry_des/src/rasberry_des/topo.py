@@ -12,6 +12,7 @@ import rospy
 import topological_navigation.tmap_utils
 import topological_navigation.route_search
 import strands_navigation_msgs.msg
+import rasberry_des.config_utils
 
 
 class TopologicalForkGraph(object):
@@ -19,7 +20,7 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_topo_nav_rows, row_ids, _node_yields, local_storages):
+    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, second_head_lane, _node_yields, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
@@ -29,20 +30,44 @@ class TopologicalForkGraph(object):
         n_topo_nav_row -- number of toplogical navigation rows, int
         row_ids -- identifications of the navigation rows, list of size n_topo_nav_rows
         _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
-        local_storages -- simpy.Resource objects, list
         """
         ns = rospy.get_namespace()
-        self.row_ids = row_ids
+        self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
+        self.n_polytunnels = n_polytunnels
+        self.n_farm_rows = n_farm_rows
         self.n_topo_nav_rows = n_topo_nav_rows
-        self.head_nodes = {}        # {row_id:head_node}
+        self.second_head_lane = second_head_lane
+
+        # half_rows: rows requiring picking in one direction
+        self.half_rows = set()
+        if self.n_polytunnels == 0 or self.n_polytunnels == 1:
+            self.half_rows.add(self.row_ids[0])
+            self.half_rows.add(self.row_ids[-1])
+        else:
+            row_num = 0
+            for i in range(self.n_polytunnels):
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += self.n_farm_rows[i]
+                row_id = "row-%02d" %(row_num)
+                self.half_rows.add(row_id)
+                row_num += 1
+
+        self.head_nodes = {}        # {row_id:[pri_head_node, sec_head_node]}
         self.row_nodes = {}         # {row_id:[row_nodes]}
-        # row_info {row_id:[head_node, start_node, end_node, row_node_dist, last_node_dist]}
+        # row_info {row_id:[pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
         self.yield_at_node = {}
         # local storage nodes
         self.local_storages = {}
         self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
+        self.cold_storage = None
+        self.cold_storage_node = None
+
+        self.use_local_storage = True # if False, store at cold storage
+
+        self.verbose = verbose
 
         for i in range(10):
             try:
@@ -51,31 +76,30 @@ class TopologicalForkGraph(object):
                 rospy.logerr(ns + "topological_map topic is not published?")
                 rospy.sleep(0.1)
             else:
-                rospy.loginfo("TopologicalForkGraph object ready")
+                self.loginfo("TopologicalForkGraph object ready")
                 break
 
-        if self.topo_map:
-            self.get_row_info()
-            self.set_node_yields(_node_yields)
-            self.set_local_storages(local_storages)
-            self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
-        else:
-            rospy.ROSException(ns + "topological_map topic not received")
+        if not self.topo_map:
+            raise Exception(ns + "topological_map topic not received")
+
+        if len(self.topo_map.nodes) == 0:
+            raise Exception("No nodes in topo_map. Try relaunching topological_navigation nodes.")
+
+        self.set_row_info()
+        # local storages should be set by calling set_local_storages externally
+        self.set_node_yields(_node_yields)
+        self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
 
     def set_node_yields(self, _node_yields):
-        """set_node_yields: Set the yields at each node from the node yields given for each row / all rows
+        """set_node_yields: Set the yields at each node from the node yields
+        given for each row / all rows
 
         Keyword arguments:
 
-        _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
+        _node_yields -- yields per node distance for each row,
+                            list of size n_topo_nav_rows or 1
         """
-        if _node_yields.__class__ == list:
-            if len(_node_yields) == self.n_topo_nav_rows:
-                node_yield_in_row = {self.row_ids[i]:_node_yields[i] for i in range(self.n_topo_nav_rows)}
-            elif len(_node_yields) == 1:
-                node_yield_in_row = {self.row_ids[i]:_node_yields[0] for i in range(self.n_topo_nav_rows)}
-        else:
-            raise TypeError("_node_yields must be list of length %d or 1" %(self.n_topo_nav_rows))
+        node_yield_in_row = rasberry_des.config_utils.param_list_to_dict("node_yields", _node_yields, self.row_ids)
 
         for row_id in self.row_ids:
             n_row_nodes = len(self.row_nodes[row_id])
@@ -84,43 +108,73 @@ class TopologicalForkGraph(object):
                 node_id = self.row_nodes[row_id][j]
                 # yield from each row node to next row node
                 if j != n_row_nodes - 1:
-                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
+#                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
+                    self.yield_at_node[node_id] = node_yield_in_row[row_id]
                 else:
                     # between the last two nodes, the distance could be smaller than node_dist
-                    row_node_dist = self.row_info[row_id][3]
-                    last_node_dist = self.row_info[row_id][4]
-                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
+                    row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
+                                                                    self.row_nodes[row_id][1])
+                    last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
+                                                                     self.row_nodes[row_id][-1])
+#                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
+                    self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
 
     def set_local_storages(self, local_storages):
-        """set_local_storages: set the local_storage_nodes {row_id:storage_node_id} and
-        local_storages {storage_node_id: simpy.Resource}
+        """set local_storage_nodes and local_storages
 
         Keyword arguments:
 
-        local_storages -- simpy.Resource objects, list
+        local_storages -- simpy.Resource object list
         """
-        n_local_storages = len(local_storages)
+        # reset
+        self.local_storage_nodes = {row_id:None for row_id in self.row_ids}
+        self.local_storages = {}
 
+        n_local_storages = len(local_storages)
+        # set local storage nodes
         storage_row_groups = numpy.array_split(numpy.arange(self.n_topo_nav_rows), n_local_storages)
 
         for i in range(n_local_storages):
             start_row = storage_row_groups[i][0]
             end_row = storage_row_groups[i][-1]
-            storage_row = "hn-%02d" %(start_row + int((end_row - start_row) / 2))
+            storage_row = "pri_hn-%02d" %(start_row + int((end_row - start_row) / 2))
 
             for row in storage_row_groups[i]:
                 self.local_storage_nodes["row-%02d" %(row)] = storage_row
             self.local_storages[storage_row] = local_storages[i]
 
-    def get_row_info(self, ):
-        """get_row_info: Get information about each row
-        {row_id: [head_node, start_node, end_node, node_dist, last_node_dist]}
+        for row_id in self.row_ids:
+            self.row_info[row_id][3] = self.local_storage_nodes[row_id]
+
+    def set_cold_storage(self, cold_storage):
+        """set cold_storage_node and cold_storage
+
+        Keyword arguments:
+
+        cold_storage -- simpy.Resource object
+        """
+        self.cold_storage_node = "cold_storage"
+        self.cold_storage = cold_storage
+        self.use_local_storage = False
+
+    def set_row_info(self, ):
+        """set_row_info: Set information about each row
+        {row_id: [pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
+
+        Also sets
+          head_nodes {row_id:[pri_head_node, sec_head_node]}
+          row_nodes {row_id:[row_nodes]}
         """
         # TODO: meta information is not queried from the db now.
         # The row and head node names are hard coded now
         # An ugly way to sort the nodes is implemented
         # get_nodes in topological_utils.queries might be useful to get nodes with same tag
-        self.head_nodes = {"row-%02d" %(i):"hn-%02d" %(i) for i in range(self.n_topo_nav_rows)}
+        self.head_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
+        for i in range(self.n_topo_nav_rows):
+            self.head_nodes["row-%02d" %(i)].append("pri_hn-%02d" %(i))
+            if self.second_head_lane:
+                self.head_nodes["row-%02d" %(i)].append("sec_hn-%02d" %(i))
+
         self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
 
         for node in self.topo_map.nodes:
@@ -130,26 +184,13 @@ class TopologicalForkGraph(object):
 
         for row_id in self.row_ids:
             self.row_nodes[row_id].sort()
-            n_row_nodes = len(self.row_nodes[row_id])
-            if n_row_nodes > 2:
-                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                self.row_nodes[row_id][1])
-
-                last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
-                                                                 self.row_nodes[row_id][-1])
-            elif n_row_nodes == 2:
-                row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                self.row_nodes[row_id][1])
-
-                last_node_dist = row_node_dist
-            else:
-                row_node_dist = last_node_dist = 0.
-
-            self.row_info[row_id] = [self.head_nodes[row_id],
+            # local_storage_nodes should be modified by calling set_local_storages
+            self.row_info[row_id] = [self.head_nodes[row_id][0],
                                      self.row_nodes[row_id][0],
                                      self.row_nodes[row_id][-1],
-                                     row_node_dist,
-                                     last_node_dist]
+                                     self.local_storage_nodes[row_id]]
+            if self.second_head_lane:
+                self.row_info[row_id].append(self.head_nodes[row_id][1])
 
     def get_path_details(self, start_node, goal_node):
         """get route_nodes, route_edges and route_distance from start_node to goal_node
@@ -208,3 +249,8 @@ class TopologicalForkGraph(object):
         for edge in edges:
             edge_ids.append(edge.edge_id)
         return edge_ids
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)

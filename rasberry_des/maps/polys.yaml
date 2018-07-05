@@ -1,0 +1,7484 @@
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-00_rn-00-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-00_pri_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-01_pri_hn-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-01_rn-01-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-01_pri_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-02_pri_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-02_rn-02-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-02_pri_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-03_pri_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-03_rn-03-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-03_pri_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-04_pri_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-04_rn-04-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-04_pri_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-05_pri_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-05_rn-05-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-05_pri_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-06_pri_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-06_rn-06-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-06_pri_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-07_pri_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-07_rn-07-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-07_pri_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-08_pri_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-08_rn-08-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-08_pri_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-09_pri_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-09_rn-09-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-09_pri_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-10_pri_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-10_rn-10-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-10_pri_hn-11
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-10
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: pri_hn-11_pri_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: pri_hn-11_rn-11-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: pri_hn-11
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 5.5
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-00_pri_hn-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-00_rn-00-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-01_rn-00-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-01_rn-00-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-02_rn-00-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-02_rn-00-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-03_rn-00-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-03_rn-00-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-04_rn-00-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-04_rn-00-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-05_rn-00-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-05_rn-00-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-06_rn-00-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-06_rn-00-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-07_rn-00-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-07_rn-00-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-08_rn-00-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-08_rn-00-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-00-09_rn-00-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-00-09_sec_hn-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-00-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-00_pri_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-00_rn-01-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-01_rn-01-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-01_rn-01-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-02_rn-01-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-02_rn-01-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-03_rn-01-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-03_rn-01-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-04_rn-01-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-04_rn-01-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-05_rn-01-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-05_rn-01-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-06_rn-01-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-06_rn-01-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-07_rn-01-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-07_rn-01-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-08_rn-01-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-08_rn-01-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-01-09_rn-01-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-01-09_sec_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-01-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-00_pri_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-00_rn-02-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-01_rn-02-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-01_rn-02-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-02_rn-02-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-02_rn-02-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-03_rn-02-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-03_rn-02-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-04_rn-02-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-04_rn-02-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-05_rn-02-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-05_rn-02-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-06_rn-02-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-06_rn-02-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-07_rn-02-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-07_rn-02-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-08_rn-02-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-08_rn-02-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-02-09_rn-02-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-02-09_sec_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-02-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-00_pri_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-00_rn-03-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-01_rn-03-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-01_rn-03-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-02_rn-03-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-02_rn-03-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-03_rn-03-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-03_rn-03-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-04_rn-03-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-04_rn-03-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-05_rn-03-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-05_rn-03-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-06_rn-03-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-06_rn-03-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-07_rn-03-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-07_rn-03-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-08_rn-03-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-08_rn-03-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-03-09_rn-03-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-03-09_sec_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-03-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-00_pri_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-00_rn-04-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-01_rn-04-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-01_rn-04-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-02_rn-04-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-02_rn-04-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-03_rn-04-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-03_rn-04-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-04_rn-04-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-04_rn-04-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-05_rn-04-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-05_rn-04-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-06_rn-04-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-06_rn-04-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-07_rn-04-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-07_rn-04-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-08_rn-04-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-08_rn-04-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-04-09_rn-04-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-04-09_sec_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-04-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-00_pri_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-00_rn-05-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-01_rn-05-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-01_rn-05-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-02_rn-05-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-02_rn-05-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-03_rn-05-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-03_rn-05-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-04_rn-05-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-04_rn-05-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-05_rn-05-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-05_rn-05-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-06_rn-05-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-06_rn-05-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-07_rn-05-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-07_rn-05-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-08_rn-05-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-08_rn-05-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-05-09_rn-05-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-05-09_sec_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-05-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-00_pri_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-00_rn-06-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-01_rn-06-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-01_rn-06-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-02_rn-06-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-02_rn-06-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-03_rn-06-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-03_rn-06-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-04_rn-06-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-04_rn-06-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-05_rn-06-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-05_rn-06-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-06_rn-06-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-06_rn-06-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-07_rn-06-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-07_rn-06-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-08_rn-06-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-08_rn-06-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-06-09_rn-06-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-06-09_sec_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-06-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-00_pri_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-00_rn-07-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-01_rn-07-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-01_rn-07-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-02_rn-07-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-02_rn-07-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-03_rn-07-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-03_rn-07-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-04_rn-07-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-04_rn-07-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-05_rn-07-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-05_rn-07-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-06_rn-07-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-06_rn-07-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-07_rn-07-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-07_rn-07-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-08_rn-07-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-08_rn-07-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-07-09_rn-07-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-07-09_sec_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-07-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-00_pri_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-00_rn-08-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-01_rn-08-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-01_rn-08-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-02_rn-08-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-02_rn-08-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-03_rn-08-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-03_rn-08-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-04_rn-08-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-04_rn-08-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-05_rn-08-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-05_rn-08-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-06_rn-08-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-06_rn-08-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-07_rn-08-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-07_rn-08-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-08_rn-08-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-08_rn-08-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-08-09_rn-08-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-08-09_sec_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-08-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-00_pri_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-00_rn-09-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-01_rn-09-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-01_rn-09-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-02_rn-09-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-02_rn-09-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-03_rn-09-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-03_rn-09-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-04_rn-09-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-04_rn-09-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-05_rn-09-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-05_rn-09-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-06_rn-09-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-06_rn-09-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-07_rn-09-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-07_rn-09-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-08_rn-09-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-08_rn-09-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-09-09_rn-09-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-09-09_sec_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-09-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-00_pri_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-00_rn-10-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-01_rn-10-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-01_rn-10-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-02_rn-10-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-02_rn-10-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-03_rn-10-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-03_rn-10-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-04_rn-10-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-04_rn-10-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-05_rn-10-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-05_rn-10-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-06_rn-10-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-06_rn-10-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-07_rn-10-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-07_rn-10-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-08_rn-10-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-08_rn-10-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-10-09_rn-10-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-10-09_sec_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-10-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-00_pri_hn-11
+      inflation_radius: 0.0
+      map_2d: polys
+      node: pri_hn-11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-00_rn-11-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 7.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-01_rn-11-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-01_rn-11-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 10.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-02_rn-11-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-02_rn-11-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 13.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-03_rn-11-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-03_rn-11-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 16.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-04_rn-11-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-04_rn-11-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 19.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-05_rn-11-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-05_rn-11-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 22.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-06_rn-11-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-06_rn-11-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 25.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-07_rn-11-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-07_rn-11-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 28.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-08_rn-11-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-08_rn-11-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 31.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: rn-11-09_rn-11-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: rn-11-09_sec_hn-11
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: rn-11-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 34.0
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-00_rn-00-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-00-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-00_sec_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-00
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-01_sec_hn-00
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-01_rn-01-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-01-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-01_sec_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-01
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-02_sec_hn-01
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-02_rn-02-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-02-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-02_sec_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-02
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-03_sec_hn-02
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-02
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-03_rn-03-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-03-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-03_sec_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-03
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-04_sec_hn-03
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-03
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-04_rn-04-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-04-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-04_sec_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-04
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-05_sec_hn-04
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-04
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-05_rn-05-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-05-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-05_sec_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-05
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: -0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-06_sec_hn-05
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-05
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-06_rn-06-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-06-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-06_sec_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-06
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 0.675
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-07_sec_hn-06
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-06
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-07_rn-07-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-07-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-07_sec_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-07
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 2.025
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-08_sec_hn-07
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-07
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-08_rn-08-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-08-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-08_sec_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-08
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 3.375
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-09_sec_hn-08
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-08
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-09_rn-09-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-09-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-09_sec_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-09
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 4.725
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-10_sec_hn-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-10_rn-10-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-10-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-10_sec_hn-11
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-10
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 6.075
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys
+- - edges:
+    - action: move_base
+      edge_id: sec_hn-11_sec_hn-10
+      inflation_radius: 0.0
+      map_2d: polys
+      node: sec_hn-10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: sec_hn-11_rn-11-09
+      inflation_radius: 0.0
+      map_2d: polys
+      node: rn-11-09
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: polys
+    name: sec_hn-11
+    pointset: polys
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 35.5
+        y: 7.425
+        z: 0.0
+    verts:
+    - x: 0.69
+      y: 0.287
+    - x: 0.287
+      y: 0.69
+    - x: -0.287
+      y: 0.69
+    - x: -0.69
+      y: 0.287
+    - x: -0.69
+      y: -0.287
+    - x: -0.287
+      y: -0.69
+    - x: 0.287
+      y: -0.69
+    - x: 0.69
+      y: -0.287
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+  - map: polys
+    node: rn-09-01
+    pointset: polys

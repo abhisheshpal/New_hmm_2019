@@ -1,0 +1,44 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+  <arg name="world_name" value="$(find rasberry_gazebo)/worlds/thorvald_AB.world"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+
+
+  <!-- Start gazebo and load the world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+
+
+  <!-- FOR THE USER: Spawn your actors here -->
+
+  <!-- First actor -->
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">
+    <arg name="actor_name" value="actor00" />
+    <arg name="start_pose_y" value="2" />
+  </include>
+
+  <!-- Second actor -->
+  <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	
+    <arg name="actor_name" value="actor01" />
+    <arg name="start_pose_x" value="8" />
+    <arg name="start_pose_y" value="4.75" />
+    <arg name="start_pose_z" value="0" />
+    <arg name="start_pose_R" value="0" />
+    <arg name="start_pose_P" value="0" />
+    <arg name="start_pose_Y" value="1.5707" />
+  </include>
+
+</launch>

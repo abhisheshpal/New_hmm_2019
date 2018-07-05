@@ -5,16 +5,17 @@
 # @date:
 # ----------------------------------
 
+import sys
 import rospy
 import rasberry_des.config_utils
 
 
 if __name__ == "__main__":
+    if len(sys.argv) <= 1:
+        raise Exception("Not enough arguments. Pass 'path to configuration file' as an argument.")
+    else:
+        config_file = sys.argv[1]
+
     rospy.init_node("check_des_config_parameters", anonymous=True)
 
-    missing_params = rasberry_des.config_utils.check_des_config()
-
-    if len(missing_params) != 0:
-        rospy.ROSException("Required DES configuration parameters missing")
-    else:
-        rospy.loginfo("All rasberry_des configuration parameters are present")
+    missing_params = rasberry_des.config_utils.check_des_config(config_file)

@@ -1,0 +1,8 @@
+<launch>
+	<!-- declare arg to be passed in -->
+	<arg name="config_file" default="$(find rasberry_des)/config/des_config.yaml"/>
+	<group ns="/">
+		<node pkg="rasberry_des" type="des.py" name="des" args="$(arg config_file)" />
+	</group>
+
+</launch>

@@ -1,0 +1,81 @@
+<?xml version="1.0"?>
+
+<robot name="actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <link name="$(arg tf_prefix)/base_link">
+    <inertial>
+      <pose>0 -0.1 0.95 0 0 0</pose>
+      <mass value="80.0"/>
+      <inertia
+        ixx="0.2085"
+        ixy="0.2385"
+        ixz="0.2385"
+        iyy="0.2385"
+        iyz="0.2385"
+        izz="0.2949"
+              />
+      </inertial>
+  
+
+    <collision name="box">
+      <origin xyz="0 -0.1 0.01" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.5 0.35 0.02"/>
+      </geometry>
+    </collision>
+
+
+    <collision name="person">
+      <origin xyz="0 0 0.02" rpy="0.04 0 0"/>
+      <geometry>
+        <mesh filename="model://person_standing/meshes/standing.dae"/>
+      </geometry>
+    </collision>
+
+
+    <visual name="visual">
+      <origin xyz="0 0 0.02" rpy="0.04 0 1.54"/>
+      <geometry>
+        <mesh filename="model://person_standing/meshes/standing.dae"/>
+      </geometry>
+    </visual>
+  </link>
+
+
+  <link name="$(arg tf_prefix)/base_footprint"/>
+
+  <link name="$(arg tf_prefix)/hokuyo"/>
+
+  <joint name="base_link_to_hokuyo" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/hokuyo"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 1" rpy="0 0 0"/>
+  </joint>
+
+
+  <!-- For odometry -->
+  <joint name="$(arg tf_prefix)/base_footprint_fixed" type="fixed">
+    <origin xyz="0 0 0.09" rpy="0 0 0"/>
+    <parent link="$(arg tf_prefix)/base_footprint"/>
+    <child  link="$(arg tf_prefix)/base_link"/>
+  </joint>
+
+
+  <gazebo reference="$(arg tf_prefix)/base_link">
+    <selfCollide>false</selfCollide>
+  </gazebo>
+
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>$(arg tf_prefix)/odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>$(arg tf_prefix)/base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+
+</robot>
