@@ -7081,7 +7081,7 @@
 					</material>
 					<cast_shadows>1</cast_shadows>
 				</visual>
-				<pose frame="">-8.900 -1.160 0.01 0.0 0.0 0.0</pose>
+				<pose frame="">-8.900 -1.160 -0.0 0.0 0.0 0.0</pose>
 			</link>
 		</model>
 		<include>
@@ -7098,26 +7098,5 @@
 				</clouds>
 			</sky>
 		</scene>
-		<actor name="actor_00">
-			<script>
-				<trajectory id="0" type="walking">
-					<waypoint>
-						<pose>5 -2.025 0 0 0 0</pose>
-						<time>0</time>
-					</waypoint>
-					<waypoint>
-						<pose>25 -2.025 0 0 0 0</pose>
-						<time>10</time>
-					</waypoint>
-				</trajectory>
-			</script>
-			<animation name="walking">
-				<interpolate_x>true</interpolate_x>
-				<filename>walk.dae</filename>
-			</animation>
-			<skin>
-				<filename>moonwalk.dae</filename>
-			</skin>
-		</actor>
 	</world>
 </sdf>
