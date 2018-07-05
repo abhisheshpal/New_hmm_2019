@@ -7081,7 +7081,7 @@
 					</material>
 					<cast_shadows>1</cast_shadows>
 				</visual>
-				<pose frame="">-8.900 -1.160 0.01 0.0 0.0 0.0</pose>
+				<pose frame="">-8.900 -1.160 -0.0 0.0 0.0 0.0</pose>
 			</link>
 		</model>
 		<include>

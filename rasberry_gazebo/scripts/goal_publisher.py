@@ -33,15 +33,26 @@ def get_transform(q, frame1, frame2):
 #####################################################################################
 # Send move_base_simple/goal topics - working :)
 
+x = -12
+y = 0
+R = 0
+P = 0
+Y = -1.57
+
+print_transform = False
+#####################################################################################
+
+
+#####################################################################################
 rospy.init_node("goal_publisher")   
 simple_goal = geometry_msgs.msg.PoseStamped()
 pub = rospy.Publisher("/move_base_simple/goal", geometry_msgs.msg.PoseStamped, queue_size=10)
  
 for i in range(3):
     simple_goal.header.frame_id = "world"
-    simple_goal.pose.position.x = 20
-    simple_goal.pose.position.y = 2.025
-    quat = tf.transformations.quaternion_from_euler(0,0,0.0)
+    simple_goal.pose.position.x = x
+    simple_goal.pose.position.y = y
+    quat = tf.transformations.quaternion_from_euler(R,P,Y)
     simple_goal.pose.orientation.x = quat[0]
     simple_goal.pose.orientation.y = quat[1]
     simple_goal.pose.orientation.z = quat[2]
@@ -53,12 +64,12 @@ for i in range(3):
 
 
 ##################################################################################### 
-q = tf.TransformListener()
-rospy.sleep(2)
-
-get_transform(q, "/map", "/actor00/hokuyo")
-get_transform(q, "/actor00/odom", "/actor00/hokuyo")
-get_transform(q, "/world", "/actor00/hokuyo")
+if print_transform:
+    rospy.sleep(2)
+    q = tf.TransformListener()
+    get_transform(q, "/map", "/actor00/hokuyo")
+    get_transform(q, "/actor00/odom", "/actor00/hokuyo")
+    get_transform(q, "/world", "/actor00/hokuyo")
 ####################################################################################
 
 
