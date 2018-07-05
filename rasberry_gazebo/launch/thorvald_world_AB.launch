@@ -61,11 +61,11 @@
 
   <!-- SPAWN YOUR ACTORS HERE -->
 
-  <!-- First actor -->
+  <!-- First actor
   <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">
     <arg name="actor_name" value="actor00" />
     <arg name="start_pose_y" value="2" />
-  </include>
+  </include>  -->
 
   <!-- Second actor -->
   <!--include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	

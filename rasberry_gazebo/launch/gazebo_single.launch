@@ -1,16 +1,37 @@
 <?xml version="1.0" ?>
 
 <launch>
-
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
-  <arg name="world" default="enclosure" />
 
-  <!-- <arg name="robot_model_conf" default="$(find thorvald_model)/config/thorvald_ii_4wd4ws_std/thorvald_ii_4wd4ws_std.yaml" /> -->
-
+  <arg name="world_name" value="thorvald_AB"/> 
+  <!-- <arg name="world" default="enclosure" /> -->
+  
   <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
 
   <arg name="simple_sim" default="True" />
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+
+
+
+
+  <!-- Start gazebo and load the world -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="gui" value="$(arg gui)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="debug" value="$(arg debug)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+    <arg name="world_name" value="$(find rasberry_gazebo)/worlds/$(arg world_name).world"/>
+  </include>
+
+
 
 
   <!--include file="$(find rasberry_gazebo)/launch/polypoles.launch" /-->
