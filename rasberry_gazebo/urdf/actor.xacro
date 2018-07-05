@@ -1,8 +1,141 @@
 <?xml version="1.0"?>
 
-<robot name="actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="actor">
+  
+  <xacro:arg name="robot_name" default=""/>
+  <xacro:arg name="tf_prefix" default=""/>
 
-  <xacro:include filename="$(find rasberry_gazebo)/urdf/actor_model.xacro"/>
-  <xacro:include filename="$(find rasberry_gazebo)/urdf/actor_laser.xacro"/>
+
+
+
+<!-- PLUGINS -->
+
+<gazebo>
+  <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+    <alwaysOn>true</alwaysOn>
+    <updateRate>20</updateRate>
+    <robotNamespace>$(arg robot_name)</robotNamespace>
+    <commandTopic>cmd_vel</commandTopic>
+    <odometryTopic>odom</odometryTopic>
+    <odometryFrame>$(arg tf_prefix)/odom</odometryFrame>
+    <odometryRate>20</odometryRate>
+    <robotBaseFrame>$(arg tf_prefix)/base_footprint</robotBaseFrame>
+  </plugin>
+</gazebo>
+
+
+
+
+<!-- CREATE LINKS -->
+
+<link name="$(arg tf_prefix)/base_footprint"/>
+
+
+<link name="$(arg tf_prefix)/base_link">
+  <inertial>
+    <pose>0 -0.1 0.95 0 0 0</pose>
+    <mass value="80.0"/>
+    <inertia
+      ixx="0.2085"
+      ixy="0.2385"
+      ixz="0.2385"
+      iyy="0.2385"
+      iyz="0.2385"
+      izz="0.2949"
+            />
+  </inertial>
+  
+  <collision name="box">
+    <origin xyz="0 -0.1 0.01" rpy="0 0 0"/>
+    <geometry>
+      <box size="0.5 0.35 0.02"/>
+    </geometry>
+  </collision>
+
+  <collision name="person">
+    <origin xyz="0 0 0.02" rpy="0.04 0 0"/>
+    <geometry>
+      <mesh filename="model://person_standing/meshes/standing.dae"/>
+    </geometry>
+  </collision>
+
+  <visual name="visual">
+    <origin xyz="0 0 0.02" rpy="0.04 0 1.54"/>
+    <geometry>
+      <mesh filename="model://person_standing/meshes/standing.dae"/>
+    </geometry>
+  </visual>
+</link>
+
+<gazebo reference="$(arg tf_prefix)/base_link">
+  <selfCollide>false</selfCollide>
+</gazebo>
+
+
+<link name="$(arg tf_prefix)/hokuyo"/>
+
+
+
+
+<!-- CREATE JOINTS -->
+
+<!-- For odometry -->
+<joint name="$(arg tf_prefix)/base_footprint_to_base_link" type="fixed">
+  <parent link="$(arg tf_prefix)/base_footprint"/>
+  <child  link="$(arg tf_prefix)/base_link"/>
+  <origin xyz="0 0 0.09" rpy="0 0 0"/>
+</joint>
+
+
+<joint name="$(arg tf_prefix)/base_link_to_hokuyo" type="fixed">
+  <parent link="$(arg tf_prefix)/base_link"/>
+  <child link="$(arg tf_prefix)/hokuyo"/>
+  <axis xyz="0 1 0" />
+  <origin xyz="0 0 1" rpy="0 0 0"/>
+</joint>
+
+
+
+
+<!-- CREATE SENSORS -->
+
+  <gazebo reference="$(arg tf_prefix)/hokuyo">
+      <sensor name="head_hokuyo_sensor" type="ray">
+      <pose>0.1 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <always_on>1</always_on>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.5</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+        <plugin name="hokuyo_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <!--frameName>$(arg tf_prefix)/hokuyo</frameName-->
+        <frameName>hokuyo</frameName>
+        </plugin>
+    </sensor>
+  </gazebo>
+
 
 </robot>
