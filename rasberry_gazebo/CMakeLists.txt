@@ -5,11 +5,14 @@ project(rasberry_gazebo)
 # add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  thorvald_gazebo_plugins
-  thorvald_model
+  gazebo
   gazebo_ros
   gazebo_plugins
   geometry_msgs
+  rospy
+  std_msgs
+  thorvald_gazebo_plugins
+  thorvald_model
   amcl
   fake_localization
   map_server
@@ -17,9 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   razor_imu_9dof
   robot_localization
   roscpp
-  rospy
   tf
-  std_msgs
 )
 
 ## System dependencies are found with CMake's conventions
