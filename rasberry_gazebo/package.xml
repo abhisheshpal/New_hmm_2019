@@ -22,11 +22,12 @@
   <!-- <url type="website">http://wiki.ros.org/rasberry_gazebo</url> -->
 
 
-  <!-- Author tags are optional, multiple are allowed, one per tag -->
-  <!-- Authors do not have to be maintainers, but could be -->
-  <!-- Example: -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="marc@hanheide.net">Marc Hanheide</author>
+  <author email="adambinch@gmail.com">Adam Binch</author>
+  <author email="jpulidofentanes@lincoln.ac.uk">Jaime Pulido Fentanes</author>
+  
 
+  <buildtool_depend>catkin</buildtool_depend>
 
   <!-- The *depend tags are used to specify dependencies -->
   <!-- Dependencies can be catkin packages or system dependencies -->
