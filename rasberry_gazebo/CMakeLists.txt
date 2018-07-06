@@ -5,7 +5,6 @@ project(rasberry_gazebo)
 # add_compile_options(-std=c++11)
 
 find_package(catkin REQUIRED COMPONENTS
-  gazebo
   gazebo_ros
   gazebo_plugins
   geometry_msgs
