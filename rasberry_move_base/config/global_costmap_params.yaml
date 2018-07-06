@@ -1,9 +1,9 @@
 global_costmap:
-  global_frame: world
-#  robot_base_frame: base_link
   update_frequency: 5.0
+  publish_frequency: 0.5
+  rolling_window: false
   static_map: true
-  robot_base_frame: actor00/base_link
-#  obstacle_layer:
-#    laser_scan_sensor:
-#      sensor_frame: actor00/hokuyo
+  plugins:  
+    - {name: map_layer, type: "costmap_2d::StaticLayer"}
+    - {name: obstacle_layer, type: "costmap_2d::VoxelLayer"}
+    - {name: global_inflation_layer, type: "costmap_2d::InflationLayer"}
