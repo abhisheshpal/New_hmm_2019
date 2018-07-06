@@ -14,27 +14,16 @@
 
   <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map world 10" />
 
-<!-- this worked!!! >
-  <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
-      <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-      <rosparam file="$(find rasberry_gazebo)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-      <rosparam file="$(find rasberry_gazebo)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-      <rosparam file="$(find rasberry_gazebo)/config/local_costmap_params.yaml" command="load" />
-      <rosparam file="$(find rasberry_gazebo)/config/global_costmap_params.yaml" command="load" />
-      <rosparam file="$(find rasberry_gazebo)/config/base_local_planner_params.yaml" command="load" />
-      <remap from="cmd_vel" to="actor00/cmd_vel"/>
-      <remap from="scan" to="actor00/scan"/>
-    </node>
--->
+
 
 <group ns="actor00">
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
       <param name="base_local_planner" value="dwa_local_planner/DWAPlannerROS" />
-      <rosparam file="$(find rasberry_gazebo)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
-      <rosparam file="$(find rasberry_gazebo)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
-      <rosparam file="$(find rasberry_gazebo)/config/local_costmap_params.yaml" command="load" />
-      <rosparam file="$(find rasberry_gazebo)/config/global_costmap_params.yaml" command="load" />
-      <rosparam file="$(find rasberry_gazebo)/config/base_local_planner_params.yaml" command="load" />
+      <rosparam file="$(find rasberry_actors)/config/costmap_common_params.yaml" command="load" ns="global_costmap" />
+      <rosparam file="$(find rasberry_actors)/config/costmap_common_params.yaml" command="load" ns="local_costmap" />
+      <rosparam file="$(find rasberry_actors)/config/local_costmap_params.yaml" command="load" />
+      <rosparam file="$(find rasberry_actors)/config/global_costmap_params.yaml" command="load" />
+      <rosparam file="$(find rasberry_actors)/config/base_local_planner_params.yaml" command="load" />
 
       <remap from="cmd_vel" to="cmd_vel"/>
       <remap from="scan" to="scan"/>

@@ -13,10 +13,10 @@
 # arch_xoffset                float: sets the position of the arches along the x-axis (meters)
 
 # note: if you don't want the polytunnel to have a canopy set arch_nx: 0
-# note: if you change the world name you will also have to change it in the launch file ../launch/thorvald_world_AB.launch (or make another launch file).
+# note: if you change the world name you will also have to change it in the launch file ../launch/world.launch (or make another launch file).
 
 
-- world_name: 'thorvald_AB.world'     
+- world_name: 'riseholme.world'     
 
 - polytunnel:
   - include: 1     # polytunnel 1

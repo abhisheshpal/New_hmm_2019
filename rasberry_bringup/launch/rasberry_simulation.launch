@@ -5,7 +5,7 @@
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
   <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
-  <arg name="with_actors" value="false"/> <!-- Include actors in the Gazebo world? -->
+  <arg name="with_actors" default="false"/> <!-- Include actors in the Gazebo world? -->
 
 
 
