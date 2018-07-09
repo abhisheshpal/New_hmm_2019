@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="map"/>
+
+    <!-- This can be pointed to a yaml file of parameters to load in the
+         movebase node so that each site can set the optimal parameters for
+         their environment, since there doesn't seem to be one true parameterset.
+    -->
+
+
+    <!-- lanch map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+
+
+    <!-- launch AMCL -->
+    <include file="$(find rasberry_move_base)/launch/amcl.launch" />
+
+
+
+    <!-- But when there is a chest_xtion, we first need to launch all the chest_xtion obstacle-avoiding
+         stuff on the pc the chest_xtion is connected to, as well as our own move_base. -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+        <remap from="/cmd_vel" to="/nav_vel"/>
+        <rosparam file="$(find rasberry_move_base)/config/move_base_params.yaml" command="load"/>
+        <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+        <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+        <rosparam file="$(find rasberry_move_base)/config/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find rasberry_move_base)/config/global_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find rasberry_move_base)/config/dwa_planner_ros.yaml" command="load"/>
+	    <rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
+	</node>
+
+    
+</launch>
