@@ -20,6 +20,7 @@
     <!-- But when there is a chest_xtion, we first need to launch all the chest_xtion obstacle-avoiding
          stuff on the pc the chest_xtion is connected to, as well as our own move_base. -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
+        <remap from="/cmd_vel" to="/nav_vel"/>
         <rosparam file="$(find rasberry_move_base)/config/move_base_params.yaml" command="load"/>
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
