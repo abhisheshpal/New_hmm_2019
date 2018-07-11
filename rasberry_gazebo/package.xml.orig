@@ -64,6 +64,23 @@
   <exec_depend>gazebo_ros</exec_depend>
   <exec_depend>gazebo_plugins</exec_depend>
   <exec_depend>rospy</exec_depend>
+<<<<<<< HEAD
+=======
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>thorvald_gazebo_plugins</exec_depend>
+  <exec_depend>thorvald_base</exec_depend>
+  <exec_depend>thorvald_model</exec_depend>
+  <exec_depend>thorvald_twist_mux</exec_depend>
+  <exec_depend>thorvald_teleop</exec_depend>
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>fake_localization</exec_depend>
+  <exec_depend>map_server</exec_depend>
+  <exec_depend>move_base</exec_depend>
+  <exec_depend>razor_imu_9dof</exec_depend>
+  <exec_depend>robot_localization</exec_depend>
+  <exec_depend>roscpp</exec_depend>
+  <exec_depend>tf</exec_depend>
+>>>>>>> 7ff28a77443b81e4ce9e37a454d67a7503d0db2e
 
 
   <!-- The export tag contains other, unspecified, tags -->
