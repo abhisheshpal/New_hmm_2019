@@ -2,8 +2,10 @@
 <launch>
   <master auto="start"/>
 
+  <arg name="map" default="$(find rasberry_actors)/maps/empty.yaml"/>
+
   <!-- Run the map server -->
-  <node name="map_server" pkg="map_server" type="map_server" args="$(find rasberry_gazebo)/maps/empty.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
 
   <node name="fake_localization" pkg="fake_localization" type="fake_localization">
     <remap from="base_pose_ground_truth" to="odometry/filtered/local" />    <!-- actors have perfect localization so prob dont need this -->
@@ -13,8 +15,6 @@
   <include file="$(find amcl)/examples/amcl_diff.launch" /-->
 
   <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 map world 10" />
-
-
 
 <group ns="actor00">
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen">
