@@ -5,12 +5,12 @@
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
   <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
-  <arg name="with_actors" value="false"/> <!-- Include actors in the Gazebo world? -->
+  <arg name="with_actors" default="true"/> <!-- Include actors in the Gazebo world? -->
 
 
 
   <!-- Gazebo arguments -->
-  <arg name="world_name" value="thorvald_AB"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+  <arg name="world_name" value="riseholme"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
   <arg name="simple_sim" default="True" />
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
@@ -47,7 +47,7 @@
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii"/>
 
-  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
+  <include file="$(find rasberry_actors)/launch/include_actors.launch" if="$(arg with_actors)"/>
 
 
 
