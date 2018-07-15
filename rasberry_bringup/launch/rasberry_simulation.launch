@@ -2,6 +2,13 @@
 <launch>
 
   <!-- Robot model arguments.  -->
+  <arg name="start_pose_x" value="0" />
+  <arg name="start_pose_y" value="2" />
+  <arg name="start_pose_z" value="0" />
+  <arg name="start_pose_R" value="0" />
+  <arg name="start_pose_P" value="0" />
+  <arg name="start_pose_Y" value="0" />
+
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
   <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
@@ -45,7 +52,7 @@
     <arg name="simple_sim" value="True" />
   </include>
 
-  <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii"/>
+  <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)"/>
 
   <include file="$(find rasberry_actors)/launch/include_actors.launch" if="$(arg with_actors)"/>
 
@@ -58,8 +65,9 @@
 
 
   <!-- tf -->
-  <node pkg="tf" type="static_transform_publisher" name="odom_to_world" args="0 0 0 0 0 0 odom world 10"/>
-  <node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 world map 10"/>
+  <!--node pkg="tf" type="static_transform_publisher" name="odom_to_world" args="0 0 0 0 0 0 odom world 10"/-->
+  <!--node pkg="tf" type="static_transform_publisher" name="world_to_map" args="0 0 0 0 0 0 world map 10"/-->
+  <!--node pkg="tf" type="static_transform_publisher" name="map_to_odom" args="0 0 0 0 0 0 map odom 10"/-->
 
 </launch>
 
