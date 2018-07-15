@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
 
-	<node pkg="amcl" type="amcl" name="amcl" output="screen">
+  <node pkg="amcl" type="amcl" name="amcl" output="screen">
 
 	      <!-- see param description on http://www.ros.org/wiki/amcl -->     
 
@@ -44,4 +44,7 @@
         <param name="use_map_topic" value="true"/>
 
 	</node>
+
+  <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true"/>
+
 </launch>
