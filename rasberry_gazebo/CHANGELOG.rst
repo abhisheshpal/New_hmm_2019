@@ -2,8 +2,8 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2018-07-16)
+------------------
 * Added more Local Planners -> check description
   *EBand Local Planner
   -Launch file: "move_base_eband.launch"

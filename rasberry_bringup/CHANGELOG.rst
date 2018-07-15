@@ -2,8 +2,8 @@
 Changelog for package rasberry_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.3 (2018-07-16)
+------------------
 * equal versions
 * Can specify starting pose in rasberry_bringup/launch/rasberry_simulation.launch
 * should work now ...
