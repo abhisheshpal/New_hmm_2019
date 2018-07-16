@@ -6,11 +6,14 @@
   <!-- First actor -->
   <include file="$(find rasberry_actors)/launch/spawn_actor.launch">
     <arg name="actor_name" value="actor00" />
-    <arg name="start_pose_y" value="2" />
+    <arg name="start_pose_x" value="0" />
+    <arg name="start_pose_y" value="2.025" />
+    <arg name="start_pose_Y" value="0" />
   </include>
 
   <!-- Second actor -->
-  <!--include file="$(find rasberry_actors)/launch/spawn_actor.launch">	
+
+  <include file="$(find rasberry_actors)/launch/spawn_actor.launch">	
     <arg name="actor_name" value="actor01" />
     <arg name="start_pose_x" value="8" />
     <arg name="start_pose_y" value="4.75" />
@@ -18,7 +21,7 @@
     <arg name="start_pose_R" value="0" />
     <arg name="start_pose_P" value="0" />
     <arg name="start_pose_Y" value="1.5707" />
-  </include-->
+  </include>
 
 </launch>
 
