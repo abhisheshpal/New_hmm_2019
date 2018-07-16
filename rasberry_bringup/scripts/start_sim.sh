@@ -9,6 +9,7 @@ tmux new-window -t $SESSION:1 -n 'mongo'
 tmux new-window -t $SESSION:2 -n 'simulation'
 tmux new-window -t $SESSION:3 -n 'move_base'
 tmux new-window -t $SESSION:4 -n 'navigation'
+tmux new-window -t $SESSION:5 -n 'rviz'
 
 tmux select-window -t $SESSION:0
 tmux split-window -v
@@ -29,6 +30,9 @@ tmux send-keys "DISPLAY=:0 roslaunch rasberry_move_base move_base_teb.launch map
 
 tmux select-window -t $SESSION:4
 tmux send-keys "DISPLAY=:0 roslaunch topological_navigation topological_navigation.launch map:=polys move_base_reconf_service:=TebLocalPlannerROS"
+
+tmux select-window -t $SESSION:5
+tmux send-keys "DISPLAY=:0  rosrun rviz rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz"
 
 # Set default window
 tmux select-window -t $SESSION:0
