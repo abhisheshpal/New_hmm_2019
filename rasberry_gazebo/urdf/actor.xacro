@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-
-<robot name="actor" xmlns:xacro="http://www.ros.org/wiki/xacro">
-
-  <xacro:include filename="$(find rasberry_gazebo)/urdf/actor_model.xacro"/>
-  <xacro:include filename="$(find rasberry_gazebo)/urdf/actor_laser.xacro"/>
-
-</robot>

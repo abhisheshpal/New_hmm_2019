@@ -2,6 +2,52 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2018-07-16)
+------------------
+* Added more Local Planners -> check description
+  *EBand Local Planner
+  -Launch file: "move_base_eband.launch"
+  -Parameters under directory "rasberry_move_base/config/eband/"
+  *Teb Local Planner
+  -Launch file: "move_base_teb.launch"
+  -Parameters under directory "rasberry_move_base/config/teb/"
+  *DWA Local Planner
+  -Launch file: "move_base_dwa.launch"
+  -Parameters under directory "rasberry_move_base/config/dwa/"
+* Seperated the gazebo world with polytunnels and actor spawning into seperate packages (rasberry_gazebo and actor_gazebo, respectively).
+  There is also a rasberry_bringup package that launches everything together
+* Merge branch 'master' of https://github.com/jailander/RASberry
+  # Conflicts:
+  #	rasberry_gazebo/package.xml
+* removing unnecessary stuff
+* rasberry_move_base config files
+* Merge branch 'master' of https://github.com/adambinch/RASberry
+* Merge branch 'master' of https://github.com/adambinch/RASberry
+* Added a new launch file 'gazebo_single_AB.launch'.
+  This provides a switch to turn actors on or off and also launches
+  the teleop_xbox nodes so that Thorvald can be controlled with the
+  xbox controller. Note that actors are now specified in another
+  new launch file 'include_actors.launch'
+* adding rasberry_move_base_package
+* gazebo dependency removed from cmakelists and package.xml
+* Merge branch 'master' of https://github.com/adambinch/RASberry
+* All packages found in cmakelists are now included in package.xml
+* Merge branch 'master' of https://github.com/adambinch/RASberry
+  # Conflicts:
+  #	rasberry_gazebo/package.xml
+* More changes for testing ...
+* Merge branch 'master' of https://github.com/adambinch/RASberry
+* Merge branch 'master' of https://github.com/LCAS/RASberry
+  # Conflicts:
+  #	rasberry_gazebo/launch/gazebo_single.launch
+* Some changes for Jaime to check.
+* The type 2 actor's laser scanner is now included in the tf tree.
+  The launch file 'thorvald_world_AB.launch' now launches the Thorvald robot model into the gazebo world.
+  The README.md has been adjusted to reflect these changes.
+* making enclosure world default environment for now
+* adding world and navigation maps
+* Contributors: Jaime Pulido Fentanes, Johnmenex, adambinch
+
 0.0.2 (2018-05-21)
 ------------------
 * Merge pull request `#51 <https://github.com/LCAS/RASberry/issues/51>`_ from adambinch/master (RT Factor improvements and TF tree fixes for multi actors)

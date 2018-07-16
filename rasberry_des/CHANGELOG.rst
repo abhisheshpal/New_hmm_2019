@@ -2,6 +2,9 @@
 Changelog for package rasberry_des
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.3 (2018-07-16)
+------------------
+
 0.0.2 (2018-05-21)
 ------------------
 * Merge pull request `#50 <https://github.com/LCAS/RASberry/issues/50>`_ from gpdas/master (Secondary head lane & Config file format changes)

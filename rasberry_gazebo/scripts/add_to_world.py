@@ -198,7 +198,7 @@ class AddtoWorld(object):
     def add_fhs_floor(self, fhs_floor_d, pose, j=0):
         cpy= fhs_floor_d['sdf']['model']
         cpy['@name'] = u'fhs_floor_' + str(j)
-        posstr= str("%.3f %.3f 0.01 0.0 0.0 0.0"%(pose[0], pose[1]))
+        posstr= str("%.3f %.3f -0.001 0.0 0.0 0.0"%(pose[0], pose[1]))
         cpy['link']['pose']['#text'] = posstr
         self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))
         
