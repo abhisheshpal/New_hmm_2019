@@ -54,14 +54,14 @@ n_farm_rows:
   value: [5, 8]
 head_row_node_dist:
   func: copy
-  value [5.0]
+  value: [5.0]
 x_offset:
   func: copy
-  value [6.0]
+  value: [6.0]
 y_offset: 0.
 row_node_dist:
   func: copy
-  value [2.0, 3.0]
+  value: [2.0, 3.0]
 row_length:
   func: copy
   value: [10.0, 12.0]

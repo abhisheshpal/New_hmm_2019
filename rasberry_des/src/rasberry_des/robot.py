@@ -5,7 +5,9 @@
 # @date:
 # ----------------------------------
 
+import random
 import rospy
+
 
 class Robot(object):
     """Robot class definition"""
@@ -15,6 +17,7 @@ class Robot(object):
         self.env = env
         self.graph = topo_graph
         self.transportation_rate = transportation_rate
+        self.transportation_rate_std = 0.02 * self.transportation_rate
         self.max_n_trays = max_n_trays
         self.n_empty_trays = self.max_n_trays
         self.n_full_trays = 0
@@ -216,7 +219,9 @@ class Robot(object):
                 break
 
             edge_distance = route_distance[i]
-            travel_time = edge_distance / self.transportation_rate
+#            travel_time = edge_distance / self.transportation_rate
+            # adding Gaussian white noise to introduce variations
+            travel_time = edge_distance / (self.transportation_rate + random.gauss(0, self.transportation_rate_std))
 
             # travel the node distance
             yield self.env.timeout(travel_time)

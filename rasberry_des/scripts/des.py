@@ -77,7 +77,7 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexographical", "shortest_distance", "utilise_all"]:
+            for scheduling_policy in ["lexicographical", "shortest_distance", "uniform_utilisation"]:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
