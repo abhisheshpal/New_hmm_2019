@@ -2,6 +2,12 @@
 Changelog for package rasberry_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2018-07-18)
+------------------
+
+0.0.3 (2018-07-16)
+------------------
+
 0.0.2 (2018-05-21)
 ------------------
 * Merge branch 'master' of https://github.com/LCAS/RASberry
