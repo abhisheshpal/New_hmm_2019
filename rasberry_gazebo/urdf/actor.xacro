@@ -92,15 +92,15 @@
   <parent link="$(arg tf_prefix)/base_link"/>
   <child link="$(arg tf_prefix)/hokuyo"/>
   <axis xyz="0 1 0" />
-  <origin xyz="0 0 1" rpy="0 0 0"/>
+  <origin xyz="0 0 0.6" rpy="0 0 0"/>
 </joint>
 
 
 <!-- CREATE SENSORS -->
 
 <gazebo reference="$(arg tf_prefix)/hokuyo">
-  <sensor name="$(arg actor_name)_hokuyo_sensor" type="ray">
-    <pose>0.1 0 0 0 0 0</pose>
+  <sensor name="$(arg actor_name)_hokuyo_sensor" type="gpu_ray">
+    <pose>0 0 0 0 0 0</pose>
     <visualize>true</visualize>
     <update_rate>40</update_rate>
     <always_on>1</always_on>
@@ -124,7 +124,7 @@
         <stddev>0.01</stddev>
       </noise>
     </ray>
-    <plugin name="$(arg actor_name)_hokuyo_node" filename="libgazebo_ros_laser.so">
+    <plugin name="$(arg actor_name)_hokuyo_node" filename="libgazebo_ros_gpu_laser.so">
       <topicName>scan</topicName>
       <frameName>hokuyo</frameName>
     </plugin>

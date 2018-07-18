@@ -9,7 +9,7 @@ import rospy
 import move_base_msgs.msg
 import geometry_msgs.msg
 import sensor_msgs.msg
-import tf
+import tf, numpy as np
 import actionlib
 
 
@@ -33,11 +33,12 @@ def get_transform(q, frame1, frame2):
 #####################################################################################
 # Send move_base_simple/goal topics - working :)
 
-x = -12
-y = 0
-R = 0
-P = 0
-Y = -1.57
+xs = [8, 0, 8, 0, 8, 0, 8, 0, 8, 0]
+ys = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Rs = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+Ps = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+#Ys = [1.57, -1.57, 1.57, -1.57, 1.57, -1.57, 1.57, -1.57, 1.57, -1.57]
+Ys = np.zeros(10)
 
 print_transform = False
 #####################################################################################
@@ -46,20 +47,31 @@ print_transform = False
 #####################################################################################
 rospy.init_node("goal_publisher")   
 simple_goal = geometry_msgs.msg.PoseStamped()
-pub = rospy.Publisher("/move_base_simple/goal", geometry_msgs.msg.PoseStamped, queue_size=10)
- 
-for i in range(3):
-    simple_goal.header.frame_id = "world"
-    simple_goal.pose.position.x = x
-    simple_goal.pose.position.y = y
-    quat = tf.transformations.quaternion_from_euler(R,P,Y)
-    simple_goal.pose.orientation.x = quat[0]
-    simple_goal.pose.orientation.y = quat[1]
-    simple_goal.pose.orientation.z = quat[2]
-    simple_goal.pose.orientation.w = quat[3]
-     
-    pub.publish(simple_goal)
-    rospy.sleep(1)
+pub = rospy.Publisher("/actor00/move_base_simple/goal", geometry_msgs.msg.PoseStamped, queue_size=10)
+
+for i in range(len(xs)):
+    
+    x = xs[i]
+    y = ys[i]
+    R = Rs[i]
+    P = Ps[i]
+    Y = Ys[i]
+    
+    if i > 0:
+        rospy.sleep(12)
+        
+    for j in range(3):
+        simple_goal.header.frame_id = "/actor00/base_link"
+        simple_goal.pose.position.x = x
+        simple_goal.pose.position.y = y
+        quat = tf.transformations.quaternion_from_euler(R,P,Y)
+        simple_goal.pose.orientation.x = quat[0]
+        simple_goal.pose.orientation.y = quat[1]
+        simple_goal.pose.orientation.z = quat[2]
+        simple_goal.pose.orientation.w = quat[3]
+         
+        pub.publish(simple_goal)
+        rospy.sleep(1)
 #####################################################################################
 
 

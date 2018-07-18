@@ -7,10 +7,8 @@
   <arg name="with_no_go_map" default="true"/>
   <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/riseholme_sim_no_go.yaml"/>
 
+
     <!--MOVE BASE-->
-    <!--arg name="map"/-->
-
-
     <group ns="$(arg actor_name)">
 
       <!--lanch map server-->
@@ -30,7 +28,7 @@
 
 
       <!-- launch AMCL -->
-      <include file="$(find rasberry_actors)/launch/amcl.launch">
+      <include file="$(find rasberry_gazebo)/launch/amcl.launch">
         <arg name= "tf_prefix" value="$(arg tf_prefix)" />
       </include>
 
@@ -43,15 +41,15 @@
           <!--Local planner-->
           <!--param name="controller_frequency" value="10.0"/>
           <param name="planner_frequency" value="0.5"/-->
-          <rosparam file="$(find rasberry_actors)/config/teb/teb_planner_ros.yaml" command="load"/>
-          <rosparam file="$(find rasberry_actors)/config/teb/teb_move_base_params.yaml" command="load"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/teb/teb_planner_ros.yaml" command="load"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/teb/teb_move_base_params.yaml" command="load"/>
 
-          <rosparam file="$(find rasberry_actors)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
-          <rosparam file="$(find rasberry_actors)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap"/>
 
-          <rosparam file="$(find rasberry_actors)/config/local_costmap_params.yaml" command="load"/>
-          <rosparam file="$(find rasberry_actors)/config/global_costmap_params.yaml" command="load"/>
-	  <rosparam file="$(find rasberry_actors)/config/nav_fn_ros.yaml" command="load" />
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/local_costmap_params.yaml" command="load"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/global_costmap_params.yaml" command="load"/>
+	  <rosparam file="$(find rasberry_gazebo)/config/move_base/nav_fn_ros.yaml" command="load" />
 
 	  <!-- resetting parameters values like frame names and topic names to the correct ones-->
           <rosparam param="global_costmap/robot_base_frame" subst_value="true">"$(arg tf_prefix)/base_link"</rosparam>
