@@ -11,9 +11,11 @@
 
   <group ns="$(arg actor_name)">
 
-    <node pkg="tf" type="static_transform_publisher" name="static_transform_publisher" args="0 0 0 0 0 0 world $(arg actor_name)/odom 10"/>
-    
-    <param name="robot_description" command="$(find xacro)/xacro '$(find rasberry_actors)/urdf/actor.xacro' '--inorder' robot_name:='$(arg actor_name)' tf_prefix:='$(arg actor_name)'" />
+    <!--node pkg="tf" type="static_transform_publisher" name="map_to_world" args="0 0 0 0 0 0 map world 10"/-->
+    <!--node pkg="tf" type="static_transform_publisher" name="world_to_actor00odom" args="0 0 0 0 0 0 map $(arg actor_name)/odom 10"/-->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_to_actor00odom" args="$(arg start_pose_x) $(arg start_pose_y) $(arg start_pose_z) $(arg start_pose_R) $(arg start_pose_P) $(arg start_pose_Y) /map $(arg actor_name)/odom 10"/-->
+
+    <param name="robot_description" command="$(find xacro)/xacro '$(find rasberry_gazebo)/urdf/actor.xacro' '--inorder' actor_name:='$(arg actor_name)' tf_prefix:='$(arg actor_name)'"/>
 
     <!--<node pkg="gazebo_ros" type="spawn_model" name="$(arg actor_name)_spawner" output="screen" args="$(arg start_pose) -urdf -param /robot_description -model $(arg actor_name)"/>-->
     <node pkg="gazebo_ros" type="spawn_model" name="$(arg actor_name)_spawner" output="screen" args="-x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg start_pose_R)  -P 		      $(arg start_pose_P)  -Y $(arg start_pose_Y) -urdf -param /$(arg actor_name)/robot_description -model $(arg actor_name)"/>
