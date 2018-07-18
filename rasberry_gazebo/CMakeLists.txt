@@ -8,12 +8,9 @@ project(rasberry_gazebo)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-<<<<<<< HEAD
   amcl
   fake_localization
   gazebo_ros
-=======
->>>>>>> upstream/master
   gazebo_plugins
   geometry_msgs
   map_server
