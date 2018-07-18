@@ -3,4 +3,4 @@
 	url = https://github.com/marc-hanheide/callarobot
 [submodule "rasberry_data_collection/StrawberryData"]
 	path = rasberry_data_collection/StrawberryData
-	url = git@github.com:RaymondKirk/StrawberryData.git
+	url = https://github.com/RaymondKirk/StrawberryData.git
