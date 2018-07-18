@@ -98,7 +98,6 @@
 
 <!-- CREATE SENSORS -->
 
-<<<<<<< HEAD:rasberry_gazebo/urdf/actor.xacro
 <gazebo reference="$(arg tf_prefix)/hokuyo">
   <sensor name="$(arg actor_name)_hokuyo_sensor" type="gpu_ray">
     <pose>0 0 0 0 0 0</pose>
