@@ -2,8 +2,8 @@
 Changelog for package rasberry_actors
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2018-07-18)
+------------------
 * removed depend to gazebo_ros
 * Added simulation with velodyne and kinect2, rviz config file to visualize them and changed actor to use gpu based simulated laser
 * Contributors: Marc Hanheide, mfernandezcarmona@lincoln.ac.uk

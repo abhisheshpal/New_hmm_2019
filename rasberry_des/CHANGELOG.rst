@@ -2,8 +2,8 @@
 Changelog for package rasberry_des
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2018-07-18)
+------------------
 * Minor correction in polytunnel_des_config.yaml
 * Adding white noise to introduce variations in picking and transportation rates
   Gaussian white noise is added to Picker's picking rate and transportation rate, and Robot's transportation rate. The noise is assumed to have zero mean and 2% of picking (or transportation) rate.

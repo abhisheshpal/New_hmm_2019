@@ -2,8 +2,8 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.0.4 (2018-07-18)
+------------------
 * removed depend to gazebo_ros
 * use gazebo 8
   closes `#65 <https://github.com/lcas/rasberry/issues/65>`_
