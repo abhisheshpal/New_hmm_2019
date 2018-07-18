@@ -2,6 +2,20 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* removed depend to gazebo_ros
+* use gazebo 8
+  closes `#65 <https://github.com/lcas/rasberry/issues/65>`_
+* Added simulation with velodyne and kinect2, rviz config file to visualize them and changed actor to use gpu based simulated laser
+* Merge branch 'master' of github.com:LCAS/RASberry
+* Changing topological map name
+* adding simulation start-up script
+* Merge branch 'master' of github.com:LCAS/RASberry
+  conflict resolved in rasberry_gazebo/worlds/thorvald_AB.world
+* World file changes because of polytunnel definition interchange in models_AB.yaml
+* Contributors: Jaime Pulido Fentanes, Marc Hanheide, gpdas, mfernandezcarmona@lincoln.ac.uk
+
 0.0.3 (2018-07-16)
 ------------------
 * Added more Local Planners -> check description

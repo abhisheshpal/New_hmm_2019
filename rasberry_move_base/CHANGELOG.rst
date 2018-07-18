@@ -2,6 +2,9 @@
 Changelog for package rasberry_move_base
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+
 0.0.3 (2018-07-16)
 ------------------
 * equal versions
