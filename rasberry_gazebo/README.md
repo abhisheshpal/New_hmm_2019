@@ -16,7 +16,7 @@ To build a world open a terminal and do the following:
 
 1. `roscd rasberry_gazebo/`
 2. `chmod a+x ./scripts/generate_world.py`
-3. `./scripts/generate_world.py --model_file ./config/models_AB.yaml --actor_file ./config/actors_AB.yaml`
+3. `./scripts/generate_world.py --model_file ./config/gazebo/models_AB.yaml --actor_file ./config/gazebo/actors_AB.yaml`
 
 If you have the Thorvald repo (https://github.com/LCAS/Thorvald) installed on your machine you can spawn the Thorvald robot model into the World you just built:
 

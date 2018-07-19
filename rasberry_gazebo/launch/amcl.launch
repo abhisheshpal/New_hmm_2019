@@ -2,12 +2,13 @@
 <launch>
 
 <arg name="tf_prefix" default=""/>
+<!--arg name="actor_name" default=""/-->
 
 	<node pkg="amcl" type="amcl" name="amcl" output="screen">
 
 	      <!-- see param description on http://www.ros.org/wiki/amcl -->     
 
-	<!--remap from="scan"  to="$(arg tf_prefix)/scan"/-->
+	<!--remap from="scan"  to="scan"/-->
 	<remap from="map" to="/map"/>
 
 		<!--overall filter -->
@@ -49,4 +50,9 @@
         <param name="use_map_topic" value="true"/>
 
 	</node>
+
+        <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true"/>
+
+        <!--node pkg="rostopic" type="rostopic" name="arbitrary_name" args="pub /$(arg actor_name)/initialpose geometry_msgs/PoseWithCovarianceStamped '{ header: { frame_id: '/map' }, pose: { pose: { position: { x: $(arg start_pose_x), y:  $(arg start_pose_y) }, orientation: { x: 0.0, y: 0.0, z: -0.142729304646, w: 0.989761762039 } }, covariance: [ 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.25, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.06853891945200942 ] } }' -1" output="screen"/-->
+
 </launch>
