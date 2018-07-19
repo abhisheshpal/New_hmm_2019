@@ -12,7 +12,6 @@
   </include>
 
   <!-- Second actor -->
-
   <include file="$(find rasberry_gazebo)/launch/spawn_actor.launch">	
     <arg name="actor_name" value="actor01" />
     <arg name="start_pose_x" value="0" />
