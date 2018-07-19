@@ -8,28 +8,33 @@ init_cmd: |
   export ROS_MASTER=$default_ip
   export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
   export ROS_HOSTNAME=$ROS_IP
-  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"  
+  export MONGO_PATH="$HOME/mongodb-rasberry"
+  export TMAP="norwaypolys"
+  export MAP="$HOME/maps/norwaypolys.yaml"
+  export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
+  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
 windows:
 - name: init
   panes:
   - roscore
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
+  - mkdir -p "$MONGO_PATH"  roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
 - name: robot
   panes:
-  - roslaunch thorvald_bringup thorvald_ii_4wd4ws_std.launch
+  - roslaunch thorvald_bringup "$ROBOT_TYPE.launch"
 - name: localisation
   panes:
   - # roslaunch rasberry_bringup localisationXXX 
 - name: navigation
   panes:
-  - # roslaunch rasberry_bringup navigationXXX
-  - # roslaunch topological_navigation XXX
+  - roslaunch rasberry_move_base move_base_dwa.launch map:=$MAP
+  - roslaunch topological_navigation topological_navigation.launch map:=$TMAP
 - name: people_perception
   panes:
   - # roslaunch rasberry_bringup XXX
 - name: coordination_robot
   panes:
-  - roslaunch rosbridge_server rosbridge_websocket.launch
+  - #roslaunch rosbridge_server rosbridge_websocket.launch
   - # rosrun rosduct XXX _
 - name: dataset_recording
   panes:
