@@ -18,6 +18,14 @@
         <param name="recovery_alpha_fast" value="0.0"/>
         <param name="gui_publish_rate" value="10.0"/>
 
+        <param name="initial_pose_x" value="0.0"/>
+	<param name="initial_pose_y" value="0.0"/>
+	<param name="initial_pose_a" value="0.0"/>
+	<!--
+	<param name="initial_cov_xx" value="0.25"/>
+	<param name="initial_cov_yy" value="0.25"/>
+	<param name="initial_cov_aa" value="0.68"/>
+-->
 		<!-- laser model -->
         <param name="laser_max_beams" value="30"/> 
         <param name="laser_z_hit" value="0.95"/>
@@ -43,7 +51,7 @@
 		<!-- map -->
         <param name="use_map_topic" value="true"/>
 
-	</node>
+  </node>
 
   <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true"/>
 
