@@ -3,22 +3,24 @@ import sys
 import rospy
 # Brings in the SimpleActionClient
 import actionlib
-import rosbag
 import topological_navigation.msg
 
 node_name = "topoNav_testcase"
 
 #Each line of this matrix represents a row in the greenhouse, each element of a line represents a waypoint
 #Matrix for Riseholme tmap
-ROWS = [['WayPoint8','WayPoint20','WayPoint36','WayPoint37','WayPoint38','WayPoint39'],
+"""ROWS = [['WayPoint8','WayPoint20','WayPoint36','WayPoint37','WayPoint38','WayPoint39'],
         ['WayPoint7','WayPoint21','WayPoint31','WayPoint34','WayPoint32','WayPoint35'],
         ['WayPoint6','WayPoint22','WayPoint29','WayPoint30','WayPoint33','WayPoint28'],
         ['WayPoint5','WayPoint25','Waypoint23','WayPoint27','WayPoint24','WayPoint26'],
         ['WayPoint1','WayPoint41','Waypoint42','WayPoint43','WayPoint44','WayPoint45'],
         ['WayPoint2','WayPoint47','Waypoint48','WayPoint49','WayPoint50','WayPoint59'],
         ['WayPoint3','WayPoint46','Waypoint51','WayPoint52','WayPoint53','WayPoint58'],
-        ['WayPoint4','WayPoint40','Waypoint54','WayPoint56','WayPoint55','WayPoint57']]
+        ['WayPoint4','WayPoint40','Waypoint54','WayPoint56','WayPoint55','WayPoint57']]"""
 #Matrix for Norway's polytunnel tmap
+ROWS = [['WayPoint1','WayPoint15','WayPoint2','WayPoint18','WayPoint3','WayPoint21','WayPoint4'],
+        ['WayPoint8','WayPoint14','WayPoint7','WayPoint17','WayPoint6','WayPoint20','WayPoint5'],
+        ['WayPoint9','WayPoint13','WayPoint10','WayPoint16','WayPoint11','WayPoint19','WayPoint12']]
 
 
 
