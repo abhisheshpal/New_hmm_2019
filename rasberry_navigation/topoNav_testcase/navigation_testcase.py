@@ -3,11 +3,13 @@ import sys
 import rospy
 # Brings in the SimpleActionClient
 import actionlib
+import rosbag
 import topological_navigation.msg
 
 node_name = "topoNav_testcase"
 
 #Each line of this matrix represents a row in the greenhouse, each element of a line represents a waypoint
+#Matrix for Riseholme tmap
 ROWS = [['WayPoint8','WayPoint20','WayPoint36','WayPoint37','WayPoint38','WayPoint39'],
         ['WayPoint7','WayPoint21','WayPoint31','WayPoint34','WayPoint32','WayPoint35'],
         ['WayPoint6','WayPoint22','WayPoint29','WayPoint30','WayPoint33','WayPoint28'],
@@ -16,6 +18,9 @@ ROWS = [['WayPoint8','WayPoint20','WayPoint36','WayPoint37','WayPoint38','WayPoi
         ['WayPoint2','WayPoint47','Waypoint48','WayPoint49','WayPoint50','WayPoint59'],
         ['WayPoint3','WayPoint46','Waypoint51','WayPoint52','WayPoint53','WayPoint58'],
         ['WayPoint4','WayPoint40','Waypoint54','WayPoint56','WayPoint55','WayPoint57']]
+#Matrix for Norway's polytunnel tmap
+
+
 
 class topol_nav_client:
 
@@ -67,7 +72,7 @@ class topol_nav_client:
 
         for waypoint in waypoint_list:
 
-            tempPath.append(waypoint)
+            path.append(waypoint)
             navigator.goToWayPoint(waypoint)
 
         print "End of row reached, going backward now ..."
@@ -77,7 +82,7 @@ class topol_nav_client:
 
             navigator.goToWayPoint(waypoint)
 
-    #The robot goes in all the rows
+    #The robot navigates in all the rows
     def navigate(self):
 
         for i in range(len(ROWS)):
@@ -102,27 +107,25 @@ class topol_nav_client:
 
 
 
-
-
-
-
-
-
     def _on_node_shutdown(self):
         self.client.cancel_all_goals()
         #sleep(2)
 
-
 if __name__ == '__main__':
 
-    if len(sys.argv) < 3 or int(sys.argv[1]) != (1 or 2 or 3) or int(sys.argv[2]) > 7:
-        print 'Argument required: [1] task : (1) goStraight or (2) roundTrip \n [2] number of the row (from 0 to 7)'
+
+    if rospy.get_param('/testcases/task') not in range (1,4) or rospy.get_param('/testcases/rowNumber') > len(ROWS):
+        print 'Usage: [1] task : (1) goStraight / (2) roundTrip / (3) navigate through all rows \n [2] index of the row for task 1 and 2 (from 0 to %d)' %(len(ROWS)-1)
         sys.exit(2)
+
+    """if len(sys.argv) < 3 or int(sys.argv[1]) > 3 or int(sys.argv[1]) < 1 or int(sys.argv[2]) > len(ROWS):
+        print 'Usage: [1] task : (1) goStraight / (2) roundTrip / (3) navigate through all rows \n [2] index of the row for task 1 and 2 (from 0 to %d)' %(len(ROWS)-1)
+        sys.exit(2)"""
 
     navigator = topol_nav_client()
 
-    task = int(sys.argv[1])
-    row_index = int(sys.argv[2])
+    task = rospy.get_param('/navigation_testcase/task')
+    row_index = rospy.get_param('/navigation_testcase/rowNumber')
 
     if task == 1:
 
