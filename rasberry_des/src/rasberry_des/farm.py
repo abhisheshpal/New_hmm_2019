@@ -21,7 +21,7 @@ class Farm(object):
         topo_map -- TopologicalForkMap object
         robots - robot agent objects
         pickers -- picker agent objects
-        policy -- "lexographical", "shortest_distance", "utilise_all"
+        policy -- "lexicographical", "shortest_distance", "uniform_utilisation"
         """
         self.name = name
         self.env = env
@@ -292,8 +292,8 @@ class Farm(object):
         if n_idle_pickers > 0:
             allocated_rows = []
 
-            # "lexographical", "shortest_distance", "utilise_all"
-            if self.scheduler_policy == "lexographical":
+            # "lexicographical", "shortest_distance", "uniform_utilisation"
+            if self.scheduler_policy == "lexicographical":
                 # allocate in the order of name
                 self.idle_pickers.sort()
                 i = 0
@@ -334,7 +334,7 @@ class Farm(object):
                     else:
                         i += 1
 
-            elif self.scheduler_policy == "utilise_all":
+            elif self.scheduler_policy == "uniform_utilisation":
                 # improve utilisation by allocating row to least used picker
 
                 # max possible allocations is n_idle_pickers
@@ -391,8 +391,8 @@ class Farm(object):
         if n_idle_robots > 0:
             assigned_pickers = []
 
-            # "lexographical", "shortest_distance", "utilise_all"
-            if self.scheduler_policy == "lexographical":
+            # "lexicographical", "shortest_distance", "uniform_utilisation"
+            if self.scheduler_policy == "lexicographical":
                 # allocate in the order of name
                 self.idle_robots.sort()
                 i = 0
@@ -434,7 +434,7 @@ class Farm(object):
                         else:
                             i += 1
 
-            elif self.scheduler_policy == "utilise_all":
+            elif self.scheduler_policy == "uniform_utilisation":
                 # improve utilisation by allocating row to least used picker
 
                 # max possible allocations is n_idle_robots

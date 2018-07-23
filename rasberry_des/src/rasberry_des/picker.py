@@ -7,6 +7,7 @@
 # ----------------------------------
 
 import math
+import random
 import rospy
 
 
@@ -46,7 +47,9 @@ class Picker(object):
         self.tot_trays = 0   # total number of trays by the picker
         self.tray_capacity = tray_capacity
         self.picking_rate = picking_rate
+        self.picking_rate_std = 0.02 * self.picking_rate
         self.transportation_rate = transportation_rate
+        self.transportation_rate_std = 0.02 * self.transportation_rate
         self.max_n_trays = max_n_trays
         self.graph = topo_graph
 
@@ -143,7 +146,9 @@ class Picker(object):
             next_node = self.row_path[curr_node_index - 1]
 
         # move to the next node
-        yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+#        yield self.env.process(self.go_to_node(next_node, self.picking_rate))
+        # adding Gaussian white noise to introduce variations
+        yield self.env.process(self.go_to_node(next_node, self.picking_rate + random.gauss(0, self.picking_rate_std)))
 
         # update picking_progress and n_tray
         self.picking_progress += self.graph.yield_at_node[self.curr_node]
@@ -257,7 +262,9 @@ class Picker(object):
                 # from curr_node go to a row_node (self.goal_node) and continue picking
                 # goal_node is set in allocate_row
                 self.loginfo("%s going to %s from %s" %(self.picker_id, self.goal_node, self.curr_node))
-                yield self.env.process(self.go_to_node(self.goal_node, self.transportation_rate))
+#                yield self.env.process(self.go_to_node(self.goal_node, self.transportation_rate))
+                # adding Gaussian white noise to introduce variations
+                yield self.env.process(self.go_to_node(self.goal_node, self.transportation_rate + random.gauss(0, self.transportation_rate_std)))
                 self.time_spent_transportation += self.env.now - transportation_start_time
 
                 self.loginfo("%s will start picking now" %(self.picker_id))

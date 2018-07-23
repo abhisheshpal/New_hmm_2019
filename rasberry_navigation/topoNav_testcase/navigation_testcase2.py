@@ -52,18 +52,20 @@ class topol_nav_client:
             sys.exit(1)"""
 
 
-    def goStraigth(self, row_index):
+    #The robot goes straight in the row
+    def goStraight(self, waypoint_list):
 
-        for waypoint in ROWS[row_index]:
+        for waypoint in waypoint_list:
 
             navigator.goToWayPoint(waypoint)
 
 
-    def roundTrip(self, row_index):
+    #The robot goes forward and when it reached the end of the row it goes back
+    def roundTrip(self, waypoint_list):
 
         path = []
 
-        for waypoint in ROWS[row_index]:
+        for waypoint in waypoint_list:
 
             tempPath.append(waypoint)
             navigator.goToWayPoint(waypoint)
@@ -75,6 +77,35 @@ class topol_nav_client:
 
             navigator.goToWayPoint(waypoint)
 
+    #The robot goes in all the rows
+    def navigate(self):
+
+        for i in range(len(ROWS)):
+
+            if i%2==0:
+
+                navigator.goStraight(ROWS[i])
+
+            else:
+
+                path = []
+
+                for j in range(len(ROWS[i])-1,-1,-1):
+
+                    path.append(ROWS[i][j])
+
+                navigator.goStraight(path)
+
+                path = []
+
+        print 'Endpoint reached'
+
+
+
+
+
+
+
 
 
     def _on_node_shutdown(self):
@@ -84,8 +115,8 @@ class topol_nav_client:
 
 if __name__ == '__main__':
 
-    if len(sys.argv) < 3 or int(sys.argv[1]) != (1 or 2) or int(sys.argv[2]) > 7:
-        print 'Argument required: [1] task : (1) goStraigth or (2) roundTrip \n [2] number of the row (from 0 to 7)'
+    if len(sys.argv) < 3 or int(sys.argv[1]) != (1 or 2 or 3) or int(sys.argv[2]) > 7:
+        print 'Argument required: [1] task : (1) goStraight or (2) roundTrip \n [2] number of the row (from 0 to 7)'
         sys.exit(2)
 
     navigator = topol_nav_client()
@@ -95,8 +126,12 @@ if __name__ == '__main__':
 
     if task == 1:
 
-        navigator.goStraigth(row_index)
+        navigator.goStraight(ROWS[row_index])
 
     elif task == 2:
 
-        navigator.roundTrip(row_index)
+        navigator.roundTrip(ROWS[row_index])
+
+    elif task == 3:
+
+        navigator.navigate()

@@ -23,9 +23,9 @@ world_f = base_dir + '/worlds/empty_grass.world'
 world_d = load_data_from_xml(world_f)
 world = AddtoWorld(world_d)
 world_name = 'thorvald_AB.world' # default
-
-default_model_config = base_dir + '/config/models_AB.yaml'
-default_actor_config = base_dir + '/config/actors_AB.yaml'
+print base_dir
+default_model_config = base_dir + '/config/gazebo/models_AB.yaml'
+default_actor_config = base_dir + '/config/gazebo/actors_AB.yaml'
 
 parser = argparse.ArgumentParser()
 parser.add_argument("--model_file", type=str, default=default_model_config, help="filename")       

@@ -3,7 +3,7 @@
 
   <!-- Robot model arguments.  -->
   <arg name="start_pose_x" value="0" />
-  <arg name="start_pose_y" value="2" />
+  <arg name="start_pose_y" value="0" />
   <arg name="start_pose_z" value="0" />
   <arg name="start_pose_R" value="0" />
   <arg name="start_pose_P" value="0" />
@@ -15,33 +15,12 @@
   <arg name="with_actors" default="false"/> <!-- Include actors in the Gazebo world? -->
 
 
-
-  <!-- Gazebo arguments -->
-  <arg name="world_name" value="riseholme"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
-  <arg name="simple_sim" default="True" />
-  <arg name="paused" default="false"/>
-  <arg name="use_sim_time" default="true"/>
-  <arg name="gui" default="true"/>
-  <arg name="headless" default="false"/>
-  <arg name="debug" default="false"/>
-  <arg name="verbose" default="false"/>
-
-
-
-  <!-- Start gazebo and load the world -->
-  <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="paused" value="$(arg paused)"/>
-    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
-    <arg name="gui" value="$(arg gui)"/>
-    <arg name="headless" value="$(arg headless)"/>
-    <arg name="debug" value="$(arg debug)"/>
-    <arg name="verbose" value="$(arg verbose)"/>
-    <arg name="world_name" value="$(find rasberry_gazebo)/worlds/$(arg world_name).world"/>
-  </include>
-
+  <!-- Launch the Gazebo world.  -->
+  <include file="$(find rasberry_gazebo)/launch/world.launch"/>
 
 
   <!-- Robot model bringup -->
+
   <include file="$(find thorvald_model)/launch/model.launch">
     <arg name="robot_model" value="$(find thorvald_model)/config/$(arg robot_model)/$(arg robot_model).yaml" />
     <arg name="model_extras" value="$(arg model_extras)" />
@@ -54,7 +33,7 @@
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)"/>
 
-  <include file="$(find rasberry_actors)/launch/include_actors.launch" if="$(arg with_actors)"/>
+  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
 
 
 
