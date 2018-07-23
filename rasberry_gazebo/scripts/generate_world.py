@@ -121,7 +121,6 @@ for model in model_config:
                     world.add_traysp2(trayp2_d, trayp2_poses, tray_length, trayp2_count)                 
                     trayp2_count += len(trayp2_poses)
                     
-"""
                     pot21_poses, pot21_max_length = get_pot21_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
                     world.add_pot21(pot21_d, pot21_poses, pot21_count)  
                     pot21_count += len(pot21_poses)
@@ -146,7 +145,7 @@ for model in model_config:
                     
                     world.add_plant1(plant1_d, pot1_poses, plant1_count)  
                     plant1_count += len(pot1_poses)
-"""
+
 
                 if (arch_nx * arch_dx) > 0:
                     arch_poses, arch_xposes, arch_yposes = get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes)
