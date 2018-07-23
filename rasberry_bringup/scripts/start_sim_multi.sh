@@ -1,7 +1,7 @@
 #!/bin/bash
 
 SESSION=$USER
-DISPLAY=2
+DISPLAY=0
 
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files
