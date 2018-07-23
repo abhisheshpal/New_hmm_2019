@@ -43,6 +43,8 @@
 		<!-- map -->
         <param name="use_map_topic" value="true"/>
 
-  </node>
+	</node>
+
+  <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true"/>
 
 </launch>
