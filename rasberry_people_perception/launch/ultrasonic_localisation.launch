@@ -1,0 +1,5 @@
+<launch>
+
+  <node pkg="marvelmind_nav" name="hedge_rcv_bin" type="hedge_rcv_bin" />
+
+</launch>
