@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="map" default="$(find rasberry_gazebo)/maps/riseholme_sim.yaml"/>
+
+    <!-- lanch map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+    
+</launch>

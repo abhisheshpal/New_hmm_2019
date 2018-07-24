@@ -29,7 +29,7 @@ tmux select-window -t $SESSION:3
 tmux send-keys "DISPLAY=:0 roslaunch rasberry_move_base move_base_teb.launch map:=$(rospack find rasberry_gazebo)/maps/riseholme_sim.yaml"
 
 tmux select-window -t $SESSION:4
-tmux send-keys "DISPLAY=:0 roslaunch topological_navigation topological_navigation.launch map:=polys move_base_reconf_service:=TebLocalPlannerROS"
+tmux send-keys "DISPLAY=:0 roslaunch topological_navigation topological_navigation.launch map:=riseholme move_base_reconf_service:=TebLocalPlannerROS"
 
 tmux select-window -t $SESSION:5
 tmux send-keys "DISPLAY=:0  rosrun rviz rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz"
