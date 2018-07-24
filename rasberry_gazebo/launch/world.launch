@@ -2,7 +2,7 @@
 <launch>
 
   <!-- Gazebo arguments -->
-  <arg name="world_name" value="riseholme"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
+  <arg name="world_name" default="riseholme"/> <!-- Note: the world_name is with respect to GAZEBO_RESOURCE_PATH environmental variable -->
   <arg name="simple_sim" default="True" />
   <arg name="paused" default="false"/>
   <arg name="use_sim_time" default="true"/>
