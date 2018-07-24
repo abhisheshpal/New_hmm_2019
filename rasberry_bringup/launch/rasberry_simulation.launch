@@ -2,21 +2,24 @@
 <launch>
 
   <!-- Robot model arguments.  -->
-  <arg name="start_pose_x" value="0" />
-  <arg name="start_pose_y" value="0" />
-  <arg name="start_pose_z" value="0" />
-  <arg name="start_pose_R" value="0" />
-  <arg name="start_pose_P" value="0" />
-  <arg name="start_pose_Y" value="0" />
+  <arg name="start_pose_x" default="0" />
+  <arg name="start_pose_y" default="0" />
+  <arg name="start_pose_z" default="0" />
+  <arg name="start_pose_R" default="0" />
+  <arg name="start_pose_P" default="0" />
+  <arg name="start_pose_Y" default="0" />
 
   <arg name="robot_name" default="thorvald" />
   <arg name="robot_model" default="thorvald_ii_4wd4ws_slim" />
   <arg name="model_extras" default="$(find thorvald_model)/urdf/sensor_modules/sensor_frames_lincoln.xacro" />
   <arg name="with_actors" default="false"/> <!-- Include actors in the Gazebo world? -->
 
+  <arg name="world_name" default="riseholme"/>
 
   <!-- Launch the Gazebo world.  -->
-  <include file="$(find rasberry_gazebo)/launch/world.launch"/>
+  <include file="$(find rasberry_gazebo)/launch/world.launch">
+   <arg name="world_name" value="$(arg world_name)"/>
+  </include>
 
 
   <!-- Robot model bringup -->
