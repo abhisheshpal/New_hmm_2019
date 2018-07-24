@@ -26,16 +26,16 @@ tmux select-window -t $SESSION:1
 tmux send-keys "DISPLAY=:$DISPLAY roslaunch mongodb_store mongodb_store.launch db_path:=$1"
 
 tmux select-window -t $SESSION:2
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup rasberry_simulation_multi.launch with_actors:=false"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup rasberry_simulation_multi.launch with_actors:=false robot_name_1:=thorvald_001 robot_pose_x1:=0.0 robot_pose_y1:=0.0 robot_pose_Y1:=-1.7 robot_name_2:=thorvald_002 robot_pose_x2:=2.0 robot_pose_y2:=4.0 robot_pose_Y2:=1.7"
 
 tmux select-window -t $SESSION:3
 tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_gazebo)/maps/riseholme_sim.yaml"
 
 tmux select-window -t $SESSION:4
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base move_base_teb_multi.launch robot_name:=thorvald_001"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base move_base_teb_multi.launch robot_name:=thorvald_001 robot_pose_x:=0.0 robot_pose_y:=0.0 robot_pose_Y:=-1.7"
 
 tmux select-window -t $SESSION:5
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base move_base_teb_multi.launch robot_name:=thorvald_002"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base move_base_teb_multi.launch robot_name:=thorvald_002 robot_pose_x:=2.0 robot_pose_y:=4.0 robot_pose_Y:=1.7"
 
 #tmux select-window -t $SESSION:6
 #tmux send-keys "DISPLAY=:$DISPLAY roslaunch topological_navigation topological_navigation.launch map:=riseholme move_base_reconf_service:=TebLocalPlannerROS"

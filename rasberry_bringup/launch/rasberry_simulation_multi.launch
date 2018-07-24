@@ -10,12 +10,12 @@
 
 
   <!-- Robot model arguments.  -->
-  <arg name="robot_pose_x1" value="0" />
-  <arg name="robot_pose_y1" value="0" />
-  <arg name="robot_pose_z1" value="0" />
-  <arg name="robot_pose_R1" value="0" />
-  <arg name="robot_pose_P1" value="0" />
-  <arg name="robot_pose_Y1" value="-1.7" />
+  <arg name="robot_pose_x1" default="0.0" />
+  <arg name="robot_pose_y1" default="0.0" />
+  <arg name="robot_pose_z1" default="0.0" />
+  <arg name="robot_pose_R1" default="0.0" />
+  <arg name="robot_pose_P1" default="0.0" />
+  <arg name="robot_pose_Y1" default="-1.7" />
 
   <arg name="robot_name_1" default="thorvald_001" />
   <arg name="robot_model_1" default="thorvald_ii_4wd4ws_slim" />
@@ -47,12 +47,12 @@
 
   <!-- Robot model arguments.  -->
 
-  <arg name="robot_pose_x2" value="2" />
-  <arg name="robot_pose_y2" value="4" />
-  <arg name="robot_pose_z2" value="0" />
-  <arg name="robot_pose_R2" value="0" />
-  <arg name="robot_pose_P2" value="0" />
-  <arg name="robot_pose_Y2" value="1.7" />
+  <arg name="robot_pose_x2" default="2.0" />
+  <arg name="robot_pose_y2" default="4.0" />
+  <arg name="robot_pose_z2" default="0.0" />
+  <arg name="robot_pose_R2" default="0.0" />
+  <arg name="robot_pose_P2" default="0.0" />
+  <arg name="robot_pose_Y2" default="1.7" />
 
   <arg name="robot_name_2" default="thorvald_002" />
   <arg name="robot_model_2" default="thorvald_ii_4wd4ws_slim" />
