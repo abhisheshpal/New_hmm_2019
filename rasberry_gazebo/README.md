@@ -10,6 +10,18 @@ You can generate n polytunnels of arbitrary length positioned wherever you like 
 The constraint is that the polytunnels are always aligned with the x-axis. Also, the polytunnel canopy is of a set width.
 The package also permits the inclusion of n actors moving between user-specified waypoints.
 
+# How to install:
+1. Install ROS kinetic
+ Follow instructions on http://wiki.ros.org/kinetic/Installation/Ubuntu
+2. Setup your catkin workspace
+ Follow Instructions on http://wiki.ros.org/catkin/Tutorials/create_a_workspace
+3. Add LCAS ubuntu repository:
+add "deb http://lcas.lincoln.ac.uk/ubuntu/main xenial main" to /etc/apt/sources.list
+run `$ sudo apt update`
+4. Clone RASberry repository into catkin/src folder
+`$ cd ~/catkin_ws/src`
+`$ git clone git@github.com:LCAS/RASberry.git`
+5. Install dependencies `$ sudo apt install ros-kinetic-strands-navigation ros-kinetic-marvelmind-nav ros-kinetic-cob-generic-can ros-kinetic-twist-mux ros-kinetic-joy ros-kinetic-amcl ros-kinetic-fake-localization ros-kinetic-razor-imu-9dof ros-kinetic-robot-localization ros-kinetic-controller-manager ros-kinetic-serial python-xmltodict`
 
 # How to run:
 To build a world open a terminal and do the following:
