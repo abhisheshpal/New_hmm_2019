@@ -1,7 +1,5 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="map" default="$(find rasberry_gazebo)/maps/riseholme_sim.yaml"/>
-    
 
     <arg name="initial_pose_x" default="0.0"/>
     <arg name="initial_pose_y" default="0.0"/>
@@ -10,9 +8,6 @@
     <arg name="initial_cov_xx" default="0.0"/>
     <arg name="initial_cov_yy" default="0.0"/>
     <arg name="initial_cov_aa" default="0.0"/>
-
-    <!-- lanch map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
 
     <!-- launch robot_pose_publisher -->
     <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true">

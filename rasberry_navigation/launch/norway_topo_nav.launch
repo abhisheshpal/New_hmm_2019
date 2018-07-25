@@ -23,9 +23,19 @@
   <!--.yaml map pointing to the pgm map for map_server -->
   <arg name="yaml_map" value="$(find rasberry_gazebo)/maps/norway_poles.yaml"/> 
 
+  <!--no_go_map args-->
+  <arg name="use_no_go_map" default="false"/>
+  <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/no_go_norway_poles.yaml"/>
+
+  <!-- launch map server-->
+  <include file="$(find rasberry_move_base)/launch/map_server.launch">
+     <arg name="map" value="$(arg yaml_map)"/>
+     <arg name="no_go_map" value="$(arg no_go_map)"/>
+     <arg name="use_no_go_map" value="$(arg use_no_go_map)"/>
+  </include>
 
 
-<!--open mongodb -->
+  <!--open mongodb -->
   <include file="$(find mongodb_store)/launch/mongodb_store.launch">
     <arg name="db_path" value="$(arg db_path)"/>
   </include>
@@ -50,7 +60,6 @@
    <arg name="initial_cov_xx" value="$(arg initial_cov_xx)"/>
    <arg name="initial_cov_yy" value="$(arg initial_cov_yy)"/>
    <arg name="initial_cov_aa" value="$(arg initial_cov_aa)"/>
-   <arg name="map" value="$(arg yaml_map)"/>
   </include>
 
   <!--topological navigation-->
