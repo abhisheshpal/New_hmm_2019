@@ -5,13 +5,9 @@ footprint: [[0.785, 0.60], [0.785, -0.60], [-0.785, -0.60], [-0.785, 0.60]]
 
 map_layer:
   map_topic: /map
+
 no_go_layer:
   map_topic: /no_go_map
-
-obstacle_layer:
-  obstacle_range: 2.5
-  raytrace_range: 3.0
-
 
 global_inflation_layer:
   inflation_radius: 0.6
@@ -20,8 +16,6 @@ global_inflation_layer:
 local_inflation_layer:
   inflation_radius: 0.15
   cost_scaling_factor: 3.0
-
-
 
 obstacle_layer:
   max_obstacle_height: 2.0
