@@ -8,9 +8,14 @@ project(rasberry_people_perception)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  geometry_msgs
   marvelmind_nav
   roscpp
   rospy
+  std_msgs
+  strands_navigation_msgs
+  tf
+  topological_navigation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -184,6 +189,11 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+install(DIRECTORY
+  launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
+)
 
 #############
 ## Testing ##
