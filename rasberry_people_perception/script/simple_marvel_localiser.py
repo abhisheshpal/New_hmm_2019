@@ -5,13 +5,15 @@
 # @date:
 # ----------------------------------
 
-import rasberry_people_perception
+import rasberry_people_perception.picker_marvel_localiser
 
 import rospy
 
 if __name__ == "__main__":
     rospy.init_node("simple_marvel_localiser", anonymous=True)
 
-    sml = rasberry_people_perception.picker_marvel_localiser.PickerMarvelLocaliser()
+    if not rospy.is_shutdown():
 
-    rospy.spin()
+        sml = rasberry_people_perception.picker_marvel_localiser.PickerMarvelLocaliser()
+
+        rospy.spin()
