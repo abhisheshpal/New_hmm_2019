@@ -12,8 +12,6 @@ import rospy
 if __name__ == "__main__":
     rospy.init_node("simple_marvel_localiser", anonymous=True)
 
-    if not rospy.is_shutdown():
+    sml = rasberry_people_perception.picker_marvel_localiser.PickerMarvelLocaliser()
 
-        sml = rasberry_people_perception.picker_marvel_localiser.PickerMarvelLocaliser()
-
-        rospy.spin()
+    rospy.spin()
