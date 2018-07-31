@@ -7,14 +7,10 @@
   <arg name="start_pose_R" default="0"/>
   <arg name="start_pose_P" default="0"/>
   <arg name="start_pose_Y" default="0"/>
-  <!--<arg name="start_pose" default="-x 0  -y 0  -z 0  -R 0  -P 0  -Y 0"/>-->
 
   <group ns="$(arg actor_name)">
 
-    <!--node pkg="tf" type="static_transform_publisher" name="map_to_world" args="0 0 0 0 0 0 map world 10"/-->
-    <!--node pkg="tf" type="static_transform_publisher" name="world_to_actor_odom" args="0 0 0 0 0 0 world $(arg actor_name)/odom 10"/-->
-    <!--node pkg="tf" type="static_transform_publisher" name="map_to_actor_odom" args="0 0 0 0 0 0 map $(arg actor_name)/odom 10"/-->
-    <!--node pkg="tf" type="static_transform_publisher" name="map_to_actor_odom" args="$(arg start_pose_x) $(arg start_pose_y) $(arg start_pose_z) $(arg start_pose_R) $(arg start_pose_P) $(arg start_pose_Y) /map $(arg actor_name)/odom 10"/-->
+    <!--node pkg="tf" type="static_transform_publisher" name="map_to_actor_odom" args="$(arg start_pose_x) $(arg start_pose_y) $(arg start_pose_z) $(arg start_pose_R) $(arg start_pose_P) $(arg       start_pose_Y) /map $(arg actor_name)/odom 10"/-->
 
     <param name="robot_description" command="$(find xacro)/xacro '$(find rasberry_gazebo)/urdf/actor.xacro' '--inorder' actor_name:='$(arg actor_name)' tf_prefix:='$(arg actor_name)'"/>
 
@@ -24,7 +20,7 @@
       <param name="publish_frequency" type="double" value="30.0" />
     </node>
 
-    <include file="$(find rasberry_gazebo)/launch/actor_move_base.launch">
+    <include file="$(find rasberry_gazebo)/launch/actor_move_base_teb.launch">
       <arg name="actor_name" value="$(arg actor_name)"/>
     </include>
 

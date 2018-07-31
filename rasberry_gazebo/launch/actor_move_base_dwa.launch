@@ -4,9 +4,8 @@
   <arg name= "tf_prefix" value="$(arg actor_name)" />
   <arg name="with_map" default="false"/>
   <arg name="map" default="$(find rasberry_gazebo)/maps/riseholme_sim.yaml"/>
-  <arg name="with_no_go_map" default="true"/>
+  <arg name="with_no_go_map" default="false"/>
   <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/riseholme_sim_no_go.yaml"/>
-
 
      <!--launch map server-->
       <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)" if="$(arg with_map)">
@@ -18,6 +17,7 @@
         <param name="frame_id" value="/map" />
         <remap from="map" to="/no_go_map"/>
       </node>
+
       <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg map)" unless="$(arg with_no_go_map)">
         <param name="frame_id" value="/map" />
         <remap from="map" to="/no_go_map"/>
@@ -50,8 +50,8 @@
           <!--Local planner-->
           <!--param name="controller_frequency" value="10.0"/>
           <param name="planner_frequency" value="0.5"/-->
-          <rosparam file="$(find rasberry_gazebo)/config/move_base/teb/teb_planner_ros.yaml" command="load"/>
-          <rosparam file="$(find rasberry_gazebo)/config/move_base/teb/teb_move_base_params.yaml" command="load"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/dwa/dwa_planner_ros.yaml" command="load"/>
+          <rosparam file="$(find rasberry_gazebo)/config/move_base/dwa/dwa_move_base_params.yaml" command="load"/>
 
           <rosparam file="$(find rasberry_gazebo)/config/move_base/costmap_common_params.yaml" command="load" ns="global_costmap"/>
           <rosparam file="$(find rasberry_gazebo)/config/move_base/costmap_common_params.yaml" command="load" ns="local_costmap"/>
@@ -71,7 +71,6 @@
           <!--rosparam param="local_costmap/obstacle_layer/laser_scan_sensor/topic" subst_value="true">"$(arg actor_name)/scan"</rosparam-->
           <rosparam param="global_costmap/obstacle_layer/laser_scan_sensor/topic" subst_value="true">"scan"</rosparam>
 
-          <rosparam param="TebLocalPlannerROS/odom_topic" subst_value="true">"/$(arg actor_name)/odom"</rosparam>
         
       </node>
 
