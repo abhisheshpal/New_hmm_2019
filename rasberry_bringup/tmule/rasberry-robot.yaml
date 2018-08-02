@@ -1,7 +1,8 @@
 ---
 init_cmd: |
-  source /opt/ros/kinetic/setup.bash
-  default_iface=$(awk '$2 == 00000000 { print $1 }' /proc/net/route)
+  source $HOME/rasberry_ws/devel/setup.bash
+  # search for VPN tun device:
+  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" "`
   default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
   export BASE_CONFIG_DIR=`readlink -f .`
   export ROBOT_NAME=`hostname`
@@ -18,23 +19,23 @@ windows:
   panes:
   - roscore
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
-  - mkdir -p "$MONGO_PATH"  roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
+  - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
 - name: robot
   panes:
-  - roslaunch thorvald_bringup "$ROBOT_TYPE.launch"
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_sensors.xacro simple_sim:=false
 - name: localisation
   panes:
-  - # roslaunch rasberry_bringup localisationXXX 
+  - roslaunch rasberry_navigation rasberry_localisation.launch
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch map:=$MAP
-  - roslaunch topological_navigation topological_navigation.launch map:=$TMAP
+  - roslaunch rasberry_move_base move_base_dwa.launch
+  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
 - name: people_perception
   panes:
   - # roslaunch rasberry_bringup XXX
 - name: coordination_robot
   panes:
-  - #roslaunch rosbridge_server rosbridge_websocket.launch
+  - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=10.8.0.4 rosbridge_port:=9090
   - # rosrun rosduct XXX _
 - name: dataset_recording
   panes:
