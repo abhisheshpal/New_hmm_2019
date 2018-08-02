@@ -10,7 +10,7 @@ init_cmd: |
   export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
   export ROS_HOSTNAME=$ROS_IP
   export MONGO_PATH="$HOME/mongodb-rasberry"
-  export TMAP="norwaypolys"
+  export TMAP="norway_poles"
   export MAP="$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
   export ROBOT_NO=`hostname | cut -f2 -d"-"`
   export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
@@ -20,7 +20,7 @@ windows:
   panes:
   - roscore
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
-  - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
+  - sleep 3; roslaunch rasberry_move_base map_server.launch map:=$MAP
 - name: robot
   panes:
   - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false
@@ -28,7 +28,7 @@ windows:
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - true || roslaunch rasberry_move_base map_server.launch map:="$MAP"
+  - roslaunch rasberry_move_base map_server.launch map:="$MAP"
   - roslaunch rasberry_navigation rasberry_localisation.launch
 - name: navigation
   panes:
