@@ -35,7 +35,7 @@ tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_navigation topological_map_
 
 tmux select-window -t $SESSION:2
 tmux send-keys "echo 'robot localisation'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_sensors.xacro simple_sim:=true world_name:=norway_poles with_actors:=false"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_003.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_003_sensors.xacro simple_sim:=true world_name:=norway_poles with_actors:=false"
 
 tmux select-window -t $SESSION:3
 tmux send-keys "echo '2D map server'" C-m
