@@ -21,20 +21,20 @@ windows:
   - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
 - name: topo_map
   panes:
-  - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
+  - sleep 3; roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
 - name: 2D_map
   panes:
-  - roslaunch rasberry_move_base map_server.launch map:=$MAP
+  - sleep 3; roslaunch rasberry_move_base map_server.launch map:=$MAP
 - name: people
   panes:
-  - rosrun rasberry_people_perception simple_marvel_localiser.py
+  - sleep 3; rosrun rasberry_people_perception simple_marvel_localiser.py
 - name: callarobot
   panes:
-  - WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-  - rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_norway_poles.yaml
+  - sleep 3; WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
+  - sleep 3; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_norway_poles.yaml
 - name: coordination_server
   panes:
-  - roslaunch rasberry_coordination coordination.launch
+  - sleep 3; roslaunch rasberry_coordination coordination.launch
 - name: dataset_recording
   panes:
   - ls
