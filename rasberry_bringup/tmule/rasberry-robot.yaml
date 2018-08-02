@@ -12,6 +12,7 @@ init_cmd: |
   export MONGO_PATH="$HOME/mongodb-rasberry"
   export TMAP="norwaypolys"
   export MAP="$HOME/maps/norwaypolys.yaml"
+  export ROBOT_NO=`hostname | cut -f2 -d"-"`
   export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
 windows:
@@ -22,7 +23,7 @@ windows:
   - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_sensors.xacro simple_sim:=false
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_sensors.xacro simple_sim:=false
 - name: localisation
   panes:
   - roslaunch rasberry_navigation rasberry_localisation.launch
