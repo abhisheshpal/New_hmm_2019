@@ -25,19 +25,19 @@ ekf_se_odom:
   odom0_differential: false
   odom0_relative: false  #turn off for displaying in rviz
 
-  imu0: imu1
-  imu0_config: [false, false, false,
-                false, false, false,
-                false, false, false,
-                false, false, true,  #for rosbag angular velocity for yaw is zero
-                false, false, false]
-  imu0_nodelay: false
-  imu0_differential: false
-  imu0_relative: false
-  imu0_queue_size: 10
-  imu0_remove_gravitational_acceleration: false
+  # imu0: imu/data
+  # imu0_config: [false, false, false,
+  #               false, false, false,
+  #               false, false, false,
+  #               false, false, true,  #for rosbag angular velocity for yaw is zero
+  #               false, false, false]
+  # imu0_nodelay: false
+  # imu0_differential: false
+  # imu0_relative: false
+  # imu0_queue_size: 10
+  # imu0_remove_gravitational_acceleration: false
 
-  use_control: false
+  # use_control: false
 
   #process_noise_covariance: [0.05, 0,    0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
   #                           0,    0.05, 0,    0,    0,    0,    0,     0,     0,    0,    0,    0,    0,    0,    0,
