@@ -1,6 +1,6 @@
 ---
 init_cmd: |
-  source $HOME/rasberry_ws/devel/setup.bash
+  source $HOME/workshop2018/devel/setup.bash
   # search for VPN tun device:
   default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" "`
   default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
