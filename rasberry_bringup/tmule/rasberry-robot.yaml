@@ -22,23 +22,23 @@ windows:
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
-  - roslaunch rasberry_bringup hokuyo.launch
-  - roslaunch rasberry_bringup xsens_driver.launch
+  - sleep 3; roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
+  - sleep 3; roslaunch rasberry_bringup hokuyo.launch
+  - sleep 3; roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - roslaunch rasberry_move_base map_server.launch map:="$MAP"
-  - roslaunch rasberry_navigation rasberry_localisation.launch
+  - sleep 3; roslaunch rasberry_move_base map_server.launch map:="$MAP"
+  - sleep 3; roslaunch rasberry_navigation rasberry_localisation.launch
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch
-  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
+  - sleep 3; roslaunch rasberry_move_base move_base_dwa.launch
+  - sleep 3; roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
 - name: people_perception
   panes:
   - ls 
 - name: coordination_robot
   panes:
-  - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=10.8.0.4 rosbridge_port:=9090
+  - sleep 3; roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=10.8.0.4 rosbridge_port:=9090
 - name: dataset_recording
   panes:
   - ls
