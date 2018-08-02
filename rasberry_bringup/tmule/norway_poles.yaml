@@ -1,0 +1,52 @@
+---
+init_cmd: |
+  source /home/thorvald/thorvald_ws/devel/setup.bash
+  default_iface=$(awk '$2 == 00000000 { print $1 }' /proc/net/route)
+  default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
+  export BASE_DIR=`readlink -f $(rospack find rasberry_bringup)/`
+  export ROBOT_NAME=`hostname`
+  export ROS_MASTER=$default_ip
+  export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
+  export ROS_HOSTNAME=$ROS_IP
+  export MONGO_PATH="$HOME/mongodb-rasberry"
+  export TMAP="norway_poles"
+  export MAP="$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
+  export NOGO_MAP="$(rospack find rasberry_navigation)/maps/no_go_norway_poles.yaml"
+  export ROBOT_TYPE="norway_robot"
+  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
+  sensor_xacro="norway_robot_sensors"
+
+windows:
+- name: init
+  panes:
+  - roscore
+# assumes mongo_db is available at $MONGO_PATH and is loaded with the $TMAP
+# ideally this should check for $TMAP in $MONGO_PATH and load if necessary
+  - sleep 10; roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
+- name: robot
+  panes:
+  - sleep 10; roslaunch rasberry_bringup robot_bringup.launch robot_model:="$BASE_DIR/config/$ROBOT_TYPE.yaml" model_extras:="$BASE_DIR/urdf/$sensor_xacro.xacro" simple_sim:=false with_teleoperation:=true
+- name: 2d_map_server
+  panes:
+  - if [ -f $NOGO_MAP ]; then
+      sleep 10; roslaunch rasberry_move_base map_server.launch map:=$MAP use_no_go_map:=true no_go_map:=$NOGO_MAP;
+    else
+      sleep 10; roslaunch rasberry_move_base map_server.launch map:=$MAP use_no_go_map:=false;
+    fi
+- name: localisation
+  panes:
+  - sleep 20; roslaunch rasberry_navigation rasberry_localisation.launch
+- name: navigation
+  panes:
+  - sleep 20; roslaunch rasberry_move_base move_base_dwa.launch
+  - sleep 20; roslaunch topological_navigation topological_navigation.launch map:=$TMAP
+#- name: people_perception
+#  panes:
+#  - # roslaunch rasberry_bringup XXX
+#- name: coordination_robot
+#  panes:
+#  - #roslaunch rosbridge_server rosbridge_websocket.launch
+#  - # rosrun rosduct XXX _
+#- name: dataset_recording
+#  panes:
+#  - # rosbag record -a
