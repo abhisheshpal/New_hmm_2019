@@ -32,11 +32,10 @@ windows:
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
 - name: people_perception
   panes:
-  - # roslaunch rasberry_bringup XXX
+  - ls 
 - name: coordination_robot
   panes:
   - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=10.8.0.4 rosbridge_port:=9090
-  - # rosrun rosduct XXX _
 - name: dataset_recording
   panes:
-  - # rosbag record -a
+  - ls
