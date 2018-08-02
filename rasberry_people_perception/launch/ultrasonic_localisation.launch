@@ -1,5 +1,37 @@
+<?xml version="1.0" ?>
 <launch>
 
+  <arg name="with_tf_publisher" default="false"/>
+
+  <arg name="with_map_server" default="false"/>
+  <arg name="map" default="$(find rasberry_gazebo)/maps/norway_poles.yaml" if="$(arg with_map_server)"/>
+  <arg name="with_no_go_map" default="false" if="$(arg with_map_server)"/>
+  <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/no_go_norway_poles.yaml" if="$(arg with_no_go_map)"/>
+
+  <arg name="with_mongodb" default="false"/>
+  <arg name="db_path" if="$(arg with_mongodb)"/>
+
+  <arg name="with_topological_navigation" default="false"/>
+  <arg name="topo_map" default="Norway_case_1" if="$(arg with_topological_navigation)"/>
+  <arg name="with_tf_publisher" default="false"/>
+
   <node pkg="marvelmind_nav" name="hedge_rcv_bin" type="hedge_rcv_bin" />
+
+  <node pkg="tf" name="marvelmind_to_map_bc" type="static_transform_publisher" args="0 0 0 0 0 0 marvelmind map 2" if="$(arg with_tf_publisher)"/>
+
+  <include file="$(find rasberry_move_base)/launch/map_server.launch" if="$(arg with_map_server)">
+    <arg name="map" value="$(arg map)"/>
+    <arg name="no_go_map" value="$(arg no_go_map)" if="$(arg with_no_go_map)"/>
+  </include>
+
+  <include file="$(find mongodb_store)/launch/mongodb_store.launch" if="$(arg with_mongodb)">
+    <arg name="db_path" value="$(arg db_path)"/>
+  </include>
+
+  <include file="$(find topological_navigation)/launch/topological_navigation.launch" if="$(arg with_topological_navigation)">
+    <arg name="map" value="$(arg topo_map)"/>
+  </include>
+
+  <node pkg="rasberry_people_perception" type="simple_marvel_localiser.py" name="simple_marvel_localiser"/>
 
 </launch>

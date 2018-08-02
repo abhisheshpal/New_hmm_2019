@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<launch>
+  <!--arg name="with_move_base" value="true"/-->
+  <arg name="actor_name" default="actor00"/>
+  <!--arg name="with_map" default="true"/>
+  <arg name="with_no_go_map" default="false"/-->
+
+  <!-- SPAWN YOUR ACTORS HERE -->
+
+  <!-- First actor -->
+  <group ns="$(arg actor_name)">
+    <include file="$(find rasberry_gazebo)/launch/actor_move_base_teb.launch">
+      <arg name="actor_name" value="$(arg actor_name)" />
+      <!--arg name="with_map" value="$(arg with_map)"/>
+      <arg name="with_no_go_map" value="$(arg with_no_go_map)"/-->
+    </include>
+  </group>
+
+  <!-- Second actor -->
+  <!--group ns="$(arg actor_name)">
+    <include file="$(find rasberry_gazebo)/launch/actor_move_base_teb.launch">
+      <arg name="actor_name" value="$(arg actor_name)" /-->
+      <!--arg name="with_map" value="$(arg with_map)"/-->
+      <!--arg name="with_no_go_map" value="$(arg with_no_go_map)"/>
+    </include>
+  </group-->
+
+</launch>
+
+

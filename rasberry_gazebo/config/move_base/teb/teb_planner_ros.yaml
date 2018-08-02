@@ -47,8 +47,9 @@ TebLocalPlannerROS:
    front_radius: 0.2 # for type "two_circles"
    rear_offset: 0.2 # for type "two_circles"
    rear_radius: 0.2 # for type "two_circles"
-   vertices:  [ [-0.27,-0.25], [1.45,-0.25], [1.45,0.25], [-0.27,0.25] ]   # for type "polygon"
+   vertices:  [[-0.25, -0.175], [0.25, -0.175], [0.25, 0.175], [-0.25, 0.175]]   # for type "polygon"
               #  xmin,ymin     xmax,ymin   xmax,ymax     xmin,ymax
+
  # GoalTolerance
     
  xy_goal_tolerance: 0.2
