@@ -28,7 +28,7 @@ windows:
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - true || roslaunch rasberry_move_base map_server.launch map:="$MAP"
+  - roslaunch rasberry_move_base map_server.launch map:="$MAP"
   - roslaunch rasberry_navigation rasberry_localisation.launch
 - name: navigation
   panes:
