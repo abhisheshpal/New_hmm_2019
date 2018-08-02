@@ -5,6 +5,6 @@
 	path = rasberry_data_collection/StrawberryData
 	url = https://github.com/RaymondKirk/StrawberryData.git
 [submodule "rasberry_people_perception/ros_marvelmind_lcas"]
-	path = rasberry_people_perception/ros_marvelmind_lcas
+	path = ros_marvelmind_lcas
 	url = https://github.com/LCAS/ros_marvelmind_package.git
 	branch = master
