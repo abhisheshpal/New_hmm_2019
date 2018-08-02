@@ -23,7 +23,7 @@ windows:
   - sleep 3; roslaunch rasberry_move_base map_server.launch map:=$MAP
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
   - roslaunch rasberry_bringup hokuyo.launch
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
