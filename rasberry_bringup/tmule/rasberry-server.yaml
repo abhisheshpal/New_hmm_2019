@@ -1,0 +1,40 @@
+---
+init_cmd: |
+  source $HOME/workshop2018/devel/setup.bash
+  # search for VPN tun device:
+  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" "`
+  default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
+  export BASE_CONFIG_DIR=`readlink -f .`
+  export ROBOT_NAME=`hostname | tr "-" "_" | tr "." "_" `
+  export ROS_MASTER=$default_ip
+  export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
+  export ROS_HOSTNAME=$ROS_IP
+  export MONGO_PATH="$HOME/mongodb-rasberry"
+  export TMAP="norway_poles"
+  export MAP="$HOME/maps/norway_poles.yaml"
+  export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
+  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
+windows:
+- name: init
+  panes:
+  - roscore
+  - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
+- name: topo_map
+  panes:
+  - sleep 3; roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
+- name: 2D_map
+  panes:
+  - sleep 3; roslaunch rasberry_move_base map_server.launch map:=$MAP
+- name: people
+  panes:
+  - sleep 3; rosrun rasberry_people_perception simple_marvel_localiser.py
+- name: callarobot
+  panes:
+  - sleep 3; WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
+  - sleep 3; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_norway_poles.yaml
+- name: coordination_server
+  panes:
+  - sleep 3; roslaunch rasberry_coordination coordination.launch
+- name: dataset_recording
+  panes:
+  - ls
