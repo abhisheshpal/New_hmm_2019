@@ -5,7 +5,7 @@ init_cmd: |
   default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" "`
   default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
   export BASE_CONFIG_DIR=`readlink -f .`
-  export ROBOT_NAME=`hostname | tr "-" "_" | tr "." "_" `
+  export ROBOT_NAME=`hostname | tr "-" "_" | tr "." "_"`
   export ROS_MASTER=$default_ip
   export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
   export ROS_HOSTNAME=$ROS_IP
