@@ -11,7 +11,7 @@ init_cmd: |
   export ROS_HOSTNAME=$ROS_IP
   export MONGO_PATH="$HOME/mongodb-rasberry"
   export TMAP="norwaypolys"
-  export MAP="$HOME/maps/norwaypolys.yaml"
+  export MAP="$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
   export ROBOT_NO=`hostname | cut -f2 -d"-"`
   export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
@@ -28,6 +28,7 @@ windows:
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
+  - true || roslaunch rasberry_move_base map_server.launch map:="$MAP"
   - roslaunch rasberry_navigation rasberry_localisation.launch
 - name: navigation
   panes:
