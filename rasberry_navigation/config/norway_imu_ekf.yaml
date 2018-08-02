@@ -25,7 +25,7 @@ odom0_nodelay: true
 odom0_differential: false
 odom0_relative: false  #turn off for displaying in rviz
 
-imu0: imu1
+imu0: imu/data
 imu0_config: [false, false, false,
         false, false, false,
         false, false, false,
