@@ -10,6 +10,6 @@
   </node>
 
   <!-- amcl -->
-  <!--<include file="$(find rasberry_move_base)/launch/amcl.launch"/>-->
+  <include file="$(find rasberry_move_base)/launch/amcl.launch"/>
 
 </launch>
