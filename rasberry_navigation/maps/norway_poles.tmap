@@ -11,25 +11,25 @@
       node: WayPoint8
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint1_WayPoint15
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint15
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint1_WayPoint15
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint15
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint1
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999990642071
+        w: 1.0
         x: 5.17417975132e-09
         y: 2.9290732062e-09
-        z: 0.00439974665642
+        z: 0.0
       position:
-        x: 4.84463310242
+        x: 1.84463310242
         y: 5.64295101166
         z: 0.0
     verts:
@@ -64,23 +64,23 @@
       node: WayPoint13
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint10_WayPoint16
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint16
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint10_WayPoint16
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint16
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint10
     pointset: norway_poles
     pose:
       orientation:
-        w: 1.0
+        w: 0.0
         x: -0.0
         y: -0.0
-        z: -0.00094200001331
+        z: 1.000
       position:
         x: 10.5611801147
         y: 2.8753888607
@@ -117,26 +117,26 @@
       node: WayPoint16
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint11_WayPoint19
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint19
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint11_WayPoint19
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint19
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint11
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999753415585
+        w: 0.0
         x: -3.34985594819e-09
         y: -4.70311256606e-09
-        z: 0.0222080647945
+        z: 1.0
       position:
         x: 16.8256473541
-        y: 3.05763459206
+        y: 3.15763459206
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -183,12 +183,12 @@
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.00692674005404
+        w: 1.00
         x: -3.14385573574e-07
         y: 2.40398946971e-07
-        z: -0.999976038933
+        z: 0.0
       position:
-        x: 22.7810535431
+        x: 25.7810535431
         y: 3.23142027855
         z: 0.0
     verts:
@@ -223,23 +223,23 @@
       node: WayPoint9
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint13_WayPoint10
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint10
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint13_WayPoint10
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint10
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint13
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999986469746
+        w: 0.0
         x: -5.94998317283e-09
         y: -3.57424645436e-09
-        z: -0.00521099567413
+        z: 1.00
       position:
         x: 7.59073495865
         y: 2.74863052368
@@ -276,13 +276,13 @@
       node: WayPoint7
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint14_WayPoint8
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint8
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint14_WayPoint8
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint8
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint14
@@ -315,20 +315,20 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 6.28
+    yaw_goal_tolerance: 0.0
 - meta:
     map: norway_poles
     node: WayPoint15
     pointset: norway_poles
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint15_WayPoint2
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint2
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint15_WayPoint2
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint2
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     - action: move_base
       edge_id: WayPoint15_WayPoint1
       inflation_radius: 0.0
@@ -342,13 +342,13 @@
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999894678593
+        w: 0.0
         x: -3.1438158743e-09
         y: -1.64326896535e-09
-        z: 0.014520063065
+        z: 1.0
       position:
         x: 7.51546096802
-        y: 5.79886960983
+        y: 5.64886960983
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -382,23 +382,23 @@
       node: WayPoint10
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint16_WayPoint11
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint11
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint16_WayPoint11
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint11
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint16
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999708890915
+        w: 0.0
         x: 2.35128339021e-09
         y: 3.326229292e-09
-        z: 0.0241347588599
+        z: 1.0
       position:
         x: 13.6766757965
         y: 2.9662694931
@@ -435,13 +435,13 @@
       node: WayPoint6
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint17_WayPoint7
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint7
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint17_WayPoint7
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint7
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint17
@@ -474,7 +474,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 6.28
+    yaw_goal_tolerance: 0.0
 - meta:
     map: norway_poles
     node: WayPoint18
@@ -488,26 +488,26 @@
       node: WayPoint2
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint18_WayPoint3
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint3
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint18_WayPoint3
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint3
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint18
     pointset: norway_poles
     pose:
       orientation:
-        w: 1.0
+        w: 0.0
         x: 0.0
         y: 0.0
-        z: 0.0
+        z: 1.0
       position:
         x: 13.4878616333
-        y: 6.00926017761
+        y: 6.009
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -541,26 +541,26 @@
       node: WayPoint11
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint19_WayPoint12
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint12
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint19_WayPoint12
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint12
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint19
     pointset: norway_poles
     pose:
       orientation:
-        w: 1.0
+        w: 0.0
         x: 0.0
         y: 0.0
-        z: 0.0
+        z: 1.0
       position:
         x: 19.8731765747
-        y: 3.21426224709
+        y: 3.26426224709
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -594,26 +594,26 @@
       node: WayPoint15
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint2_WayPoint18
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint18
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint2_WayPoint18
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint18
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint2
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999697089195
+        w: 0.0
         x: 0.0
         y: -0.0
-        z: 0.0246120020747
+        z: 1.0
       position:
         x: 10.4962129593
-        y: 5.9139547348
+        y: 5.86 
         z: -0.0
     verts:
     - x: 0.689999997616
@@ -647,13 +647,13 @@
       node: WayPoint5
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint20_WayPoint6
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint6
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint20_WayPoint6
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint6
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint20
@@ -686,7 +686,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 6.28
+    yaw_goal_tolerance: 0.0
 - meta:
     map: norway_poles
     node: WayPoint21
@@ -700,26 +700,26 @@
       node: WayPoint3
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint21_WayPoint4
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint4
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint21_WayPoint4
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint4
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint21
     pointset: norway_poles
     pose:
       orientation:
-        w: 1.0
+        w: 0.0
         x: 0.0
         y: 0.0
-        z: 0.0
+        z: 1.0
       position:
         x: 19.7805290222
-        y: 6.30268335342
+        y: 6.302683352
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -753,23 +753,23 @@
       node: WayPoint18
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint3_WayPoint21
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint21
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint3_WayPoint21
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint21
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint3
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.999894
+        w: 0.0
         x: -0.0
         y: 0.0
-        z: 0.014528
+        z: 1.0
       position:
         x: 16.781354
         y: 6.133478
@@ -794,7 +794,7 @@
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
 - meta:
-    map: norway_poles
+    map: Norway_case_
     node: WayPoint4
     pointset: norway_poles
   node:
@@ -819,13 +819,13 @@
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.707
+        w: 1.0
         x: 0.0
         y: 0.0
-        z: -0.707
+        z: 0.0
       position:
-        x: 22.852148056
-        y: 6.39380121231
+        x: 25.852148056
+        y: 6.39380
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -866,25 +866,25 @@
       node: WayPoint12
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint5_WayPoint20
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint20
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint5_WayPoint20
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint20
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint5
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.0
+        w: 1.0
         x: 0.0
         y: 0.0
-        z: -1.0
+        z: 0.0
       position:
-        x: 22.8261203766
+        x: 25.8261203766
         y: 4.84428930283
         z: 0.0
     verts:
@@ -912,13 +912,13 @@
     pointset: norway_poles
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint6_WayPoint17
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint17
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint6_WayPoint17
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint17
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     - action: move_base
       edge_id: WayPoint6_WayPoint20
       inflation_radius: 0.0
@@ -958,20 +958,20 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.0
-    yaw_goal_tolerance: 6.28
+    yaw_goal_tolerance: 0.0
 - meta:
     map: norway_poles
     node: WayPoint7
     pointset: norway_poles
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint7_WayPoint14
-      inflation_radius: 0.0
-      map_2d: norway_poles
-      node: WayPoint14
-      recovery_behaviours_config: ''
-      top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint7_WayPoint14
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint14
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     - action: move_base
       edge_id: WayPoint7_WayPoint17
       inflation_radius: 0.0
@@ -1011,7 +1011,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.0
-    yaw_goal_tolerance: 6.28
+    yaw_goal_tolerance: 0.0
 - meta:
     map: norway_poles
     node: WayPoint8
@@ -1039,18 +1039,25 @@
       node: WayPoint14
       recovery_behaviours_config: ''
       top_vel: 0.55
+    # - action: move_base
+    #   edge_id: WayPoint8_WayPoint15
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint15
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint8
     pointset: norway_poles
     pose:
       orientation:
-        w: 0.707
+        w: 1.0
         x: 0.0
         y: 0.0
-        z: -0.707
+        z: 0.0
       position:
-        x: 4.87381505966
+        x: 1.87381505966
         y: 4.08887815475
         z: 0.0
     verts:
@@ -1086,12 +1093,19 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint9_WayPoint13
+      edge_id: WayPoint9_WayPoint22
       inflation_radius: 0.0
       map_2d: norway_poles
-      node: WayPoint13
+      node: WayPoint22
       recovery_behaviours_config: ''
       top_vel: 0.55
+    #- action: move_base
+    #   edge_id: WayPoint9_WayPoint13
+    #   inflation_radius: 0.0
+    #   map_2d: norway_poles
+    #   node: WayPoint13
+    #   recovery_behaviours_config: ''
+    #   top_vel: 0.55
     localise_by_topic: ''
     map: norway_poles
     name: WayPoint9
@@ -1103,7 +1117,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 4.93059492111
+        x: 1.93059492111
         y: 2.62772059441
         z: 0.0
     verts:
@@ -1125,3 +1139,157 @@
       y: -0.287000000477
     xy_goal_tolerance: 0.0
     yaw_goal_tolerance: 0.0
+- meta:
+    map: norway_poles
+    node: WayPoint22
+    pointset: norway_poles
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint22_WayPoint9
+      inflation_radius: 0.0
+      map_2d: norway_poles
+      node: WayPoint9
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint22_WayPoint23
+      inflation_radius: 0.0
+      map_2d: norway_poles
+      node: WayPoint23
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint22_WayPoint24
+      inflation_radius: 0.0
+      map_2d: norway_poles
+      node: WayPoint24
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway_poles
+    name: WayPoint22
+    pointset: norway_poles
+    pose:
+      orientation:
+        w: 0.707
+        x: 0.0
+        y: 0.0
+        z: 0.707
+      position:
+        x: 1.93059492111
+        y: -1.62772059441
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+- meta:
+    map: norway_poles
+    node: WayPoint23
+    pointset: norway_poles
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint23_WayPoint22
+      inflation_radius: 0.0
+      map_2d: norway_poles
+      node: WayPoint22
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway_poles
+    name: WayPoint23
+    pointset: norway_poles
+    pose:
+      orientation:
+        w: 0.707
+        x: 0.0
+        y: 0.0
+        z: 0.707
+      position:
+        x: 4.93059492111
+        y: -1.62772059441
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+- meta:
+    map: norway_poles
+    node: WayPoint24
+    pointset: norway_poles
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint24_WayPoint22
+      inflation_radius: 0.0
+      map_2d: norway_poles
+      node: WayPoint22
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway_poles
+    name: WayPoint24
+    pointset: norway_poles
+    pose:
+      orientation:
+        w: 0.707
+        x: 0.0
+        y: 0.0
+        z: 0.707
+      position:
+        x: -1.93059492111
+        y: -1.62772059441
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.0
+    yaw_goal_tolerance: 0.0
+
+

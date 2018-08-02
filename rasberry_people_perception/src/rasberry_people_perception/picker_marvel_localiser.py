@@ -54,18 +54,18 @@ class PickerMarvelLocaliser(object):
         """callback function for headge_pose_a topics
         """
         if msg.address not in self.picker_marvel_ids:
-            self.n_pickers += 1
-            self.picker_marvel_ids.append(msg.address)
             # set up pose publishers
-            self.posestamped_pubs[msg.address] = rospy.Publisher("/picker_%02d/posestamped" %(msg.address), geometry_msgs.msg.PoseStamped, queue_size=5)
+            self.posestamped_pubs[msg.address] = rospy.Publisher("/picker%02d/posestamped" %(msg.address), geometry_msgs.msg.PoseStamped, queue_size=5)
 #            self.pose_msgs[msg.address] = geometry_msgs.msg.Pose()
             self.posestamped_msgs[msg.address] = geometry_msgs.msg.PoseStamped()
             self.posestamped_msgs[msg.address].header.frame_id = "/map"
             # set up topo map related pubs
-            self.current_node_pubs[msg.address] = rospy.Publisher("/picker_%02d/current_node" %(msg.address), std_msgs.msg.String, queue_size=5)
+            self.current_node_pubs[msg.address] = rospy.Publisher("/picker%02d/current_node" %(msg.address), std_msgs.msg.String, queue_size=5)
             self.current_node_msgs[msg.address] = std_msgs.msg.String()
-            self.closest_node_pubs[msg.address] = rospy.Publisher("/picker_%02d/closest_node" %(msg.address), std_msgs.msg.String, queue_size=5)
-            self.closest_node_msgs[msg.address] = std_msgs.msg.String()
+            self.closest_node_pubs[msg.address] = rospy.Publisher("/picker%02d/closest_node" %(msg.address), std_msgs.msg.String, queue_size=5)
+            self.picker_marvel_ids.append(msg.address)
+            self.n_pickers += 1
+
 
         # TODO: assuming there is a tf frame /marvelmind from which a transformation is broadcasted to /map frame
         # TODO: pose in frame /map to be used for finding the topological current and closest nodes
