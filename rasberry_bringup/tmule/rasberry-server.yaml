@@ -9,7 +9,7 @@ init_cmd: |
   export ROS_MASTER=$default_ip
   export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
   export ROS_HOSTNAME=$ROS_IP
-  export MONGO_PATH="$HOME/mongodb-rasberry"
+  export MONGO_PATH="$HOME/mongodb"
   export TMAP="norway_poles"
   export MAP="$HOME/maps/norway_poles.yaml"
   export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
