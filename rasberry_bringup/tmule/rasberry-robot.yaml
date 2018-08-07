@@ -15,6 +15,8 @@ init_cmd: |
   export ROBOT_NO=`hostname | cut -f2 -d"-"`
   export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
+  export ROSBRIDGE_IP="10.8.0.4"
+  export ROSBRIDGE_PORT="9090"
 windows:
 - name: init
   panes:
@@ -39,7 +41,7 @@ windows:
   - ls 
 - name: coordination_robot
   panes:
-  - sleep 3; roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=10.8.0.4 rosbridge_port:=9090
+  - sleep 3; roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
 - name: dataset_recording
   panes:
   - ls
