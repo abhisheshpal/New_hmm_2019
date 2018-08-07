@@ -32,7 +32,7 @@ tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_navigation topological_map_
 
 tmux select-window -t $SESSION:2
 tmux send-keys "echo '2D map server'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_gazebo)/maps/norway_poles.yaml"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
 
 tmux select-window -t $SESSION:3
 tmux send-keys "echo 'rviz'" C-m
@@ -43,18 +43,8 @@ tmux send-keys "echo 'marvelmind localiser'" C-m
 tmux send-keys "DISPLAY=:$DISPLAY rosrun rasberry_people_perception simple_marvel_localiser.py"
 
 tmux select-window -t $SESSION:5
-tmux split-window -h
-tmux select-pane -t 0
-tmux split-window -h
-tmux select-pane -t 0
 tmux send-keys "echo 'rosbridge'" C-m
 tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_coordination coordination.launch"
-tmux select-pane -t 1
-tmux send-keys "echo 'rosduct to server'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_coordination server_websocket_adapter.launch robot_name:=thorvald_003 rosbridge_ip:=10.8.0.5 rosbridge_port:=9090"
-tmux select-pane -t 2
-tmux send-keys "echo 'rosduct to server'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_coordination server_websocket_adapter.launch robot_name:=thorvald_005 rosbridge_ip:=10.8.0.3 rosbridge_port:=9090"
 
 tmux select-window -t $SESSION:6
 tmux split-window -h

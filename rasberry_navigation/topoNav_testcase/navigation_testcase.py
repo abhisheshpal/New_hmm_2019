@@ -116,7 +116,7 @@ class topol_nav_client:
 if __name__ == '__main__':
 
 
-    if rospy.get_param('/testcases/task') not in range (1,4) or rospy.get_param('/testcases/rowNumber') > len(ROWS):
+    if rospy.get_param('/navigation_testcase/task') not in range (1,4) or rospy.get_param('/navigation_testcase/rowNumber') > len(ROWS):
         print 'Usage: [1] task : (1) goStraight / (2) roundTrip / (3) navigate through all rows \n [2] index of the row for task 1 and 2 (from 0 to %d)' %(len(ROWS)-1)
         sys.exit(2)
 
@@ -139,4 +139,4 @@ if __name__ == '__main__':
 
     elif task == 3:
 
-        navigator.navigate()
+navigator.navigate()

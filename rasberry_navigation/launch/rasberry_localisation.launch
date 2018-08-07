@@ -5,7 +5,7 @@
   <arg name="ekf_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
 
   <!-- imu-ekf localization for odom-to-base_link -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true">
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
     <rosparam command="load" file="$(arg ekf_config)" />
   </node>
 

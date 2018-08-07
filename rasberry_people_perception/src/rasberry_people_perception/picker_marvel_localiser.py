@@ -63,21 +63,21 @@ class PickerMarvelLocaliser(object):
             self.current_node_pubs[msg.address] = rospy.Publisher("/picker%02d/current_node" %(msg.address), std_msgs.msg.String, queue_size=5)
             self.current_node_msgs[msg.address] = std_msgs.msg.String()
             self.closest_node_pubs[msg.address] = rospy.Publisher("/picker%02d/closest_node" %(msg.address), std_msgs.msg.String, queue_size=5)
+            self.closest_node_msgs[msg.address] = std_msgs.msg.String()
             self.picker_marvel_ids.append(msg.address)
             self.n_pickers += 1
 
 
         # TODO: assuming there is a tf frame /marvelmind from which a transformation is broadcasted to /map frame
         # TODO: pose in frame /map to be used for finding the topological current and closest nodes
-
-        self.posestamped_msgs[msg.address].pose.position.x = msg.x_m
-        self.posestamped_msgs[msg.address].pose.position.y = msg.y_m
-        self.posestamped_pubs[msg.address].publish(self.posestamped_msgs[msg.address])
-        current_node, closest_node = self.topo_localiser.localise_pose(self.posestamped_msgs[msg.address])
-        if current_node is not None:
-            self.current_node_msgs[msg.address].data = current_node
-            self.current_node_pubs[msg.address].publish(self.current_node_msgs[msg.address])
-        if closest_node is not None:
-            self.closest_node_msgs[msg.address].data = closest_node
-            self.closest_node_pubs[msg.address].publish(self.closest_node_msgs[msg.address])
-
+        if msg.address in self.picker_marvel_ids:
+            self.posestamped_msgs[msg.address].pose.position.x = msg.x_m
+            self.posestamped_msgs[msg.address].pose.position.y = msg.y_m
+            self.posestamped_pubs[msg.address].publish(self.posestamped_msgs[msg.address])
+            current_node, closest_node = self.topo_localiser.localise_pose(self.posestamped_msgs[msg.address])
+            if current_node is not None:
+                self.current_node_msgs[msg.address].data = current_node
+                self.current_node_pubs[msg.address].publish(self.current_node_msgs[msg.address])
+            if closest_node is not None:
+                self.closest_node_msgs[msg.address].data = closest_node
+                self.closest_node_pubs[msg.address].publish(self.closest_node_msgs[msg.address])
