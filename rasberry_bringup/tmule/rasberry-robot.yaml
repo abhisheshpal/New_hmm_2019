@@ -9,7 +9,7 @@ init_cmd: |
   export ROS_MASTER=$default_ip
   export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
   export ROS_HOSTNAME=$ROS_IP
-  export MONGO_PATH="$HOME/mongodb-rasberry"
+  export MONGO_PATH="$HOME/mongodb"
   export TMAP="norway_poles"
   export MAP="$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
   export ROBOT_NO=`hostname | cut -f2 -d"-"`
@@ -19,6 +19,7 @@ windows:
 - name: init
   panes:
   - roscore
+  - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
