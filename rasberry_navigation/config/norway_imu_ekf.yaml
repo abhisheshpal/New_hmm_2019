@@ -15,11 +15,11 @@ base_link_frame: base_link
 world_frame: odom
 
 odom0: odometry/base_raw
-odom0_config: [false, false, true,    # x y z
-         false, false, false,   # roll pitch yaw
-         true,  true,  false,   # Vx Vy Vz
-         false, false, false,   # Gx Gy Gz
-         false, false, false]   # Ax Ay Az
+odom0_config: [false, false, true,  # X,        Y,        Z
+               false, false, false, # roll,     pitch,    yaw
+               true,  true,  false, # vx,       vy,       vz
+               false, false, false, # gyro_x,   gyro_y,   gyro_z
+               false, false, false] # accel_x,  accel_y,  accel_z
 odom0_queue_size: 10
 odom0_nodelay: true
 odom0_differential: false
@@ -27,13 +27,13 @@ odom0_relative: false  #turn off for displaying in rviz
 
 imu0: imu/data
 imu0_config: [false, false, false,
-        false, false, false,
-        false, false, false,
-        false, false, true,  #for rosbag angular velocity for yaw is zero
-        false, false, false]
+              false, false, true,
+              false, false, false,
+              false, false, true,  
+              true,  false, false]
 imu0_nodelay: false
 imu0_differential: false
-imu0_relative: false
+imu0_relative: true
 imu0_queue_size: 10
 imu0_remove_gravitational_acceleration: false
 
