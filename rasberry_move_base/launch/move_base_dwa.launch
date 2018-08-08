@@ -9,6 +9,7 @@
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
         <remap from="/cmd_vel" to="/nav_vel"/>
+        <remap from="odom" to="odometry/base_raw"/>
 
         <!--Parameters-->
 
@@ -23,7 +24,7 @@
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
         <rosparam file="$(find rasberry_move_base)/config/local_costmap_params.yaml" command="load"/>
         <rosparam file="$(find rasberry_move_base)/config/global_costmap_params.yaml" command="load"/>
-	    <rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
+	<rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
 
     </node>
     

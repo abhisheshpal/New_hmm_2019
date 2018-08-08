@@ -4,9 +4,9 @@
   <arg name="with_tf_publisher" default="false"/>
 
   <arg name="with_map_server" default="false"/>
-  <arg name="map" default="$(find rasberry_gazebo)/maps/norway_poles.yaml" if="$(arg with_map_server)"/>
+  <arg name="map" default="$(find rasberry_navigation)/maps/norway_poles.yaml" if="$(arg with_map_server)"/>
   <arg name="with_no_go_map" default="false" if="$(arg with_map_server)"/>
-  <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/no_go_norway_poles.yaml" if="$(arg with_no_go_map)"/>
+  <arg name="no_go_map" default="$(find rasberry_navigation)/maps/no_go_norway_poles.yaml" if="$(arg with_no_go_map)"/>
 
   <arg name="with_mongodb" default="false"/>
   <arg name="db_path" if="$(arg with_mongodb)"/>

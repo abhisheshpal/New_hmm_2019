@@ -3,9 +3,9 @@
   <arg name="actor_name" default="actor00"/>
   <arg name= "tf_prefix" value="$(arg actor_name)" />
   <arg name="with_map" default="false"/>
-  <arg name="map" default="$(find rasberry_gazebo)/maps/riseholme_sim.yaml"/>
+  <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml"/>
   <arg name="with_no_go_map" default="false"/>
-  <arg name="no_go_map" default="$(find rasberry_gazebo)/maps/riseholme_sim_no_go.yaml"/>
+  <arg name="no_go_map" default="$(find rasberry_navigation)/maps/riseholme_sim_no_go.yaml"/>
 
      <!--launch map server-->
       <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)" if="$(arg with_map)">

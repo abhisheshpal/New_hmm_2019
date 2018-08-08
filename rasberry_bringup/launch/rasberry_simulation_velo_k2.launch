@@ -6,7 +6,7 @@
       https://gitsvn-nt.oru.se/iliad/software/kinect2_simulation
 
 
-roslaunch move_base_teb.launch map:=$(rospack find rasberry_gazebo)/maps/riseholme_sim.yaml
+roslaunch move_base_teb.launch map:=$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml
 rviz -d catkin_ws/src/RASberry_git/rasberry_gazebo/rviz/polytunnel_velodyne_kinect2.rviz 
   -->
 <launch>
