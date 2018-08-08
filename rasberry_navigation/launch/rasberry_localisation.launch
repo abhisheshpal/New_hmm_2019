@@ -2,12 +2,21 @@
 
 <launch>
 
-  <arg name="ekf_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
+ 	<arg name="ekf_imu_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
+  <arg name="ekf_odom_config" default="$(find rasberry_navigation)/config/norway_odom_ekf.yaml"/>
+  <arg name="use_imu" default="true"/>
 
   <!-- imu-ekf localization for odom-to-base_link -->
-  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
-    <rosparam command="load" file="$(arg ekf_config)" />
-  </node>
+  <group if="$(arg use_imu)">
+	  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
+	    <rosparam command="load" file="$(arg ekf_imu_config)" />
+	  </node>
+  </group>
+  <group unless="$(arg use_imu)">
+  	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
+	    <rosparam command="load" file="$(arg ekf_odom_config)" />
+	  </node>
+  </group>
 
   <!-- amcl -->
   <include file="$(find rasberry_move_base)/launch/amcl.launch"/>
