@@ -9,12 +9,12 @@ project(rasberry_move_base)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   amcl
-  dwa-local-planner
-  eband-local-planner
+  dwa_local_planner
+  eband_local_planner
   map_server
   move_base
   robot_pose_publisher
-  teb-local-planner
+  teb_local_planner
   tf
 )
 
