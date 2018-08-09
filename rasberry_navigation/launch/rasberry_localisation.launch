@@ -7,16 +7,10 @@
   <arg name="use_imu" default="true"/>
 
   <!-- imu-ekf localization for odom-to-base_link -->
-  <group if="$(arg use_imu)">
-	  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
-	    <rosparam command="load" file="$(arg ekf_imu_config)" />
-	  </node>
-  </group>
-  <group unless="$(arg use_imu)">
-  	<node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
-	    <rosparam command="load" file="$(arg ekf_odom_config)" />
-	  </node>
-  </group>
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
+    <rosparam command="load" file="$(arg ekf_imu_config)" if="$(arg use_imu)"/>
+    <rosparam command="load" file="$(arg ekf_odom_config)" unless="$(arg use_imu)"/>
+  </node> 
 
   <!-- amcl -->
   <include file="$(find rasberry_move_base)/launch/amcl.launch"/>
