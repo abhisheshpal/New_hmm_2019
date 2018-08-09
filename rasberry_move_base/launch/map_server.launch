@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="map" default="$(find rasberry_gazebo)/maps/riseholme_sim.yaml"/>
+    <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml"/>
     <arg name="no_go_map" default=""/>
     <arg name="use_no_go_map" default="false"/>
 

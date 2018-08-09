@@ -2,6 +2,7 @@
 
 SESSION=$USER
 DISPLAY=0
+ROBOT_NO='003'
 
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files
@@ -28,30 +29,30 @@ tmux select-window -t $SESSION:1
 tmux split-window -v
 tmux select-pane -t 0
 tmux send-keys "echo 'mongodb'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch mongodb_store mongodb_store.launch db_path:=$1"
+tmux send-keys "roslaunch mongodb_store mongodb_store.launch db_path:=$1"
 tmux select-pane -t 1
 tmux send-keys "echo 'topological map server'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_navigation topological_map_manager_central.launch map:=riseholme"
+tmux send-keys "roslaunch rasberry_navigation topological_map_manager_central.launch map:=riseholme"
 
 tmux select-window -t $SESSION:2
 tmux send-keys "echo 'robot localisation'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_sensors.xacro simple_sim:=true world_name:=riseholme with_actors:=false"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_"$ROBOT_NO".yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_"$ROBOT_NO"_sim_sensors.xacro simple_sim:=true world_name:=riseholme with_actors:=false"
 
 tmux select-window -t $SESSION:3
 tmux send-keys "echo '2D map server'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_gazebo)/maps/riseholme_sim.yaml"
+tmux send-keys "roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml"
 
 tmux select-window -t $SESSION:4
 tmux send-keys "echo 'robot localisation'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base amcl.launch"
+tmux send-keys "roslaunch rasberry_move_base amcl.launch"
 
 tmux select-window -t $SESSION:5
 tmux send-keys "echo 'move_base actions for the robot'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_move_base move_base_teb.launch"
+tmux send-keys "roslaunch rasberry_move_base move_base_dwa.launch"
 
 tmux select-window -t $SESSION:6
 tmux send-keys "echo 'topological navigation actions for the robot'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=TebLocalPlannerROS"
+tmux send-keys "roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS"
 
 tmux select-window -t $SESSION:7
 tmux send-keys "echo 'rviz'" C-m
@@ -62,19 +63,19 @@ tmux split-window -v
 tmux select-pane -t 0
 tmux send-keys "echo 'mimic marvelmind_nav/hedge_rcv_bin or run that node if available'" C-m
 tmux send-keys "echo 'rosrun marvelmind_nav hedge_rcv_bin'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY rostopic pub -r 10 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '1' '0' '2.0' '4.0' '0.0' '0'"
+tmux send-keys "rostopic pub -r 10 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '1' '0' '2.0' '4.0' '0.0' '0'"
 tmux select-pane -t 1
 tmux send-keys "echo 'marvelmind localiser'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY rosrun rasberry_people_perception simple_marvel_localiser.py"
+tmux send-keys "rosrun rasberry_people_perception simple_marvel_localiser.py"
 
 tmux select-window -t $SESSION:9
 tmux split-window -h
 tmux select-pane -t 0
 tmux send-keys "echo 'callarobot websocket client'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py"
+tmux send-keys "WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py"
 tmux select-pane -t 1
 tmux send-keys "echo 'task scheduler'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY rosrun rasberry_coordination simple_task_executor_node.py"
+tmux send-keys "rosrun rasberry_coordination simple_task_executor_node.py"
 
 # Set default window
 tmux select-window -t $SESSION:1

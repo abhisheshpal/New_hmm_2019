@@ -2,7 +2,7 @@
 
 <launch>
 
- 	<arg name="ekf_imu_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
+  <arg name="ekf_imu_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
   <arg name="ekf_odom_config" default="$(find rasberry_navigation)/config/norway_odom_ekf.yaml"/>
   <arg name="use_imu" default="true"/>
 

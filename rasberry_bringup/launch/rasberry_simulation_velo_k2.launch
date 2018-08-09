@@ -6,7 +6,7 @@
       https://gitsvn-nt.oru.se/iliad/software/kinect2_simulation
 
 
-roslaunch move_base_teb.launch map:=$(rospack find rasberry_gazebo)/maps/riseholme_sim.yaml
+roslaunch move_base_teb.launch map:=$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml
 rviz -d catkin_ws/src/RASberry_git/rasberry_gazebo/rviz/polytunnel_velodyne_kinect2.rviz 
   -->
 <launch>
@@ -73,7 +73,7 @@ rviz -d catkin_ws/src/RASberry_git/rasberry_gazebo/rviz/polytunnel_velodyne_kine
 
   <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)"/>
 
-  <include file="$(find rasberry_actors)/launch/include_actors.launch" if="$(arg with_actors)"/>
+  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
 
 
 

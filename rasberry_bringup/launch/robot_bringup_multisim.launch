@@ -1,0 +1,90 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="simple_sim" default="true"/>
+  <arg name="with_teleoperation" default="false" />
+  <arg name="world_name" default="riseholme" if="$(arg simple_sim)"/>
+  <arg name="with_actors" default="false"/>
+
+
+  <!-- Robot_1 model arguments.  -->
+  <arg name="robot_name_1" default="thorvald_001" />
+  <arg name="robot_model_1" default="$(find rasberry_bringup)/config/norway_robot_003.yaml"/>
+  <arg name="model_extras_1" default="$(find rasberry_bringup)/urdf/norway_robot_003_sim_sensors.xacro"/>
+  <arg name="tf_prefix_1" default="$(arg robot_name_1)" />
+  <arg name="joy_dev_1" default="/dev/input/js0" />
+  <!-- Robot starting pose arguments for simulation  -->
+  <arg name="start_pose_x_1" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_y_1" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_z_1" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_R_1" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_P_1" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_Y_1" default="-1.7" if="$(arg simple_sim)"/>
+  <!-- model bringup -->
+  <group ns="$(arg robot_name_1)">
+    <include file="$(find thorvald_model)/launch/model.launch">
+      <arg name="robot_name" value="$(arg robot_name_1)" />
+      <arg name="tf_prefix" value="$(arg tf_prefix_1)" />
+      <arg name="robot_model" value="$(arg robot_model_1)" />
+      <arg name="model_extras" value="$(arg model_extras_1)" />
+    </include>
+    <!-- base bringup-->
+    <include file="$(find thorvald_base)/launch/base_bringup.launch">
+      <arg name="robot_model" value="$(arg robot_model_1)" />
+      <arg name="simple_sim" value="$(arg simple_sim)" />
+    </include>
+    <!-- teleop bringup -->
+    <include file="$(find thorvald_teleop)/launch/teleop_xbox.launch" if="$(arg with_teleoperation)">
+      <arg name="joy_dev" value="$(arg joy_dev_1)" />
+    </include>
+    <!-- twist mux bringup -->
+    <include file="$(find thorvald_twist_mux)/launch/twist_mux.launch" />
+    <!-- spawn robot in gazebo -->
+    <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /$(arg robot_name_1)/robot_description -model $(arg robot_name_1) -x $(arg start_pose_x_1) -y $(arg start_pose_y_1) -z $(arg start_pose_z_1) -R $(arg  start_pose_R_1)  -P $(arg start_pose_P_1)  -Y $(arg start_pose_Y_1)" if="$(arg simple_sim)"/>
+  </group>
+
+
+  <!-- Robot_2 model arguments.  -->
+  <arg name="robot_name_2" default="thorvald_001" />
+  <arg name="robot_model_2" default="$(find rasberry_bringup)/config/norway_robot_003.yaml"/>
+  <arg name="model_extras_2" default="$(find rasberry_bringup)/urdf/norway_robot_003_sim_sensors.xacro"/>
+  <arg name="tf_prefix_2" default="$(arg robot_name_2)" />
+  <arg name="joy_dev_2" default="/dev/input/js0" />
+  <!-- Robot starting pose arguments for simulation  -->
+  <arg name="start_pose_x_2" default="2.0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_y_2" default="4.0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_z_2" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_R_2" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_P_2" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_Y_2" default="1.7" if="$(arg simple_sim)"/>
+  <!-- model bringup -->
+  <group ns="$(arg robot_name_2)">
+    <include file="$(find thorvald_model)/launch/model.launch">
+      <arg name="robot_name" value="$(arg robot_name_2)" />
+      <arg name="tf_prefix" value="$(arg tf_prefix_2)" />
+      <arg name="robot_model" value="$(arg robot_model_2)" />
+      <arg name="model_extras" value="$(arg model_extras_2)" />
+    </include>
+    <!-- base bringup-->
+    <include file="$(find thorvald_base)/launch/base_bringup.launch">
+      <arg name="robot_model" value="$(arg robot_model_2)" />
+      <arg name="simple_sim" value="$(arg simple_sim)" />
+    </include>
+    <!-- teleop bringup -->
+    <include file="$(find thorvald_teleop)/launch/teleop_xbox.launch" if="$(arg with_teleoperation)">
+      <arg name="joy_dev" value="$(arg joy_dev_2)" />
+    </include>
+    <!-- twist mux bringup -->
+    <include file="$(find thorvald_twist_mux)/launch/twist_mux.launch" />
+    <!-- spawn robot in gazebo -->
+    <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /$(arg robot_name_2)/robot_description -model $(arg robot_name_2) -x $(arg start_pose_x_2) -y $(arg start_pose_y_2) -z $(arg start_pose_z_2) -R $(arg  start_pose_R_2)  -P $(arg start_pose_P_2)  -Y $(arg start_pose_Y_2)" if="$(arg simple_sim)"/>
+  </group>
+
+  <!-- Launch the Gazebo world.  -->
+  <include file="$(find rasberry_gazebo)/launch/world.launch" if="$(arg simple_sim)">
+   <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+  <!-- Include actors in the Gazebo world? -->
+  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
+
+</launch>

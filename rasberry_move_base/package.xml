@@ -16,17 +16,25 @@
   <author email="jpulidofentanes@lincoln.ac.uk">Jaime Pulido Fentanes</author>
 
   <buildtool_depend>catkin</buildtool_depend>
-  <build_depend>roscpp</build_depend>
-  <build_depend>std_msgs</build_depend>
-  <build_depend>sensor_msgs</build_depend>
-  <build_depend>tf</build_depend>
-  <build_depend>move_base</build_depend>
 
+  <build_depend>amcl</build_depend>
+  <build_depend>dwa_local_planner</build_depend>
+  <build_depend>eband_local_planner</build_depend>
+  <build_depend>map_server</build_depend>
+  <build_depend>move_base</build_depend>
+  <build_depend>robot_pose_publisher</build_depend>
+  <build_depend>teb_local_planner</build_depend>
+  <build_depend>tf</build_depend>
+
+  <exec_depend>amcl</exec_depend>
+  <exec_depend>dwa_local_planner</exec_depend>
+  <exec_depend>eband_local_planner</exec_depend>
   <exec_depend>map_server</exec_depend>
   <exec_depend>move_base</exec_depend>
-  <exec_depend>dwa_local_planner</exec_depend>
+  <exec_depend>robot_pose_publisher</exec_depend>
+  <exec_depend>teb_local_planner</exec_depend>
   <exec_depend>tf</exec_depend>
-  <exec_depend>amcl</exec_depend>
+
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>

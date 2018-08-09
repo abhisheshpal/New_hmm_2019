@@ -17,9 +17,11 @@ find_package(catkin REQUIRED COMPONENTS
   move_base
   razor_imu_9dof
   robot_localization
+  robot_state_publisher
   rospy
   std_msgs
   tf
+  xacro
 )
 
 ## System dependencies are found with CMake's conventions
@@ -190,7 +192,7 @@ install(PROGRAMS
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-install(DIRECTORY config launch maps
+install(DIRECTORY config launch models urdf rviz worlds
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 )
 

@@ -8,9 +8,16 @@ project(rasberry_navigation)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  monitored_navigation
   nav_msgs
+  nmea_navsat_driver
+  rasberry_move_base
+  robot_localization
   rospy
   std_msgs
+  tf
+  topological_navigation
+  xsens_driver
 )
 
 ## System dependencies are found with CMake's conventions
@@ -184,6 +191,11 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+foreach (dir launch config maps )
+    install(DIRECTORY ${dir}/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
+endforeach(dir)
 
 #############
 ## Testing ##
