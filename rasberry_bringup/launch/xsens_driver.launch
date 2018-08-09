@@ -8,12 +8,12 @@
     <arg name="no_rotation_duration" default="0" doc="duration (int in seconds) of the no-rotation calibration procedure"/>
 
     <!-- node -->
-	<node pkg="xsens_driver" type="mtnode.py" name="xsens_driver" output="screen" >
-		<param name="device" value="$(arg device)"/>
-		<param name="baudrate" value="$(arg baudrate)"/>
-		<param name="timeout" value="$(arg timeout)"/>
-		<param name="frame_id" value="$(arg frame_id)"/>
-		<param name="frame_local" value="$(arg frame_local)"/>
-		<param name="no_rotation_duration" value="$(arg no_rotation_duration)"/>
-	</node>
+    <node pkg="xsens_driver" type="mtnode.py" name="xsens_driver" output="screen" >
+        <param name="device" value="$(arg device)"/>
+        <param name="baudrate" value="$(arg baudrate)"/>
+        <param name="timeout" value="$(arg timeout)"/>
+        <param name="frame_id" value="$(arg frame_id)"/>
+        <param name="frame_local" value="$(arg frame_local)"/>
+        <param name="no_rotation_duration" value="$(arg no_rotation_duration)"/>
+    </node>
 </launch>
