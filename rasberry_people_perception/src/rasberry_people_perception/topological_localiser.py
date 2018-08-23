@@ -59,10 +59,14 @@ class TopologicalNavLoc(object):
 
         while not self.rec_map:
             rospy.sleep(rospy.Duration.from_sec(0.1))
-        rospy.loginfo("People_Perception TopologicalNavLoc ready")
+        rospy.loginfo("People_Perception TopologicalNavLoc object is successfully initialised")
 
     def localise_pose(self, req):
         """This function gets the node and closest node for a pose
+
+        Keyword arguments:
+
+        req -- geometry_msgs/PoseStamped object
         """
         not_loc = True
         distances = []

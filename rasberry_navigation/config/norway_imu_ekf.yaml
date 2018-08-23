@@ -18,7 +18,7 @@ odom0: odometry/base_raw
 odom0_config: [false, false, false,  # X,        Y,        Z
                false, false, false, # roll,     pitch,    yaw
                true,  true,  false, # vx,       vy,       vz
-               false, false, false, # gyro_x,   gyro_y,   gyro_z
+               false, false, true, # gyro_x,   gyro_y,   gyro_z
                false, false, false] # accel_x,  accel_y,  accel_z
 odom0_queue_size: 10
 odom0_nodelay: true

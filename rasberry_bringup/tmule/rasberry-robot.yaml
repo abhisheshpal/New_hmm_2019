@@ -1,23 +1,55 @@
 ---
 init_cmd: |
-  source $HOME/rasberry_ws/devel/setup.bash
+  #exec /bin/bash
+  set -o pipefail
+  function export_default () {
+    var_name="$1"
+    var_default="$2"
+    eval $var_name="${!var_name:-$var_default}"
+    export $var_name
+    echo "  $0 -> $var_name=${!var_name}"
+  }
+
+  # source ROS
+  source "/opt/ros/kinetic/setup.bash"
   # search for VPN tun device:
-  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" "`
-  default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@'`
-  export BASE_CONFIG_DIR=`readlink -f .`
-  export ROBOT_NAME=`hostname | tr "-" "_" | tr "." "_"`
-  export ROS_MASTER=$default_ip
-  export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
-  export ROS_HOSTNAME=$ROS_IP
-  export MONGO_PATH="$HOME/mongodb"
-  export USE_IMU="true"
-  export TMAP="norway_poles"
-  export MAP="$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  export ROBOT_NO=`hostname | cut -f2 -d"-"`
-  export ROBOT_TYPE="thorvald_ii_4wd4ws_slim"
+  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" " || echo lo`
+  default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@' || echo 127.0.0.1`
+  
+  # load robot-specific config file
+  if [ -r "$HOME/.rasberryrc" ]; then echo "*** loading $HOME/.rasberryrc" ; source "$HOME/.rasberryrc"; fi
+  
+  export_default BASE_CONFIG_DIR `readlink -f . || echo .`
+  export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
+  export_default SCENARIO_NAME "default"
+  # load robot-specific config file
+  if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
+  # load scenario-specific config file
+  if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
+  export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
+  source "$CATKIN_WORKSPACE/devel/setup.bash"
+  # set ROS_MASTER to the correct IP
+  export_default ROS_MASTER $default_ip
+  # set ROS_IP not to the IP that we will connect to remotely
+  export_default ROS_IP `ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/' || echo $ROS_MASTER`
+  # set ROS_HOSTNAME to the ROS_IP to avoid configuring /etc/hosts for anyone who connects
+  export_default ROS_HOSTNAME "$ROS_IP"
+  # path where to expect MONGODB
+  export_default MONGO_PATH "$HOME/mongodb"
+  # use IMU?
+  export_default USE_IMU true
+  # the topomap to be used
+  export_default TMAP norway_poles
+  # the gridmap to be used (key in mongodb)
+  export_default MAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
+  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
+  # figure out the robot number from the hostname, assuming it is like `thorvald-XXX`
+  export_default ROBOT_NO `hostname | cut -f2 -d"-"`
+  # set the robot type
+  export_default ROBOT_TYPE "thorvald_ii_4wd4ws_slim"
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
-  export ROSBRIDGE_IP="10.8.0.4"
-  export ROSBRIDGE_PORT="9090"
+  export_default ROSBRIDGE_IP "10.8.0.4"
+  export_default ROSBRIDGE_PORT "9090"
 windows:
 - name: init
   panes:
@@ -26,23 +58,27 @@ windows:
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
-  - sleep 3; roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/norway_robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/norway_robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
-  - sleep 3; roslaunch rasberry_bringup hokuyo.launch
-  - sleep 3; roslaunch rasberry_bringup xsens_driver.launch
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
+  - roslaunch rasberry_bringup hokuyo.launch
+  - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - sleep 3; roslaunch rasberry_move_base map_server.launch map:="$MAP"
-  - sleep 3; roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU"
+  - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="/tmp/rasberry.ptb"
+  - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
+  - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU"
 - name: navigation
   panes:
-  - sleep 3; roslaunch rasberry_move_base move_base_dwa.launch
-  - sleep 3; roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
+  - roslaunch rasberry_move_base move_base_dwa.launch
+  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
+  - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: people_perception
   panes:
   - ls 
+  - rosrun marvelmind_nav hedge_rcv_bin
 - name: coordination_robot
   panes:
-  - sleep 3; roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
+  - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
 - name: dataset_recording
   panes:
+  - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
   - ls

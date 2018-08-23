@@ -9,3 +9,7 @@
 	path = ros_marvelmind_lcas
 	url = https://github.com/LCAS/ros_marvelmind_package.git
 	branch = master
+[submodule "persistent_topics"]
+	path = persistent_topics
+	url = https://github.com/marc-hanheide/persistent_topics.git
+	branch = master
