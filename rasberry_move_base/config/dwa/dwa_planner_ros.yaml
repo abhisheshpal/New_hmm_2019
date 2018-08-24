@@ -47,4 +47,4 @@ DWAPlannerROS:
   forward_point_distance: 1.0
 
   prune_plan: true
-  holonomic_robot: true
+  holonomic_robot: false

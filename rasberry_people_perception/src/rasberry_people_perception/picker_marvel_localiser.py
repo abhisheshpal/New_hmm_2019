@@ -49,6 +49,7 @@ class PickerMarvelLocaliser(object):
 
         # /hedge_pos_a subscriber should be after the transforListener to avoid errors in subscriber callback
         self.marvel_sub = rospy.Subscriber(hedge_pos_a_topic, marvelmind_nav.msg.hedge_pos_a, self.hedge_pos_a_cb)
+        rospy.loginfo("picker_marvel_localiser is intialised succesfully")
 
     def hedge_pos_a_cb(self, msg):
         """callback function for headge_pose_a topics
@@ -75,9 +76,9 @@ class PickerMarvelLocaliser(object):
             self.posestamped_msgs[msg.address].pose.position.y = msg.y_m
             self.posestamped_pubs[msg.address].publish(self.posestamped_msgs[msg.address])
             current_node, closest_node = self.topo_localiser.localise_pose(self.posestamped_msgs[msg.address])
-            if current_node is not None:
+            if current_node != "none":
                 self.current_node_msgs[msg.address].data = current_node
                 self.current_node_pubs[msg.address].publish(self.current_node_msgs[msg.address])
-            if closest_node is not None:
+            if closest_node != "none":
                 self.closest_node_msgs[msg.address].data = closest_node
                 self.closest_node_pubs[msg.address].publish(self.closest_node_msgs[msg.address])

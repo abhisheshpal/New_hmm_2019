@@ -6,7 +6,7 @@ Panels:
       Expanded:
         - /Group1
       Splitter Ratio: 0.5
-    Tree Height: 700
+    Tree Height: 738
   - Class: rviz/Selection
     Name: Selection
   - Class: rviz/Tool Properties
@@ -25,7 +25,7 @@ Panels:
     Experimental: false
     Name: Time
     SyncMode: 0
-    SyncSource: LaserScan
+    SyncSource: ""
 Visualization Manager:
   Class: ""
   Displays:
@@ -52,247 +52,6 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
-        /base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        /base_sensors:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        /bat0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /bat1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner0_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner0_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner0_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner0_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner1_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner1_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner2_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner2_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner2_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner2_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner3_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner3_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner3_3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /corner3_4:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /hokuyo:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /leg0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /leg1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /leg2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /leg3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe0_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe0_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe2_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe2_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe3_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe3_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe4_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /pipe4_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /septentrio:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        /top0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /top1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /top2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /top3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /wheel0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /wheel1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /wheel2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /wheel3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        /xsens:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
@@ -526,16 +285,16 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 29.469059
+      Distance: 81.4989548
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 4.96732998
-        Y: -3.90380597
-        Z: -2.42914557
+        X: 21.9195557
+        Y: 49.5076828
+        Z: 2.30827332
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
@@ -552,7 +311,7 @@ Window Geometry:
   Height: 1023
   Hide Left Dock: false
   Hide Right Dock: false
-  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000352fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006300fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000004200000352000000de00fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000352fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000004200000352000000b900fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000078000000042fc0100000002fb0000000800540069006d00650100000000000007800000028800fffffffb0000000800540069006d00650100000000000004500000000000000000000004fb0000035200000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
+  QMainWindow State: 000000ff00000000fd00000004000000000000016a00000371fc0200000008fb0000001200530065006c0065006300740069006f006e00000001e10000009b0000006100fffffffb0000001e0054006f006f006c002000500072006f007000650072007400690065007302000001ed000001df00000185000000a3fb000000120056006900650077007300200054006f006f02000001df000002110000018500000122fb000000200054006f006f006c002000500072006f0070006500720074006900650073003203000002880000011d000002210000017afb000000100044006900730070006c006100790073010000002800000371000000d700fffffffb0000002000730065006c0065006300740069006f006e00200062007500660066006500720200000138000000aa0000023a00000294fb00000014005700690064006500530074006500720065006f02000000e6000000d2000003ee0000030bfb0000000c004b0069006e0065006300740200000186000001060000030c00000261000000010000010f00000371fc0200000003fb0000001e0054006f006f006c002000500072006f00700065007200740069006500730100000041000000780000000000000000fb0000000a00560069006500770073010000002800000371000000ad00fffffffb0000001200530065006c0065006300740069006f006e010000025a000000b200000000000000000000000200000490000000a9fc0100000001fb0000000a00560069006500770073030000004e00000080000002e100000197000000030000074700000042fc0100000002fb0000000800540069006d00650100000000000007470000030000fffffffb0000000800540069006d00650100000000000004500000000000000000000004c20000037100000004000000040000000800000008fc0000000100000002000000010000000a0054006f006f006c00730100000000ffffffff0000000000000000
   Selection:
     collapsed: false
   Time:
@@ -561,6 +320,6 @@ Window Geometry:
     collapsed: false
   Views:
     collapsed: false
-  Width: 1920
-  X: 1920
+  Width: 1863
+  X: 57
   Y: 27
