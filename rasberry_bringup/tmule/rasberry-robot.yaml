@@ -50,6 +50,8 @@ init_cmd: |
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
+  export_default USE_SIM false
+  export_default GAZEBO_WORLD riseholme
 windows:
 - name: init
   panes:
@@ -58,7 +60,7 @@ windows:
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=false with_teleoperation:=true
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD
   - roslaunch rasberry_bringup hokuyo.launch
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
