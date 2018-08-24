@@ -168,6 +168,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
 install(PROGRAMS
    scripts/move_base_seq.py
+   scripts/gazebo_people_tracker.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

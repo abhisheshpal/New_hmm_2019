@@ -2,7 +2,7 @@
 
 SESSION=$USER
 DISPLAY=0
-ROBOT_NO='003'
+ROBOT_NO='007'
 
 tmux -2 new-session -d -s $SESSION
 # Setup a window for tailing log files
@@ -36,11 +36,11 @@ tmux send-keys "roslaunch rasberry_navigation topological_map_manager_central.la
 
 tmux select-window -t $SESSION:2
 tmux send-keys "echo 'robot localisation'" C-m
-tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_"$ROBOT_NO".yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_"$ROBOT_NO"_sim_sensors.xacro simple_sim:=true world_name:=riseholme with_actors:=false"
+tmux send-keys "DISPLAY=:$DISPLAY roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_"$ROBOT_NO".yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_"$ROBOT_NO"_sensors.xacro simple_sim:=true world_name:=riseholme with_actors:=false"
 
 tmux select-window -t $SESSION:3
 tmux send-keys "echo '2D map server'" C-m
-tmux send-keys "roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml"
+tmux send-keys "roslaunch rasberry_move_base map_server.launch map:=$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml no_go_map:=$(rospack find rasberry_navigation)/maps/riseholme_sim_no_go.yaml use_no_go_map:=true"
 
 tmux select-window -t $SESSION:4
 tmux send-keys "echo 'robot localisation'" C-m
