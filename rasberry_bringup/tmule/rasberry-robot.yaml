@@ -52,6 +52,7 @@ init_cmd: |
   export_default ROSBRIDGE_PORT "9090"
   export_default USE_SIM false
   export_default GAZEBO_WORLD riseholme
+  export_default EKF_PUBLISH_TF true
 windows:
 - name: init
   panes:
@@ -67,7 +68,7 @@ windows:
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="/tmp/rasberry.ptb"
   - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU"
+  - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
 - name: navigation
   panes:
   - roslaunch rasberry_move_base move_base_dwa.launch

@@ -4,3 +4,4 @@ export NOGOMAP="`readlink -f ../../rasberry_navigation/maps/riseholme_sim_no_go.
 export ROSBRIDGE_IP="10.8.0.4"
 export USE_SIM=true
 export GAZEBO_WORLD=riseholme
+export EKF_PUBLISH_TF=false
