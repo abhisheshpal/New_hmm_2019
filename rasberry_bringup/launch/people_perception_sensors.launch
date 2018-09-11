@@ -1,0 +1,31 @@
+<launch> 
+
+   <arg name="no_robot" default="false"/>
+
+  <!-- Fake TFs -->
+  <group if="$(arg no_robot)">
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_velodyne" args="0 0 1 0 0 0 base_link velodyne 100" />
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_map" args="0 0 0 0 0 0 base_link map 100" />
+  </group>
+
+<!-- Velodyne VLP-16 Driver -->
+  <node pkg="nodelet" type="nodelet" name="velodyne_nodelet_manager" args="manager" output="screen"/>
+  
+  <node pkg="nodelet" type="nodelet" name="driver_nodelet" args="load velodyne_driver/DriverNodelet velodyne_nodelet_manager" output="screen">
+    <param name="model" value="VLP16"/>
+    <param name="pcap" value=""/>
+    <param name="frame_id" value="velodyne"/>
+    <!-- <param name="rpm" value="600.0"/> -->
+  </node>
+  
+  <node pkg="nodelet" type="nodelet" name="cloud_nodelet" args="load velodyne_pointcloud/CloudNodelet velodyne_nodelet_manager" output="screen">
+    <param name="calibration" value="$(find object3d_detector)/config/vlp16.yaml"/>
+    <param name="min_range" value="0.4"/>
+    <param name="max_range" value="130.0"/>
+</node>
+
+<!-- TODO: Kinect 2 Driver -->
+
+
+
+</launch>
