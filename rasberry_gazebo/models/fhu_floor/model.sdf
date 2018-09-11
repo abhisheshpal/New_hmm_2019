@@ -1,12 +1,12 @@
 <?xml version='1.0'?>
 <sdf version='1.6'>
-  <model name='fhs_floor_2'>
+  <model name='fhu_floor'>
     <link name='link_0'>
       <pose frame=''>0 0 0 0 -0 0</pose>
       <visual name='visual'>
         <geometry>
           <box>
-            <size>9.75 6.25 0.01</size>
+            <size>9.75 8.2 0.01</size>
           </box>
         </geometry>
         <material>
@@ -28,7 +28,7 @@
       <collision name='collision'>
         <geometry>
           <box>
-            <size>9.75 6.25 0.001</size>
+            <size>9.75 8.2 0.001</size>
           </box>
         </geometry>
       </collision>
