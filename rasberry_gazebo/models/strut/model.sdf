@@ -1,26 +1,22 @@
 <?xml version="1.0" ?>
 <sdf version="1.5">
-<model name="pole">
-  <pose>0.0 3.0 0 0.0 0.0 0.0</pose>
+<model name="strut">
+  <pose>0.0 0.0 0 0.0 0.0 0.0</pose>
   <static>1</static>
   <link name="link">
     <collision name="collision">
       <geometry>
 	<cylinder>
-	  <length>1.15</length>
-	  <radius>0.025</radius>
-	  <!--length>1.38235</length>
-	  <radius>0.0456111</radius-->
+	  <length>1.76</length>
+	  <radius>0.02</radius>
         </cylinder>
       </geometry>
     </collision>
     <visual name="visual">
       <geometry>
 	<cylinder>
-	  <length>1.15</length>
-	  <radius>0.025</radius>
-	  <!--length>1.38235</length>
-	  <radius>0.0456111</radius-->
+	  <length>1.76</length>
+	  <radius>0.02</radius>
 	</cylinder>
       </geometry>
       <material>

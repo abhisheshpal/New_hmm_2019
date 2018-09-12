@@ -66,7 +66,7 @@ windows:
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="/tmp/rasberry.ptb"
+  - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
   - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
   - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
 - name: navigation

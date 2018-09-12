@@ -98,13 +98,27 @@ def get_plant_poses(pot1_xposes, pot1_yposes):
         plant2_poses.append(plant2_pose)    
     return plant1_poses + plant2_poses
     
-    
-    
+        
 def get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes):
     arch_xposes = np.arange(0, arch_nx*arch_dx, arch_dx) + arch_xoffset
     arch_yposes = np.zeros(arch_nx) + pole_yposes[0] - pole_dy
     return to_list(arch_xposes, arch_yposes), arch_xposes, arch_yposes
+
+
+def get_strut_poses_L(arch_xposes, arch_yposes, arch_dx, pole_ny, pole_dy):
+    strut_xposes = np.arange(arch_xposes[0], arch_xposes[-1]+2*arch_dx, 2*arch_dx) + 0.02
+    #strut_xposes = arch_xposes + 0.02
+    strut_yposes = np.zeros(strut_xposes.shape[0]) + arch_yposes[0] + ((pole_ny+1) * pole_dy)  + 0.7
+    strut_roll = 0.8959
+    return to_list(strut_xposes, strut_yposes), strut_xposes, strut_yposes, strut_roll
+
     
+def get_strut_poses_R(arch_xposes, arch_yposes, arch_dx):
+    strut_xposes = np.arange(arch_xposes[0], arch_xposes[-1]+2*arch_dx, 2*arch_dx) + 0.02
+    #strut_xposes = arch_xposes + 0.02
+    strut_yposes = np.zeros(strut_xposes.shape[0]) + arch_yposes[0] - 0.6628
+    strut_roll = -0.8959
+    return to_list(strut_xposes, strut_yposes), strut_xposes, strut_yposes, strut_roll
     
     
 def get_canopy10m_poses(arch_xposes, arch_ypose, pole_dy):
@@ -114,7 +128,7 @@ def get_canopy10m_poses(arch_xposes, arch_ypose, pole_dy):
     canopy10m_max_length = arch_length - remainder    
     
     canopy10m_xposes = np.arange(arch_xposes[0], arch_xposes[0]+canopy10m_max_length, canopy10m_length)
-    canopy10m_yposes = np.zeros(len(canopy10m_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    canopy10m_yposes = np.zeros(len(canopy10m_xposes)) + arch_ypose #+ 0.017
     return to_list(canopy10m_xposes, canopy10m_yposes), canopy10m_max_length    
     
     
@@ -126,7 +140,7 @@ def get_canopy4m_poses(arch_xposes, arch_ypose, pole_dy, canopy10m_max_length):
     canopy4m_max_length = arch_length - remainder    
     
     canopy4m_xposes = np.arange(arch_xposes[0]+canopy10m_max_length, arch_xposes[0]+canopy10m_max_length+canopy4m_length, canopy4m_length)
-    canopy4m_yposes = np.zeros(len(canopy4m_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    canopy4m_yposes = np.zeros(len(canopy4m_xposes)) + arch_ypose #+ 0.017
     return to_list(canopy4m_xposes, canopy4m_yposes), canopy4m_max_length
     
     
@@ -134,6 +148,6 @@ def get_canopy4m_poses(arch_xposes, arch_ypose, pole_dy, canopy10m_max_length):
 def get_canopyhalfm_poses(arch_xposes, arch_ypose, pole_dy, canopy10m_max_length, canopy4m_max_length):
     canopyhalfm_length = 0.5    
     canopyhalfm_xposes = np.arange(arch_xposes[0]+canopy10m_max_length+canopy4m_max_length, arch_xposes[1], canopyhalfm_length)
-    canopyhalfm_yposes = np.zeros(len(canopyhalfm_xposes)) + arch_ypose + (3*pole_dy) + 0.017
+    canopyhalfm_yposes = np.zeros(len(canopyhalfm_xposes)) + arch_ypose #+ 0.017
     return to_list(canopyhalfm_xposes, canopyhalfm_yposes)   
 ################################################################################
