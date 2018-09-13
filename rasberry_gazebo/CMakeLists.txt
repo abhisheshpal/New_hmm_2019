@@ -24,6 +24,15 @@ find_package(catkin REQUIRED COMPONENTS
   xacro
 )
 
+if(CMAKE_HOST_UNIX)
+  catkin_add_env_hooks(90-rasberry_gazebo SHELLS sh DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/env_hooks)
+else()
+  message(FATAL_ERROR "Only UNIX builds supported.")
+endif()
+
+
+
+
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
 find_package(gazebo REQUIRED)

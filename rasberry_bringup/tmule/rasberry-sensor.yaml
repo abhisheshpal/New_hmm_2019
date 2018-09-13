@@ -26,7 +26,7 @@ init_cmd: |
   if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
   if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
-  export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
+  export_default CATKIN_WORKSPACE "`echo $HOME/catkin_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
   export_default ROS_MASTER $default_ip
@@ -57,31 +57,13 @@ windows:
 - name: init
   panes:
   - roscore
-  - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
-  - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
-- name: robot
+- name: sensors
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD
-  - roslaunch rasberry_bringup hokuyo.launch
-  - roslaunch rasberry_bringup xsens_driver.launch
-- name: localisation
-  panes:
-  - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
-  - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
-- name: navigation
-  panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch
-  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
-  - rosrun topological_navigation visualise_map.py "$TMAP"
+  - sleep 3; roslaunch rasberry_bringup people_perception_sensors.launch no_robot:=true
 - name: people_perception
-  panes:
-  - ls 
-  - rosrun marvelmind_nav hedge_rcv_bin
-- name: coordination_robot
-  panes:
-  - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
+  panes: 
+  - sleep 3; roslaunch rasberry_people_perception people_tracker.launch
 - name: dataset_recording
   panes:
-  - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
+  - sleep 3; DISPLAY=:0 rviz -d $(rospack find rasberry_people_perception)/rviz/rasberry_tracker.rviz
   - ls
