@@ -16,8 +16,8 @@ from generate_poses import *
 save_world = True
 
 rospack = rospkg.RosPack()
-base_dir = rospack.get_path('rasberry_gazebo')
-#base_dir = os.getcwd()[:-8]
+#base_dir = rospack.get_path('rasberry_gazebo')
+base_dir = os.getcwd()[:-8]
 
 world_f = base_dir + '/worlds/empty_grass.world'
 world_d = load_data_from_xml(world_f)
@@ -127,28 +127,28 @@ for model in model_config:
                     trayp2_count += len(trayp2_poses)
                     
                     pot21_poses, pot21_max_length = get_pot21_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
-                    world.add_pot21(pot21_d, pot21_poses, pot21_count)  
+                    #world.add_pot21(pot21_d, pot21_poses, pot21_count)  
                     pot21_count += len(pot21_poses)
                 
                     pot9_poses, pot9_max_length = get_pot9_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length)
-                    world.add_pot9(pot9_d, pot9_poses, pot9_count)  
+                    #world.add_pot9(pot9_d, pot9_poses, pot9_count)  
                     pot9_count += len(pot9_poses)
                     
                     pot1_poses, pot1_xposes = get_pot1_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length, pot9_max_length) 
-                    world.add_pot1(pot1_d, pot1_poses, pot1_count)
+                    #world.add_pot1(pot1_d, pot1_poses, pot1_count)
                     pot1_count += len(pot1_poses)
                 
                     #plant_poses = get_plant_poses(pot1_xposes, pole_yposes)
                     #world.add_plants(plant_d, plant_poses, plant_count)  
                     #plant_count += len(plant_poses)
                     
-                    world.add_plant21(plant21_d, pot21_poses, plant21_count)  
+                    #world.add_plant21(plant21_d, pot21_poses, plant21_count)  
                     plant21_count += len(pot21_poses)                    
                     
-                    world.add_plant9(plant9_d, pot9_poses, plant9_count)  
+                    #world.add_plant9(plant9_d, pot9_poses, plant9_count)  
                     plant9_count += len(pot9_poses)
                     
-                    world.add_plant1(plant1_d, pot1_poses, plant1_count)  
+                    #world.add_plant1(plant1_d, pot1_poses, plant1_count)  
                     plant1_count += len(pot1_poses)
 
 

@@ -16,7 +16,7 @@
 # note: if you change the world name you will also have to change it in the launch file ../launch/world.launch (or make another launch file).
 
 
-- world_name: 'riseholme_new.world'     
+- world_name: 'riseholme.world'     
 
 - polytunnel:
   - include: 1     # polytunnel 1
