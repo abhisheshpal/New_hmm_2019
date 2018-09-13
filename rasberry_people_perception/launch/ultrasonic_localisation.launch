@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="with_tf_publisher" default="false"/>
+
+  <node pkg="marvelmind_nav" name="hedge_rcv_bin" type="hedge_rcv_bin" />
+
+  <node pkg="tf" name="marvelmind_to_map_bc" type="static_transform_publisher" args="0 0 0 0 0 0 marvelmind map 2" if="$(arg with_tf_publisher)"/>
+
+  <node pkg="rasberry_people_perception" type="simple_marvel_localiser.py" name="simple_marvel_localiser"/>
+
+</launch>

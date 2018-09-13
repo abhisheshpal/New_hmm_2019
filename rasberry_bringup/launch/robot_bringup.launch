@@ -1,0 +1,57 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="robot_model" />
+  <arg name="model_extras" default=""/>
+  <arg name="simple_sim" />
+
+  <arg name="robot_name" default="" />
+  <arg name="tf_prefix" default="" />
+  <arg name="with_teleoperation" default="false" />
+  <arg name="joy_dev" default="/dev/input/js0" />
+
+  <!-- Robot starting pose arguments for simulation  -->
+  <arg name="start_pose_x" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_y" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_z" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_R" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_P" default="0" if="$(arg simple_sim)"/>
+  <arg name="start_pose_Y" default="0" if="$(arg simple_sim)"/>
+
+  <arg name="world_name" if="$(arg simple_sim)"/>
+  <arg name="with_actors" default="false"/>
+
+
+  <!-- model bringup -->
+  <include file="$(find thorvald_model)/launch/model.launch">
+    <arg name="robot_name" value="$(arg robot_name)" />
+    <arg name="tf_prefix" value="$(arg tf_prefix)" />
+    <arg name="robot_model" value="$(arg robot_model)" />
+    <arg name="model_extras" value="$(arg model_extras)" />
+  </include>
+
+  <!-- base bringup-->
+  <include file="$(find thorvald_base)/launch/base_bringup.launch">
+    <arg name="robot_model" value="$(arg robot_model)" />
+    <arg name="simple_sim" value="$(arg simple_sim)" />
+  </include>
+
+  <!-- teleop bringup -->
+  <include file="$(find thorvald_teleop)/launch/teleop_xbox.launch" if="$(arg with_teleoperation)">
+    <arg name="joy_dev" value="$(arg joy_dev)" />
+  </include>
+
+  <!-- twist mux bringup -->
+  <include file="$(find thorvald_twist_mux)/launch/twist_mux.launch" />
+
+  <!-- Launch the Gazebo world.  -->
+  <include file="$(find rasberry_gazebo)/launch/world.launch" if="$(arg simple_sim)">
+   <arg name="world_name" value="$(arg world_name)"/>
+  </include>
+
+  <!-- spawn robot in gazebo -->
+  <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /robot_description -model thorvald_ii -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)" if="$(arg simple_sim)"/>
+
+  <!-- Include actors in the Gazebo world? -->
+  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
+
+</launch>

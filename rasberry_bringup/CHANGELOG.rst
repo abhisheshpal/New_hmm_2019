@@ -2,6 +2,13 @@
 Changelog for package rasberry_bringup
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.0.4 (2018-07-18)
+------------------
+* Added simulation with velodyne and kinect2, rviz config file to visualize them and changed actor to use gpu based simulated laser
+* Changing topological map name
+* adding simulation start-up script
+* Contributors: Jaime Pulido Fentanes, mfernandezcarmona@lincoln.ac.uk
+
 0.0.3 (2018-07-16)
 ------------------
 * equal versions

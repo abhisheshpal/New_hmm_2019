@@ -1,0 +1,8 @@
+# This file should is an example of a local config file that is loaded by the tmule init_cmd.
+# Copy this example to `$HOME/.rasberryrc` to load it in our tmule config. It's purpose is to
+# define environment variables for the specific machine/user only. So, this is a good place
+# to define SCENARIO_NAME and ROBOT_NAME, and change these accordingly if the robot is running
+# in a different scenario without changing any configuration files under git control.
+
+export ROBOT_NAME="thorvald_007"
+export SCENARIO_NAME="riseholme"

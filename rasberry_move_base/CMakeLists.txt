@@ -8,9 +8,14 @@ project(rasberry_move_base)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  amcl
+  dwa_local_planner
+  eband_local_planner
+  map_server
   move_base
-  rospy
-  std_msgs
+  robot_pose_publisher
+  teb_local_planner
+  tf
 )
 
 ## System dependencies are found with CMake's conventions
@@ -184,6 +189,11 @@ include_directories(
 #   # myfile2
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
+
+foreach (dir launch config )
+    install(DIRECTORY ${dir}/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
+endforeach(dir)
 
 #############
 ## Testing ##

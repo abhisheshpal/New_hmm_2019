@@ -8,7 +8,22 @@ project(rasberry_bringup)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  gazebo_ros
+  marvelmind_nav
+  mongodb_store
+  rasberry_coordination
+  rasberry_gazebo
+  rasberry_move_base
+  rasberry_navigation
+  rasberry_people_perception
   rospy
+  rviz
+  thorvald_base
+  thorvald_model
+  thorvald_twist_mux
+  thorvald_teleop
+  urg_node
+  xsens_driver
 )
 
 ## System dependencies are found with CMake's conventions
@@ -157,10 +172,14 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+
+install(PROGRAMS
+  scripts/start_multisim.sh
+  scripts/start_sim.sh
+  scripts/start_sim_norway_poles_unified.sh
+  scripts/start_sim_riseholme_unified.sh
+  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+)
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
@@ -176,12 +195,11 @@ include_directories(
 #   PATTERN ".svn" EXCLUDE
 # )
 
-## Mark other files for installation (e.g. launch and bag files, etc.)
-# install(FILES
-#   # myfile1
-#   # myfile2
-#   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-# )
+foreach (dir launch resources tmule config urdf)
+    install(DIRECTORY ${dir}/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir})
+endforeach(dir)
+
 
 #############
 ## Testing ##

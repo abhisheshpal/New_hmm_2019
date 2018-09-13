@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="map"/>
 
-    <!-- lanch map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
-
-    <!-- launch AMCL -->
-    <include file="$(find rasberry_move_base)/launch/amcl.launch"/>
+    <!-- launch robot_pose_publisher -->
+    <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true">
+      <param name="~map_frame" value="/map"/>
+      <param name="~base_frame" value="/base_link"/>
+    </node>
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
         <remap from="/cmd_vel" to="/nav_vel"/>
@@ -20,15 +19,12 @@
         <rosparam file="$(find rasberry_move_base)/config/eband/eband_planner_ros.yaml" command="load"/>
         <rosparam file="$(find rasberry_move_base)/config/eband/eband_move_base_params.yaml" command="load"/>
 
-
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="global_costmap"/>
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
         <rosparam file="$(find rasberry_move_base)/config/local_costmap_params.yaml" command="load"/>
         <rosparam file="$(find rasberry_move_base)/config/global_costmap_params.yaml" command="load"/>
-	    <rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
-        
+	<rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
         
     </node>
-
     
 </launch>

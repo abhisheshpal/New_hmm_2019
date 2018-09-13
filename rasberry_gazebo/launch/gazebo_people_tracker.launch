@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<launch>
+  <node pkg="rasberry_gazebo" type="gazebo_people_tracker.py" name="gazebo_people_tracker" output="screen">
+        
+    <!-- Load Sequence of robot names. If the robot has no prefixed name then set to "" -->
+    <rosparam param="robot_names">[""]</rosparam>
+    <!-- Load Sequence of actor names. These should match the names used in rasberry_gazebo/launch/include_actors.launch -->
+    <rosparam param="actor_names">["actor00", "actor01"]</rosparam>
+
+  </node>
+
+</launch> 
