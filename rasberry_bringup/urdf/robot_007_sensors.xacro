@@ -55,7 +55,7 @@
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.7025 -0.0 0.66" rpy="3.14 0 -0.785"/>
+    <origin xyz="0.7025 -0.0 0.66" rpy="3.14 0.0 0.0"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
@@ -77,8 +77,8 @@
           <horizontal>
             <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-2.356194</min_angle>
-            <max_angle>0.785398</max_angle>
+            <min_angle>-1.570796</min_angle>
+            <max_angle>1.570796</max_angle>
           </horizontal>
         </scan>
         <range>
