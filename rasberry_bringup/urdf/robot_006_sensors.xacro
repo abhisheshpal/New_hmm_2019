@@ -4,9 +4,9 @@
   <xacro:arg name="robot_name" default=""/>
   <xacro:arg name="tf_prefix" default=""/>
 
-  <link name="$(arg tf_prefix)/base_sensors"/>
-  <link name="$(arg tf_prefix)/septentrio"/>
-  <link name="$(arg tf_prefix)/xsens"/>
+  <!--link name="$(arg tf_prefix)/base_sensors"/-->
+  <!--link name="$(arg tf_prefix)/septentrio"/-->
+  <!--link name="$(arg tf_prefix)/xsens"/-->
   <link name="$(arg tf_prefix)/velodyne"/>
 
   <!-- Hokuyo Laser -->
@@ -32,37 +32,37 @@
     </inertial>
   </link>
 
-  <joint name="base_base_sens" type="fixed">
+  <!--joint name="base_base_sens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/base_sensors"/>
     <origin xyz="0.547 0 0.77" rpy="0 0 0"/>
-  </joint>
+  </joint-->
 
-  <joint name="base_sens_septentrio" type="fixed">
+  <!--joint name="base_sens_septentrio" type="fixed">
     <parent link="$(arg tf_prefix)/base_sensors"/>
     <child link="$(arg tf_prefix)/septentrio"/>
     <origin xyz="-0.01 0 0.3" rpy="0 0 0"/>
-  </joint>
+  </joint-->
 
 
-  <joint name="base_sens_xsens" type="fixed">
+  <!--joint name="base_sens_xsens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/xsens"/>
     <origin xyz="0.018 0.258 0.69" rpy="0 0 0"/>
-  </joint>
+  </joint-->
 
    <joint name="base_sens_hokuyo" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.7025 -0.0 0.66" rpy="3.141593 0.0 0.0"/>
+    <origin xyz="0.8305 -0.0 0.64" rpy="3.141593 0.0 0.0"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
-    <parent link="$(arg tf_prefix)/base_sensors"/>
+    <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/velodyne"/>
     <axis xyz="0 1 0" />
-    <origin xyz="-0.024 0 0.03" rpy="0 0 0"/>
+    <origin xyz="0.01 0 1.465" rpy="0 0 0"/>
   </joint>
 
   <!--hokuyo-->
