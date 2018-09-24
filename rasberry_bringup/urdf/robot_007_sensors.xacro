@@ -48,14 +48,14 @@
   <joint name="base_sens_xsens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/xsens"/>
-    <origin xyz="0.018 0.258 0.69" rpy="0 0 0"/>
+    <origin xyz="-0.005 0.2605 0.682" rpy="0 0 0"/>
   </joint>
 
    <joint name="base_sens_hokuyo" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.7025 -0.0 0.66" rpy="3.141593 0.0 0.0"/>
+    <origin xyz="0.7025 0.005 0.66" rpy="3.141593 0.0 0.0"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
