@@ -2116,549 +2116,21 @@
 				<pose frame="">18.760 -1.285 1.19165 1.5707 0.0 0.0</pose>
 			</link>
 		</model>
-		<model name="dummy_arch_0">
+		<model name="fixed_arches_0">
 			<static>1</static>
-			<pose>6.720 -7.960 0.0 1.5707 0.0 1.5707</pose>
+			<pose>3.645 -7.960 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
+							<uri>model://dummy_arch_17/dummy_arch_17.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_1">
-			<static>1</static>
-			<pose>8.250 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_2">
-			<static>1</static>
-			<pose>9.780 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_3">
-			<static>1</static>
-			<pose>11.310 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_4">
-			<static>1</static>
-			<pose>12.840 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_5">
-			<static>1</static>
-			<pose>14.370 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_6">
-			<static>1</static>
-			<pose>15.900 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_7">
-			<static>1</static>
-			<pose>17.430 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_8">
-			<static>1</static>
-			<pose>18.960 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_9">
-			<static>1</static>
-			<pose>20.490 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_10">
-			<static>1</static>
-			<pose>22.020 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_11">
-			<static>1</static>
-			<pose>23.550 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_12">
-			<static>1</static>
-			<pose>25.080 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_13">
-			<static>1</static>
-			<pose>26.610 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_14">
-			<static>1</static>
-			<pose>28.140 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_15">
-			<static>1</static>
-			<pose>29.670 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_16">
-			<static>1</static>
-			<pose>31.200 -7.960 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
+							<uri>model://dummy_arch_17/dummy_arch_17.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -2679,7 +2151,7 @@
 		</model>
 		<model name="canopy10m_0">
 			<static>1</static>
-			<pose>6.720 -7.960 0.0 1.5707 0.0 1.5707</pose>
+			<pose>6.720 -7.960 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -2700,7 +2172,7 @@
 		</model>
 		<model name="canopy10m_1">
 			<static>1</static>
-			<pose>16.720 -7.960 0.0 1.5707 0.0 1.5707</pose>
+			<pose>16.720 -7.960 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -2721,7 +2193,7 @@
 		</model>
 		<model name="canopy4m_0">
 			<static>1</static>
-			<pose>26.720 -7.960 0.0 1.5707 0.0 1.5707</pose>
+			<pose>26.720 -7.960 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -2742,7 +2214,7 @@
 		</model>
 		<model name="canopyhalfm_0">
 			<static>1</static>
-			<pose>30.720 -7.960 0.0 1.5707 0.0 1.5707</pose>
+			<pose>30.720 -7.960 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -5191,549 +4663,21 @@
 				<pose frame="">18.760 6.675 1.19165 1.5707 0.0 0.0</pose>
 			</link>
 		</model>
-		<model name="dummy_arch_17">
+		<model name="fixed_arches_1">
 			<static>1</static>
-			<pose>6.720 0.000 0.0 1.5707 0.0 1.5707</pose>
+			<pose>3.645 0.000 0.0 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
 						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
+							<uri>model://dummy_arch_17/dummy_arch_17.stl</uri>
 						</mesh>
 					</geometry>
 				</collision>
 				<visual name="visual">
 					<geometry>
 						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_18">
-			<static>1</static>
-			<pose>8.250 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_19">
-			<static>1</static>
-			<pose>9.780 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_20">
-			<static>1</static>
-			<pose>11.310 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_21">
-			<static>1</static>
-			<pose>12.840 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_22">
-			<static>1</static>
-			<pose>14.370 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_23">
-			<static>1</static>
-			<pose>15.900 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_24">
-			<static>1</static>
-			<pose>17.430 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_25">
-			<static>1</static>
-			<pose>18.960 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_26">
-			<static>1</static>
-			<pose>20.490 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_27">
-			<static>1</static>
-			<pose>22.020 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_28">
-			<static>1</static>
-			<pose>23.550 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_29">
-			<static>1</static>
-			<pose>25.080 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_30">
-			<static>1</static>
-			<pose>26.610 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_31">
-			<static>1</static>
-			<pose>28.140 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_32">
-			<static>1</static>
-			<pose>29.670 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/Grey</name>
-						</script>
-						<shader type="vertex">
-							<normal_map>__default__</normal_map>
-						</shader>
-						<emissive>0 0 0 1</emissive>
-						<specular>0.01 0.01 0.01 1</specular>
-						<ambient>0.75 0.75 0.75 1</ambient>
-						<diffuse>0.07 0.07 0.07 1</diffuse>
-					</material>
-				</visual>
-			</link>
-		</model>
-		<model name="dummy_arch_33">
-			<static>1</static>
-			<pose>31.200 0.000 0.0 1.5707 0.0 1.5707</pose>
-			<link name="link">
-				<collision name="collision">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
-						</mesh>
-					</geometry>
-				</collision>
-				<visual name="visual">
-					<geometry>
-						<mesh>
-							<uri>model://dummy_arch/dummy_arch.stl</uri>
+							<uri>model://dummy_arch_17/dummy_arch_17.stl</uri>
 						</mesh>
 					</geometry>
 					<material>
@@ -5754,7 +4698,7 @@
 		</model>
 		<model name="canopy10m_2">
 			<static>1</static>
-			<pose>6.720 0.000 0.0 1.5707 0.0 1.5707</pose>
+			<pose>6.720 0.000 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -5775,7 +4719,7 @@
 		</model>
 		<model name="canopy10m_3">
 			<static>1</static>
-			<pose>16.720 0.000 0.0 1.5707 0.0 1.5707</pose>
+			<pose>16.720 0.000 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -5796,7 +4740,7 @@
 		</model>
 		<model name="canopy4m_1">
 			<static>1</static>
-			<pose>26.720 0.000 0.0 1.5707 0.0 1.5707</pose>
+			<pose>26.720 0.000 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -5817,7 +4761,7 @@
 		</model>
 		<model name="canopyhalfm_1">
 			<static>1</static>
-			<pose>30.720 0.000 0.0 1.5707 0.0 1.5707</pose>
+			<pose>30.720 0.000 -0.00 1.5707 0.0 1.5707</pose>
 			<link name="link">
 				<collision name="collision">
 					<geometry>
@@ -6153,7 +5097,360 @@
 		</model>
 		<model name="frontage_0">
 			<static>1</static>
-			<pose>0.000 0.000 0.0 0.0 0.0 0.0</pose>
+			<pose>0.000 0.000 0.0 0.0 0.0 0.000</pose>
+			<link name="link_1">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 -7.94 1.7 0.0 0.0 0.0</pose>
+			</link>
+			<link name="link_2">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 0 1.7 0.0 0.0 0.0</pose>
+			</link>
+			<link name="link_3">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 7.93 1.7 0.0 0.0 0.0</pose>
+			</link>
+			<link name="link_10">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 -4 1.7 0.0 0.0 0.0</pose>
+			</link>
+			<link name="link_11">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>3.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 3.96 1.7 0.0 0.0 0.0</pose>
+			</link>
+			<link name="link_4">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>16.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>16.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 0 2.7 1.5707 0.0 0.0</pose>
+			</link>
+			<link name="link_5">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>16.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>16.5</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>6.68 0 3.45 1.5707 0.0 0.0</pose>
+			</link>
+			<link name="link_6">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>5.89 -7.94 1.225 0 0.565 0.0</pose>
+			</link>
+			<link name="link_7">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>5.89 0 1.225 0 0.565 0.0</pose>
+			</link>
+			<link name="link_8">
+				<collision name="collision">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<cylinder>
+							<length>2.93</length>
+							<radius>0.02</radius>
+						</cylinder>
+					</geometry>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/Chrome</name>
+						</script>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<emissive>0.1 0.1 0.1 1</emissive>
+						<specular>0.01 0.01 0.01 1</specular>
+						<ambient>0.5 0.5 0.5 1</ambient>
+						<diffuse>0.05 0.05 0.05 1</diffuse>
+					</material>
+				</visual>
+				<pose>5.89 7.93 1.225 0 0.565 0.0</pose>
+			</link>
+			<link name="link_9">
+				<collision name="collision">
+					<geometry>
+						<box>
+							<size>0.002 15.87 0.75</size>
+						</box>
+					</geometry>
+				</collision>
+				<visual name="visual">
+					<geometry>
+						<box>
+							<size>0.002 15.87 0.75</size>
+						</box>
+					</geometry>
+					<material>
+						<emissive>1 1 1 1</emissive>
+						<shader type="vertex">
+							<normal_map>__default__</normal_map>
+						</shader>
+						<specular>1 1 1 1</specular>
+						<lighting>1</lighting>
+						<ambient>1 1 1 1</ambient>
+						<diffuse>1 1 1 1</diffuse>
+					</material>
+					<cast_shadows>1</cast_shadows>
+					<transparency>0.65</transparency>
+				</visual>
+				<pose>6.68 0 3.075 0 0 0</pose>
+			</link>
+		</model>
+		<model name="frontage_1">
+			<static>1</static>
+			<pose>37.950 -0.007 0.0 0.0 0.0 3.141</pose>
 			<link name="link_1">
 				<collision name="collision">
 					<geometry>
@@ -8222,158 +7519,19 @@
 		<model name="food_handling_shed_0">
 			<static>1</static>
 			<pose frame="">-7.470 1.670 0.0 0.0 0.0 3.141</pose>
-			<link name="Wall_10">
-				<collision name="Wall_10_Collision">
+			<link name="Wall_5">
+				<collision name="Wall_5_Collision">
 					<geometry>
 						<box>
-							<size>8.2 0.1 2.5</size>
+							<size>9.70037 0.1 2.5</size>
 						</box>
 					</geometry>
 					<pose frame="">0 0 1.25 0 -0 0</pose>
 				</collision>
-				<visual name="Wall_10_Visual">
+				<visual name="Wall_5_Visual">
 					<geometry>
 						<box>
-							<size>8.2 0.1 2.5</size>
-						</box>
-					</geometry>
-					<meta>
-						<layer>0</layer>
-					</meta>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/CeilingTiled</name>
-						</script>
-						<ambient>1 1 1 1</ambient>
-					</material>
-					<pose frame="">0 0 1.25 0 -0 0</pose>
-				</visual>
-				<pose frame="">4.8 0 0 0 -0 -1.5708</pose>
-			</link>
-			<link name="Wall_11">
-				<collision name="Wall_11_Collision_0">
-					<geometry>
-						<box>
-							<size>5.43069 0.1 2.5</size>
-						</box>
-					</geometry>
-					<pose frame="">-2.13443 0 1.25 0 -0 0</pose>
-				</collision>
-				<collision name="Wall_11_Collision_1">
-					<geometry>
-						<box>
-							<size>2.83185 0.1 2.5</size>
-						</box>
-					</geometry>
-					<pose frame="">3.43384 0 1.25 0 -0 0</pose>
-				</collision>
-				<collision name="Wall_11_Collision_2">
-					<geometry>
-						<box>
-							<size>1.437 0.1 0.5</size>
-						</box>
-					</geometry>
-					<pose frame="">1.29942 0 2.25 0 -0 0</pose>
-				</collision>
-				<visual name="Wall_11_Visual_0">
-					<geometry>
-						<box>
-							<size>5.43069 0.1 2.5</size>
-						</box>
-					</geometry>
-					<meta>
-						<layer>0</layer>
-					</meta>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/CeilingTiled</name>
-						</script>
-						<ambient>1 1 1 1</ambient>
-					</material>
-					<pose frame="">-2.13443 0 1.25 0 -0 0</pose>
-				</visual>
-				<visual name="Wall_11_Visual_1">
-					<geometry>
-						<box>
-							<size>2.83185 0.1 2.5</size>
-						</box>
-					</geometry>
-					<meta>
-						<layer>0</layer>
-					</meta>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/CeilingTiled</name>
-						</script>
-						<ambient>1 1 1 1</ambient>
-					</material>
-					<pose frame="">3.43384 0 1.25 0 -0 0</pose>
-				</visual>
-				<visual name="Wall_11_Visual_2">
-					<geometry>
-						<box>
-							<size>1.437 0.1 0.5</size>
-						</box>
-					</geometry>
-					<meta>
-						<layer>0</layer>
-					</meta>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/CeilingTiled</name>
-						</script>
-						<ambient>1 1 1 1</ambient>
-					</material>
-					<pose frame="">1.29942 0 2.25 0 -0 0</pose>
-				</visual>
-				<pose frame="">-0 -4.05 0 0 -0 3.14159</pose>
-			</link>
-			<link name="Wall_12">
-				<collision name="Wall_12_Collision">
-					<geometry>
-						<box>
-							<size>8.2 0.1 2.5</size>
-						</box>
-					</geometry>
-					<pose frame="">0 0 1.25 0 -0 0</pose>
-				</collision>
-				<visual name="Wall_12_Visual">
-					<geometry>
-						<box>
-							<size>8.2 0.1 2.5</size>
-						</box>
-					</geometry>
-					<meta>
-						<layer>0</layer>
-					</meta>
-					<material>
-						<script>
-							<uri>file://media/materials/scripts/gazebo.material</uri>
-							<name>Gazebo/CeilingTiled</name>
-						</script>
-						<ambient>1 1 1 1</ambient>
-					</material>
-					<pose frame="">0 0 1.25 0 -0 0</pose>
-				</visual>
-				<pose frame="">-4.8 0 0 0 -0 1.5708</pose>
-			</link>
-			<link name="Wall_9">
-				<collision name="Wall_9_Collision">
-					<geometry>
-						<box>
-							<size>9.70046 0.1 2.5</size>
-						</box>
-					</geometry>
-					<pose frame="">0 0 1.25 0 -0 0</pose>
-				</collision>
-				<visual name="Wall_9_Visual">
-					<geometry>
-						<box>
-							<size>9.70046 0.1 2.5</size>
+							<size>9.70037 0.1 2.5</size>
 						</box>
 					</geometry>
 					<meta>
@@ -8389,6 +7547,145 @@
 					<pose frame="">0 0 1.25 0 -0 0</pose>
 				</visual>
 				<pose frame="">-0 4.05 0 0 -0 0</pose>
+			</link>
+			<link name="Wall_6">
+				<collision name="Wall_6_Collision">
+					<geometry>
+						<box>
+							<size>8.20047 0.1 2.5</size>
+						</box>
+					</geometry>
+					<pose frame="">0 0 1.25 0 -0 0</pose>
+				</collision>
+				<visual name="Wall_6_Visual">
+					<geometry>
+						<box>
+							<size>8.20047 0.1 2.5</size>
+						</box>
+					</geometry>
+					<meta>
+						<layer>0</layer>
+					</meta>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/CeilingTiled</name>
+						</script>
+						<ambient>1 1 1 1</ambient>
+					</material>
+					<pose frame="">0 0 1.25 0 -0 0</pose>
+				</visual>
+				<pose frame="">4.8 -0 0 0 -0 -1.5708</pose>
+			</link>
+			<link name="Wall_7">
+				<collision name="Wall_7_Collision_0">
+					<geometry>
+						<box>
+							<size>5.3757 0.1 2.5</size>
+						</box>
+					</geometry>
+					<pose frame="">-2.16197 0 1.25 0 -0 0</pose>
+				</collision>
+				<collision name="Wall_7_Collision_1">
+					<geometry>
+						<box>
+							<size>2.23943 0.1 2.5</size>
+						</box>
+					</geometry>
+					<pose frame="">3.7301 0 1.25 0 -0 0</pose>
+				</collision>
+				<collision name="Wall_7_Collision_2">
+					<geometry>
+						<box>
+							<size>2.0845 0.1 0.5</size>
+						</box>
+					</geometry>
+					<pose frame="">1.56813 0 2.25 0 -0 0</pose>
+				</collision>
+				<visual name="Wall_7_Visual_0">
+					<geometry>
+						<box>
+							<size>5.3757 0.1 2.5</size>
+						</box>
+					</geometry>
+					<meta>
+						<layer>0</layer>
+					</meta>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/CeilingTiled</name>
+						</script>
+						<ambient>1 1 1 1</ambient>
+					</material>
+					<pose frame="">-2.16197 0 1.25 0 -0 0</pose>
+				</visual>
+				<visual name="Wall_7_Visual_1">
+					<geometry>
+						<box>
+							<size>2.23943 0.1 2.5</size>
+						</box>
+					</geometry>
+					<meta>
+						<layer>0</layer>
+					</meta>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/CeilingTiled</name>
+						</script>
+						<ambient>1 1 1 1</ambient>
+					</material>
+					<pose frame="">3.7301 0 1.25 0 -0 0</pose>
+				</visual>
+				<visual name="Wall_7_Visual_2">
+					<geometry>
+						<box>
+							<size>2.0845 0.1 0.5</size>
+						</box>
+					</geometry>
+					<meta>
+						<layer>0</layer>
+					</meta>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/CeilingTiled</name>
+						</script>
+						<ambient>1 1 1 1</ambient>
+					</material>
+					<pose frame="">1.56813 0 2.25 0 -0 0</pose>
+				</visual>
+				<pose frame="">-0 -4.05 0 0 -0 3.14159</pose>
+			</link>
+			<link name="Wall_8">
+				<collision name="Wall_8_Collision">
+					<geometry>
+						<box>
+							<size>8.19953 0.1 2.5</size>
+						</box>
+					</geometry>
+					<pose frame="">0 0 1.25 0 -0 0</pose>
+				</collision>
+				<visual name="Wall_8_Visual">
+					<geometry>
+						<box>
+							<size>8.19953 0.1 2.5</size>
+						</box>
+					</geometry>
+					<meta>
+						<layer>0</layer>
+					</meta>
+					<material>
+						<script>
+							<uri>file://media/materials/scripts/gazebo.material</uri>
+							<name>Gazebo/CeilingTiled</name>
+						</script>
+						<ambient>1 1 1 1</ambient>
+					</material>
+					<pose frame="">0 0 1.25 0 -0 0</pose>
+				</visual>
+				<pose frame="">-4.8 -0 0 0 -0 1.5708</pose>
 			</link>
 		</model>
 		<model name="fhs_floor_0">

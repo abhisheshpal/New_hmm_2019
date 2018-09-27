@@ -54,6 +54,7 @@ for model in model_config:
         plant9_f = base_dir + '/models/plant9/model.sdf'
         plant1_f = base_dir + '/models/plant1/model.sdf'
         arch_f = base_dir + '/models/dummy_arch/model.sdf'
+        fixed_arches_f = base_dir + '/models/dummy_arch_17/model.sdf'
         strut_f = base_dir + '/models/strut/model.sdf'
         canopy10m_f = base_dir + '/models/canopy10m/model.sdf'
         canopy4m_f = base_dir + '/models/canopy4m/model.sdf'
@@ -71,6 +72,7 @@ for model in model_config:
         plant9_d = load_data_from_xml(plant9_f)
         plant1_d = load_data_from_xml(plant1_f)
         arch_d = load_data_from_xml(arch_f)
+        fixed_arches_d = load_data_from_xml(fixed_arches_f)
         strut_d = load_data_from_xml(strut_f) 
         canopy10m_d = load_data_from_xml(canopy10m_f)        
         canopy4m_d = load_data_from_xml(canopy4m_f)        
@@ -88,6 +90,7 @@ for model in model_config:
         plant9_count = 0
         plant1_count = 0
         arch_count = 0
+        fixed_arches_count = 0
         strut_count = 0
         canopy10m_count = 0   
         canopy4m_count = 0   
@@ -98,6 +101,7 @@ for model in model_config:
         for i in range(len(polytunnels)):
             if polytunnels[i]['include']:            
             
+                fixed_arches = polytunnels[i]['fixed_arches']
                 pole_nx = polytunnels[i]['pole_nx']
                 pole_ny = polytunnels[i]['pole_ny']
                 pole_dx = polytunnels[i]['pole_dx']
@@ -154,8 +158,17 @@ for model in model_config:
 
                 if (arch_nx * arch_dx) > 0:
                     arch_poses, arch_xposes, arch_yposes = get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes)
-                    world.add_arches(arch_d, arch_poses, arch_count)
-                    arch_count += len(arch_poses)   
+                    
+                    if not fixed_arches:
+                        world.add_arches(arch_d, arch_poses, arch_count)
+                        arch_count += len(arch_poses)
+                        
+                    else:
+                        xoffset = arch_xoffset-(1.53*2)-0.015
+                        yoffset = pole_yoffset - pole_dy
+                        fixed_arch_poses = [xoffset, yoffset]
+                        world.add_fixed_arches(fixed_arches_d, fixed_arch_poses, fixed_arches_count)
+                        fixed_arches_count += 1
                     
                     canopy10m_poses, canopy10m_max_length = get_canopy10m_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
                     world.add_canopy10m(canopy10m_d, canopy10m_poses, canopy10m_count)
@@ -191,7 +204,8 @@ for model in model_config:
                 
                 xpose = frontage[i]['xpose']
                 ypose = frontage[i]['ypose']
-                world.add_frontage(frontage_d, [xpose, ypose], i)   
+                yaw = frontage[i]['yaw']
+                world.add_frontage(frontage_d, [xpose, ypose, yaw], i)   
    
    
     if model.keys()[0] == 'riseholme_enclosure':
