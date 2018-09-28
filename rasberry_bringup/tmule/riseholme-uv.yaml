@@ -53,7 +53,7 @@ init_cmd: |
   export_default USE_SIM false
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
-  export_default USE_CARROT false
+  export_default USE_CARROT true
 windows:
 - name: init
   panes:
