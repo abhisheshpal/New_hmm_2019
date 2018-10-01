@@ -165,6 +165,7 @@ include_directories(
 
 install(PROGRAMS
   scripts/simple_uv_treatment_node.py
+  scripts/uv_rig.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

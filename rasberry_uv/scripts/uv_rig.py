@@ -39,7 +39,7 @@ class UVRig:
     print('Connected!')
 
 
-    # Spin until the end of time or until ros shuts down... whatever comes first 
+    # Spin until the end of time or until ros shuts down... whatever comes first
     rospy.spin()
 
 
@@ -75,6 +75,3 @@ if __name__ == '__main__':
     try:
       uv_rig = UVRig(port, baud)
     except rospy.ROSInterruptException: pass
-
-
-                                                                                                                                                                                          81,0-1        Bot
