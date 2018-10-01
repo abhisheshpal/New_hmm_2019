@@ -6,3 +6,4 @@ export USE_SIM=true
 export GAZEBO_WORLD=riseholme
 export EKF_PUBLISH_TF=false
 export USE_IMU=false
+export USE_CARROT=false
