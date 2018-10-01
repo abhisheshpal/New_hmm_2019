@@ -127,19 +127,8 @@ class UVTreatment(object):
         rows = [2, 3]#, 4, 5]
         row_start_nodes = {2:"WayPoint64", 3:"WayPoint27", 4:"WayPoint59", 5:"WayPoint45"}
         row_finish_nodes = {2:"WayPoint10", 3:"WayPoint60", 4:"WayPoint36", 5:"WayPoint58"}
-        
-#        /move_base/DWAPlannerROS/max_rot_vel
-#/move_base/DWAPlannerROS/max_trans_vel
-#/move_base/DWAPlannerROS/max_vel_x
-#/move_base/DWAPlannerROS/max_vel_y
-#/move_base/DWAPlannerROS/min_rot_vel
-#/move_base/DWAPlannerROS/min_trans_vel
-#/move_base/DWAPlannerROS/min_vel_x
-#/move_base/DWAPlannerROS/min_vel_y
-
-#        # Tried resetting the max_vel but is not working!!!
-#        max_vel_x = rospy.get_param("/move_base/DWAPlannerROS/max_vel_x")
-#        max_trans_vel = rospy.get_param("/move_base/DWAPlannerROS/max_trans_vel")
+        uv_on_nodes = {2:"WayPoint64", 3:"WayPoint27", 4:"WayPoint59", 5:"WayPoint45"}
+        uv_off_nodes = {2:"WayPoint10", 3:"WayPoint60", 4:"WayPoint36", 5:"WayPoint58"}
         
         for row_id in rows:
             # go to start of row
@@ -154,10 +143,6 @@ class UVTreatment(object):
                 rospy.loginfo(info_msg)
                 return False
 
-#            # TODO: resetting max velocity. This should be done from topo_nav            
-#        # Tried this not working!!!
-#            rospy.set_param("/move_base/DWAPlannerROS/max_vel_x", 0.2)
-#            rospy.set_param("/move_base/DWAPlannerROS/max_trans_vel", 0.2)
             rospy.sleep(0.2)
             
             self._do_treatment(row_finish_nodes[row_id])
@@ -170,18 +155,9 @@ class UVTreatment(object):
             elif not result.success:
                 rospy.loginfo(info_msg)
                 return False
-            
-#            # TODO: resetting max velocity. This should be done from topo_nav            
-#            rospy.set_param("/move_base/DWAPlannerROS/max_vel_x", max_vel_x)
-#            rospy.set_param("/move_base/DWAPlannerROS/max_trans_vel", max_trans_vel)
+
             rospy.sleep(0.2)
         
-#        # TODO: resetting max velocity. This should be done from topo_nav       
-#        # Tried this not working!!!
-#        rospy.set_param("/move_base/DWAPlannerROS/max_vel_x", max_vel_x)
-#        rospy.set_param("/move_base/DWAPlannerROS/max_trans_vel", max_trans_vel)
-        rospy.sleep(0.2)
-            
         # go to base node
         self._set_topo_nav_goal(goal_node="WayPoint56", done_cb=self._done_cb, feedback_cb=self._fb_cb)
         result = self._topo_nav.get_result()
