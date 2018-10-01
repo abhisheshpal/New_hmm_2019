@@ -75,6 +75,9 @@ windows:
   - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
   - rosrun topological_navigation visualise_map.py "$TMAP"
+- name: uv
+  panes:
+  - rosrun rasberry_uv simple_uv_treatment_node.py
 - name: dataset_recording
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
