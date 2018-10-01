@@ -13,6 +13,7 @@ import std_msgs.msg
 import topological_navigation.msg
 import geometry_msgs.msg
 import rasberry_people_perception.topological_localiser
+import std_srvs.srv
 
 
 class UVTreatment(object):
@@ -38,6 +39,10 @@ class UVTreatment(object):
         
         # topological navigation action client
         self._topo_nav = actionlib.SimpleActionClient(self.ns + "topological_navigation", topological_navigation.msg.GotoNodeAction)
+        
+        self.uv_trigger_req = std_srvs.srv.SetBoolRequest()
+        self.uv_trigger_client = rospy.ServiceProxy("/switch_uv", std_srvs.srv.SetBool)
+        
         rospy.loginfo("UVTreatment object ready")
 
     def _update_pose_cb(self, msg):
@@ -94,6 +99,8 @@ class UVTreatment(object):
         rospy.loginfo("send robot-%s to do uv treatment" %(self.ns[1:]))
         # TODO: uv_rig on service call
         rospy.loginfo("Turning UV Rig ON")
+        self.uv_trigger_req.data = True
+        self.uv_trigger_client.call(self.uv_trigger_req.data)
         self._set_topo_nav_goal(goal_node=goal_node,
                                done_cb=self._done_treatment_cb,
                                feedback_cb=self._fb_cb)
@@ -116,6 +123,9 @@ class UVTreatment(object):
         """
         # TODO: uv_rig off service call
         rospy.loginfo("Turning UV Rig OFF")
+        self.uv_trigger_req.data = False
+        self.uv_trigger_client.call(self.uv_trigger_req.data)
+        
         if result.success:
             rospy.loginfo("topo_navigation completed")
         elif not rospy.is_shutdown():
