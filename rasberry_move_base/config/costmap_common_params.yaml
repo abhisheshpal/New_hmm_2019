@@ -12,12 +12,12 @@ no_go_layer:
   map_topic: /no_go_map
 
 global_inflation_layer:
-  inflation_radius: 0.66
-  cost_scaling_factor: 0.97
+  inflation_radius: 0.5
+  cost_scaling_factor: 2.0
 
 local_inflation_layer:
-  inflation_radius: 0.66
-  cost_scaling_factor: 0.97
+  inflation_radius: 0.5
+  cost_scaling_factor: 2.0
 
 obstacle_layer:
   max_obstacle_height: 2.0

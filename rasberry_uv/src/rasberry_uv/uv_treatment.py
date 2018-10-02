@@ -105,13 +105,13 @@ class UVTreatment(object):
         rospy.loginfo("Turning UV Rig ON")
         if not self.use_sim:
             self.uv_trigger_req.data = True
-            result = self.uv_trigger_client.call(self.uv_trigger_req.data)
-#            if result.success:
+            uv_trigger_res = self.uv_trigger_client.call(self.uv_trigger_req.data)
+#            if uv_trigger_res.success:
 #                rospy.loginfo("Turned UV Rig ON")
 
         self._set_topo_nav_goal(goal_node=goal_node,
-                               done_cb=self._done_treatment_cb,
-                               feedback_cb=self._fb_cb)
+                                done_cb=self._done_treatment_cb,
+                                feedback_cb=self._fb_cb)
 
     def _fb_cb(self, fb):
         """topo_nav feedback callback
@@ -121,10 +121,12 @@ class UVTreatment(object):
     def _done_cb(self, status, result):
         """topo_nav done callback
         """
-        if not rospy.is_shutdown():
+        if result is None:
             rospy.loginfo("failed to finish topo_navigation")
         elif result.success:
             rospy.loginfo("topo_navigation completed")
+        elif not rospy.is_shutdown():
+            rospy.loginfo("failed to finish topo_navigation")
 
     def _done_treatment_cb(self, status, result):
         """treatment topo_nav done callback
@@ -137,10 +139,12 @@ class UVTreatment(object):
 #            if uv_trigger_res.success:
 #                rospy.loginfo("Turned UV Rig ON")
 
-        if not rospy.is_shutdown():
+        if result is None:
             rospy.loginfo("failed to finish topo_navigation")
         elif result.success:
             rospy.loginfo("topo_navigation completed")
+        elif not rospy.is_shutdown():
+            rospy.loginfo("failed to finish topo_navigation")
 
     def run(self, ):
         # the information about the rows, starting and finishing nodes should
