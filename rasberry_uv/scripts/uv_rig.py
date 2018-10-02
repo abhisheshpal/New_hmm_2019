@@ -21,12 +21,10 @@ class UVRig:
     # Advertise service
     self._srv_lights = rospy.Service('switch_uv', SetBool, self.lights_callback)
 
-
     # Port, baud and serial connection
     self._port = port
     self._baud = baud
     self._ser_uv = serial.Serial(self._port, self._baud, timeout=1)
-
 
     # Verify that we are talking to the correct device
     connected = False
@@ -38,10 +36,8 @@ class UVRig:
         connected = True
     print('Connected!')
 
-
     # Spin until the end of time or until ros shuts down... whatever comes first
     rospy.spin()
-
 
     # Close serial connection
     self._ser_uv.close()
@@ -55,13 +51,10 @@ class UVRig:
       print('Lights off')
       self._ser_uv.write('!L:0\n')
 
-
-
   # Callback for our switch uv service
   def lights_callback(self, req):
     self.switch_lights(req.data)
-
-
+    return (True, "")
 
 if __name__ == '__main__':
 
