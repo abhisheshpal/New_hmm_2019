@@ -1,0 +1,6 @@
+free_thresh: 0.196
+image: norway_poles_no_go.pgm
+negate: 0
+occupied_thresh: 0.65
+origin: [-55.099999999999994, -30.200000000000003, 0.0]
+resolution: 0.05
