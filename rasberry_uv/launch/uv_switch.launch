@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="port" default="" />
+  <arg name="baud_rate" default="115200" />
+
+  <!-- uv_switch service provider node -->
+  <node pkg="rasberry_uv" type="uv_rig.py" name="uv_rig" args="$(arg port) $(arg baud_rate)"/>
+
+  <!-- uv_switch safetly teleop node -->
+  <node pkg="rasberry_uv" type="uv_safety.py" name="uv_safety" />
+
+</launch>

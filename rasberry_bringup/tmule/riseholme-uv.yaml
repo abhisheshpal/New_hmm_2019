@@ -78,7 +78,7 @@ windows:
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: uv
   panes:
-  - rosrun rasberry_uv uv_rig.py /dev/ttyACM0 115200
+  - roslaunch rasberry_uv uv_switch.py port:=/dev/ttyACM0 baud_rate:=115200
   - rosrun rasberry_uv simple_uv_treatment_node.py
 - name: dataset_recording
   panes:
