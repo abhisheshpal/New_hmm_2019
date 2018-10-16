@@ -8,8 +8,14 @@ project(rasberry_uv)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  actionlib
+  geometry_msgs
   rasberry_navigation
+  rasberry_people_perception
   rospy
+  sensor_msgs
+  std_srvs
+  topological_navigation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -166,6 +172,7 @@ include_directories(
 install(PROGRAMS
   scripts/simple_uv_treatment_node.py
   scripts/uv_rig.py
+  scripts/uv_safety.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 
@@ -190,10 +197,10 @@ install(PROGRAMS
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-#foreach (dir launch)
-#    install(DIRECTORY ${dir}/
-#    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
-#endforeach(dir)
+foreach (dir launch)
+    install(DIRECTORY ${dir}/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
+endforeach(dir)
 
 #############
 ## Testing ##
