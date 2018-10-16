@@ -24,7 +24,7 @@ class ClassName:
 
         #      MESSAGETYPES
         self.controller = Joy()
-        self.controller.buttons = [0, 0]
+        self.controller.buttons = [0, 0, 0, 0, 0, 0, 0, 0]
         #self.cmd_vel = Twist()
 
         #      CONSTANTS
