@@ -1,7 +1,7 @@
 - meta:
     map: riseholme
     node: WayPoint10
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -14,7 +14,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint10
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.999632179737
@@ -22,8 +22,8 @@
         y: -3.36271227752e-06
         z: 0.0271208286285
       position:
-        x: 43.889
-        y: 36.566
+        x: 32.49
+        y: -6.0065
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -47,7 +47,7 @@
 - meta:
     map: riseholme
     node: WayPoint27
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -74,7 +74,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint27
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: -0.00859242677689
@@ -82,8 +82,8 @@
         y: -2.13815756211e-08
         z: -0.999963283539
       position:
-        x: 43.953
-        y: 37.896
+        x: 32.49
+        y: -4.6885
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -107,7 +107,7 @@
 - meta:
     map: riseholme
     node: WayPoint36
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -127,7 +127,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint36
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.998707652092
@@ -135,8 +135,8 @@
         y: 2.95917601534e-09
         z: -0.0508242845535
       position:
-        x: 44.049
-        y: 39.22
+        x: 32.49
+        y: -3.3685
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -160,7 +160,7 @@
 - meta:
     map: riseholme
     node: WayPoint45
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -180,7 +180,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint45
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: -0.0371066629887
@@ -188,8 +188,8 @@
         y: 1.95027837435e-07
         z: -0.999311506748
       position:
-        x: 44.164
-        y: 40.514
+        x: 32.49
+        y: -2.0484999999999998
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -213,7 +213,7 @@
 - meta:
     map: riseholme
     node: WayPoint56
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     tag:
     - Base Station
   node:
@@ -256,7 +256,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint56
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.998913407326
@@ -264,8 +264,8 @@
         y: 9.87941881081e-11
         z: -0.0466050133109
       position:
-        x: 13.517999649
-        y: 40.1360015869
+        x: 0.87
+        y: -3.9565
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -289,7 +289,7 @@
 - meta:
     map: riseholme
     node: WayPoint58
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -316,7 +316,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint58
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.00742003321648
@@ -324,8 +324,8 @@
         y: 7.62667617948e-09
         z: 0.999972581863
       position:
-        x: 17.2119998932
-        y: 42.3747777778
+        x: 5.53
+        y: -1.9765
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -349,7 +349,7 @@
 - meta:
     map: riseholme
     node: WayPoint59
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -369,7 +369,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint59
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.999478399754
@@ -377,8 +377,8 @@
         y: -1.02859587514e-08
         z: -0.0322974845767
       position:
-        x: 17.1074466705
-        y: 41.0317777778
+        x: 5.53
+        y: -3.2965
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -402,7 +402,7 @@
 - meta:
     map: riseholme
     node: WayPoint60
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -415,7 +415,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint60
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: -0.0981757119298
@@ -423,8 +423,8 @@
         y: -4.13397884813e-07
         z: -0.995169103146
       position:
-        x: 16.9979991913
-        y: 39.7007777778
+        x: 5.53
+        y: -4.6165
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -448,7 +448,7 @@
 - meta:
     map: riseholme
     node: WayPoint63
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     tag:
     - Storage
   node:
@@ -477,7 +477,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint63
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 1.0
@@ -485,8 +485,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 13.363
-        y: 37.181
+        x: 0.87
+        y: -6.5965
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -510,7 +510,7 @@
 - meta:
     map: riseholme
     node: WayPoint64
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -544,7 +544,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint64
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.999453961849
@@ -552,8 +552,8 @@
         y: -1.87822983833e-08
         z: -0.0330460518599
       position:
-        x: 16.8799991608
-        y: 38.3657777778
+        x: 5.53
+        y: -5.9365000000000006
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -577,7 +577,7 @@
 - meta:
     map: riseholme
     node: WayPoint66
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     tag:
     - Charging
   node:
@@ -620,7 +620,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint66
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.998012006283
@@ -628,8 +628,8 @@
         y: 2.9471558527e-09
         z: -0.0630242824554
       position:
-        x: 13.6719999313
-        y: 43.0830001831
+        x: 0.87
+        y: -1.3165
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -653,7 +653,7 @@
 - meta:
     map: riseholme
     node: WayPoint67
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -673,7 +673,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint67
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.962702095509
@@ -681,8 +681,8 @@
         y: -6.83375933619e-09
         z: -0.270563840866
       position:
-        x: 14.1379995346
-        y: 51.4809989929
+        x: 0.87
+        y: 6.6034999999999995
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -706,7 +706,7 @@
 - meta:
     map: riseholme
     node: WayPoint68
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -726,7 +726,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint68
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 1.0
@@ -734,8 +734,8 @@
         y: 0.0
         z: 0.0
       position:
-        x: 6.228
-        y: 54.08
+        x: -5.88
+        y: 9.1835
         z: 0.0
     verts:
     - x: 1.14424562454
@@ -759,7 +759,7 @@
 - meta:
     map: riseholme
     node: WayPoint69
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -793,7 +793,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint69
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.72663072
@@ -801,8 +801,8 @@
         y: 0.0
         z: 0.68702823
       position:
-        x: 5.8197
-        y: 47.711
+        x: -5.88
+        y: 2.8255
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -826,7 +826,7 @@
 - meta:
     map: riseholme
     node: WayPoint70
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -839,7 +839,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint70
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.72663072
@@ -847,8 +847,8 @@
         y: 0.0
         z: 0.68702823
       position:
-        x: 7.9433
-        y: 44.149
+        x: -3.8218
+        y: -0.784
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -872,7 +872,7 @@
 - meta:
     map: riseholme
     node: WayPoint71
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -885,7 +885,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint71
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.72663072
@@ -893,8 +893,8 @@
         y: 0.0
         z: 0.68702823
       position:
-        x: 6.347
-        y: 44.159
+        x: -5.4918
+        y: -0.784
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -918,7 +918,7 @@
 - meta:
     map: riseholme
     node: WayPoint72
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
   node:
     edges:
     - action: move_base
@@ -931,7 +931,7 @@
     localise_by_topic: ''
     map: riseholme
     name: WayPoint72
-    pointset: riseholme-uv
+    pointset: riseholme-uv_sim
     pose:
       orientation:
         w: 0.72663072
@@ -939,8 +939,8 @@
         y: 0.0
         z: 0.68702823
       position:
-        x: 4.751
-        y: 44.209
+        x: -7.1618
+        y: -0.784
         z: 0.0
     verts:
     - x: 0.689999997616
