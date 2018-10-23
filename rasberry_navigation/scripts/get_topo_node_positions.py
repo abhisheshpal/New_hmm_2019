@@ -138,7 +138,7 @@ if plot:
     
     plt.figure(2); plt.clf()
     plt.plot(posB[:, 0], posB[:, 1], 'b.')
-    plt.plot(cA[:, 1], cB[:, 2], 'r.')
+    plt.plot(cB[:, 1], cB[:, 2], 'r.')
     plt.xlabel('X (meters)')
     plt.ylabel('Y (meters)')
     plt.title('Polytunnel 2')

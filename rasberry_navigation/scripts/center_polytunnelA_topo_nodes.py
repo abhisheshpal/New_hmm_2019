@@ -32,6 +32,8 @@ for i, way_point in enumerate(way_points):
     
     for j, node in enumerate(cpy):
         if node["node"]["name"] == way_point_str:
+            print "adjusting position of node " + way_point_str
+            
             cpy[j]['node']['pose']['position']['x'] = float(centres[i][0])
             cpy[j]['node']['pose']['position']['y'] = float(centres[i][1])
             

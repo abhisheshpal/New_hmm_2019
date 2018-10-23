@@ -21,7 +21,7 @@ way_points = [120,119,110,101,84,83]
 dx = 0.5
 dy = -0.04
 
-f_in = base_dir + "/riseholme_new.tmap"  
+f_in = base_dir + "/" + infile
 topo_map = load_data_from_yaml(f_in)
 cpy = copy.deepcopy(topo_map)
 for i, way_point in enumerate(way_points):
@@ -29,6 +29,8 @@ for i, way_point in enumerate(way_points):
     
     for j, node in enumerate(cpy):
         if node["node"]["name"] == way_point_str:
+            print "adjusting position of node " + way_point_str            
+            
             x = copy.deepcopy(cpy[j]['node']['pose']['position']['x'])
             y = copy.deepcopy(cpy[j]['node']['pose']['position']['y'])
             
