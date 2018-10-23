@@ -120,7 +120,7 @@ way_points.extend([57,54,53,52,51,50,49,48,47,46])
 way_points = np.array(way_points).reshape(len(way_points), 1)
 
 cA = np.hstack((way_points, cA))
-cB = np.hstack((way_points, cB))
+cB = np.hstack((way_points + 74, cB))
 
 #new_node_positions = [[13.138, 51.481], [5.928, 53.080], [5.494, 45.340]]
 #yaw = np.arctan2(8.18-0.68, -6.18--6.18) # From (x1,y1) to (x2,y2) the direction is atan2(y2−y1,x2−x1)
