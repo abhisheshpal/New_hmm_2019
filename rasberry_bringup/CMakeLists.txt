@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
   marvelmind_nav
   mongodb_store
+  persistent_topics
   rasberry_coordination
   rasberry_gazebo
   rasberry_move_base
