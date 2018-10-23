@@ -4,7 +4,7 @@ Created on Wed Oct 17 08:45:22 2018
 
 @author: Adam Binch
 
-This script adds the nodes and edges for polytinnel B to the topological map by 
+This script adds the nodes and edges for polytunnel B to the topological map by 
 re-using those for polytunnel A. Note that this script adds edges that occur 
 within the polytunnel only. All other edges were added using 
 `rasberry_navigation/scripts/add_edges_between_nodes.py` 
@@ -47,6 +47,8 @@ for i, index in enumerate(indices):
     node = copy.deepcopy(cpy[index])
     
     new_origin = "WayPoint{}".format(int(wayPoints_pTunnelB[i]))
+    
+    print "adding node " + new_origin
     
     node["meta"]["node"] = new_origin
     node["node"]["name"] = new_origin

@@ -38,6 +38,7 @@ for i, way_point in enumerate(way_points):
             indices.append(j)
             
 for i in sorted(indices, reverse=True):
+    print "deleting node " + cpy[i]["node"]["name"]
     del cpy[i]            
 
 if write_map:
