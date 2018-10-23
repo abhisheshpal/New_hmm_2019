@@ -2,7 +2,7 @@
 """
 Created on Wed Oct 17 15:50:32 2018
 
-@author: adam
+@author: Adam Binch
 
 Add edges specified in `e`. The left number is the origin, the right is 
 the destination.
@@ -39,6 +39,8 @@ for edge in e:
         if node["node"]["name"] == origin:
             destination = "WayPoint{}".format(edge[1])
             edge_id = origin + "_" + destination 
+            
+            print "adding edge " + edge_id
             
             new_edge = {'action': 'move_base',
                         'edge_id': edge_id,
