@@ -55,6 +55,7 @@ init_cmd: |
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
   export_default USE_UV_PARAMS true
+  export_default USE_GUI false
 windows:
 - name: init
   panes:
@@ -63,7 +64,7 @@ windows:
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD with_gui:=$USE_GUI
   - roslaunch rasberry_bringup hokuyo.launch
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
@@ -78,9 +79,9 @@ windows:
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: uv
   panes:
-  - roslaunch rasberry_uv uv_switch.launch port:=/dev/ttyACM0 baud_rate:=115200
-  - rosrun rasberry_uv simple_uv_treatment_node.py
+  - roslaunch rasberry_uv uv_switch.launch port:=/dev/ttyACM0 baud_rate:=115200 use_sim:=$USE_SIM
+  - rosrun rasberry_uv simple_uv_treatment_node.py $(rospack find rasberry_uv)/config/riseholme.yaml
 - name: dataset_recording
   panes:
-  - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
+  - rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
   - ls
