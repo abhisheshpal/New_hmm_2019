@@ -17,14 +17,37 @@ import std_srvs.srv
 
 
 class UVTreatment(object):
-    def __init__(self, ns="/", use_sim=False):
-        self.ns = ns
-        self.use_sim = use_sim
+    """
+    An object for controlling a single robot to do the uv treatment for a set of rows
+    """
+    def __init__(self, robot_id="", ns="", treatment_rows=[], row_start_nodes={}, row_finish_nodes={}):
+        """
+        UVTreatment initialiser
+
+        Keyword arguments:
+
+        robot_id -- robot's id
+        ns -- namespace, useful when centrally controlling multiple robots
+        treatment_rows -- row_ids for treatment, list
+        row_start_nodes -- start node of each row_id, dict
+        row_finish_nodes -- finish node of each row_id, dict
+        """
+        self.robot_id = robot_id
+        if ns != "":
+            self.ns = ns
+        else:
+            self.ns = self.robot_id + "/"
+
+        self.treatment_rows = treatment_rows
+        self.row_start_nodes= row_start_nodes
+        self.row_finish_nodes = row_finish_nodes
 
         self.lock = threading.Lock()
 
         rospy.loginfo("Initialising TopologicalNavLoc object")
-        self.topo_localiser = rasberry_people_perception.topological_localiser.TopologicalNavLoc()
+        # ns argument to topo_localiser is empty unless the topological map server
+        # is running within a namesapce
+        self.topo_localiser = rasberry_people_perception.topological_localiser.TopologicalNavLoc(ns=self.ns)
         rospy.loginfo("TopologicalNavLoc object ready")
         rospy.loginfo("Initialising UVTreatment object")
 
@@ -41,11 +64,10 @@ class UVTreatment(object):
         # topological navigation action client
         self._topo_nav = actionlib.SimpleActionClient(self.ns + "topological_navigation", topological_navigation.msg.GotoNodeAction)
 
-        if not self.use_sim:
-            self.uv_trigger_req = std_srvs.srv.SetBoolRequest()
-            rospy.loginfo("Waiting for /switch_uv service...")
-            rospy.wait_for_service("/switch_uv")
-            self.uv_trigger_client = rospy.ServiceProxy("/switch_uv", std_srvs.srv.SetBool)
+        self.uv_trigger_req = std_srvs.srv.SetBoolRequest()
+        rospy.loginfo("Waiting for %sswitch_uv service..." %(self.ns))
+        rospy.wait_for_service(self.ns + "switch_uv")
+        self.uv_trigger_client = rospy.ServiceProxy(self.ns + "switch_uv", std_srvs.srv.SetBool)
 
         rospy.loginfo("UVTreatment object ready")
 
@@ -91,7 +113,7 @@ class UVTreatment(object):
         """send_goal and set feedback and done callbacks to topo_nav action client
         """
         goal = topological_navigation.msg.GotoNodeGoal()
-        rospy.loginfo("robot-%s has goal %s" %(self.ns[1:], goal_node))
+        rospy.loginfo("robot %s has goal %s" %(self.robot_id, goal_node))
         goal.target = goal_node
         goal.no_orientation = False
         self._topo_nav.send_goal(goal, done_cb=done_cb, active_cb=active_cb, feedback_cb=feedback_cb)
@@ -100,14 +122,14 @@ class UVTreatment(object):
     def _do_treatment(self, goal_node):
         """wrapper for sending specific goal to topo_nav action client
         """
-        rospy.loginfo("send robot-%s to do uv treatment" %(self.ns[1:]))
+        rospy.loginfo("send robot %s to do uv treatment" %(self.robot_id))
         # TODO: uv_rig on service call
         rospy.loginfo("Turning UV Rig ON")
-        if not self.use_sim:
-            self.uv_trigger_req.data = True
-            uv_trigger_res = self.uv_trigger_client.call(self.uv_trigger_req.data)
-#            if uv_trigger_res.success:
-#                rospy.loginfo("Turned UV Rig ON")
+
+        self.uv_trigger_req.data = True
+        uv_trigger_res = self.uv_trigger_client.call(self.uv_trigger_req.data)
+        if uv_trigger_res.success:
+                rospy.loginfo("Turned UV Rig ON")
 
         self._set_topo_nav_goal(goal_node=goal_node,
                                 done_cb=self._done_treatment_cb,
@@ -133,11 +155,11 @@ class UVTreatment(object):
         """
         # TODO: uv_rig off service call
         rospy.loginfo("Turning UV Rig OFF")
-        if not self.use_sim:
-            self.uv_trigger_req.data = False
-            uv_trigger_res = self.uv_trigger_client.call(self.uv_trigger_req.data)
-#            if uv_trigger_res.success:
-#                rospy.loginfo("Turned UV Rig ON")
+
+        self.uv_trigger_req.data = False
+        uv_trigger_res = self.uv_trigger_client.call(self.uv_trigger_req.data)
+        if uv_trigger_res.success:
+            rospy.loginfo("Turned UV Rig OFF")
 
         if result is None:
             rospy.loginfo("failed to finish topo_navigation")
@@ -147,23 +169,14 @@ class UVTreatment(object):
             rospy.loginfo("failed to finish topo_navigation")
 
     def run(self, ):
-        # the information about the rows, starting and finishing nodes should
-        # ideally come from a yaml file
-        rows = [2, 3]#, 4, 5]
-        row_start_nodes = {2:"WayPoint64", 3:"WayPoint27", 4:"WayPoint59", 5:"WayPoint45"}
-        row_finish_nodes = {2:"WayPoint10", 3:"WayPoint60", 4:"WayPoint36", 5:"WayPoint58"}
-        # TODO: something to explore. Add new nodes in the rows at the start and end for
-        # uv on/off purposes. current/closest node can then be used decide when this should
-        # be done.
-#        uv_on_nodes = {2:"WayPoint64", 3:"WayPoint27", 4:"WayPoint59", 5:"WayPoint45"}
-#        uv_off_nodes = {2:"WayPoint10", 3:"WayPoint60", 4:"WayPoint36", 5:"WayPoint58"}
-
-        for row_id in rows:
+        """
+        """
+        for row_id in self.treatment_rows:
             # go to start of row
-            self._set_topo_nav_goal(goal_node=row_start_nodes[row_id], done_cb=self._done_cb, feedback_cb=self._fb_cb)
+            self._set_topo_nav_goal(goal_node=self.row_start_nodes[row_id], done_cb=self._done_cb, feedback_cb=self._fb_cb)
             result = self._topo_nav.get_result()
 
-            info_msg = "failed to reach start of row %d. exiting!" %(row_id)
+            info_msg = "failed to reach start of %s. exiting!" %(row_id)
             if result is None:
                 rospy.loginfo(info_msg)
                 return False
@@ -173,10 +186,10 @@ class UVTreatment(object):
 
             rospy.sleep(0.2)
 
-            self._do_treatment(row_finish_nodes[row_id])
+            self._do_treatment(self.row_finish_nodes[row_id])
             result = self._topo_nav.get_result()
 
-            info_msg = "failed to reach finish node of row %d. exiting!" %(row_id)
+            info_msg = "failed to reach finish node of %s. exiting!" %(row_id)
             if result is None:
                 rospy.loginfo(info_msg)
                 return False
