@@ -18,9 +18,9 @@ init_cmd: |
   
   # load robot-specific config file
   if [ -r "$HOME/.rasberryrc" ]; then echo "*** loading $HOME/.rasberryrc" ; source "$HOME/.rasberryrc"; fi
-  
   export_default BASE_CONFIG_DIR `readlink -f . || echo .`
   export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
+  #export_default SCENARIO_NAME "sim_riseholme"
   export_default SCENARIO_NAME "default"
   # load robot-specific config file
   if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
@@ -36,39 +36,40 @@ init_cmd: |
   export_default ROS_HOSTNAME "$ROS_IP"
   # path where to expect MONGODB
   export_default MONGO_PATH "$HOME/mongodb"
-  # use IMU?
-  export_default USE_IMU true
   # the topomap to be used
-  export_default TMAP riseholme
+  export_default TMAP riseholme_sim
   # the gridmap to be used (key in mongodb)
-  export_default MAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  # set the robot type
-  export_default ROBOT_TYPE "thorvald_ii_4wd4ws_slim"
-  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
-  export_default ROSBRIDGE_IP "10.8.0.4"
+  export_default MAP "$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml"
+  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/riseholme_sim_no_go.yaml"
+  # set the ROS_MASTER_URI and ROSBRIDGE
+  export ROBOTS_URI="http://$ROS_MASTER:11311/"
+  export SERVER_URI="http://$ROS_MASTER:11411/"
+  export ROS_MASTER_URI=${ROBOTS_URI}
+  export_default ROSBRIDGE_IP "localhost"
   export_default ROSBRIDGE_PORT "9090"
-  export_default USE_SIM false
+  # sim related
+  export_default USE_SIM true
+  export_default WITH_GUI false
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
-  # sim related
-  export_default ROBOT_NO "007"
-  export_default WITH_GUI false
+  export_default USE_IMU False
   # robot_1
-  export NAME_1=thorvald_001
-  export MODEL_1=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO}.yaml
-  export MODEL_EXTRAS_1=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro
-  export POS_X_1=1.0
-  export POS_Y_1=-1.5
-  export POS_A_1=0.0
+  export ROBOT_NO_1="007"
+  export ROBOT_NAME_1=thorvald_001
+  export ROBOT_MODEL_1=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_1}.yaml
+  export ROBOT_MODEL_EXTRAS_1=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_1}_sensors.xacro
+  export ROBOT_POS_X_1=1.0
+  export ROBOT_POS_Y_1=-1.5
+  export ROBOT_POS_A_1=0.0
   # robot_2
-  export NAME_2=thorvald_002
-  export MODEL_2=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO}.yaml
-  export MODEL_EXTRAS_2=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro 
-  export POS_X_2=1.0
-  export POS_Y_2=1.5
-  export POS_A_2=0.0
+  export ROBOT_NO_2="007"
+  export ROBOT_NAME_2=thorvald_002
+  export ROBOT_MODEL_2=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_2}.yaml
+  export ROBOT_MODEL_EXTRAS_2=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_2}_sensors.xacro 
+  export ROBOT_POS_X_2=1.0
+  export ROBOT_POS_Y_2=1.5
+  export ROBOT_POS_A_2=0.0
   # mongo
   export ROBOTS_MONGO_PATH=$MONGO_PATH/robots
   export ROBOTS_MONGO_PORT=62345
@@ -80,42 +81,42 @@ windows:
   panes:
   - roscore
   - sleep 3; mkdir -p "$ROBOTS_MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch port:=$ROBOTS_MONGO_PORT db_path:=$ROBOTS_MONGO_PATH
-  - export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; roscore -p 11411
-  - sleep 3; export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; mkdir -p "$SERVER_MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch port:=$SERVER_MONGO_PORT db_path:=$SERVER_MONGO_PATH
+  - export ROS_MASTER_URI=${SERVER_URI}; roscore -p 11411
+  - sleep 3; export ROS_MASTER_URI=${SERVER_URI}; mkdir -p "$SERVER_MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch port:=$SERVER_MONGO_PORT db_path:=$SERVER_MONGO_PATH
 - name: robots
   panes:
   - roslaunch rasberry_bringup gazebo_bringup.launch gui:=$WITH_GUI world_name:=$GAZEBO_WORLD
-  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$NAME_1 robot_model:=$MODEL_1 model_extras:=$MODEL_EXTRAS_1 with_teleoperation:=false start_pose_x:=$POS_X_1 start_pose_y:=$POS_Y_1 start_pose_Y:=$POS_A_1
-  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$NAME_2 robot_model:=$MODEL_2 model_extras:=$MODEL_EXTRAS_2 with_teleoperation:=false start_pose_x:=$POS_X_2 start_pose_y:=$POS_Y_2 start_pose_Y:=$POS_A_2
+  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_1 robot_model:=$ROBOT_MODEL_1 ROBOT_MODEL_extras:=$ROBOT_MODEL_EXTRAS_1 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_1 start_pose_y:=$ROBOT_POS_Y_1 start_pose_Y:=$ROBOT_POS_A_1
+  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_2 robot_model:=$ROBOT_MODEL_2 ROBOT_MODEL_extras:=$ROBOT_MODEL_EXTRAS_2 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_2 start_pose_y:=$ROBOT_POS_Y_2 start_pose_Y:=$ROBOT_POS_A_2
 - name: localisation
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$NAME_1 initial_pose_x:=$POS_X_1 initial_pose_y:=$POS_Y_1 initial_pose_a:=$POS_A_1
-  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$NAME_2 initial_pose_x:=$POS_X_2 initial_pose_y:=$POS_Y_2 initial_pose_a:=$POS_A_2
+  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_1 initial_pose_x:=$ROBOT_POS_X_1 initial_pose_y:=$ROBOT_POS_Y_1 initial_pose_a:=$ROBOT_POS_A_1
+  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_2 initial_pose_x:=$ROBOT_POS_X_2 initial_pose_y:=$ROBOT_POS_Y_2 initial_pose_a:=$ROBOT_POS_A_2
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$NAME_1
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$NAME_1
-  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$NAME_2
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$NAME_2
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2
 - name: rosduct
   panes:
-  - export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; roslaunch rasberry_coordination coordination.launch
-  - sleep 3; export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
-  - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$NAME_1 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
-  - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$NAME_2 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
+  - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination coordination.launch
+  - sleep 3; export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
+  - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$ROBOT_NAME_1 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
+  - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$ROBOT_NAME_2 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
 - name: coordination
   panes:
-  - export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-  - export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_$SCENARIO_NAME.yaml
+  - export ROS_MASTER_URI=${SERVER_URI}; WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
+  - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_$SCENARIO_NAME.yaml
 - name: people_perception
   panes:
-  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '0' '0' '12.3' '-3.31' '0.0' '0'
-  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '2' '0' '18.0' '5.0' '0.0' '0'
-  - export ROS_MASTER_URI="http://$ROS_MASTER:11411/"; rosrun rasberry_people_perception simple_marvel_localiser.py
+  - rostopic pub -r 3 /hedge_ROBOT_POS_a marvelmind_nav/hedge_ROBOT_POS_a -- '0' '0' '12.3' '-3.31' '0.0' '0'
+  - rostopic pub -r 3 /hedge_ROBOT_POS_a marvelmind_nav/hedge_ROBOT_POS_a -- '2' '0' '18.0' '5.0' '0.0' '0'
+  - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_people_perception simple_marvel_localiser.py
 - name: visualisation
   panes:
-  - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$NAME_1 map:=$TMAP
-  - echo "roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$NAME_2 map:=$TMAP"
+  - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_1 map:=$TMAP
+  - echo "roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_2 map:=$TMAP"
   - rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation_multisim.rviz
