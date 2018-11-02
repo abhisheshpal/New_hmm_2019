@@ -2,8 +2,8 @@
 Changelog for package rasberry_uv
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2018-11-02)
+------------------
 * Merge pull request `#156 <https://github.com/LCAS/RASberry/issues/156>`_ from gpdas/uv_updates
   Tested in simulation. Merging this.
 * rasberry_uv updates + minor changes elsewhere

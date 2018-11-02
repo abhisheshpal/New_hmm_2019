@@ -2,8 +2,8 @@
 Changelog for package rasberry_navigation
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2018-11-02)
+------------------
 * Merge pull request `#155 <https://github.com/LCAS/RASberry/issues/155>`_ from gpdas/uv_updates
   Merging this. riseholme topo_maps updated
 * Merge branch 'master' into uv_updates

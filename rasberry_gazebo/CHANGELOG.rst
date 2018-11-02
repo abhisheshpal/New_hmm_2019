@@ -2,8 +2,8 @@
 Changelog for package rasberry_gazebo
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2018-11-02)
+------------------
 * Merge pull request `#144 <https://github.com/LCAS/RASberry/issues/144>`_ from adambinch/master
   Merging this. Nodes in topo map have been re-centred (they are now more accurately centred). The topo map for the sim has been updated to match the topo map.
 * Nodes in topo map have been re-centred (they are now more accurately centred).

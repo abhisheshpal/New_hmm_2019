@@ -2,8 +2,8 @@
 Changelog for package rasberry_des
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2018-11-02)
+------------------
 * Merge pull request `#154 <https://github.com/LCAS/RASberry/issues/154>`_ from gpdas/master
   Merging this. Task cancellation & other updates in rasberry_coordination
 * Picker can cancel task from CAR interface - rasberry_coordination

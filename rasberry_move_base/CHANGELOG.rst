@@ -2,8 +2,8 @@
 Changelog for package rasberry_move_base
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Forthcoming
------------
+0.1.0 (2018-11-02)
+------------------
 * Merge remote-tracking branch 'upstream/master'
 * Merge pull request `#149 <https://github.com/LCAS/RASberry/issues/149>`_ from gpdas/master
   Merging this. Package for autonomous UV treatment - initial commits
