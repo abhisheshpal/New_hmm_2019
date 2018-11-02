@@ -2,6 +2,12 @@
 Changelog for package rasberry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* new_work
+* w.i.p.
+* Contributors: ThomasDegallaix, adambinch
+
 0.0.4 (2018-07-18)
 ------------------
 

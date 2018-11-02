@@ -2,6 +2,28 @@
 Changelog for package rasberry_des
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+Forthcoming
+-----------
+* Merge pull request `#154 <https://github.com/LCAS/RASberry/issues/154>`_ from gpdas/master
+  Merging this. Task cancellation & other updates in rasberry_coordination
+* Picker can cancel task from CAR interface - rasberry_coordination
+  1. CancelTask.srv from rasberry_coordination is removed. Instead strands_executive_msgs/CancelTask is used
+  2. coordinator.py: Tasks can be cancelled from CAR interface
+  - if the task is being processed, it will be cancelled and the robot will be sent to base
+  - if the task is not yet taken for processing, it will be ignored when taken out of the queue
+  - collect_tray failure case has been added to done_cb in coordination
+  3. picker_state_monitor.py
+  - task_time added to get the latest task of pickers
+  - user_id replaced with picker_id to be consistent and to avoid mistakes, as both variable may have some value.
+  - task_robot for the task will be None if the task had a robot assigned, but is cancelled
+  4. robot.py
+  - send the robot to base if current_goal is cancelled
+* nw
+* new_work
+* First commit for topoNav testcases
+* w.i.p.
+* Contributors: Gautham P Das, ThomasDegallaix, adambinch, gpdas
+
 0.0.4 (2018-07-18)
 ------------------
 * Minor correction in polytunnel_des_config.yaml
