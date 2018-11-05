@@ -108,11 +108,12 @@ windows:
   - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$ROBOT_NAME_2 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
 - name: coordination
   panes:
-  - export ROS_MASTER_URI=${SERVER_URI}; WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
+  - export ROS_MASTER_URI=${SERVER_URI}; roscd rasberry_coordination/callarobot; python callarobot.py
+  - export ROS_MASTER_URI=${SERVER_URI}; python $(rospack find rasberry_coordination)/callarobot/ws_client.py
   - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_$SCENARIO_NAME.yaml
 - name: people_perception
   panes:
-  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '0' '0' '12.3' '-3.31' '0.0' '0'
+  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '1' '0' '12.3' '-3.31' '0.0' '0'
   - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '2' '0' '18.0' '5.0' '0.0' '0'
   - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_people_perception simple_marvel_localiser.py
 - name: visualisation
