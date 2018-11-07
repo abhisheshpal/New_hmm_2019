@@ -69,7 +69,7 @@ windows:
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
-  - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
+  - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
   - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
   - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
 - name: navigation

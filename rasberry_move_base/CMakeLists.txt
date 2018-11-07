@@ -8,10 +8,8 @@ project(rasberry_move_base)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  amcl
   dwa_local_planner
   eband_local_planner
-  map_server
   move_base
   robot_pose_publisher
   teb_local_planner
