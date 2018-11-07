@@ -28,6 +28,7 @@ class Robot(object):
 
         # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
         # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
+        # 6 - return to local_storage from cold_storage
         self.mode = 0
 
         # parameters to check utilisation

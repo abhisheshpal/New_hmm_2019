@@ -8,6 +8,8 @@ project(rasberry_navigation)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  amcl
+  map_server
   monitored_navigation
   nav_msgs
   nmea_navsat_driver
@@ -166,10 +168,17 @@ include_directories(
 
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
-# install(PROGRAMS
-#   scripts/my_python_script
-#   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-# )
+ install(PROGRAMS
+   scripts/add_edges_between_nodes.py
+   scripts/add_polytunnelB_topo_nodes.py
+   scripts/adjust_topo_node_infleunce_zones.py
+   scripts/adjust_topo_node_positions.py
+   scripts/center_polytunnelA_topo_nodes.py
+   scripts/delete_topo_nodes.py
+   scripts/get_sim_topo_node_positions.py
+   scripts/get_topo_node_positions.py
+   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+ )
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node

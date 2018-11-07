@@ -4,18 +4,6 @@
     <arg name="robot_name" default=""/>
     <arg name="tf_prefix" default="$(arg robot_name)"/>
 
-    <arg name="robot_pose_x" default="0" />
-    <arg name="robot_pose_y" default="0" />
-    <arg name="robot_pose_z" default="0" />
-    <arg name="robot_pose_R" default="0" />
-    <arg name="robot_pose_P" default="0" />
-    <arg name="robot_pose_Y" default="0" />
-
-    <!--arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml"/-->
-
-    <!-- lanch map server -->
-    <!--node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/-->
-
     <group ns="$(arg robot_name)">
 
       <remap from="map" to="/map"/>
@@ -25,14 +13,6 @@
         <param name="~map_frame" value="/map"/>
         <param name="~base_frame" value="$(arg tf_prefix)/base_link"/>
       </node>
-
-      <!-- launch AMCL -->
-      <include file="$(find rasberry_move_base)/launch/amcl.launch"/>
-      <rosparam param="amcl/odom_frame_id" subst_value="True">$(arg robot_name)/odom</rosparam>
-      <rosparam param="amcl/base_frame_id" subst_value="True">$(arg robot_name)/base_link</rosparam>
-      <rosparam param="amcl/initial_pose_x" subst_value="True">$(arg robot_pose_x)</rosparam>
-      <rosparam param="amcl/initial_pose_y" subst_value="True">$(arg robot_pose_y)</rosparam>
-      <rosparam param="amcl/initial_pose_a" subst_value="True">$(arg robot_pose_Y)</rosparam>
 
       <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
           <remap from="cmd_vel" to="nav_vel"/>

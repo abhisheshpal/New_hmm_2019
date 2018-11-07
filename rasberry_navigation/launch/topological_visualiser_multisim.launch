@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<launch>
+  <!-- declare arg to be passed in -->
+  <arg name="robot_name" default="" />
+  <arg name="map" />
+
+  <group ns="$(arg robot_name)">
+
+    <node pkg="topological_navigation" type="visualise_map.py" name="visualise_map" output="screen" args="$(arg map)"/>
+
+  </group>
+
+</launch>

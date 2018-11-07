@@ -79,7 +79,8 @@ add_message_files(
 
 add_service_files(
   FILES
-  CancelTask.srv
+  RobotState.srv
+  RobotStates.srv
 )
 
 ## Generate actions in the 'action' folder
@@ -102,7 +103,7 @@ add_action_files(
 # )
 
 generate_messages(
-  DEPENDENCIES std_msgs actionlib_msgs
+  DEPENDENCIES std_msgs actionlib_msgs strands_executive_msgs
 )
 
 ################################################

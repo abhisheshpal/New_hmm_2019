@@ -16,8 +16,8 @@ from generate_poses import *
 save_world = True
 
 rospack = rospkg.RosPack()
-base_dir = rospack.get_path('rasberry_gazebo')
-#base_dir = os.getcwd()[:-8]
+#base_dir = rospack.get_path('rasberry_gazebo')
+base_dir = os.getcwd()[:-8]
 
 world_f = base_dir + '/worlds/empty_grass.world'
 world_d = load_data_from_xml(world_f)
@@ -54,6 +54,7 @@ for model in model_config:
         plant9_f = base_dir + '/models/plant9/model.sdf'
         plant1_f = base_dir + '/models/plant1/model.sdf'
         arch_f = base_dir + '/models/dummy_arch/model.sdf'
+        fixed_arches_f = base_dir + '/models/dummy_arch_17/model.sdf'
         strut_f = base_dir + '/models/strut/model.sdf'
         canopy10m_f = base_dir + '/models/canopy10m/model.sdf'
         canopy4m_f = base_dir + '/models/canopy4m/model.sdf'
@@ -71,6 +72,7 @@ for model in model_config:
         plant9_d = load_data_from_xml(plant9_f)
         plant1_d = load_data_from_xml(plant1_f)
         arch_d = load_data_from_xml(arch_f)
+        fixed_arches_d = load_data_from_xml(fixed_arches_f)
         strut_d = load_data_from_xml(strut_f) 
         canopy10m_d = load_data_from_xml(canopy10m_f)        
         canopy4m_d = load_data_from_xml(canopy4m_f)        
@@ -88,6 +90,7 @@ for model in model_config:
         plant9_count = 0
         plant1_count = 0
         arch_count = 0
+        fixed_arches_count = 0
         strut_count = 0
         canopy10m_count = 0   
         canopy4m_count = 0   
@@ -98,6 +101,7 @@ for model in model_config:
         for i in range(len(polytunnels)):
             if polytunnels[i]['include']:            
             
+                fixed_arches = polytunnels[i]['fixed_arches']
                 pole_nx = polytunnels[i]['pole_nx']
                 pole_ny = polytunnels[i]['pole_ny']
                 pole_dx = polytunnels[i]['pole_dx']
@@ -127,35 +131,44 @@ for model in model_config:
                     trayp2_count += len(trayp2_poses)
                     
                     pot21_poses, pot21_max_length = get_pot21_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes)
-                    world.add_pot21(pot21_d, pot21_poses, pot21_count)  
+                    #world.add_pot21(pot21_d, pot21_poses, pot21_count)  
                     pot21_count += len(pot21_poses)
                 
                     pot9_poses, pot9_max_length = get_pot9_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length)
-                    world.add_pot9(pot9_d, pot9_poses, pot9_count)  
+                    #world.add_pot9(pot9_d, pot9_poses, pot9_count)  
                     pot9_count += len(pot9_poses)
                     
                     pot1_poses, pot1_xposes = get_pot1_poses([pole_xposes[0], pole_xposes[-1]], pole_yposes, pot21_max_length, pot9_max_length) 
-                    world.add_pot1(pot1_d, pot1_poses, pot1_count)
+                    #world.add_pot1(pot1_d, pot1_poses, pot1_count)
                     pot1_count += len(pot1_poses)
                 
                     #plant_poses = get_plant_poses(pot1_xposes, pole_yposes)
                     #world.add_plants(plant_d, plant_poses, plant_count)  
                     #plant_count += len(plant_poses)
                     
-                    world.add_plant21(plant21_d, pot21_poses, plant21_count)  
+                    #world.add_plant21(plant21_d, pot21_poses, plant21_count)  
                     plant21_count += len(pot21_poses)                    
                     
-                    world.add_plant9(plant9_d, pot9_poses, plant9_count)  
+                    #world.add_plant9(plant9_d, pot9_poses, plant9_count)  
                     plant9_count += len(pot9_poses)
                     
-                    world.add_plant1(plant1_d, pot1_poses, plant1_count)  
+                    #world.add_plant1(plant1_d, pot1_poses, plant1_count)  
                     plant1_count += len(pot1_poses)
 
 
                 if (arch_nx * arch_dx) > 0:
                     arch_poses, arch_xposes, arch_yposes = get_arch_poses(arch_nx, arch_dx, arch_xoffset, pole_dy, pole_yposes)
-                    world.add_arches(arch_d, arch_poses, arch_count)
-                    arch_count += len(arch_poses)   
+                    
+                    if not fixed_arches:
+                        world.add_arches(arch_d, arch_poses, arch_count)
+                        arch_count += len(arch_poses)
+                        
+                    else:
+                        xoffset = arch_xoffset-(1.53*2)-0.015
+                        yoffset = pole_yoffset - pole_dy
+                        fixed_arch_poses = [xoffset, yoffset]
+                        world.add_fixed_arches(fixed_arches_d, fixed_arch_poses, fixed_arches_count)
+                        fixed_arches_count += 1
                     
                     canopy10m_poses, canopy10m_max_length = get_canopy10m_poses([arch_xposes[0], arch_xposes[-1]], arch_yposes[0], pole_dy)
                     world.add_canopy10m(canopy10m_d, canopy10m_poses, canopy10m_count)
@@ -191,7 +204,8 @@ for model in model_config:
                 
                 xpose = frontage[i]['xpose']
                 ypose = frontage[i]['ypose']
-                world.add_frontage(frontage_d, [xpose, ypose], i)   
+                yaw = frontage[i]['yaw']
+                world.add_frontage(frontage_d, [xpose, ypose, yaw], i)   
    
    
     if model.keys()[0] == 'riseholme_enclosure':

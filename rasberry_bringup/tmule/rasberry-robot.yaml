@@ -39,10 +39,10 @@ init_cmd: |
   # use IMU?
   export_default USE_IMU true
   # the topomap to be used
-  export_default TMAP norway_poles
+  export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
-  export_default MAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
+  export_default MAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
+  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
   # figure out the robot number from the hostname, assuming it is like `thorvald-XXX`
   export_default ROBOT_NO `hostname | cut -f2 -d"-"`
   # set the robot type
@@ -53,6 +53,8 @@ init_cmd: |
   export_default USE_SIM false
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
+  export_default USE_CARROT false
+  export_default USE_GUI true
 windows:
 - name: init
   panes:
@@ -61,17 +63,17 @@ windows:
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
-  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD
+  - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD use_gui:=$USE_GUI
   - roslaunch rasberry_bringup hokuyo.launch
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
-  - roslaunch rasberry_move_base map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
+  - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
   - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch
+  - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: people_perception

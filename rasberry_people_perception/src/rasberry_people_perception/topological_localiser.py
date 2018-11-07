@@ -51,10 +51,10 @@ class TopologicalNavLoc(object):
         self.point_in_poly = point_in_poly
 
         #This service returns the closest node from a given pose
-        rospy.wait_for_service("topological_map_manager/get_tagged_nodes")
-        self.get_tagged_nodes = rospy.ServiceProxy("topological_map_manager/get_tagged_nodes", strands_navigation_msgs.srv.GetTaggedNodes)
+        rospy.wait_for_service(self.ns + "topological_map_manager/get_tagged_nodes")
+        self.get_tagged_nodes = rospy.ServiceProxy(self.ns + "topological_map_manager/get_tagged_nodes", strands_navigation_msgs.srv.GetTaggedNodes)
 
-        rospy.Subscriber("topological_map", strands_navigation_msgs.msg.TopologicalMap, self.map_cb)
+        rospy.Subscriber(self.ns + "topological_map", strands_navigation_msgs.msg.TopologicalMap, self.map_cb)
         rospy.loginfo("Waiting for Topological map ...")
 
         while not self.rec_map:
