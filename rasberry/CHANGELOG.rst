@@ -2,6 +2,12 @@
 Changelog for package rasberry
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+0.1.0 (2018-11-02)
+------------------
+* new_work
+* w.i.p.
+* Contributors: ThomasDegallaix, adambinch
+
 0.0.4 (2018-07-18)
 ------------------
 
