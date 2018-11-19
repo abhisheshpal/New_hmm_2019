@@ -8129,7 +8129,7 @@
 			<uri>model://grass_ground_plane</uri>
 		</include>
 		<physics type="ode">
-			<real_time_update_rate>200</real_time_update_rate>
+			<real_time_update_rate>1000</real_time_update_rate>
 			<real_time_factor>1</real_time_factor>
 			<max_step_size>0.005</max_step_size>
 			<gravity>0 0 -9.8</gravity>
