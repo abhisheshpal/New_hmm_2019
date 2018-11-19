@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <sdf version="1.4">
 	<world name="default">
+		<scene>
+			<shadows>1</shadows>
+			<sky>
+				<clouds>
+					<speed>12</speed>
+				</clouds>
+			</sky>
+		</scene>
 		<model name="pole_0">
 			<static>1</static>
 			<pose>7.000 -6.640 0.575 0.0 0.0 0.0</pose>
@@ -8120,13 +8128,11 @@
 		<include>
 			<uri>model://grass_ground_plane</uri>
 		</include>
-		<scene>
-			<shadows>1</shadows>
-			<sky>
-				<clouds>
-					<speed>12</speed>
-				</clouds>
-			</sky>
-		</scene>
+		<physics type="ode">
+			<real_time_update_rate>0</real_time_update_rate>
+			<real_time_factor>1</real_time_factor>
+			<max_step_size>0.005</max_step_size>
+			<gravity>0 0 -9.8</gravity>
+		</physics>
 	</world>
 </sdf>
