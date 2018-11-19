@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="simple_sim" default="true"/>
+  <arg name="world_name" default="riseholme" if="$(arg simple_sim)"/>
+  <arg name="with_actors" default="false"/>
+  <arg name="with_gui" default="true" />
+
+  <!-- Launch the Gazebo world.  -->
+  <include file="$(find rasberry_gazebo)/launch/world.launch" if="$(arg simple_sim)">
+   <arg name="world_name" value="$(arg world_name)"/>
+   <arg name="gui" value="$(arg with_gui)" />
+  </include>
+
+  <!-- Include actors in the Gazebo world? -->
+  <include file="$(find rasberry_gazebo)/launch/include_actors.launch" if="$(arg with_actors)"/>
+
+</launch>
