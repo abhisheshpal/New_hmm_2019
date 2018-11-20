@@ -16,8 +16,8 @@ from generate_poses import *
 save_world = True
 
 rospack = rospkg.RosPack()
-#base_dir = rospack.get_path('rasberry_gazebo')
-base_dir = os.getcwd()[:-8]
+base_dir = rospack.get_path('rasberry_gazebo')
+#base_dir = os.getcwd()[:-8]
 
 world_f = base_dir + '/worlds/empty_grass.world'
 world_d = load_data_from_xml(world_f)
