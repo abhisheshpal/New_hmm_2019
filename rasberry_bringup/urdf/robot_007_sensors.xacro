@@ -8,6 +8,8 @@
   <!--link name="$(arg tf_prefix)/septentrio"/-->
   <link name="$(arg tf_prefix)/xsens"/>
   <link name="$(arg tf_prefix)/velodyne"/>
+  <link name="$(arg tf_prefix)/thermal_camera"/>
+  <link name="$(arg tf_prefix)/kinect2_color_camera"/>"
 
   <!-- Hokuyo Laser -->
   <link name="$(arg tf_prefix)/hokuyo">
