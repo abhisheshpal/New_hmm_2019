@@ -8,6 +8,8 @@
   <!--link name="$(arg tf_prefix)/septentrio"/-->
   <link name="$(arg tf_prefix)/xsens"/>
   <link name="$(arg tf_prefix)/velodyne"/>
+  <link name="$(arg tf_prefix)/thermal_camera"/>
+  <link name="$(arg tf_prefix)/kinect2_rgb_optical_frame"/>"
 
   <!-- Hokuyo Laser -->
   <link name="$(arg tf_prefix)/hokuyo">
@@ -75,7 +77,7 @@
 
  <joint name="base_sens_kinect2" type="fixed">
     <parent link="$(arg tf_prefix)/base_sensors"/> 
-    <child link="$(arg tf_prefix)/kinect2_color_camera"/>
+    <child link="$(arg tf_prefix)/kinect2_rgb_optical_frame"/>
     <axis xyz="0 1 0" />
     <origin xyz="0.494 0.0025 0.023" rpy="0 0 0"/>
   </joint>
