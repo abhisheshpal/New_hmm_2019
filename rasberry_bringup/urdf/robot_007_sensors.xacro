@@ -5,7 +5,7 @@
   <xacro:arg name="tf_prefix" default=""/>
 
   <link name="$(arg tf_prefix)/base_sensors"/>
-  <link name="$(arg tf_prefix)/septentrio"/>
+  <!--link name="$(arg tf_prefix)/septentrio"/-->
   <link name="$(arg tf_prefix)/xsens"/>
   <link name="$(arg tf_prefix)/velodyne"/>
 
@@ -35,35 +35,51 @@
   <joint name="base_base_sens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/base_sensors"/>
-    <origin xyz="-0.370 -0.1075 1.440" rpy="0 0 0"/>
+    <!-- <origin xyz="-0.370 -0.1075 1.440" rpy="0 0 0"/> -->
+    <origin xyz="-0.370 -0.115 1.440" rpy="0 0 0"/> 
   </joint>
 
-  <joint name="base_sens_septentrio" type="fixed">
+  <!--joint name="base_sens_septentrio" type="fixed">
     <parent link="$(arg tf_prefix)/base_sensors"/>
     <child link="$(arg tf_prefix)/septentrio"/>
     <origin xyz="-0.01 0 0.3" rpy="0 0 0"/>
-  </joint>
+  </joint-->
 
 
   <joint name="base_sens_xsens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/xsens"/>
-    <origin xyz="-0.005 0.2605 0.682" rpy="0 0 0"/>
+    <origin xyz="0.8025 -0.05 0.76" rpy="0 0 0"/>
   </joint>
 
    <joint name="base_sens_hokuyo" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.7025 0.005 0.66" rpy="3.141593 0.0 0.0"/>
+    <origin xyz="0.8025 -0.0 0.65" rpy="3.141593 0.0 0.0"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
     <parent link="$(arg tf_prefix)/base_sensors"/>
     <child link="$(arg tf_prefix)/velodyne"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.38 0.12 0.04" rpy="0 0 0"/>
+    <origin xyz="0.38 -0.122 0.04" rpy="0 0 0"/>
   </joint>
+
+ <joint name="base_sens_thermal" type="fixed">
+    <parent link="$(arg tf_prefix)/base_sensors"/>
+    <child link="$(arg tf_prefix)/thermal_camera"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0.29 0.135 0.115" rpy="0 0 0"/>
+  </joint>
+
+ <joint name="base_sens_kinect2" type="fixed">
+    <parent link="$(arg tf_prefix)/base_sensors"/> 
+    <child link="$(arg tf_prefix)/kinect2_color_camera"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0.494 0.0025 0.023" rpy="0 0 0"/>
+  </joint>
+
 
   <!--hokuyo-->
   <gazebo reference="$(arg tf_prefix)/hokuyo">
