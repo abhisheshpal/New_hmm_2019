@@ -42,8 +42,8 @@ motor_drives:
 # Battery enclosure modules. Set node to -1 if battery is not included in module.
 batteries:
   {
-    bat0: {node:  345, type: 1, x:  0.0, y:  0.285, z: 0.72, yaw: 0, bat_mesh: 0} ,
-    bat1: {node: -1, type: 0, x:  0.0, y: -0.285, yaw: 0, z: 0.72, bat_mesh: 1},
+    bat0: {node:  345, type: 1, x:  0.0, y:  0.285, z: 0.72, yaw: 0, bat_mesh: 0, with_battery: 1} ,
+    bat1: {node: -1, type: 0, x:  0.0, y: -0.285, yaw: 0, z: 0.72, bat_mesh: 1, with_battery: 0},
   }
 
 pipes:
