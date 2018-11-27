@@ -55,7 +55,7 @@ init_cmd: |
   export_default USE_CARROT false
   export_default USE_IMU False
   # robot_1
-  export ROBOT_NO_1="007"
+  export ROBOT_NO_1="008"
   export ROBOT_NAME_1=thorvald_001
   export ROBOT_MODEL_1=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_1}.yaml
   export ROBOT_MODEL_EXTRAS_1=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_1}_sensors.xacro
@@ -63,7 +63,7 @@ init_cmd: |
   export ROBOT_POS_Y_1=-1.5
   export ROBOT_POS_A_1=0.0
   # robot_2
-  export ROBOT_NO_2="007"
+  export ROBOT_NO_2="008"
   export ROBOT_NAME_2=thorvald_002
   export ROBOT_MODEL_2=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_2}.yaml
   export ROBOT_MODEL_EXTRAS_2=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_2}_sensors.xacro 
