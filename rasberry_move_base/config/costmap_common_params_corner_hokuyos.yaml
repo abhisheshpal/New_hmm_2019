@@ -1,0 +1,52 @@
+global_frame: /map
+robot_base_frame: /base_link
+
+#footprint: [[0.785, 0.60], [0.785, -0.60], [-0.785, -0.60], [-0.785, 0.60]]
+#footprint: [[0.67, 0.385], [0.67, -0.385], [-0.67, -0.385], [-0.67, 0.385]]
+footprint: [[0.76, 0.50], [0.76, -0.50], [-0.76, -0.50], [-0.76, 0.50]]
+
+map_layer:
+  map_topic: /map
+
+no_go_layer:
+  map_topic: /no_go_map
+
+global_inflation_layer:
+  inflation_radius: 0.5
+  cost_scaling_factor: 2.0
+
+local_inflation_layer:
+  inflation_radius: 0.5
+  cost_scaling_factor: 2.0
+
+obstacle_layer:
+  max_obstacle_height: 2.0
+  obstacle_range: 2.5
+  raytrace_range: 3.0
+
+  unknown_threshold: 6
+  mark_threshold: 0
+  
+  track_unknown_space: true
+  
+  observation_sources: fr_laser_scan_sensor bl_laser_scan_sensor
+#  observation_sources: fr_laser_scan_sensor
+  fr_laser_scan_sensor: {sensor_frame: hokuyo_fr, data_type: LaserScan, topic: /scan_fr, marking: true, clearing: true}
+  bl_laser_scan_sensor: {sensor_frame: hokuyo_bl, data_type: LaserScan, topic: /scan_bl, marking: true, clearing: true}
+
+global_obstacle_layer:
+  max_obstacle_height: 2.0
+  obstacle_range: 2.5
+  raytrace_range: 3.0
+
+  unknown_threshold: 6
+  mark_threshold: 0
+
+  track_unknown_space: true
+
+  observation_sources: fr_laser_scan_sensor bl_laser_scan_sensor
+#  observation_sources: fr_laser_scan_sensor
+  fr_laser_scan_sensor: {sensor_frame: hokuyo_fr, data_type: LaserScan, topic: /scan_fr, marking: false, clearing: false}
+  bl_laser_scan_sensor: {sensor_frame: hokuyo_bl, data_type: LaserScan, topic: /scan_bl, marking: false, clearing: false}
+#marking and clearing set to true for norway_poles_demo purposes
+
