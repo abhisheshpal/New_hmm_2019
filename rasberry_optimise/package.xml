@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>rasberry_optimise</name>
-  <version>0.0.0</version>
+  <version>0.1.0</version>
   <description>The rasberry_optimise package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
@@ -58,7 +58,7 @@
   <build_depend>rospy</build_depend>
   <build_depend>actionlib</build_depend>
   <build_depend>roslib</build_depend>
-  <build_depend>gazebo_msgs</build_depend>
+  <build_depend>gazebo8_msgs</build_depend>
   <build_depend>geometry_msgs</build_depend>
   <build_depend>topological_navigation</build_depend>
   <build_depend>strands_navigation_msgs</build_depend>
@@ -72,7 +72,7 @@
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>actionlib</build_export_depend>
   <build_export_depend>roslib</build_export_depend>
-  <build_export_depend>gazebo_msgs</build_export_depend>
+  <build_export_depend>gazebo8_msgs</build_export_depend>
   <build_export_depend>geometry_msgs</build_export_depend>
   <build_export_depend>topological_navigation</build_export_depend>
   <build_export_depend>strands_navigation_msgs</build_export_depend>
@@ -86,7 +86,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>actionlib</exec_depend>
   <exec_depend>roslib</exec_depend>
-  <exec_depend>gazebo_msgs</exec_depend>
+  <exec_depend>gazebo8_msgs</exec_depend>
   <exec_depend>geometry_msgs</exec_depend>
   <exec_depend>topological_navigation</exec_depend>
   <exec_depend>strands_navigation_msgs</exec_depend>

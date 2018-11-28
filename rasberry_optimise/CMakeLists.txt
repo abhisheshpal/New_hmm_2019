@@ -16,7 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   actionlib
   roslib
-  gazebo_msgs
+  gazebo8_msgs
   geometry_msgs
   topological_navigation
   strands_navigation_msgs
