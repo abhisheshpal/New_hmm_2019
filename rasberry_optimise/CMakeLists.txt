@@ -171,6 +171,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
  install(PROGRAMS
    scripts/optimise.py
+   scripts/get_fitness.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

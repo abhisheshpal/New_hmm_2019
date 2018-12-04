@@ -1,7 +1,11 @@
 <?xml version="1.0" ?>
 <launch>
+  <!--arg name="move_base_reconf_service" default="DWAPlannerROS" /-->
+  
 
   <!-- Optimisation procedure -->
-  <node pkg="rasberry_optimise" type="optimise.py" name="optimiser" output="screen" />
+  <node pkg="rasberry_optimise" type="optimise.py" name="optimiser" output="screen" >
+    <!--param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/-->
+  </node>
 
 </launch>
