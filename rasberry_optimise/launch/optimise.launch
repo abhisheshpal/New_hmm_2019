@@ -1,10 +1,11 @@
 <?xml version="1.0" ?>
 <launch>
   <!--arg name="move_base_reconf_service" default="DWAPlannerROS" /-->
-  
+  <arg name="scenario" default="$(find rasberry_optimise)/config/scenario.yaml" />
+  <arg name="parameters" default="$(find rasberry_optimise)/config/parameters.yaml" />  
 
   <!-- Optimisation procedure -->
-  <node pkg="rasberry_optimise" type="optimise.py" name="optimiser" output="screen" >
+  <node pkg="rasberry_optimise" type="optimise.py" name="optimiser" output="screen" args="$(arg scenario) $(arg parameters)">
     <!--param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/-->
   </node>
 
