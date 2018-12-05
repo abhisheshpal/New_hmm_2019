@@ -1,10 +1,7 @@
 #!/usr/bin/env python
-from __future__ import division
-import rospy
+import rospy, sys
 from rasberry_optimise.utils import *
-from rasberry_optimise.get_fitness import getFitness
-import sys
-import yaml
+from rasberry_optimise.rasberry_scenario_server import scenario_server
 
 
 if __name__ == "__main__":
@@ -23,9 +20,9 @@ if __name__ == "__main__":
     config_parameters = load_config_from_yaml(parameters)
     # Probably load a config file for the genetic algorithm here.
 
-    # Initialise the genetic algorithm and fitness function here.
+    # Initialise the genetic algorithm and scenario server (fitness function) here.
     rcnfsrvs = config_parameters.keys()
-    gf = getFitness(config_scenario, rcnfsrvs)
+    ss = scenario_server(config_scenario, rcnfsrvs)
 
     # Dummy genetic algorithm: just makes a dictionary with new (test) param values
     # to pass to the fitness function.
@@ -43,6 +40,6 @@ if __name__ == "__main__":
 
 
     # Run the test scenario and get fitness.
-    gf.run_scenario()
-    gf.run_scenario(params)
+    ss.run_scenario()
+    ss.run_scenario(params)
 #####################################################################################

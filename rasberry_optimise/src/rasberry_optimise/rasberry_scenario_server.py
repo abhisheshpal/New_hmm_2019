@@ -11,7 +11,7 @@ from std_srvs.srv import Empty
 from utils import *
 
 
-class getFitness(object):
+class scenario_server(object):
     """getFitness class definition.    
     """
     
@@ -231,11 +231,19 @@ class getFitness(object):
             
 if __name__ == "__main__":
     
-    rospy.init_node("optimiser", anonymous=True, disable_signals=True)
+    rospy.init_node("scenario_server", anonymous=True, disable_signals=True)
     
-    config_scenario = load_config_from_yaml("scenario.yaml")
+    if len(sys.argv) < 3:
+        rospy.loginfo("usage is optimise.py path_to_scenario_yaml path_to_parameters_yaml")
+        exit()
+    else:
+        print sys.argv
+        scenario = sys.argv[1]
+        parameters = sys.argv[2]
+
+    config_scenario = load_config_from_yaml(scenario)
     
-    gf = getFitness(config_scenario)  
-    gf.run_scenario()
-    gf.run_scenario()
+    ss = scenario_server(config_scenario)  
+    ss.run_scenario()
+    ss.run_scenario()
 #####################################################################################            
