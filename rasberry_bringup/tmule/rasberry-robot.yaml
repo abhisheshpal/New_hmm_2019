@@ -48,7 +48,7 @@ init_cmd: |
   # set the robot type
   export_default ROBOT_TYPE "thorvald_ii_4wd4ws_slim"
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
-  export_default ROSBRIDGE_IP "10.8.0.4"
+  export_default ROSBRIDGE_IP "10.8.0.18"
   export_default ROSBRIDGE_PORT "9090"
   export_default USE_SIM false
   export_default GAZEBO_WORLD riseholme
