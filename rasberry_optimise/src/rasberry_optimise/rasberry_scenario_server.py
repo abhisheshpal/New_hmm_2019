@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
-import rospy, actionlib, dynamic_reconfigure.client
+import rospy, actionlib, dynamic_reconfigure.client, sys
 from gazebo_msgs.srv import SetModelState 
 from gazebo_msgs.msg import ModelState
 from geometry_msgs.msg import PoseWithCovarianceStamped
@@ -26,7 +26,6 @@ class scenario_server(object):
         self.goal_node = config_scenario["goal_node"]
         self.robot_name = config_scenario["robot_name"]
         self.max_wait_time = rospy.Duration(config_scenario["max_wait_time"])
-        self.rcnfsrvs = rcnfsrvs
 
         
         try:
@@ -96,10 +95,10 @@ class scenario_server(object):
         
         
         # Create reconfigure clients.
-        if self.rcnfsrvs is not None:
+        if rcnfsrvs is not None:
             rospy.loginfo("Creating reconfigure clients ...")
             self.rcnfclients = {}
-            for rcnfsrv in self.rcnfsrvs:
+            for rcnfsrv in rcnfsrvs:
                 try:
                     self.rcnfclients[rcnfsrv] \
                     = dynamic_reconfigure.client.Client(rcnfsrv, timeout=5.0)
@@ -187,8 +186,7 @@ class scenario_server(object):
            given by the GA and get fitness score = 1/time to complete
         """
         try:
-            rospy.sleep(0.5)        
-            print "\n"        
+            rospy.sleep(1.0)        
             rospy.loginfo("Running test scenario ...")
             
             # Reconfigure parameters
@@ -214,7 +212,7 @@ class scenario_server(object):
             pass
         
         else:
-            return 1.0/t # fitness
+            return (t,) # fitness
             
             
     def do_reconf(self, rcnfclient, params):

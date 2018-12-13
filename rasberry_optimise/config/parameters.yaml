@@ -10,34 +10,34 @@
     min: 1.0
     max: 100.0
   occdist_scale: 
-    include: 1 
+    include: 0 
     type: "float"
     min: 1.0
     max: 100.0
   prune_plan:
-    include: 1 
+    include: 0 
     type: "bool"
 
 /move_base/global_costmap/global_inflation_layer:
   cost_scaling_factor: 
-    include: 1 
+    include: 0 
     type: "float"
     min: 1.0
     max: 100.0
   inflation_radius: 
-    include: 1 
+    include: 0 
     type: "float"
     min: 1.0
     max: 100.0
 
 /move_base/local_costmap/local_inflation_layer:
   cost_scaling_factor: 
-    include: 1 
+    include: 0 
     type: "float"
     min: 1.0
     max: 100.0
   inflation_radius: 
-    include: 1 
+    include: 0 
     type: "float"
     min: 1.0
     max: 100.0
