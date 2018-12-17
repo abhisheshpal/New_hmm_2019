@@ -409,7 +409,7 @@ class Picker(object):
                         else: # with robots
                             # this unloading will happen if s/he finished picking the last allocated row
                             # and tray is not full
-                            self.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
+                            self.loginfo("%s unloading all trays at %s" %(self.picker_id, storage_node))
                             wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
                             yield self.env.timeout(wait_time)
                             self.time_spent_unloading += self.env.now - unloading_start_time

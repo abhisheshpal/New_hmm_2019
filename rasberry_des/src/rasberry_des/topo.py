@@ -126,10 +126,10 @@ class TopologicalForkGraph(object):
                     self.yield_at_node[node_id] = node_yield_in_row[row_id] + random.gauss(0, 0.02 * node_yield_in_row[row_id])
                 else:
                     # between the last two nodes, the distance could be smaller than node_dist
-                    row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                    self.row_nodes[row_id][1])
-                    last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
-                                                                     self.row_nodes[row_id][-1])
+                    row_node_dist = self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][0],
+                                                                             self.row_nodes[row_id][1])
+                    last_node_dist = self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][-2],
+                                                                              self.row_nodes[row_id][-1])
 #                    self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
                     last_node_yield = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
                     # adding Gaussian white noise to yield with std of 2% of node_yield
@@ -200,6 +200,7 @@ class TopologicalForkGraph(object):
                     self._row_nodes.append(node.name)
 
         for row_id in self.row_ids:
+            # assuming the node names can be directly sorted
             self.row_nodes[row_id].sort()
             # local_storage_nodes should be modified by calling set_local_storages
             self.row_info[row_id] = [self.head_nodes[row_id][0],
@@ -232,7 +233,7 @@ class TopologicalForkGraph(object):
             route_edges.append(edge_to_goal[0])
 
             for i in range(len(route_nodes) - 1):
-                route_distance.append(self.get_distance_between_nodes(route_nodes[i], route_nodes[i + 1]))
+                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
 
         return (route_nodes, route_edges, route_distance)
 
@@ -245,8 +246,8 @@ class TopologicalForkGraph(object):
         node -- name of the node in topological map"""
         return self.topo_map.nodes[self.node_index[node]]
 
-    def get_distance_between_nodes(self, from_node, to_node):
-        """get_distance_between_nodes: Given names of two nodes, return the distance of the edge
+    def get_distance_between_adjacent_nodes(self, from_node, to_node):
+        """get_distance_between_adjacent_nodes: Given names of two nodes, return the distance of the edge
         between their node objects. A wrapper for the get_distance_to_node function in tmap_utils.
         Works only for adjacent nodes.
 
@@ -336,7 +337,7 @@ class TopologicalForkGraph(object):
 
             # sum the path distance
             for i in range(len(route_nodes) - 1):
-                route_distance.append(self.get_distance_between_nodes(route_nodes[i], route_nodes[i + 1]))
+                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
 
         return (route_nodes, route_edges, route_distance)
 
