@@ -80,11 +80,34 @@ class PickerPredictor(object):
         self.trans_dists = [] # transportation distances
         self.trans_times = [] # transportation times
 
+        # all lambda functions below to get mean of an array would return 0. if the array is empty
+
+        self.mean_idle_time = lambda: numpy.mean(self.time_spent_in_mode[0]) if numpy.size(self.time_spent_in_mode[0]) != 0. else mean_idle_time
+        self.mean_tray_pick_dist = lambda: numpy.mean(self.picking_dists_per_tray) if numpy.size(self.picking_dists_per_tray) != 0. else mean_tray_pick_dist
+
+        # mean picking rate (speed while picking)  - per tray or for individual row edges?
+#        # per tray - problem is update frequency is low
+#        self.mean_pick_rate = lambda: numpy.mean(numpy.array(self.picking_dists_per_tray) / numpy.array(self.picking_times_per_tray)) if numpy.size(self.picking_dists_per_tray) != 0. else mean_pick_rate
+        # per individual row edges
+        # - considering picking rate along an edge as a distribution of RV
+        self.mean_pick_rate = lambda: numpy.mean(numpy.array(self.picking_dists) / numpy.array(self.picking_times)) if numpy.size(self.picking_dists) != 0. else mean_pick_rate
+#        # - from total distance and time
+#        self.mean_pick_rate = lambda: sum(self.picking_dists) / sum(self.picking_times) if numpy.size(self.picking_dists) != 0. else mean_pick_rate
+
+        # mean_trans_rate
+        # there will be at least one transportation mode before first picking
+        # - cosnidering trans_rate as taken from a distribution of RV
+        self.mean_trans_rate = lambda: numpy.mean(numpy.array(self.trans_dists) / numpy.array(self.trans_times)) if numpy.size(self.trans_dists) != 0. else mean_trans_rate
+#        # - from total distance and time
+#        self.mean_trans_rate = lambda: sum(self.trans_dists) / sum(self.trans_times) if numpy.size(self.trans_dists) != 0. else mean_trans_rate
+
         # unloading time at local storage (mode 4)
         self.unload_times = []
+        self.mean_unload_time = lambda: numpy.mean(numpy.array(self.unload_times)) if numpy.size(self.unload_times) != 0. else mean_unload_time
 
         # loading time on robots (mode 5) - this also includes the time for the robot to arrive
         self.load_times = []
+        self.mean_load_time = lambda: numpy.mean(numpy.array(self.load_times)) if numpy.size(self.load_times) != 0. else mean_load_time
 
         # TODO: Pickers are assumed to start at the local storage of first row in idle mode
         self.set_initial_mode_and_pose(0, self.graph.local_storage_nodes[self.graph.row_ids[0]])
@@ -252,23 +275,15 @@ class PickerPredictor(object):
 
                     # update distance and time for this tray
                     picking_time = picking_dist = 0.0
-                    if self.mode_index_tray_stop[-1] == self.mode_index_tray_start[-1]:
-                        # no intermediate mode changes
-                        idx = self.mode_index_tray_start[-1]
-                        picking_time = self.mode_stop_times[idx] - self.mode_start_times[idx]
-                        picking_dist = self.get_picking_distance(self.mode_start_poses[idx],
-                                                                 self.mode_stop_poses[idx])
-
-                    else:
-                        # some mode changes in between - one or more row changes
-                        # loop through the modes
-                        # add distance and time, while in picking mode similar to above
-                        for idx in range(self.mode_index_tray_start[-1], self.mode_index_tray_stop[-1] + 1):
-                            if self.mode[idx] == 2:
-                                # if in picking mode
-                                picking_time += self.mode_stop_times[idx] - self.mode_start_times[idx]
-                                picking_dist += self.get_picking_distance(self.mode_start_poses[idx],
-                                                                          self.mode_stop_poses[idx])
+                    # 1. no intermediate mode changes (idx = self.mode_index_tray_start[-1])
+                    # 2. with intermediate mode changes (e.g. new row)
+                    # loop through the modes & add distance and time, while in picking mode
+                    for idx in range(self.mode_index_tray_start[-1], self.mode_index_tray_stop[-1] + 1):
+                        if self.mode[idx] == 2:
+                            # only if this is picking mode
+                            picking_time += self.mode_stop_times[idx] - self.mode_start_times[idx]
+                            picking_dist += self.get_picking_distance(self.mode_start_poses[idx],
+                                                                      self.mode_stop_poses[idx])
 
                     self.picking_times_per_tray.append(picking_time)
                     self.picking_dists_per_tray.append(picking_dist)
@@ -355,7 +370,7 @@ class PickerPredictor(object):
         """
         # tray full -> mode 3 (without robots) or mode 5 (with robots)
         # predict only if a new tray has been initialised, else return None
-
+        time_now = self.env.now
         # place holders for prediction
         finish_row = None
         finish_node = None
@@ -366,9 +381,10 @@ class PickerPredictor(object):
             # if a tray is not started, nothing to calculate
             return (finish_row, finish_node, finish_dir, finish_time)
 
-        # No prediction without prior data
-        if len(self.picking_times_per_tray) == 0:
-            return (finish_row, finish_node, finish_dir, finish_time)
+        # TODO: Predictions enabled without prior data, as we initialise mean values
+#        # No prediction without prior data
+#        if len(self.picking_times_per_tray) == 0:
+#            return (finish_row, finish_node, finish_dir, finish_time)
 
         # for how long (distance) the picking (of the current tray) has been going on?
         dist_so_far = 0.
@@ -400,8 +416,7 @@ class PickerPredictor(object):
         #     after reaching start picking (picking mode)
 
         # calculate rem_time and estimate where the picker would be at that time
-        mean_tray_pick_dist = numpy.mean(self.picking_dists_per_tray)
-        remain_tray_pick_dist = mean_tray_pick_dist - dist_so_far if (mean_tray_pick_dist - dist_so_far) > 0. else 0.
+        remain_tray_pick_dist = self.mean_tray_pick_dist() - dist_so_far if (self.mean_tray_pick_dist() - dist_so_far) > 0. else 0.
 
         if remain_tray_pick_dist == 0:
             finish_row = self.curr_row
@@ -410,24 +425,7 @@ class PickerPredictor(object):
             finish_time = time_now
             return (finish_row, finish_node, finish_dir, finish_time)
 
-        # mean picking rate (speed while picking)  - per tray or for individual row edges?
-#        # per tray - problem is update frequency is low
-#        mean_pick_rate = numpy.mean(numpy.array(self.picking_dists_per_tray) / numpy.array(self.picking_times_per_tray))
-        # per individual row edges
-        # - considering picking rate along an edge as a distribution of RV
-        mean_pick_rate = numpy.mean(numpy.array(self.picking_dists) / numpy.array(self.picking_times))
-#        # - from total distance and time
-#        mean_pick_rate = sum(self.picking_dists) / sum(self.picking_times)
-
-        remain_tray_pick_time = remain_tray_pick_dist / mean_pick_rate
-
-        mean_idle_time = numpy.mean(self.time_spent_in_mode[0])
-        # mean_trans_rate
-        # there will be at least one transportation mode before first picking
-        # - cosnidering trans_rate as taken from a distribution of RV
-        mean_trans_rate = numpy.mean(numpy.array(self.trans_dists) / numpy.array(self.trans_times))
-#        # - from totak distancen and time
-#        mean_trans_rate = sum(self.trans_dists) / sum(self.trans_times)
+        remain_tray_pick_time = remain_tray_pick_dist / self.mean_pick_rate()
 
         # remaining picking time to fill tray is already calculated
         # what would be the extra time needed for any other modes from now to tray_full
@@ -441,19 +439,19 @@ class PickerPredictor(object):
 
         if self.verbose:
             print "id:%s, row:%s, node:%s, dir:%s, mode:%s" %(self.picker_id, curr_row, curr_node, curr_dir, curr_mode)
-            print "\t mean_tray_pick_dist = %0.2f" %(mean_tray_pick_dist)
-            print "\t mean_pick_rate = %0.2f" %(mean_pick_rate)
+            print "\t mean_tray_pick_dist = %0.2f" %(self.mean_tray_pick_dist())
+            print "\t mean_pick_rate = %0.2f" %(self.mean_pick_rate())
             print "\t dist so far: %0.2f" %(dist_so_far)
             print "\t remaining_pick_dist: %0.2f" %(remain_tray_pick_dist)
-            print "\t mean_idle_time: %0.2f" %(mean_idle_time)
-            print "\t mean_trans_rate: %0.2f" %(mean_trans_rate)
+            print "\t mean_idle_time: %0.2f" %(self.mean_idle_time())
+            print "\t mean_trans_rate: %0.2f" %(self.mean_trans_rate())
 
         curr_row_idx = self.graph.row_ids.index(self.curr_row)
         while True:
             if rospy.is_shutdown():
                 break
 
-            # only possible modes here are idle and go_to_rn (after row_finish) and picking
+            # only possible modes here are idle and go_to_row_node (after row_finish) and picking
             if curr_mode == 0:
                 # estimate the next row
                 # accurately estimating the next row for individual picker is difficult as
@@ -502,17 +500,17 @@ class PickerPredictor(object):
                 # calculate time to reach next row
                 next_row_start_node = self.graph.row_info[next_row][1]
                 _, _, _dists = self.graph.get_path_details(curr_node, next_row_start_node)
-                extra_time += (sum(_dists) / mean_trans_rate)
+                extra_time += (sum(_dists) / self.mean_trans_rate())
                 curr_row = next_row
                 curr_node = next_row_start_node
                 curr_mode = 2
                 curr_dir = "forward"
                 if self.verbose:
-                    print "\t trans, extra_time +%0.2f" %(sum(_dists) / mean_trans_rate)
+                    print "\t trans, extra_time +%0.2f" %(sum(_dists) / self.mean_trans_rate())
 
             elif curr_mode == 2:
                 # closest node in the current row
-                cn_nodes, cn_dists, cn_dirs = self.graph.get_closest_nodes_while_picking(curr_row, curr_node, curr_dir, remain_tray_pick_dist)
+                cn_nodes, cn_dists, cn_dirs = self.get_closest_nodes_while_picking(curr_node, curr_dir, remain_tray_pick_dist)
 
                 if self.verbose:
                     print "\t cn_nodes:", cn_nodes
@@ -549,6 +547,71 @@ class PickerPredictor(object):
             print "\t now:%0.2f, remain_pick:%0.2f, extra:%0.2f" %(time_now, remain_tray_pick_time, extra_time)
 
         return (finish_row, finish_node, finish_dir, finish_time)
+
+    def get_closest_nodes_while_picking(self, node, pick_dir, distance):
+        """given a row_id and a distance, return the closest nodes while picking
+        along with the remaining distances and directions at these nodes
+
+        keyword arguments:
+
+        distance -- distance along the row (if full_row distance could be > row_length)
+        """
+        row_id = self.graph.get_row_id_of_row_node(curr_node)
+
+        assert distance >= 0
+        if pick_dir == "reverse":
+            # full-row / bi-directional picking
+            route_nodes, _, route_dists = self.get_path_details(node, self.row_info[row_id][1])
+            route_dir = ["reverse" for i in range(len(route_nodes))]
+        else:
+            # could be a half/full row
+            route_nodes = []
+            route_dists = []
+            if row_id in self.half_rows:
+                # half-row, only forward picking
+                route_nodes, _, route_dists = self.graph.get_path_details(node, self.graph.row_info[row_id][2])
+                route_dir = ["forward" for i in range(len(route_nodes))]
+            else:
+                # full-row, forward and reverse picking
+                _route_nodes, _, _route_dists = self.graph.get_path_details(node, self.graph.row_info[row_id][2])
+                route_nodes.extend(_route_nodes)
+                route_dists.extend(_route_dists)
+                route_dir = ["forward" for i in range(len(_route_nodes))]
+                _route_nodes, _, _route_dists = self.graph.get_path_details(self.graph.row_info[row_id][2], self.graph.row_info[row_id][1])
+                route_nodes.extend(_route_nodes[1:])
+                route_dists.extend(_route_dists)
+                route_dir.extend(["reverse" for i in range(len(_route_nodes) - 1)])
+
+        closest_nodes = []
+        finish_dists = []
+        finish_dirs = []
+        row_dist = sum(route_dists)
+        if distance > row_dist:
+            # given distance is more than the row_length
+            if (len(route_dists) == 0):
+                # start and end nodes are the same -> empty route_dists
+                closest_nodes.append(node)
+                finish_dists.append(distance)
+                finish_dirs.append(pick_dir)
+            else:
+                closest_nodes.append(route_nodes[-1])
+                finish_dists.append(distance - row_dist)
+                finish_dirs.append(route_dir[-1])
+        else:
+            # given distance is less than the row_length
+            _dist = 0.
+            for i in range(len(route_dists)):
+                _dist += route_dists[i]
+                if (_dist >= distance):
+                    closest_nodes.append(route_nodes[i])
+                    finish_dists.append(distance - (_dist - route_dists[i]))
+                    finish_dirs.append(route_dir[i])
+                    closest_nodes.append(route_nodes[i+1])
+                    finish_dists.append(distance - (_dist + route_dists[i]))
+                    finish_dirs.append(route_dir[i+1])
+                    break
+
+        return (closest_nodes, finish_dists, finish_dirs)
 
     def has_started_a_tray(self,):
         """return true if a tray has been started and it is not full yet"""
