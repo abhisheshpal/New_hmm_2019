@@ -501,3 +501,7 @@ class PickerPredictor(object):
             print "\t now:%0.2f, remain_pick:%0.2f, extra:%0.2f" %(time_now, remain_tray_pick_time, extra_time)
 
         return (finish_row, finish_node, finish_dir, finish_time)
+
+    def has_started_a_tray(self,):
+        """return true if a tray has been started and it is not full yet"""
+        return True if len(self.mode_index_tray_start) > len(self.mode_index_tray_stop) else False

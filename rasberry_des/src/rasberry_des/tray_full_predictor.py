@@ -60,3 +60,12 @@ class TrayFullPredictor(object):
         """
         self._unallocated_rows.remove(row_id)
 
+    def predict_tray_full(self, ):
+        """predict when and where the pickers (who are in the picking mode now) will have their
+        trays full.
+        """
+        predictions = {}
+        for picker_id in self.picker_ids:
+            predictions[picker_id] = self.predictors[picker_id].predict_current_tray_full()
+
+        return predictions

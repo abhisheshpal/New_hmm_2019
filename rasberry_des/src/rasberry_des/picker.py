@@ -10,6 +10,8 @@ import math
 import random
 import rospy
 
+import rasberry_des.config_utils
+
 
 class Picker(object):
     """Picker class definition"""
@@ -155,7 +157,7 @@ class Picker(object):
 
         # update picking_progress and n_tray
         self.picking_progress += self.graph.yield_at_node[self.curr_node]
-        if self.picking_progress >= self.tray_capacity:
+        if self.picking_progress > self.tray_capacity or rasberry_des.config_utils.isclose(self.picking_progress, self.tray_capacity):
             self.n_trays += 1
             self.picking_progress -= self.tray_capacity
 

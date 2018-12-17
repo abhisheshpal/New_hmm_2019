@@ -263,15 +263,38 @@ class Farm(object):
 
                 self.predictor.update_mode_and_pose(picker_id, picker.mode, picker.curr_node,
                                                     picker.picking_dir, goal_node)
-                # make predictions - only once from a node and only when in picking mode
-                if ((picker.mode == 2) and
-                    ((predicted_from[picker_id] is None) or (predicted_from[picker_id] != picker.curr_node))):
-                    # predict individual picker's tray_full events -> no global view and next row may be wrong
-                    pred_row, pred_node, pred_dir, pred_time = self.predictor.predictors[picker_id].predict_current_tray_full()
-                    new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
-                    self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
-                    predicted_from[picker_id] = picker.curr_node
+#                # make predictions - only once from a node and only when in picking mode
+#                if ((picker.mode == 2) and
+#                    ((predicted_from[picker_id] is None) or (predicted_from[picker_id] != picker.curr_node))):
+#                    # predict individual picker's tray_full events -> no global view and next row may be wrong
+#                    pred_row, pred_node, pred_dir, pred_time = self.predictor.predictors[picker_id].predict_current_tray_full()
+#                    new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
+#                    self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
+#                    predicted_from[picker_id] = picker.curr_node
 
+            # predict tray_full events with a global view
+            # has any picker, not in previous predictions, started a new tray?
+            new_tray_started = False
+            for picker_id in self.picker_ids:
+                if picker_id not in predictions and self.predictor.predictors[picker_id].has_started_a_tray():
+                    new_tray_started = True
+                    break
+            # has any picker in previous predictions changed his node?
+            node_changed = False
+            for picker_id in predictions:
+                if predicted_from[picker_id] != self.pickers[picker_id].curr_node:
+                    node_changed = True
+                    break
+            # predict only if (to reduce redundant predictions)
+            #   any picker, not in previous predictions, started a new tray, or
+            #   any picker in previous predictions changed the node
+            if new_tray_started or node_changed:
+                # predictions are made only for the pickers who are started picking and did not fill the current tray
+                predictions = self.predictor.predict_tray_full()
+
+                for picker_id in predictions:
+                    pred_row, pred_node, pred_dir, pred_time = predictions[picker_id][1:5]
+                    picker = self.pickers[picker_id]
                     new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
                     self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
                     predicted_from[picker_id] = picker.curr_node
