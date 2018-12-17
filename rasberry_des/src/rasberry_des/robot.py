@@ -8,6 +8,8 @@
 import random
 import rospy
 
+import rasberry_des.config_utils
+
 
 class Robot(object):
     """Robot class definition"""
@@ -94,7 +96,7 @@ class Robot(object):
                     self.loginfo("%s is assigned to %s" %(self.robot_id, self.assigned_picker_id))
 
                 # TODO: idle state battery charge changes
-                if self.battery_charge <= 40:
+                if self.battery_charge < 40.0 or rasberry_des.config_utils.isclose(self.battery_charge, 40.0):
                     self.loginfo("battery low on %s, going to charging mode" %(self.robot_id))
                     self.time_spent_idle += self.env.now - idle_start_time
                     # change mode to charging

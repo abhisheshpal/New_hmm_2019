@@ -7,7 +7,7 @@
 
 import operator
 import rospy
-import rasberry_des.picker_predictor
+import rasberry_des.tray_full_predictor
 
 
 class Farm(object):
@@ -82,7 +82,10 @@ class Farm(object):
         self.scheduler_policy = policy
 
         # picker predictor
-        self.predictors = {picker_id:rasberry_des.picker_predictor.PickerPredictor(picker_id, self.env, self.graph, self.n_pickers, self.n_robots, self.verbose) for picker_id in self.picker_ids}
+        self.predictor = rasberry_des.tray_full_predictor.TrayFullPredictor(self.picker_ids, self.env,
+                                                                            self.graph, self.n_robots,
+                                                                            self.verbose)
+
         # to check predictions
         self.predictions = {picker_id:{} for picker_id in self.picker_ids} #{picker_00:{tray_00:[predict_1, predict_2, ..., actual]}}
         self.tray_counts = {picker_id:0 for picker_id in self.picker_ids}
@@ -102,6 +105,8 @@ class Farm(object):
         predicted_from = {picker_id:None for picker_id in self.picker_ids}
         inform_allocation_finished = False
         inform_picking_finished = False
+        predictions = {}
+
         while True:
             if rospy.is_shutdown():
                 break
@@ -245,19 +250,31 @@ class Farm(object):
 #==============================================================================
             # TODO: Check whether any mode changes could be missed?
             for picker_id in self.picker_ids:
+                goal_node = None
                 picker = self.pickers[picker_id]
-                # update mode in predictor
-                self.predictors[picker_id].update_mode_and_pose(picker.mode,
-                                                                picker.curr_node,
-                                                                picker.picking_dir)
+                # update mode and pose in predictor
+                if picker.mode == 1:
+                    goal_node = picker.goal_node
+                elif picker.mode == 3:
+                    # if local storage, it will be set according to picker.curr_row
+                    goal_node = picker.local_storage_node if self.graph.use_local_storage else picker.cold_storage_node
+                elif picker.mode == 6:
+                    goal_node = picker.local_storage_node
+
+                self.predictor.update_mode_and_pose(picker_id, picker.mode, picker.curr_node,
+                                                    picker.picking_dir, goal_node)
+                # make predictions - only once from a node and only when in picking mode
                 if ((picker.mode == 2) and
                     ((predicted_from[picker_id] is None) or (predicted_from[picker_id] != picker.curr_node))):
-                    # predict only once from a node and only when in picking mode
-                    pred_row, pred_node, pred_dir, pred_time = self.predictors[picker_id].predict_current_tray_full()
+                    # predict individual picker's tray_full events -> no global view and next row may be wrong
+                    pred_row, pred_node, pred_dir, pred_time = self.predictor.predictors[picker_id].predict_current_tray_full()
                     new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
                     self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
                     predicted_from[picker_id] = picker.curr_node
 
+                    new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
+                    self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
+                    predicted_from[picker_id] = picker.curr_node
 
 #==============================================================================
 #             # update modes of all assigned robots
@@ -411,6 +428,9 @@ class Farm(object):
         self.pickers[picker_id].allocate_row_to_picker(row_id)
 
         self.allocation_time[row_id] = self.env.now
+
+        # update unallocated rows in predictor
+        self.predictor.update_unallocated(row_id)
 
         self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
                                                         row_id,
