@@ -43,6 +43,9 @@ class TrayFullPredictor(object):
         # PickerPredictor is used as logging object for each picker
         self.predictors = {picker_id:rasberry_des.picker_predictor.PickerPredictor(picker_id, self.env,
                                                                                    self.graph, self.n_pickers, self.n_robots,
+                                                                                   mean_idle_time, mean_tray_pick_dist,
+                                                                                   mean_pick_rate, mean_trans_rate,
+                                                                                   mean_unload_time, mean_load_time,
                                                                                    self.verbose) for picker_id in self.picker_ids}
 
     def set_initial_mode_and_pose(self, picker_id, mode, node, direction=None):
@@ -63,9 +66,21 @@ class TrayFullPredictor(object):
     def predict_tray_full(self, ):
         """predict when and where the pickers (who are in the picking mode now) will have their
         trays full.
+
+        TODO: current implementation assumes clear sequeces when modes are changed
+
+        assuming mode changes happen only when the current mode is finished normally,
+        e.g. picking - tray_full or row_finish; idle - new_alloc.
+        when needed based on the MDP probability to switch to another mode from current,
+        predict the next mode.
         """
         predictions = {}
         for picker_id in self.picker_ids:
             predictions[picker_id] = self.predictors[picker_id].predict_current_tray_full()
 
         return predictions
+
+    def loginfo(self, msg):
+        """log info based on a flag"""
+        if self.verbose:
+            rospy.loginfo(msg)

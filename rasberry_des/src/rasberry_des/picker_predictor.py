@@ -8,11 +8,30 @@
 import numpy
 import rospy
 
+import rasberry_des.config_utils
+
 
 class PickerPredictor(object):
     """A class to predict a picker's actions and positions"""
-    def __init__(self, picker_id, env, topo_graph, n_pickers, n_robots, verbose=False):
-        """Initialiser for PickerPredictor"""
+    def __init__(self, picker_id, env, topo_graph, n_pickers, n_robots, mean_idle_time, mean_tray_pick_dist,
+                 mean_pick_rate, mean_trans_rate, mean_unload_time, mean_load_time, verbose=False):
+        """Initialiser for PickerPredictor
+
+        Keyword arguments:
+
+        picker_id -- id of the picker being tracked
+        env -- simpy environment object
+        topo_graph -- topo_graph object
+        n_picker -- number of pickers
+        n_robots -- number of robots
+        mean_idle_time -- average time the picker spends in idle mode (to be used only before getting any logged data)
+        mean_tray_pick_dist -- mean distance to be picked for filling a tray (to be used only before getting any logged data)
+        mean_pick_rate -- picker's mean rate of travel while picking (to be used only before getting any logged data)
+        mean_trans_rate -- picker's transportation rate when not picking (to be used only before getting any logged data)
+        mean_unload_time -- time a picker may spend for unloading a tray at storage (to be used only before getting any logged data)
+        mean_load_time -- time a picker may spend for loading a tray on a robot (to be used only before getting any logged data)
+        verbose -- to print detailed logs or not
+        """
         self.picker_id = picker_id
 
         self.env = env
@@ -24,6 +43,7 @@ class PickerPredictor(object):
         self.curr_row = None
         self.curr_node = None
         self.curr_dir = None
+        self.goal_node = None
 
         # picker modes
         # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
@@ -38,12 +58,15 @@ class PickerPredictor(object):
         self.mode_start_poses = []       # (node_id, direction) at which the mode started
         self.mode_stop_poses = []        # (node_id, direction) at which the mode stopped
 
-        self.mode_index_tray_start = [] # index of the mode at which a tray picking is started
-        self.mode_index_tray_stop = []  # index of the mode at which a tray picking is finished
-        self.picking_dists_per_tray = [] # distance travelled for filling a tray
+        self.mode_index_tray_start = [] # index of the mode (in self.modes) at which a tray picking is started
+        self.mode_index_tray_stop = []  # index of the mode (in self.modes) at which a tray picking is finished
+        self.picking_dists_per_tray = [] # distance travelled for filling a tray (only picking mode)
         self.picking_times_per_tray = [] # time taken to fill a tray (only picking mode)
 
         self.picker_modes = [0, 1, 2, 3, 4, 5, 6]
+        self.picker_modes_str = {0:"idle", 1:"go_to_row_node", 2:"picking",
+                                 3:"go_to_storage", 4:"wait_unloading",
+                                 5:"wait_loading", 6:"go_to_local_from_cold"}
         self.n_picker_modes = len(self.picker_modes)
         # to calculate MDP probability of transition from one mode to another
         self.mode_transition = numpy.zeros((self.n_picker_modes, self.n_picker_modes))
@@ -57,7 +80,13 @@ class PickerPredictor(object):
         self.trans_dists = [] # transportation distances
         self.trans_times = [] # transportation times
 
-        # TODO: Pickers are assumed to start at the LS of first row in idle mode
+        # unloading time at local storage (mode 4)
+        self.unload_times = []
+
+        # loading time on robots (mode 5) - this also includes the time for the robot to arrive
+        self.load_times = []
+
+        # TODO: Pickers are assumed to start at the local storage of first row in idle mode
         self.set_initial_mode_and_pose(0, self.graph.local_storage_nodes[self.graph.row_ids[0]])
 
     def set_initial_mode_and_pose(self, mode, node, direction=None):
@@ -76,7 +105,7 @@ class PickerPredictor(object):
         self.curr_node = node
         self.modes_nodes_dirs_times.append((mode, node, direction, time_now))
 
-    def update_mode_and_pose(self, mode, node, direction=None):
+    def update_mode_and_pose(self, mode, node, direction=None, goal_node=None):
         """update the current mode of the picker
 
         Keyword arguments:
@@ -154,10 +183,24 @@ class PickerPredictor(object):
                         self.trans_dists.append(sum(route_dists))
                         self.trans_times.append(self.modes_nodes_dirs_times[-1][3] - self.modes_nodes_dirs_times[-2][3])
 
+                    # unloading related
+                    if self.mode[-2] == 4 and (self.mode[-1] == 0 or self.mode[-1] == 1 or self.mode[-1] == 6):
+                        # after unloadig modes -> idle, go_to_row_node or go_to_local_from_cold
+                        self.unload_times.append(self.modes_nodes_dirs_times[-1][3] - self.modes_nodes_dirs_times[-2][3])
+
+                    # loading related
+                    if self.mode[-2] == 5 and (self.mode[-1] == 0 or self.mode[-1] == 2):
+                        # after unloadig modes -> idle (if at row finish node) or picking
+                        self.load_times.append(self.modes_nodes_dirs_times[-1][3] - self.modes_nodes_dirs_times[-2][3])
+
+                # goal_pose in [1] go_to_row_node, [3] go_to_storage or [6] go_to_local_from_cold
+                if self.mode[-1] == 1 or self.mode[-1] == 3 or self.mode[-1] == 6:
+                    self.goal_node = goal_node
+
 #==============================================================================
 #                 # is this a new tray event?
 #==============================================================================
-                # assuming picker has only one tray
+                # TODO: assuming picker has only one tray
                 # common: curr_mode = picking
                 if self.mode[-1] == 2:
                     # first 0 -> 1 -> 2 is a tray start event
@@ -177,12 +220,12 @@ class PickerPredictor(object):
                                   (self.mode[-4] == 6) and (self.mode[-3] == 0) and
                                   (self.mode[-2] == 1)):
                                 # tray full happened at the end of previous row
-                                # trays unloaded at cs -> go_to_ls -> idle -> go_to_rn -> picking
+                                # trays unloaded at cold -> go_to_local_from_cold -> idle -> go_to_row_node -> picking
                                 self.mode_index_tray_start.append(len(self.mode) - 1)
                             elif ((self.mode[-5] == 3) and (self.mode[-4] == 4) and
                                   (self.mode[-3] == 0) and (self.mode[-2] == 1)):
                                 # tray full happened at the end of previous row
-                                # trays unloaded at ls -> idle -> go_to_rn -> picking
+                                # trays unloaded at local -> idle -> go_to_row_node -> picking
                                 self.mode_index_tray_start.append(len(self.mode) - 1)
 
                         # with robots
@@ -194,7 +237,7 @@ class PickerPredictor(object):
                             elif ((self.mode[-4] == 5) and (self.mode[-3] == 0) and
                                   (self.mode[-2] == 1)):
                                 # tray full happened at the end of previous row
-                                # trays loaded on robot -> idle -> go_to_rn -> picking
+                                # trays loaded on robot -> idle -> go_to_row_node -> picking
                                 self.mode_index_tray_start.append(len(self.mode) - 1)
 
 #==============================================================================
@@ -204,7 +247,8 @@ class PickerPredictor(object):
                 # without robots: go_to_storage
                 if self.mode[-1] == 3 or self.mode[-1] == 5:
                     # tray_full happened at the end of previous mode
-                    self.mode_index_tray_stop.append(len(self.mode) -2)
+                    # the mode end time is the time at which next mode starts
+                    self.mode_index_tray_stop.append(len(self.mode) - 2)
 
                     # update distance and time for this tray
                     picking_time = picking_dist = 0.0
@@ -235,9 +279,9 @@ class PickerPredictor(object):
                 if (((self.mode[-2] == 1) and (self.mode[-1] == 2)) or
                     ((self.mode[-2] == 5) and (self.mode[-1] == 2))):
                     # reached a row_node and started picking
+                    # get_row_id_of_row_node() could return None, but not here as the curr_node is a row_node
                     row_id = self.graph.get_row_id_of_row_node(self.curr_node)
                     if (self.curr_row is None) or (self.curr_row != row_id):
-                        # curr_row will be None if not at a row_node
                         self.curr_row = row_id
 
 #==============================================================================
@@ -305,7 +349,10 @@ class PickerPredictor(object):
         return picking_dist
 
     def predict_current_tray_full(self, ):
-        """predict where and when the current tray could be full"""
+        """predict where and when the current tray could be full.
+        it assumes the next row (if the tray won't be full in the current row)
+        is curr_row + n_pickers, as the predictions are based only on individual picker's info
+        """
         # tray full -> mode 3 (without robots) or mode 5 (with robots)
         # predict only if a new tray has been initialised, else return None
 
@@ -315,8 +362,8 @@ class PickerPredictor(object):
         finish_dir = None
         finish_time = 0.
 
-        if len(self.mode_index_tray_start) <= len(self.mode_index_tray_stop):
-            # tray_start index must be > tray_stop index for the picker to be filling up a tray
+        if not self.has_started_a_tray():
+            # if a tray is not started, nothing to calculate
             return (finish_row, finish_node, finish_dir, finish_time)
 
         # No prediction without prior data
@@ -416,14 +463,7 @@ class PickerPredictor(object):
                 curr_row_idx = self.graph.row_ids.index(curr_row)
                 next_row_idx = curr_row_idx + self.n_pickers
                 # check whether getting to next_row possible
-                if len(self.graph.row_ids) >= next_row_idx + 1:
-                    # estimated next_row exists
-                    next_row = self.graph.row_ids[next_row_idx]
-                    extra_time += mean_idle_time
-                    curr_mode = 1
-                    if self.verbose:
-                        print "\t idling now, extra_time + %0.2f" %(mean_idle_time)
-                else:
+                if len(self.graph.row_ids) < next_row_idx + 1:
                     # can't estimate next row, resetting
                     extra_time = 0.
                     if self.verbose:
@@ -432,17 +472,23 @@ class PickerPredictor(object):
                         print "\t len(row_ids): ", len(self.graph.row_ids)
                     break
 
+                # estimated next_row exists
+                next_row = self.graph.row_ids[next_row_idx]
+                extra_time += self.mean_idle_time()
+                curr_mode = 1
+                if self.verbose:
+                    print "\t idling now, extra_time + %0.2f" %(self.mean_idle_time())
+
             elif curr_mode == 1:
                 if next_row is None:
+                    # reaches here when the picker started in mode [1]
                     if self.verbose:
                         print "\t next_row is None"
                     # if the prediction method is called in this mode
                     curr_row_idx = self.graph.row_ids.index(curr_row)
                     next_row_idx = curr_row_idx + self.n_pickers
-                    next_row = self.graph.row_ids[next_row_idx]
                     # check whether getting to next_row possible
-
-                    if len(self.graph.row_ids) > next_row_idx + 1:
+                    if len(self.graph.row_ids) < next_row_idx + 1:
                         # can't estimate next row, resetting
                         extra_time = 0.
                         if self.verbose:
@@ -450,6 +496,8 @@ class PickerPredictor(object):
                             print "\t next_row_idx: ", next_row_idx
                             print "\t len(row_ids): ", len(self.graph.row_ids)
                         break
+                    # estimated next_row exists
+                    next_row = self.graph.row_ids[next_row_idx]
 
                 # calculate time to reach next row
                 next_row_start_node = self.graph.row_info[next_row][1]
