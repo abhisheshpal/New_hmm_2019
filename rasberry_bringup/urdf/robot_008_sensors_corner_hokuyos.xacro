@@ -79,14 +79,14 @@
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo_fr"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.6959 -0.4835 0.59" rpy="3.141593 0.0 -0.79"/>
+    <origin xyz="0.704 -0.439 0.705" rpy="0.0 0.0 -0.79"/>
   </joint>
 
    <joint name="base_sens_hokuyo_bl" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo_bl"/>
     <axis xyz="0 1 0" />
-    <origin xyz="-0.6959 0.4835 0.59" rpy="3.141593 0.0 2.36"/>
+    <origin xyz="-0.704 0.439 0.705" rpy="0.0 0.0 2.36"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
