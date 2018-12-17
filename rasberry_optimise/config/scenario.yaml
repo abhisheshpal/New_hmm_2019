@@ -1,0 +1,4 @@
+start_node: WayPoint35
+goal_node: WayPoint44
+robot_name: thorvald_ii
+max_wait_time: 420 #(seconds)
