@@ -387,21 +387,7 @@ class PickerPredictor(object):
 #            return (finish_row, finish_node, finish_dir, finish_time)
 
         # for how long (distance) the picking (of the current tray) has been going on?
-        dist_so_far = 0.
-        time_now = self.env.now
-        if self.mode_index_tray_start[-1] == len(self.mode) - 1:
-            # picking started and no mode changes so far
-            dist_so_far = self.get_picking_distance(self.mode_start_poses[-1], (self.curr_node, self.curr_dir))
-        else:
-            # picking started earlier, and there has been some mode changes bcz of row_finish
-            # a single row picking may not fill up a tray - so there could be more than one
-            # picking modes. curr_mode is not finished yet
-            for idx in range(self.mode_index_tray_start[-1], len(self.mode) - 1):
-                if self.mode[idx] == 2:
-                    dist_so_far += self.get_picking_distance(self.mode_start_poses[idx], self.mode_stop_poses[idx])
-            # if curr_mode == 2
-            if self.mode[-1] == 2:
-                dist_so_far += self.get_picking_distance(self.mode_start_poses[-1], (self.curr_node, self.curr_dir))
+        dist_so_far = self.get_dist_picked_so_far()
 
         # prediction is going to be in a loop
         ## picking mode
@@ -499,47 +485,47 @@ class PickerPredictor(object):
 
                 # calculate time to reach next row
                 next_row_start_node = self.graph.row_info[next_row][1]
-                _, _, _dists = self.graph.get_path_details(curr_node, next_row_start_node)
-                extra_time += (sum(_dists) / self.mean_trans_rate())
+                extra_time += self.get_trans_time_to_node(curr_node, next_row_start_node)
                 curr_row = next_row
                 curr_node = next_row_start_node
                 curr_mode = 2
                 curr_dir = "forward"
                 if self.verbose:
-                    print "\t trans, extra_time +%0.2f" %(sum(_dists) / self.mean_trans_rate())
+                    print "\t trans, extra_time +%0.2f" %(self.get_trans_time_to_node(curr_node, next_row_start_node))
 
             elif curr_mode == 2:
                 # closest node in the current row
-                cn_nodes, cn_dists, cn_dirs = self.get_closest_nodes_while_picking(curr_node, curr_dir, remain_tray_pick_dist)
+                cn_nodes, cn_dists, cn_dirs = self.get_closest_event_nodes_while_picking(curr_node, curr_dir, remain_tray_pick_dist)
 
                 if self.verbose:
                     print "\t cn_nodes:", cn_nodes
-                    print "\t remaining_dists:", cn_dists
+                    print "\t tot_dists:", cn_dists
                     print "\t cn_dirs:", cn_dirs
 
-                if min(cn_dists) <= 0:
+                if max(cn_dists) > remain_tray_pick_dist or rasberry_des.config_utils.isclose(max(cn_dists), remain_tray_pick_dist):
                     # will finish in this row - two nodes are returned
                     if abs(cn_dists[0]) < abs(cn_dists[1]):
                         finish_node = cn_nodes[0]
                         finish_dir = cn_dirs[0]
                         if self.verbose:
-                            print "\t picking_to_finish, remain_dist %0.2f" %(cn_dists[0])
+                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[0])
                     else:
                         finish_node = cn_nodes[1]
                         finish_dir = cn_dirs[1]
                         if self.verbose:
-                            print "\t picking_to_finish, remain_dist %0.2f" %(cn_dists[1])
+                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[1])
                     finish_row = curr_row
                     break
 
                 else:
                     # won't finish in this row - one node and distance returned
-                    remain_tray_pick_dist = cn_dists[0]
+                    dist_so_far += cn_dists[0]
+                    remain_tray_pick_dist -= cn_dists[0]
                     curr_node = cn_nodes[0]
                     curr_dir = cn_dirs[0]
                     curr_mode = 0
                     if self.verbose:
-                        print "\t picking_not_to_finish, remain_dist %0.2f" %(cn_dists[0])
+                        print "\t picking_not_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[0])
 
         # find finish_time
         finish_time = time_now + remain_tray_pick_time + extra_time
@@ -548,32 +534,159 @@ class PickerPredictor(object):
 
         return (finish_row, finish_node, finish_dir, finish_time)
 
-    def get_closest_nodes_while_picking(self, node, pick_dir, distance):
+    def get_dist_picked_so_far(self, ):
+        """get the distance travelled so far while picking the current tray
+        """
+        if not self.has_started_a_tray():
+            # if a tray is not started, nothing to calculate
+            return 0.0
+
+        # TODO: Predictions enabled without prior data, as we initialise mean values
+#        # No prediction without prior data
+#        if len(self.picking_times_per_tray) == 0:
+#            return None
+
+        # for how long (distance) the picking (of the current tray) has been going on?
+        dist_so_far = 0.
+        if self.mode_index_tray_start[-1] == len(self.mode) - 1:
+            # picking started and no mode changes so far
+            dist_so_far = self.get_picking_distance(self.mode_start_poses[-1], (self.curr_node, self.curr_dir))
+        else:
+            # picking started earlier, and there has been some mode changes bcz of row_finish
+            # a single row picking may not fill up a tray - so there could be more than one
+            # picking modes. curr_mode is not finished yet
+            for idx in range(self.mode_index_tray_start[-1], len(self.mode) - 1):
+                if self.mode[idx] == 2:
+                    dist_so_far += self.get_picking_distance(self.mode_start_poses[idx], self.mode_stop_poses[idx])
+            # if curr_mode == 2
+            if self.mode[-1] == 2:
+                dist_so_far += self.get_picking_distance(self.mode_start_poses[-1], (self.curr_node, self.curr_dir))
+        return dist_so_far
+
+    def get_trans_time_to_node(self, curr_node=None, goal_node=None):
+        """If a picker is transporting to a row node, when will it reach there
+        from the curr_node? Either both arguments must be given or both must
+        not be given.
+
+        Keyword arguments:
+
+        curr_node - starting node, default: None (use self.curr_node)
+        goal_node - finish node, default: None (use self.goal_node)
+        """
+        if ((curr_node is None and goal_node is not None) or
+            (curr_node is not None and goal_node is None)):
+            return None
+
+        elif curr_node is None:
+            _, _, dists = self.graph.get_path_details(self.curr_node, self.goal_node)
+            return sum(dists) / self.mean_trans_rate()
+
+        else:
+            _, _, dists = self.graph.get_path_details(curr_node, goal_node)
+            return sum(dists) / self.mean_trans_rate()
+
+    def predict_picking_finish_event(self, curr_node, curr_dir, dist_so_far, mode_start_time, time_now):
+        """predict which of tray_full and row_finish will be the first event
+        if tray_full, event: `tray_full`, details: [node, dir, time, dist_so_far]
+        if row_finish, event: `row_finish`, details: [node, dir, time, dist_so_far]
+
+        this method works only when the picker is in the picking mode
+
+        Keyword arguments:
+        curr_node -- current node
+        curr_dir -- current direction
+        dist_so_far -- if already started picking a tray, how much is picked so far
+        mode_start_time -- time at which this mode is started
+        time_now -- current time
+        """
+        next_event = None
+        event_details = []
+
+        # remaining_distance
+        remain_tray_pick_dist = self.mean_tray_pick_dist() - dist_so_far
+
+        try:
+            assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+        except:
+            # remaining dist is less than zero
+            next_event = "tray_full"
+            event_details.append(curr_node)
+            event_details.append(curr_dir)
+            event_details.append(time_now)
+            event_details.append(dist_so_far)
+            return (next_event, event_details)
+
+        # will it be finished in the current row?
+        # if picking would not be finishing in this row, only node returnd is the row_end_node
+        # if picking could be finishing this row, there will be two nodes (just before and after the
+        # distance travelled equals the target distance) returned
+        cn_nodes, cn_dists, cn_dirs = self.get_closest_event_nodes_while_picking(curr_node, curr_dir, remain_tray_pick_dist)
+
+        if len(cn_dists) == 2:
+            # will finish in this row - two nodes in cn_nodes
+            # now return the closer one
+            # TODO: better to return both with some probability?
+            next_event = "tray_full"
+            if abs(remain_tray_pick_dist - cn_dists[0]) < abs(remain_tray_pick_dist - cn_dists[1]):
+                # picking_to_finish, remain_dist is cn_dists[0]
+                event_details.append(cn_nodes[0])
+                event_details.append(cn_dirs[0])
+                tot_dist = dist_so_far + cn_dists[0]
+                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(tot_dist) # picked distance
+            else:
+                # picking_to_finish, remain_dist is cn_dists[1]
+                event_details.append(cn_nodes[1])
+                event_details.append(cn_dirs[1])
+                tot_dist = dist_so_far + cn_dists[1]
+                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(tot_dist) # picked distance
+
+        else:
+            # won't finish in this row - one node and distance returned
+            next_event = "row_finish"
+            event_details.append(cn_nodes[0])
+            event_details.append(cn_dirs[0])
+            tot_dist = dist_so_far + cn_dists[0]
+            event_details.append(mode_start_time + (tot_dist / self.mean_pick_rate())) # picking time
+            event_details.append(tot_dist) # picked distance
+
+        return (next_event, event_details)
+
+    def get_closest_event_nodes_while_picking(self, curr_node, curr_dir, remain_tray_pick_dist):
         """given a row_id and a distance, return the closest nodes while picking
-        along with the remaining distances and directions at these nodes
+        along with the remaining distances and directions at these nodes.
+
+        if picking would not be finishing in this row, only node returnd is the row_end_node
+        if picking could be finishing this row, there will be two nodes (just before and after the
+        distance travelled equals the target distance) returned
 
         keyword arguments:
 
-        distance -- distance along the row (if full_row distance could be > row_length)
+        curr_node -- current node
+        curr_dir -- current picking direction
+        remain_tray_pick_dist -- remaining picking distance to fill the current tray
         """
         row_id = self.graph.get_row_id_of_row_node(curr_node)
 
-        assert distance >= 0
-        if pick_dir == "reverse":
+        assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+
+        # find details of the route from curr_pose to row_end_node
+        if curr_dir == "reverse":
             # full-row / bi-directional picking
-            route_nodes, _, route_dists = self.get_path_details(node, self.row_info[row_id][1])
+            route_nodes, _, route_dists = self.graph.get_path_details(curr_node, self.graph.row_info[row_id][1])
             route_dir = ["reverse" for i in range(len(route_nodes))]
         else:
             # could be a half/full row
             route_nodes = []
             route_dists = []
-            if row_id in self.half_rows:
+            if row_id in self.graph.half_rows:
                 # half-row, only forward picking
-                route_nodes, _, route_dists = self.graph.get_path_details(node, self.graph.row_info[row_id][2])
+                route_nodes, _, route_dists = self.graph.get_path_details(curr_node, self.graph.row_info[row_id][2])
                 route_dir = ["forward" for i in range(len(route_nodes))]
             else:
                 # full-row, forward and reverse picking
-                _route_nodes, _, _route_dists = self.graph.get_path_details(node, self.graph.row_info[row_id][2])
+                _route_nodes, _, _route_dists = self.graph.get_path_details(curr_node, self.graph.row_info[row_id][2])
                 route_nodes.extend(_route_nodes)
                 route_dists.extend(_route_dists)
                 route_dir = ["forward" for i in range(len(_route_nodes))]
@@ -585,31 +698,36 @@ class PickerPredictor(object):
         closest_nodes = []
         finish_dists = []
         finish_dirs = []
-        row_dist = sum(route_dists)
-        if distance > row_dist:
-            # given distance is more than the row_length
-            if (len(route_dists) == 0):
-                # start and end nodes are the same -> empty route_dists
-                closest_nodes.append(node)
-                finish_dists.append(distance)
-                finish_dirs.append(pick_dir)
-            else:
-                closest_nodes.append(route_nodes[-1])
-                finish_dists.append(distance - row_dist)
-                finish_dirs.append(route_dir[-1])
-        else:
-            # given distance is less than the row_length
+        remain_row_dist = sum(route_dists)
+
+        if remain_tray_pick_dist < remain_row_dist or rasberry_des.config_utils.isclose(remain_tray_pick_dist, remain_row_dist):
+            # given remain_tray_pick_dist <= the row_length (picking could finish in this row)
             _dist = 0.
             for i in range(len(route_dists)):
                 _dist += route_dists[i]
-                if (_dist >= distance):
+                if (_dist > remain_tray_pick_dist or rasberry_des.config_utils.isclose(_dist, remain_tray_pick_dist)):
+                    # len(route_dists) = len(route_nodes) - 1
+                    # return the nodes just before and after _dist == remain_tray_pick_dist
                     closest_nodes.append(route_nodes[i])
-                    finish_dists.append(distance - (_dist - route_dists[i]))
+                    finish_dists.append(_dist - route_dists[i])
                     finish_dirs.append(route_dir[i])
                     closest_nodes.append(route_nodes[i+1])
-                    finish_dists.append(distance - (_dist + route_dists[i]))
+                    finish_dists.append(_dist)
                     finish_dirs.append(route_dir[i+1])
                     break
+
+        else:
+            # given remain_tray_pick_dist > remaining row_length
+            if (len(route_dists) == 0):
+                # start and end nodes are the same -> empty route_dists
+                closest_nodes.append(curr_node)
+                finish_dists.append(remain_tray_pick_dist)
+                finish_dirs.append(curr_dir)
+            else:
+                closest_nodes.append(route_nodes[-1])
+                finish_dists.append(remain_row_dist)
+                finish_dirs.append(route_dir[-1])
+
 
         return (closest_nodes, finish_dists, finish_dirs)
 
