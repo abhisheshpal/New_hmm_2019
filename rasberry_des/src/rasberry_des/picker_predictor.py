@@ -724,10 +724,10 @@ class PickerPredictor(object):
                 finish_dists.append(remain_tray_pick_dist)
                 finish_dirs.append(curr_dir)
             else:
+                # won't be finishing in this row
                 closest_nodes.append(route_nodes[-1])
-                finish_dists.append(remain_row_dist)
+                finish_dists.append(remain_tray_pick_dist - remain_row_dist)
                 finish_dirs.append(route_dir[-1])
-
 
         return (closest_nodes, finish_dists, finish_dirs)
 
