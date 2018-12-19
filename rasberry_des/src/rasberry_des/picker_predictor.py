@@ -317,7 +317,10 @@ class PickerPredictor(object):
         """
         row_id = self.graph.get_row_id_of_row_node(start_pose[0])
 
-        assert row_id == self.graph.get_row_id_of_row_node(stop_pose[0])
+        try:
+            assert row_id == self.graph.get_row_id_of_row_node(stop_pose[0])
+        except:
+            raise Exception("row_id == self.graph.get_row_id_of_row_node(stop_pose[0])")
 
         picking_dist = 0.0
 
@@ -499,33 +502,34 @@ class PickerPredictor(object):
 
                 if self.verbose:
                     print "\t cn_nodes:", cn_nodes
-                    print "\t tot_dists:", cn_dists
+                    print "\t rem_dists:", cn_dists
                     print "\t cn_dirs:", cn_dirs
 
-                if max(cn_dists) > remain_tray_pick_dist or rasberry_des.config_utils.isclose(max(cn_dists), remain_tray_pick_dist):
+#                if max(cn_dists) > remain_tray_pick_dist or rasberry_des.config_utils.isclose(max(cn_dists), remain_tray_pick_dist):
+                if len(cn_dists) == 2:
                     # will finish in this row - two nodes are returned
                     if abs(cn_dists[0]) < abs(cn_dists[1]):
                         finish_node = cn_nodes[0]
                         finish_dir = cn_dirs[0]
                         if self.verbose:
-                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[0])
+                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + remain_tray_pick_dist + cn_dists[0])
                     else:
                         finish_node = cn_nodes[1]
                         finish_dir = cn_dirs[1]
                         if self.verbose:
-                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[1])
+                            print "\t picking_to_finish, tot_dist %0.2f" %(dist_so_far + remain_tray_pick_dist + cn_dists[1])
                     finish_row = curr_row
                     break
 
                 else:
                     # won't finish in this row - one node and distance returned
-                    dist_so_far += cn_dists[0]
-                    remain_tray_pick_dist -= cn_dists[0]
+                    dist_so_far += remain_tray_pick_dist - cn_dists[0]
+                    remain_tray_pick_dist = cn_dists[0]
                     curr_node = cn_nodes[0]
                     curr_dir = cn_dirs[0]
                     curr_mode = 0
                     if self.verbose:
-                        print "\t picking_not_to_finish, tot_dist %0.2f" %(dist_so_far + cn_dists[0])
+                        print "\t picking_not_to_finish, tot_dist %0.2f" %(dist_so_far)
 
         # find finish_time
         finish_time = time_now + remain_tray_pick_time + extra_time
@@ -669,7 +673,11 @@ class PickerPredictor(object):
         """
         row_id = self.graph.get_row_id_of_row_node(curr_node)
 
-        assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+        try:
+            assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+        except:
+            msg = "remain_tray_pick_dist: %0.1f" %(remain_tray_pick_dist)
+            raise Exception(msg)
 
         # find details of the route from curr_pose to row_end_node
         if curr_dir == "reverse":
