@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <launch>
+    <arg name="use_carrot_planner" default="false"/>
 
     <!-- launch robot_pose_publisher -->
     <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true">
@@ -23,7 +24,9 @@
         <rosparam file="$(find rasberry_move_base)/config/costmap_common_params.yaml" command="load" ns="local_costmap"/>
         <rosparam file="$(find rasberry_move_base)/config/local_costmap_params.yaml" command="load"/>
         <rosparam file="$(find rasberry_move_base)/config/global_costmap_params.yaml" command="load"/>
-	<rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" />
+	<rosparam file="$(find rasberry_move_base)/config/carrot_planner.yaml" command="load" if="$(arg use_carrot_planner)" />
+	<rosparam file="$(find rasberry_move_base)/config/nav_fn_ros.yaml" command="load" unless="$(arg use_carrot_planner)" />
+
 
     </node>
     

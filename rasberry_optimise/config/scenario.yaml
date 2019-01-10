@@ -1,4 +1,5 @@
+# CONFIGURATION FOR THE SCENARIO SERVER
 start_node: WayPoint35
 goal_node: WayPoint44
 robot_name: thorvald_ii
-max_wait_time: 75 #(seconds)
+max_wait_time: 90 # time (seconds) allowed to complete scenario.

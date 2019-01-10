@@ -1,16 +1,17 @@
 <?xml version="1.0" ?>
 <launch>
 
-
-  <arg name="db_path" default="/home/adam/mongodb"/>
+  <arg name="db_path" default="$(env HOME)/mongodb"/>
+  <!--arg name="db_path" default="/home/adam/mongodb"/-->
   <arg name="use_rviz" default="true"/>
 
   <!-- Robot arguments -->
+  <arg name="with_teleoperation" default="false" />
   <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_007.yaml"/>
   <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_007_sensors.xacro"/>
 
   <!-- Gazebo arguments -->
-  <arg name="world_name" default="riseholme" />
+  <arg name="world_name" default="riseholme_0.0-0.01" />
   <arg name="with_gui" default="true" />
 
   <!-- Map arguments -->
@@ -19,11 +20,12 @@
   <arg name="no_go_map" default="$(find rasberry_navigation)/maps/riseholme_sim_no_go.yaml" />
   <arg name="topo_map" default="riseholme_sim" />
 
+  <!-- Localisation arguments -->
+  <arg name="use_fake_localisation" default="false"/>
+
   <!-- Move base arguments -->
   <arg name="use_carrot_planner" default="false"/>
-
-  <!-- Topological navigation arguments -->
-  <arg name="move_base_reconf_service" default="DWAPlannerROS" />
+  <arg name="use_teb_planner" default="false"/>
 
 
 
@@ -35,6 +37,7 @@
 
   <!-- Robot and Gazebo bringup -->
   <include file="$(find rasberry_bringup)/launch/robot_bringup.launch">
+    <arg name="with_teleoperation" value="$(arg with_teleoperation)" />
     <arg name="robot_model" value="$(arg robot_model)" />
     <arg name="model_extras" value="$(arg model_extras)" />
     <arg name="simple_sim" value="true" />
@@ -54,17 +57,28 @@
     <arg name="map" value="$(arg topo_map)" />
   </include>
 
-  <!-- amcl -->
-  <include file="$(find rasberry_navigation)/launch/amcl.launch"/>
+  <!-- Localisation -->
+  <node name="fake_localization" pkg="fake_localization" type="fake_localization" if="$(arg use_fake_localisation)">
+    <remap from="base_pose_ground_truth" to="odometry/gazebo" /> 
+    <param name="odom_frame_id" type="string" value="odom"/>
+    <param name="base_frame_id" type="string" value="base_link"/>
+  </node>
+
+  <include file="$(find rasberry_navigation)/launch/amcl.launch" unless="$(arg use_fake_localisation)"/>
 
   <!-- Move base bringup -->
-  <include file="$(find rasberry_move_base)/launch/move_base_dwa.launch">
+  <include file="$(find rasberry_move_base)/launch/move_base_teb.launch" if="$(arg use_teb_planner)">
+    <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
+  </include>
+
+  <include file="$(find rasberry_move_base)/launch/move_base_dwa.launch" unless="$(arg use_teb_planner)">
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
   </include>
 
   <!-- Topological navigation bringup -->
   <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
-    <arg name="move_base_reconf_service" value="$(arg move_base_reconf_service)" />
+    <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
+    <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
   </include>
 
   <!-- Run rviz -->

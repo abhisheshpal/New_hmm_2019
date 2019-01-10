@@ -12,21 +12,24 @@ from utils import *
 
 
 class scenario_server(object):
-    """getFitness class definition.    
+    """scenario_server class definition.    
     """
     
     def __init__(self, config_scenario, rcnfsrvs=None):
         """
         Keyword arguments:
-        config -- dictionary containing the configuration parameters for running a 
-                  test scenario.
+        config   -- dictionary containing the configuration parameters for running a 
+                    test scenario.
+        rcnfsrvs -- list of reconfigure services to make clients for (optional).
         """
+        
+        rospy.loginfo("Initialising scenario server ...")        
+        
         # Get config for test scenario.
         self.start_node = config_scenario["start_node"]
         self.goal_node = config_scenario["goal_node"]
         self.robot_name = config_scenario["robot_name"]
         self.max_wait_time = rospy.Duration(config_scenario["max_wait_time"])
-
         
         try:
             assert self.start_node != self.goal_node
@@ -102,7 +105,7 @@ class scenario_server(object):
                 try:
                     self.rcnfclients[rcnfsrv] \
                     = dynamic_reconfigure.client.Client(rcnfsrv, timeout=5.0)
-                    rospy.loginfo("Created client for {}.".format(rcnfsrv))
+                    rospy.loginfo("Created client for {}".format(rcnfsrv))
                 except rospy.ROSException as e:
                     rospy.logerr(e)
                     rospy.signal_shutdown(e)
@@ -176,17 +179,18 @@ class scenario_server(object):
            clear costmaps.
         """
         self.set_model_state_client(self.model_state)
-        rospy.sleep(1.0)
+        rospy.sleep(2.0)
         self.init_pose_pub.publish(self.initial_pose)
         self.clear_costmaps_client()
         
 
     def run_scenario(self, params=None):
-        """Run the test scenario (move from start node to goal node) with parameters 
-           given by the GA and get fitness score = 1/time to complete
+        """Run the test scenario (move from start node to goal node) 
+           and get measure of fitness = time to complete.
         """
         try:
-            rospy.sleep(1.0)        
+            rospy.sleep(1.0)
+            print "\n"
             rospy.loginfo("Running test scenario ...")
             
             # Reconfigure parameters
@@ -219,6 +223,8 @@ class scenario_server(object):
         """Reconfigure parameters.
         """
         try:
+            for param in params.keys():
+                print "Setting {} = {}".format(param, params[param]) 
             rcnfclient.update_configuration(params)
         except rospy.ROSException as e:
             rospy.logerr(e)
@@ -231,17 +237,16 @@ if __name__ == "__main__":
     
     rospy.init_node("scenario_server", anonymous=True, disable_signals=True)
     
-    if len(sys.argv) < 3:
-        rospy.loginfo("usage is optimise.py path_to_scenario_yaml path_to_parameters_yaml")
+    if len(sys.argv) < 2:
+        rospy.loginfo("usage is optimise.py path_to_scenario_yaml")
         exit()
     else:
         print sys.argv
         scenario = sys.argv[1]
-        parameters = sys.argv[2]
 
     config_scenario = load_config_from_yaml(scenario)
     
     ss = scenario_server(config_scenario)  
     ss.run_scenario()
     ss.run_scenario()
-#####################################################################################            
+#####################################################################################

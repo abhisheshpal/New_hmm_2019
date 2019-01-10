@@ -1,0 +1,30 @@
+# REGISTER YOUR PARAMETERS FOR OPTMISATION HERE.
+# You must specify the reconfigure services and group your parameters accordingly (as below).
+# type: parameter type - can be float, integer (int) or boolean (bool).
+# min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
+# max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
+
+/move_base/TebLocalPlannerROS: 
+  weight_optimaltime: 
+    type: "int"
+    min: 1
+    max: 1000
+  weight_obstacle: 
+    type: "int"
+    min: 1
+    max: 1000
+  weight_inflation: 
+    type: "float"
+    min: 0.1
+    max: 10.0
+
+/move_base/local_costmap/local_inflation_layer:
+  inflation_radius: 
+    type: "float"
+    min: 0.05
+    max: 5.0
+  cost_scaling_factor: 
+    type: "float"
+    min: 0.2
+    max: 20.0
+

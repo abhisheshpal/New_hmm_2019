@@ -1,0 +1,11 @@
+# HYPER PARAMETERS OF THE GENETIC ALGORITHM
+ngen: 5              # The number of generations.
+init_popsize: 10     # Initial population size before first selection is carried out.
+indpb: 0.1           # Independent probability for each attribute (parameter) to be mutated.
+tournsize: 2         # The number of individuals participating in each selection tournament.
+mu: 10               # The number of individuals to select for the next generation.
+lambda: 5            # The number of children to produce at each generation.
+cxpb: 0.5            # The probability that an offspring is produced by crossover.
+mutpb: 0.2           # The probability that an offspring is produced by mutation.
+
+save_path: "/home/adam/Documents/SagaRobotics/RASberry/optim/data" # optional location to save data (defaults to rasberry_optmise package directory)
