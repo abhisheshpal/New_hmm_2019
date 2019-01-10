@@ -11,10 +11,12 @@ find_package(catkin REQUIRED COMPONENTS
   mongodb_store
   rasberry_bringup
   rasberry_navigation
+  fake_localization
   rasberry_move_base
   rviz
   rospy
   actionlib
+  dynamic_reconfigure
   roslib
   gazebo_msgs
   geometry_msgs
