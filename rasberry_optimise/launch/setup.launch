@@ -2,7 +2,6 @@
 <launch>
 
   <arg name="db_path" default="$(env HOME)/mongodb"/>
-  <!--arg name="db_path" default="/home/adam/mongodb"/-->
   <arg name="use_rviz" default="true"/>
 
   <!-- Robot arguments -->
@@ -21,7 +20,7 @@
   <arg name="topo_map" default="riseholme_sim" />
 
   <!-- Localisation arguments -->
-  <arg name="use_fake_localisation" default="false"/>
+  <arg name="use_fake_localisation" default="true"/>
 
   <!-- Move base arguments -->
   <arg name="use_carrot_planner" default="false"/>
