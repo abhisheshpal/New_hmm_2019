@@ -11,6 +11,7 @@ def evaluate(individual):
        parameters (individual) and get measure of fitness = time to complete.
     """
     
+    # Make dictionary of parameters to pass to the scenario server.
     params = {}
     count = 0
     for i, rcnfsrv in enumerate(rcnfsrvs):
@@ -31,7 +32,8 @@ def evaluate(individual):
     time_2 = time.time()
 
     eval_calls.append(1)
-    times.append(time_2-time_1)  
+    times.append(time_2-time_1)
+    data.append([individual, t])
 
     evals_remaining = tot_eval_calls - np.sum(eval_calls)
     time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
@@ -91,6 +93,7 @@ if __name__ == "__main__":
     NGEN = config_ga["ngen"]
     POPSIZE = config_ga["init_popsize"]
     INDPB = config_ga["indpb"]
+    C = config_ga["c"]
     TOURNSIZE = config_ga["tournsize"]
     MU = config_ga["mu"]
     LAMBDA_ = config_ga["lambda"]
@@ -101,6 +104,7 @@ if __name__ == "__main__":
     print "Setting ngen = {}".format(NGEN)
     print "Setting popsize = {}".format(POPSIZE)
     print "Setting indpb = {}".format(INDPB)
+    print "Setting c = {}".format(C)
     print "Setting tournsize = {}".format(TOURNSIZE)
     print "Setting mu = {}".format(MU)
     print "Setting lambda = {}".format(LAMBDA_)
@@ -132,7 +136,7 @@ if __name__ == "__main__":
                 attr_max = config_params.values()[i][param_name]['max']
                 toolbox.register(attr, random.uniform, attr_min, attr_max)
                 
-                sigmas.append((0.5 * (attr_max - attr_min)) / 3.0)
+                sigmas.append((0.5 * (attr_max - attr_min)) / C)
                 mins.append(attr_min)
                 maxs.append(attr_max)
                 
@@ -141,7 +145,7 @@ if __name__ == "__main__":
                 attr_max = config_params.values()[i][param_name]['max']
                 toolbox.register(attr, random.randint, attr_min, attr_max) 
                 
-                sigmas.append((0.5 * (attr_max - attr_min)) / 3.0)
+                sigmas.append((0.5 * (attr_max - attr_min)) / C)
                 mins.append(attr_min)
                 maxs.append(attr_max)
                 
@@ -192,7 +196,8 @@ if __name__ == "__main__":
     # Run the genetic algorithm.
     eval_calls = []
     times = []
-    tot_eval_calls = (NGEN * LAMBDA_) + POPSIZE # estimate
+    data = []
+    tot_eval_calls = int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE # average
     initial_pop = toolbox.population(POPSIZE)
     
     pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU, 
@@ -218,6 +223,9 @@ if __name__ == "__main__":
         
     with open(save_dir + "/pop.json", 'w') as fout:
         json.dump(pop, fout)
+        
+    with open(save_dir + "/data.json", 'w') as fout:
+        json.dump(data, fout)
     
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
     pickle.dump(config_scenario, open(save_dir + "/config_scenario.p", "wb"))

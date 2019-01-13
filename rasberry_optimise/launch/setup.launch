@@ -2,7 +2,7 @@
 <launch>
 
   <arg name="db_path" default="$(env HOME)/mongodb"/>
-  <arg name="use_rviz" default="true"/>
+  <arg name="use_rviz" default="false"/>
 
   <!-- Robot arguments -->
   <arg name="with_teleoperation" default="false" />
@@ -11,7 +11,7 @@
 
   <!-- Gazebo arguments -->
   <arg name="world_name" default="riseholme_0.0-0.01" />
-  <arg name="with_gui" default="true" />
+  <arg name="with_gui" default="false" />
 
   <!-- Map arguments -->
   <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml" />
