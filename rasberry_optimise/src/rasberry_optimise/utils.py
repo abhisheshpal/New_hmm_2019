@@ -21,7 +21,8 @@ def make_param_dict(config_params, individual, with_contraint=False):
 
     params = {}
     count = 0
-    for i, rcnfsrv in enumerate(config_params.keys()):
+    rcnfsrvs = config_params.keys()
+    for i, rcnfsrv in enumerate(rcnfsrvs):
         
         params[rcnfsrv] = {}
         param_names = config_params.values()[i].keys()
@@ -42,7 +43,7 @@ def make_param_dict(config_params, individual, with_contraint=False):
         
     # Constrain global inflation parameters to equal local inflation parameters
     if with_contraint:                
-        if rcnfsrv1 in params.keys():
+        if rcnfsrv1 in rcnfsrvs and rcnfsrv2 not in rcnfsrvs:
             params[rcnfsrv2] = {}
     
             if param1 in params[rcnfsrv1].keys():

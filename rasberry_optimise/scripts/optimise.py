@@ -189,7 +189,7 @@ if __name__ == "__main__":
     rcnfsrv2 = "/move_base/global_costmap/global_inflation_layer"
 
     if with_constraint:
-        if rcnfsrv1 in rcnfsrvs:
+        if rcnfsrv1 in rcnfsrvs and rcnfsrv2 not in rcnfsrvs:
             rcnfsrvs.append(rcnfsrv2)
 
     ss = scenario_server(config_scenario, rcnfsrvs)
