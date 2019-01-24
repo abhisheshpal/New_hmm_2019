@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
-import rospy, sys, random, time, datetime, pickle, json, os, rospkg, numpy as np
+import rospy, sys, random, time, datetime, pickle, os, rospkg, numpy as np
 from rasberry_optimise.utils import *
 from rasberry_optimise.rasberry_scenario_server import scenario_server
 from deap import base, creator, tools, algorithms
@@ -12,20 +12,7 @@ def evaluate(individual):
     """
     
     # Make dictionary of parameters to pass to the scenario server.
-    params = {}
-    count = 0
-    for i, rcnfsrv in enumerate(rcnfsrvs):
-        params[rcnfsrv] = {}
-        param_names = config_params.values()[i].keys()
-        for param_name in param_names:
-            if config_params.values()[i][param_name]['type'] == "bool":
-                if individual[count] == 1:
-                    params[rcnfsrv][param_name] = 'true'
-                else:
-                    params[rcnfsrv][param_name] = 'false'
-            else:
-                params[rcnfsrv][param_name] = individual[count]
-            count+=1
+    params = make_param_dict(config_params, individual, with_constraint)
     
     time_1 = time.time()
     t = ss.run_scenario(params)
@@ -39,7 +26,7 @@ def evaluate(individual):
     time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
     
     print "Evaluations remaining (estimated): {}".format(evals_remaining)
-    print "Estimated time to complete procedure: {} hours.".format(time_to_complete)
+    print "Estimated time to complete: {} hours.".format(time_to_complete)
     
     return t
     
@@ -78,18 +65,17 @@ if __name__ == "__main__":
         config_parameters_path = sys.argv[2]
         config_ga_path = sys.argv[3]
         
+    with_constraint = True
+        
     # Get configuration for the optimisation procedure.
-    config_scenario = load_config_from_yaml(config_scenario_path)
-    config_params = load_config_from_yaml(config_parameters_path)
-    config_ga = load_config_from_yaml(config_ga_path)
+    config_scenario = load_data_from_yaml(config_scenario_path)
+    config_params = load_data_from_yaml(config_parameters_path)
+    config_ga = load_data_from_yaml(config_ga_path)
 #####################################################################################
     
     
 #####################################################################################
-    # Initialise the scenario server and set hyper-parameters of the GA.
-    rcnfsrvs = config_params.keys()
-    ss = scenario_server(config_scenario, rcnfsrvs)
-    
+    # Set hyper-parameters of the GA.
     NGEN = config_ga["ngen"]
     POPSIZE = config_ga["init_popsize"]
     INDPB = config_ga["indpb"]
@@ -119,10 +105,12 @@ if __name__ == "__main__":
     creator.create("Individual", list, fitness=creator.FitnessMin)
     toolbox = base.Toolbox()        
     
+    rcnfsrvs = config_params.keys()
     attributes = []
     sigmas = [] # std of gaussian mutation
     mins = []
     maxs = []
+    
     print "\nRegistering the following parameters for optimisation ..."
     for i, rcnfsrv in enumerate(rcnfsrvs):
         param_names = config_params.values()[i].keys()
@@ -160,12 +148,15 @@ if __name__ == "__main__":
                 print "Please set {} to type `float`, `int` or `bool` in parameter configuration file.".format(param_name)
                 sys.exit()
                 
-            attributes.append(toolbox.__getattribute__(attr))   
+            attributes.append(toolbox.__getattribute__(attr))
+            
+    print "\n"
 #####################################################################################            
             
 
 #####################################################################################
-    # Register the DEAP operators.            
+    # Register the DEAP operators.
+            
     toolbox.register("individual", tools.initCycle, creator.Individual, attributes, n=1)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
@@ -193,7 +184,16 @@ if __name__ == "__main__":
 
 
 #####################################################################################
-    # Run the genetic algorithm.
+    # Initialise the scenario server and run the genetic algorithm.
+    rcnfsrv1 = "/move_base/local_costmap/local_inflation_layer"
+    rcnfsrv2 = "/move_base/global_costmap/global_inflation_layer"
+
+    if with_constraint:
+        if rcnfsrv1 in rcnfsrvs:
+            rcnfsrvs.append(rcnfsrv2)
+
+    ss = scenario_server(config_scenario, rcnfsrvs)
+
     eval_calls = []
     times = []
     data = []
@@ -218,14 +218,9 @@ if __name__ == "__main__":
     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     os.mkdir(save_dir)      
     
-    with open(save_dir + "/hof.json", 'w') as fout:
-        json.dump([ind for ind in hof], fout)
-        
-    with open(save_dir + "/pop.json", 'w') as fout:
-        json.dump(pop, fout)
-        
-    with open(save_dir + "/data.json", 'w') as fout:
-        json.dump(data, fout)
+    save_data_to_json(save_dir + "/hof.json", [ind for ind in hof])
+    save_data_to_json(save_dir + "/pop.json", pop)
+    save_data_to_json(save_dir + "/data.json", data)
     
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
     pickle.dump(config_scenario, open(save_dir + "/config_scenario.p", "wb"))
