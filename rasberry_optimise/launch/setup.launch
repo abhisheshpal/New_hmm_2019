@@ -2,16 +2,16 @@
 <launch>
 
   <arg name="db_path" default="$(env HOME)/mongodb"/>
-  <arg name="use_rviz" default="false"/>
+  <arg name="use_rviz" default="true"/>
 
   <!-- Robot arguments -->
   <arg name="with_teleoperation" default="false" />
-  <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_007.yaml"/>
-  <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_007_sensors.xacro"/>
+  <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_008.yaml"/>
+  <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_008_sensors.xacro"/>
 
   <!-- Gazebo arguments -->
   <arg name="world_name" default="riseholme_0.0-0.01" />
-  <arg name="with_gui" default="false" />
+  <arg name="with_gui" default="true" />
 
   <!-- Map arguments -->
   <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml" />

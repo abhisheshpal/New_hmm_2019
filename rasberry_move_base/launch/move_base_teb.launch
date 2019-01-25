@@ -10,6 +10,7 @@
 
     <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" clear_params="true">
         <remap from="/cmd_vel" to="/nav_vel"/>
+        <remap from="odom" to="odometry/base_raw"/>
 
         <!--Parameters-->
 
