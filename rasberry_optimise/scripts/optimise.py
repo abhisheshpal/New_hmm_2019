@@ -15,7 +15,7 @@ def evaluate(individual):
     params = make_param_dict(config_params, individual, with_constraint)
     
     time_1 = time.time()
-    t = ss.run_scenario(params)
+    t, trajectory = ss.run_scenario(params)
     time_2 = time.time()
 
     eval_calls.append(1)

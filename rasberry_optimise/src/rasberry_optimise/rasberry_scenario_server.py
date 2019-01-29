@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 from __future__ import division
-import rospy, actionlib, dynamic_reconfigure.client, sys
+import rospy, actionlib, dynamic_reconfigure.client, sys, copy, tf
 from gazebo_msgs.srv import SetModelState 
 from gazebo_msgs.msg import ModelState
-from geometry_msgs.msg import PoseWithCovarianceStamped
+from geometry_msgs.msg import PoseWithCovarianceStamped, Pose
 from topological_navigation.msg import GotoNodeAction, GotoNodeGoal
 from topological_navigation import route_search
 from strands_navigation_msgs.msg import TopologicalMap
@@ -116,10 +116,9 @@ class scenario_server(object):
         # for robot teleportation.
         self.model_state = ModelState()
         self.model_state.model_name = self.robot_name
-        self.model_state.pose.orientation.w = 1
         for node in self.topo_map.nodes:
             if node.name == self.start_node:
-                self.model_state.pose.position=node.pose.position
+                self.model_state.pose=node.pose
                 break
             
         
@@ -136,6 +135,7 @@ class scenario_server(object):
         
         # Robot model is at the start node before the test scenario starts.
         self.reset_robot()
+        self.robot_poses = []
         
 
     def map_callback(self, msg):
@@ -186,7 +186,7 @@ class scenario_server(object):
 
     def run_scenario(self, params=None):
         """Run the test scenario (move from start node to goal node) 
-           and get measure of fitness = time to complete.
+           and get time to complete.
         """
         try:
             rospy.sleep(1.0)
@@ -198,10 +198,17 @@ class scenario_server(object):
                 for rcnfsrv in params.keys():
                     self.do_reconf(self.rcnfclients[rcnfsrv], params[rcnfsrv])
             
+            rp_sub = rospy.Subscriber("/robot_pose", Pose, self.rp_callback)            
+            
             time_1 = rospy.Time.now()
             self.topo_nav_client.send_goal_and_wait(self.topo_goal, self.max_wait_time)
             time_2 = rospy.Time.now()
             result = self.topo_nav_client.get_result()
+            
+            rp_sub.unregister()
+            trajectory = copy.copy(self.robot_poses)
+            del self.robot_poses[:]
+            
             self.reset_robot()
             
             print result
@@ -216,7 +223,7 @@ class scenario_server(object):
             pass
         
         else:
-            return (t,) # fitness
+            return (t,), trajectory 
             
             
     def do_reconf(self, rcnfclient, params):
@@ -232,6 +239,17 @@ class scenario_server(object):
             exit()
             
             
+    def rp_callback(self, msg):
+        x = msg.position.x
+        y = msg.position.y
+        xq = msg.orientation.x
+        yq = msg.orientation.y
+        zq = msg.orientation.z
+        wq = msg.orientation.w
+        roll, pitch, yaw = tf.transformations.euler_from_quaternion([xq, yq, zq, wq])
+        self.robot_poses.append([x, y, yaw])
+            
+            
             
 if __name__ == "__main__":
     
@@ -244,9 +262,8 @@ if __name__ == "__main__":
         print sys.argv
         scenario = sys.argv[1]
 
-    config_scenario = load_config_from_yaml(scenario)
+    config_scenario = load_data_from_yaml(scenario)
     
     ss = scenario_server(config_scenario)  
-    ss.run_scenario()
     ss.run_scenario()
 #####################################################################################
