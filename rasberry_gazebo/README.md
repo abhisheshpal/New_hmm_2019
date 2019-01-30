@@ -33,13 +33,14 @@ To build a world open a terminal and do the following:
 3. `./scripts/generate_world.py --model_file ./config/gazebo/models_AB.yaml --actor_file ./config/gazebo/actors_AB.yaml`
 
 4. If you have the Thorvald repo (https://github.com/LCAS/Thorvald) installed on your machine you can spawn the Thorvald robot model into the Gazebo World: <br /> 
-`roslaunch rasberry_bringup robot_bringup.launch`
+`roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_007.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_007_sensors.xacro simple_sim:=true world_name:=riseholme with_actors:=false`
 
 If you do not then:
 
 5. `roslaunch rasberry_gazebo world.launch`
 
-Note : you can subsitute `models_AB.yaml` and `actors_AB.yaml` in step 3 for your own config files.
+Note : you can subsitute `models_AB.yaml` and `actors_AB.yaml` in step 3 for your own config files. 
+       you can use other cofiguration files in place of `robot_007.yaml` and `robot_007_sensors.xacro` in step 4.
 
 An issue with the actors (which we will call 'type-1 actors') generated using the config file `./config/actors_AB.yaml` is that they cannot be controlled during simulation time.
 Therefore another type of actor ('type-2 actor') is available in this package that can be controlled at runtime. These are robots with a human mesh, controlled with the standard 
