@@ -49,7 +49,7 @@ Therefore another type of actor ('type-2 actor') is available in this package th
 # Actor Move-Base
 Move base has been implemented for the type-2 actors, and is applied automatically for each actor specified in `./launch/include_actors.launch`. The procedure is as follows.
 1. Launch a Gazebo world (see steps 4 and 5 in the previous section). <br />
-2. Launch the map server. It is recommended you use the no go map: <br /> `roslaunch rasberry_navigation map_server.launch use_no_go_map:=true`. 
+2. Launch the map server. It is recommended you use a no go map, for the given map of the environment: <br /> `roslaunch rasberry_navigation map_server.launch map:="$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml" use_no_go_map:=true no_go_map:="$(rospack find rasberry_navigation)/maps/riseholme_sim_no_go.yaml"`. 
 3. Include the actors: <br /> `roslaunch rasberry_gazebo include_actors.launch`.
 
 
