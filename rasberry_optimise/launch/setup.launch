@@ -10,7 +10,7 @@
   <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_008_sensors.xacro"/>
 
   <!-- Gazebo arguments -->
-  <arg name="world_name" default="riseholme_0.0-0.01" />
+  <arg name="world_name" default="riseholme_0.0-0.005" />
   <arg name="with_gui" default="true" />
 
   <!-- Map arguments -->
@@ -44,6 +44,10 @@
     <arg name="with_gui" value="$(arg with_gui)" />
   </include>
 
+  <!-- Gazebo collision detection -->
+  <node pkg="contact_monitor" type="contactMonitor" name="contact" />
+  <node name="contact_throttler" type="throttle" pkg="topic_tools" args="messages /collision_data 30 /collision_data_throttled"/>
+
   <!-- Metric maps -->
   <include file="$(find rasberry_navigation)/launch/map_server.launch">
     <arg name="map" value="$(arg map)" />
@@ -63,7 +67,10 @@
     <param name="base_frame_id" type="string" value="base_link"/>
   </node>
 
-  <include file="$(find rasberry_navigation)/launch/amcl.launch" unless="$(arg use_fake_localisation)"/>
+  <include file="$(find rasberry_navigation)/launch/rasberry_localisation.launch" unless="$(arg use_fake_localisation)" >
+    <arg name="use_imu" value="false" />
+    <arg name="publish_tf" value="false" />
+  </include>
 
   <!-- Move base bringup -->
   <include file="$(find rasberry_move_base)/launch/move_base_teb.launch" if="$(arg use_teb_planner)">

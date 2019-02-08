@@ -23,6 +23,9 @@ find_package(catkin REQUIRED COMPONENTS
   topological_navigation
   strands_navigation_msgs
   std_srvs
+  contact_monitor
+  topic_tools
+  tf
 )
 
 ## System dependencies are found with CMake's conventions

@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 from __future__ import division
-import rospy, sys, random, time, datetime, pickle, os, rospkg, numpy as np
+import rospy, sys, random, time, datetime, pickle, os, numpy as np
 from rasberry_optimise.utils import *
 from rasberry_optimise.rasberry_scenario_server import scenario_server
 from deap import base, creator, tools, algorithms
@@ -14,21 +14,30 @@ def evaluate(individual):
     # Make dictionary of parameters to pass to the scenario server.
     params = make_param_dict(config_params, individual, with_constraint)
     
-    time_1 = time.time()
-    t, trajectory = ss.run_scenario(params)
-    time_2 = time.time()
-
-    eval_calls.append(1)
-    times.append(time_2-time_1)
-    data.append([individual, t])
-
-    evals_remaining = tot_eval_calls - np.sum(eval_calls)
-    time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
+    metric_array = np.empty((NUM_RUNS, 4))
+    for i in range(NUM_RUNS):
+        
+        time_1 = time.time()
+        metrics, trajectory = ss.run_scenario(params)
+        time_2 = time.time()
+        metric_array[i, :] = metrics
+        
+        eval_calls.append(1)
+        times.append(time_2-time_1)
+        data.append([individual, metrics])
     
-    print "Evaluations remaining (estimated): {}".format(evals_remaining)
-    print "Estimated time to complete: {} hours.".format(time_to_complete)
+        evals_remaining = tot_eval_calls - np.sum(eval_calls)
+        time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
+        
+        print "Evaluations remaining (estimated): {}/{}".format(evals_remaining, tot_eval_calls)
+        print "Estimated time to complete: {} hours.".format(time_to_complete)
+        
+    t = np.median(metric_array[:, 0])
+    cost_dollars = np.median(metric_array[:, 1])
+    trajectory_length = np.median(metric_array[:, 2])
+    dist_from_coords = np.median(metric_array[:, 3])
     
-    return t
+    return (t, cost_dollars, trajectory_length, dist_from_coords)
     
     
 def checkBounds(mins, maxs):
@@ -85,6 +94,11 @@ if __name__ == "__main__":
     LAMBDA_ = config_ga["lambda"]
     CXPB = config_ga["cxpb"]
     MUTPB = config_ga["mutpb"]
+    WEIGHT_TIME = config_ga["weight_time"]
+    WEIGHT_SMOOTH = config_ga["weight_smooth"]
+    WEIGHT_LENGTH = config_ga["weight_length"]
+    WEIGHT_COORDS = config_ga["weight_coords"]
+    NUM_RUNS = config_ga["num_runs"]
     
     print "\nSetting hyper-parameters of the genetic algorithm ..."
     print "Setting ngen = {}".format(NGEN)
@@ -96,13 +110,23 @@ if __name__ == "__main__":
     print "Setting lambda = {}".format(LAMBDA_)
     print "Setting cxpb = {}".format(CXPB)
     print "Setting mutpb = {}".format(MUTPB)
+    print "Setting weight_time = {}".format(WEIGHT_TIME)
+    print "Setting weight_smooth = {}".format(WEIGHT_SMOOTH)
+    print "Setting weight_length = {}".format(WEIGHT_LENGTH)
+    print "Setting weight_coords = {}".format(WEIGHT_COORDS)
+    print "Setting num_runs = {}".format(NUM_RUNS)
 #####################################################################################    
     
     
 #####################################################################################    
     # Create DEAP toolbox and register parameters for optimisation.
-    creator.create("FitnessMin", base.Fitness, weights=(-1.0,))
-    creator.create("Individual", list, fitness=creator.FitnessMin)
+    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_COORDS])
+    weights[np.where(weights <= 0.0)[0]] = sys.float_info.min
+    weights = -1 * weights
+    weights[1] = -1 * weights[1]
+    
+    creator.create("FitnessMulti", base.Fitness, weights=tuple(weights))
+    creator.create("Individual", list, fitness=creator.FitnessMulti)
     toolbox = base.Toolbox()        
     
     rcnfsrvs = config_params.keys()
@@ -197,7 +221,7 @@ if __name__ == "__main__":
     eval_calls = []
     times = []
     data = []
-    tot_eval_calls = int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE # average
+    tot_eval_calls = NUM_RUNS * (int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE) # average
     initial_pop = toolbox.population(POPSIZE)
     
     pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU, 
@@ -211,8 +235,7 @@ if __name__ == "__main__":
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
     else:
-        rospack = rospkg.RosPack()
-        save_path = rospack.get_path("rasberry_optimise")
+        save_path = base_dir
         
     save_dir = os.path.join(save_path, 
     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))

@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="parameters" default="$(find rasberry_optimise)/resources/dwa_s3_1-0-0-0.json" />
+  <arg name="parameter_index" default="3" />
+  <arg name="config_parameters" default="$(find rasberry_optimise)/config/parameters_dwa.yaml" />   
+
+  <!-- Reconfigure -->
+  <node pkg="rasberry_optimise" type="reconfigure.py" name="reconfigure" output="screen" 
+        args="$(arg parameters) $(arg parameter_index) $(arg config_parameters)" />
+
+</launch>
