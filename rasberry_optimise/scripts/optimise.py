@@ -12,7 +12,7 @@ def evaluate(individual):
     """
     
     # Make dictionary of parameters to pass to the scenario server.
-    params = make_param_dict(config_params, individual, with_constraint)
+    params = make_param_dict(config_params, individual)
     
     metric_array = np.empty((NUM_RUNS, 4))
     for i in range(NUM_RUNS):
@@ -73,8 +73,6 @@ if __name__ == "__main__":
         config_scenario_path = sys.argv[1]
         config_parameters_path = sys.argv[2]
         config_ga_path = sys.argv[3]
-        
-    with_constraint = True
         
     # Get configuration for the optimisation procedure.
     config_scenario = load_data_from_yaml(config_scenario_path)
@@ -212,9 +210,8 @@ if __name__ == "__main__":
     rcnfsrv1 = "/move_base/local_costmap/local_inflation_layer"
     rcnfsrv2 = "/move_base/global_costmap/global_inflation_layer"
 
-    if with_constraint:
-        if rcnfsrv1 in rcnfsrvs and rcnfsrv2 not in rcnfsrvs:
-            rcnfsrvs.append(rcnfsrv2)
+    if rcnfsrv1 in rcnfsrvs and rcnfsrv2 not in rcnfsrvs:
+        rcnfsrvs.append(rcnfsrv2)
 
     ss = scenario_server(config_scenario, rcnfsrvs)
 

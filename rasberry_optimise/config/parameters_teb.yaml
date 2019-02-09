@@ -5,14 +5,14 @@
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
 /move_base/TebLocalPlannerROS:
-  dt_ref: 
+  dt_ref: # dt_hysteresis constrained to be 10% of dt_ref as recommended here http://wiki.ros.org/teb_local_planner
     type: "float"
-    min: 0.01
+    min: 0.02
     max: 1.0
-  dt_hysteresis: 
-    type: "float"
-    min: 0.01
-    max: 1.0
+#  dt_hysteresis: 
+#    type: "float"
+#    min: 0.01
+#    max: 1.0
   global_plan_overwrite_orientation: 
     type: "bool"
   global_plan_viapoint_sep: 
@@ -35,10 +35,10 @@
     type: "int"
     min: 2
     max: 10
-  penalty_epsilon: 
+  penalty_epsilon: # should be < min(max_vel_x, max_vel_x_backwards, max_vel_theta, acc_lim_x). Default = 0.1, min possible: 0.0, max possible: 1.0
     type: "float"
     min: 0.01
-    max: 1.0
+    max: 0.19
   weight_max_vel_x: 
     type: "float"
     min: 0.5
@@ -81,3 +81,4 @@
     type: "float"
     min: 1.0
     max: 100.0
+

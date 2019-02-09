@@ -232,10 +232,9 @@ class scenario_server(object):
             print result
             if result.success:
                 
+                # Get metrics
                 t = (time_2-time_1).to_sec()
-                
                 cost_dollars = scorepath(np.array(trajectory))
-                
                 trajectory_length = get_trajectory_length(trajectory)
                 
                 if self.coords_file is not None:

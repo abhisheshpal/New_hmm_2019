@@ -40,7 +40,7 @@ if __name__ == "__main__":
         
         # Create reconfigure clients.
         rospy.loginfo("Creating reconfigure clients ...")
-        rcnfsrvs = config_params.keys()
+        rcnfsrvs = param_dict.keys()
         rcnfclients = {}
         for rcnfsrv in rcnfsrvs:
             try:
