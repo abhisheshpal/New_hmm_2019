@@ -32,10 +32,10 @@ def evaluate(individual):
         print "Evaluations remaining (estimated): {}/{}".format(evals_remaining, tot_eval_calls)
         print "Estimated time to complete: {} hours.".format(time_to_complete)
         
-    t = np.median(metric_array[:, 0])
-    cost_dollars = np.median(metric_array[:, 1])
-    trajectory_length = np.median(metric_array[:, 2])
-    dist_from_coords = np.median(metric_array[:, 3])
+    t = np.mean(metric_array[:, 0])
+    cost_dollars = np.mean(metric_array[:, 1])
+    trajectory_length = np.mean(metric_array[:, 2])
+    dist_from_coords = np.mean(metric_array[:, 3])
     
     return (t, cost_dollars, trajectory_length, dist_from_coords)
     
