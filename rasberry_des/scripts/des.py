@@ -189,6 +189,17 @@ if __name__ == "__main__":
 
                     if SAVE_STATS:
                         time_now = time.time()*1000000
+
+                        # event logs
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_events.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        for item in farm.events:
+                            print >> f_handle, item
+                        for picker_id in picker_ids:
+                            print >> f_handle, picker_id
+                            for item in farm.predictor.predictors[picker_id].modes_nodes_dirs_times:
+                                print >> f_handle, item
+                        f_handle.close()
+
                         # predictions log
                         f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"

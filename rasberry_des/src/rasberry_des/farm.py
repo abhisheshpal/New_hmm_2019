@@ -114,6 +114,8 @@ class Farm(object):
         self.tray_counts = {picker_id:0 for picker_id in self.picker_ids}
         self.tray_full = {picker_id:True for picker_id in self.picker_ids}
 
+        self.events = []
+
         self.action = self.env.process(self.scheduler_monitor())
 
     def scheduler_monitor(self, ):
@@ -129,6 +131,9 @@ class Farm(object):
         inform_allocation_finished = False
         inform_picking_finished = False
         predictions = {}
+        time_now = self.env.now
+        # time_now, agent, node, dir, event
+        self.events.append([time_now, "all", "None", "None", "starting the process"])
 
         while True:
             if rospy.is_shutdown():
@@ -136,6 +141,8 @@ class Farm(object):
 
             # picking finished in all rows
             if self.finished_picking() and not inform_picking_finished:
+                # time_now, agent, node, dir, event
+                self.events.append([time_now, "all", "None", "None", "finished picking"])
                 inform_picking_finished = True
                 self.loginfo("all rows are picked")
                 for robot_id in self.robot_ids:
@@ -148,6 +155,8 @@ class Farm(object):
 
             # allocation of all rows is finished
             if self.finished_allocating() and not inform_allocation_finished:
+                # time_now, agent, node, dir, event
+                self.events.append([time_now, "all", "None", "None", "finished row allocations"])
                 self.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
                 for robot_id in self.robot_ids:
