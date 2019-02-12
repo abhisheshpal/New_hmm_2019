@@ -132,8 +132,8 @@ class Farm(object):
         inform_picking_finished = False
         predictions = {}
         time_now = self.env.now
-        # time_now, agent, node, dir, event
-        self.events.append([time_now, "all", "None", "None", "starting the process"])
+        # time_now, event
+        self.events.append([time_now, "starting the process"])
 
         while True:
             if rospy.is_shutdown():
@@ -141,8 +141,8 @@ class Farm(object):
 
             # picking finished in all rows
             if self.finished_picking() and not inform_picking_finished:
-                # time_now, agent, node, dir, event
-                self.events.append([time_now, "all", "None", "None", "finished picking"])
+                # time_now, event
+                self.events.append([time_now, "finished picking"])
                 inform_picking_finished = True
                 self.loginfo("all rows are picked")
                 for robot_id in self.robot_ids:
@@ -155,8 +155,8 @@ class Farm(object):
 
             # allocation of all rows is finished
             if self.finished_allocating() and not inform_allocation_finished:
-                # time_now, agent, node, dir, event
-                self.events.append([time_now, "all", "None", "None", "finished row allocations"])
+                # time_now, event
+                self.events.append([time_now, "finished row allocations"])
                 self.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
                 for robot_id in self.robot_ids:

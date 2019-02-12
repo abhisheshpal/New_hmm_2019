@@ -192,10 +192,12 @@ if __name__ == "__main__":
 
                         # event logs
                         f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_events.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        print >> f_handle, "time_now, event"
                         for item in farm.events:
                             print >> f_handle, item
                         for picker_id in picker_ids:
-                            print >> f_handle, picker_id
+                            print >> f_handle, "\n", picker_id
+                            print >> f_handle, "mode, node, direction, time_now"
                             for item in farm.predictor.predictors[picker_id].modes_nodes_dirs_times:
                                 print >> f_handle, item
                         f_handle.close()
