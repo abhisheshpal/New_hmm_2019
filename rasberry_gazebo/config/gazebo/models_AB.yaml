@@ -70,7 +70,7 @@
 
 
 - lab:
-  - include: 0
+  - include: 1
     pose: [-9.438, -45.426, 0.0]
 
 

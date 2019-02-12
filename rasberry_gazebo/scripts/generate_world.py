@@ -244,7 +244,7 @@ for model in model_config:
         
         lab = model['lab']
         for i in range(len(lab)):
-            if fhs[i]['include']:
+            if lab[i]['include']:
                 
                 pose = lab[i]['pose']
                 world.add_lab(lab_d, pose, i)
