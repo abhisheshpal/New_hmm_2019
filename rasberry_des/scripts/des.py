@@ -222,6 +222,10 @@ if __name__ == "__main__":
                             n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
                             if row_id in topo_graph.half_rows:
                                 print >> f_handle, "  half_row"
+                                for head_node in topo_graph.head_nodes[row_id]:
+                                    print >> f_handle, "  node: %s, x: %0.3f, y: %0.3f" %(head_node,
+                                                                                          topo_graph.get_node(head_node).pose.position.x,
+                                                                                          topo_graph.get_node(head_node).pose.position.y)
                                 for i in range(1, n_row_nodes):
                                     print >> f_handle, "  node: %s, x: %0.3f, y: %0.3f, yield: %0.3f" %(topo_graph.row_nodes[row_id][i],
                                                                                                         topo_graph.get_node(topo_graph.row_nodes[row_id][i]).pose.position.x,
