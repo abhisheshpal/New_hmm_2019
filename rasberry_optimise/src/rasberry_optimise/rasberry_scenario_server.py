@@ -1,10 +1,13 @@
 #!/usr/bin/env python
 from __future__ import division
 import rospy, actionlib, dynamic_reconfigure.client, sys, tf, rospkg
+import numpy as np
+import message_filters
 from copy import copy
 from gazebo_msgs.srv import SetModelState 
 from gazebo_msgs.msg import ModelState, ContactState
-from geometry_msgs.msg import PoseWithCovarianceStamped, Pose
+from geometry_msgs.msg import PoseWithCovarianceStamped
+from nav_msgs.msg import Odometry
 from topological_navigation.msg import GotoNodeAction, GotoNodeGoal
 from topological_navigation import route_search
 from strands_navigation_msgs.msg import TopologicalMap
@@ -38,7 +41,7 @@ class scenario_server(object):
             rospack = rospkg.RosPack()
             base_dir = rospack.get_path("rasberry_optimise")    
             coords_file = base_dir + "/resources/" + self.coords_file
-            self.coords = get_coords(coords_file)
+            self.coords = load_data_from_json(coords_file)
         else:
             self.coords_file = None
             
@@ -138,16 +141,20 @@ class scenario_server(object):
         self.initial_pose = PoseWithCovarianceStamped()
         self.initial_pose.header.frame_id = "/map"
         self.initial_pose.pose.pose = self.model_state.pose
-        self.initial_pose.pose.covariance = [0.0043, -0.0006, 0.0, 0.0, 0.0, 0.0, -0.0006, 
-                                        0.0013, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-                                        0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
-                                        0.0003]
+        self.initial_pose.pose.covariance = [0.006635127796202456, 0.0006228153697929173, 
+                                             0.0, 0.0, 0.0, 0.0, 0.0006228153697929173, 
+                                             0.004126767460876479, 0.0, 0.0, 0.0, 0.0, 
+                                             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+                                             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+                                             0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 
+                                             0.0002255732129925828]
         
         
         # Robot model is at the start node before the test scenario starts.
         self.reset_robot()
         self.robot_poses = []
+        self.robot_poses_filtered = []
+        self.amcl_poses_filtered = []
         
 
     def map_callback(self, msg):
@@ -191,7 +198,7 @@ class scenario_server(object):
            clear costmaps.
         """
         self.set_model_state_client(self.model_state)
-        rospy.sleep(2.0)
+        rospy.sleep(3.0)
         self.init_pose_pub.publish(self.initial_pose)
         self.clear_costmaps_client()
         
@@ -209,9 +216,14 @@ class scenario_server(object):
             if params is not None:
                 for rcnfsrv in params.keys():
                     self.do_reconf(self.rcnfclients[rcnfsrv], params[rcnfsrv])
-            
+                
             # For getting the robot's trajectory
-            rp_sub = rospy.Subscriber("/robot_pose", Pose, self.rp_callback)
+            rp_sub = rospy.Subscriber("/odometry/gazebo", Odometry, self.rp_callback)
+            rp_sub_filtered = message_filters.Subscriber("/odometry/gazebo", Odometry)
+            amcl_sub_filtered = message_filters.Subscriber("/amcl_pose", PoseWithCovarianceStamped)
+            
+            time_sync = message_filters.ApproximateTimeSynchronizer([rp_sub_filtered, amcl_sub_filtered], 10, 0.1, allow_headerless=True)
+            time_sync.registerCallback(self.rp_filtered_callback)
             
             # Listen for collisions between robot model and other objects.
             self.collided = False
@@ -222,10 +234,17 @@ class scenario_server(object):
             self.topo_nav_client.send_goal_and_wait(self.topo_goal, self.max_wait_time)
             time_2 = rospy.Time.now()
             result = self.topo_nav_client.get_result()
+            
+            rp_sub.unregister() 
+            rp_sub_filtered.unregister() 
+            amcl_sub_filtered.unregister() 
 
-            rp_sub.unregister()
             trajectory = copy(self.robot_poses)
             del self.robot_poses[:]
+            trajectory_ground_truth = copy(self.robot_poses_filtered)
+            del self.robot_poses_filtered[:]
+            trajectory_amcl = copy(self.amcl_poses_filtered)
+            del self.amcl_poses_filtered[:]
             
             self.reset_robot()
             
@@ -240,26 +259,32 @@ class scenario_server(object):
                 if self.coords_file is not None:
                     dist_from_coords = get_dist_from_coords(self.coords, trajectory)
                 else:
-                    dist_from_coords = 0.0                
+                    dist_from_coords = 0.0
+                    
+                pose_error, position_error, orientation_error = get_localisation_error(trajectory_ground_truth, trajectory_amcl)
                 
                 print "Completed scenario in {} seconds".format(t)
                 print "Rotation cost = {} dollars".format(cost_dollars)
                 print "Length of trajectory = {} meters".format(trajectory_length)
                 print "Sum squared distance from coordinates = {} meters squared".format(dist_from_coords)
+                print "Mean pose error = {}".format(pose_error)                
+                print "Mean position error = {} meters".format(position_error) 
+                print "Mean orientation error = {} degrees".format(orientation_error) 
                 
             else:
                 t = self.max_wait_time.to_sec()
                 cost_dollars = -10e5
                 trajectory_length = 10e5
                 dist_from_coords = 10e5
+                pose_error = 10e5
                 print "Failed to complete scenario in maximum alloted time of {} seconds".format(t)
                 
         except rospy.ROSException:
             pass
         
         else:
-            metrics = (t, cost_dollars, trajectory_length, dist_from_coords)
-            return metrics, trajectory 
+            metrics = (t, cost_dollars, trajectory_length, dist_from_coords, pose_error)
+            return metrics, trajectory
             
             
     def do_reconf(self, rcnfclient, params):
@@ -276,16 +301,28 @@ class scenario_server(object):
             
             
     def rp_callback(self, msg):
+        robot_pose = self.get_pose(msg) 
+        self.robot_poses.append(robot_pose)        
+            
+            
+    def rp_filtered_callback(self, msg_rp, msg_amcl):
+        robot_pose = self.get_pose(msg_rp) 
+        amcl_pose = self.get_pose(msg_amcl) 
+        self.robot_poses_filtered.append(robot_pose)
+        self.amcl_poses_filtered.append(amcl_pose)
+            
+            
+    def get_pose(self, msg):
         """Get robot poses and append them to a list to form the robot's trajectory.
         """
-        x = msg.position.x
-        y = msg.position.y
-        xq = msg.orientation.x
-        yq = msg.orientation.y
-        zq = msg.orientation.z
-        wq = msg.orientation.w
+        x = msg.pose.pose.position.x
+        y = msg.pose.pose.position.y
+        xq = msg.pose.pose.orientation.x
+        yq = msg.pose.pose.orientation.y
+        zq = msg.pose.pose.orientation.z
+        wq = msg.pose.pose.orientation.w
         roll, pitch, yaw = tf.transformations.euler_from_quaternion([xq, yq, zq, wq])
-        self.robot_poses.append([x, y, yaw])
+        return [x, y, yaw]
         
 
     def contact_callback(self, msg):
@@ -299,7 +336,7 @@ class scenario_server(object):
             and col2_name != "grass_ground_plane::link::collision":
                 if not self.collided:
                     contact_sub.unregister()
-                    print rospy.logwarn("COLLISION DETECTED")
+                    rospy.logwarn("COLLISION DETECTED")
                     self.topo_nav_client.cancel_goal()
                     self.collided = True
 
