@@ -20,7 +20,7 @@
   <arg name="topo_map" default="riseholme_sim" />
 
   <!-- Localisation arguments -->
-  <arg name="use_fake_localisation" default="true"/>
+  <arg name="use_fake_localisation" default="false"/>
 
   <!-- Move base arguments -->
   <arg name="use_carrot_planner" default="false"/>

@@ -8,13 +8,13 @@ from deap import base, creator, tools, algorithms
 
 def evaluate(individual):
     """Run the test scenario (move from start node to goal node) given a set of 
-       parameters (individual) and get measure of fitness = time to complete.
+       parameters (individual) and get fitness metrics.
     """
     
     # Make dictionary of parameters to pass to the scenario server.
     params = make_param_dict(config_params, individual)
     
-    metric_array = np.empty((NUM_RUNS, 4))
+    metric_array = np.empty((NUM_RUNS, 5))
     for i in range(NUM_RUNS):
         
         time_1 = time.time()
@@ -30,15 +30,17 @@ def evaluate(individual):
         time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
         
         print "Evaluations remaining (estimated): {}/{}".format(evals_remaining, tot_eval_calls)
-        print "Estimated time to complete: {} hours.".format(time_to_complete)
+        print "Estimated time to complete: {} hours".format(time_to_complete)
+    
         
-    t = np.mean(metric_array[:, 0])
-    cost_dollars = np.mean(metric_array[:, 1])
-    trajectory_length = np.mean(metric_array[:, 2])
-    dist_from_coords = np.mean(metric_array[:, 3])
+    t = np.median(metric_array[:, 0])
+    cost_dollars = np.median(metric_array[:, 1])
+    trajectory_length = np.median(metric_array[:, 2])
+    dist_from_coords = np.median(metric_array[:, 3])
+    localisation_error = np.median(metric_array[:, 4])
     
-    return (t, cost_dollars, trajectory_length, dist_from_coords)
-    
+    return (t, cost_dollars, trajectory_length, dist_from_coords, localisation_error)
+
     
 def checkBounds(mins, maxs):
     """Make sure that crossover/mutation doesn't produce a parameter that falls out 
@@ -96,6 +98,7 @@ if __name__ == "__main__":
     WEIGHT_SMOOTH = config_ga["weight_smooth"]
     WEIGHT_LENGTH = config_ga["weight_length"]
     WEIGHT_COORDS = config_ga["weight_coords"]
+    WEIGHT_LOCALISATION_ERROR = config_ga["weight_localisation_error"]
     NUM_RUNS = config_ga["num_runs"]
     
     print "\nSetting hyper-parameters of the genetic algorithm ..."
@@ -112,14 +115,14 @@ if __name__ == "__main__":
     print "Setting weight_smooth = {}".format(WEIGHT_SMOOTH)
     print "Setting weight_length = {}".format(WEIGHT_LENGTH)
     print "Setting weight_coords = {}".format(WEIGHT_COORDS)
+    print "Setting weight_localisation_error = {}".format(WEIGHT_LOCALISATION_ERROR)
     print "Setting num_runs = {}".format(NUM_RUNS)
 #####################################################################################    
     
     
 #####################################################################################    
     # Create DEAP toolbox and register parameters for optimisation.
-    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_COORDS])
-    weights[np.where(weights <= 0.0)[0]] = sys.float_info.min
+    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_COORDS, WEIGHT_LOCALISATION_ERROR])
     weights = -1 * weights
     weights[1] = -1 * weights[1]
     
@@ -188,9 +191,13 @@ if __name__ == "__main__":
                      
     toolbox.decorate("mate", checkBounds(mins, maxs))
     toolbox.decorate("mutate", checkBounds(mins, maxs))                     
-                     
-    toolbox.register("select", tools.selTournament, tournsize=TOURNSIZE) 
-    toolbox.register("evaluate", evaluate)
+    
+    if TOURNSIZE == 0:
+        toolbox.register("select", tools.selBest)
+    else:                  
+        toolbox.register("select", tools.selTournament, tournsize=TOURNSIZE) 
+        
+    toolbox.register("evaluate", evaluate)  
 #####################################################################################    
     
 

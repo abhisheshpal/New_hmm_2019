@@ -56,13 +56,3 @@
     min: 3
     max: 100
 
-#/move_base/local_costmap/local_inflation_layer:
-#  inflation_radius: 
-#    type: "float"
-#    min: 0.05
-#    max: 10.0
-#  cost_scaling_factor: 
-#    type: "float"
-#    min: 0.05
-#    max: 10.0
-
