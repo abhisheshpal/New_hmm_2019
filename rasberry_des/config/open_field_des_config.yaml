@@ -72,7 +72,7 @@ yield_per_node:
   func: gauss
   value: [0.065, 0.0013]
 second_head_lane: false
-n_local_storages: 1
+n_local_storages: 29
 dist_to_cold_storage: 250.0
 
 ##-----------------------------------------------------------------------------
