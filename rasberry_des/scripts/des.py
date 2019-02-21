@@ -73,8 +73,7 @@ if __name__ == "__main__":
 #    n_local_storages = n_topo_nav_rows
 #    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
     policies = ["uniform_utilisation"]
-
-    raw_input("Press ENTER to start the DES")
+    use_cold_storage = False
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -131,8 +130,9 @@ if __name__ == "__main__":
                     # assuming a fork graph with a head lane
                     local_storages = [simpy.Resource(env, capacity=n_pickers+n_robots) for i in range(n_local_storages)]
                     topo_graph.set_local_storages(local_storages)
-                    cold_storage = simpy.Resource(env, capacity=n_pickers+n_robots)
-                    topo_graph.set_cold_storage(cold_storage)
+                    if use_cold_storage:
+                        cold_storage = simpy.Resource(env, capacity=n_pickers+n_robots)
+                        topo_graph.set_cold_storage(cold_storage)
 
                     robots = []
                     for robot_id in robot_ids:
@@ -191,7 +191,7 @@ if __name__ == "__main__":
                         time_now = time.time()*1000000
 
                         # event logs
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_events.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_events.yaml" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         # sim details
                         print >> f_handle, "# Environment details"
                         print >> f_handle, "env_details:"
@@ -202,6 +202,8 @@ if __name__ == "__main__":
                             for i in range(topo_graph.n_polytunnels):
                                 print >> f_handle, "    tunnel-%d: %d" %(i, topo_graph.n_farm_rows[i])
                         print >> f_handle, "  n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
+                        print >> f_handle, "  n_local_storages: %d" %(len(topo_graph.local_storages))
+                        print >> f_handle, "  use_local_storage: %s" %(topo_graph.use_local_storage)
                         tot_yield = 0.
                         if len(topo_graph.row_ids) > 1:
                             print >> f_handle, "  row_details:"
@@ -214,7 +216,12 @@ if __name__ == "__main__":
                             row_end_y = topo_graph.get_node(row_end_node).pose.position.y
                             row_length = numpy.hypot((row_end_x - row_start_x), (row_end_y - row_start_y))
                             node_dist = topo_graph.get_distance_between_adjacent_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
+                            storage_node = topo_graph.local_storage_nodes[row_id]
                             print >> f_handle, "  -  row_id: %s" %(row_id)
+                            print >> f_handle, "     storage_node:"
+                            print >> f_handle, "       node_id: %s" %(topo_graph.local_storage_nodes[row_id])
+                            print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(storage_node).pose.position.x)
+                            print >> f_handle, "       y: %0.3f" %(topo_graph.get_node(storage_node).pose.position.y)
                             print >> f_handle, "     start_node:"
                             print >> f_handle, "       node_id: %s" %(topo_graph.row_info[row_id][1])
                             print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(row_start_node).pose.position.x)
@@ -222,7 +229,7 @@ if __name__ == "__main__":
                             print >> f_handle, "     end_node:"
                             print >> f_handle, "       node_id: %s" %(topo_graph.row_info[row_id][2])
                             print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(row_end_node).pose.position.x)
-                            print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(row_end_node).pose.position.y)
+                            print >> f_handle, "       y: %0.3f" %(topo_graph.get_node(row_end_node).pose.position.y)
                             print >> f_handle, "     row_length: %0.3f" %(row_length)
                             print >> f_handle, "     node_dist: %0.3f" %(node_dist)
                             row_yield = 0.

@@ -39,7 +39,7 @@ def get_allocated_rows(log_data, verbose=False):
         allocated_rows[item["picker_id"]] = []
         count = 1
         for alloc_rows in item["allocated_rows"]:
-            print "    %d: %s" %(count, alloc_rows["row_id"])
+            if verbose: print "    %d: %s" %(count, alloc_rows["row_id"])
             allocated_rows[item["picker_id"]].append(alloc_rows["row_id"])
             count += 1
     return allocated_rows
