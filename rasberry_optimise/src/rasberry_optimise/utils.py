@@ -17,24 +17,6 @@ def save_data_to_json(filename, data):
     with open(filename, 'w') as f:
         json.dump(data, f)
         
-        
-def get_coords(filename):
-    
-    with open(filename) as f:
-        content = f.readlines()
-        content = [x.strip() for x in content] 
-        
-    coords=[]
-    for i in content:
-        d=i.split()
-        coords.append(d)
-
-    for i in coords:
-        i[0]=float(i[0])
-        i[1]=float(i[1])
-        
-    return coords
-        
 
 teb_rcnfsrv = "/move_base/TebLocalPlannerROS"        
 rcnfsrv1 = "/move_base/local_costmap/local_inflation_layer"
