@@ -9,8 +9,89 @@
 import os
 import sys
 import yaml
-import numpy as np
+import numpy
 
+
+def get_node_yields(log_data, verbose=False):
+    node_yields = {} # {node_id: yield}
+    n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]
+    assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
+    row_ids = []
+    row_nodes = {}
+    for item in log_data["env_details"]["row_details"]:
+        row_ids.append(item["row_id"])
+        if verbose: print "row_id: %s" %(item["row_id"])
+        if verbose: print "  row_nodes:"
+        row_nodes[item["row_id"]] = {}
+        for row_info in item["row_nodes"]:
+            if verbose: print "    node_id:%s yield: %0.3f" %(row_info["node_id"], row_info["yield"])
+            node_yields[row_info["node_id"]] = row_info["yield"]
+    return node_yields
+
+def get_allocated_rows(log_data, verbose=False):
+    allocated_rows = {} # {picker_id: [allcoated_row_id_1, allcoated_row_id_2, ...]}
+    n_pickers = log_data["sim_details"]["n_pickers"]
+    assert n_pickers == len(log_data["sim_details"]["picker_states"])
+    allocated_rows = {}
+    for item in log_data["sim_details"]["picker_states"]:
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "  allocated_rows:"
+        allocated_rows[item["picker_id"]] = []
+        count = 1
+        for alloc_rows in item["allocated_rows"]:
+            print "    %d: %s" %(count, alloc_rows["row_id"])
+            allocated_rows[item["picker_id"]].append(alloc_rows["row_id"])
+            count += 1
+    return allocated_rows
+
+def get_time_spent_in_rows(log_data, verbose=False):
+    # Time spent in each row for all rows in each picker case
+    n_pickers = log_data["sim_details"]["n_pickers"]
+    assert n_pickers == len(log_data["sim_details"]["picker_states"])
+    time_spent_in_rows = {}
+    for item in log_data["sim_details"]["picker_states"]:
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "  allocated_rows:"
+        time_spent_in_rows[item["picker_id"]] = {}
+        count = 1
+        for alloc_rows in item["allocated_rows"]:
+            if verbose: print "   %d. %s: time_spent: %0.3f" %(count, alloc_rows["row_id"], alloc_rows["completion_time"] - alloc_rows["allocation_time"])
+            time_spent_in_rows[item["picker_id"]][alloc_rows["row_id"]] = alloc_rows["completion_time"] - alloc_rows["allocation_time"]
+            count +=1
+    return time_spent_in_rows
+
+def get_state_times(log_data, state, state_str, verbose=False):
+    state_times = {}
+    if verbose: print "MODE:%d - %s" %(state, state_str)
+    for item in log_data["sim_details"]["picker_states"]:
+        state_times[item["picker_id"]] = []
+        state_start = None
+        state_finish = None
+        mean = 0
+        sigma = 0
+        count = 0
+        for state_info in item["state_changes"]:
+            if state_info["mode"] == state:
+                if state_start is None:
+                    state_start = state_info["time"]
+                else:
+                    pass
+            else:
+                if state_start is None:
+                    pass
+                else:
+                    state_finish = state_info["time"]
+                    state_times[item["picker_id"]].append(state_finish - state_start)
+                    count += 1
+                    state_start = None
+                    state_finish = None
+
+        mean = numpy.mean(state_times[item["picker_id"]])
+        sigma = numpy.std(state_times[item["picker_id"]])
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
+        if verbose: print "  ", state_times[item["picker_id"]]
+    return state_times
 
 if __name__ == "__main__":
     if len(sys.argv) <2:
@@ -35,207 +116,26 @@ if __name__ == "__main__":
         else:
             f_handle.close()
 
+        # node yield associated with each row
+        node_yields = get_node_yields(log_data, verbose=False)
 
-        # Print NODE YEILD associated with each row
-        n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]
-        assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
-        row_ids = []
-        row_nodes = {}
-        for item in log_data["env_details"]["row_details"]:
-            row_ids.append(item["row_id"])
-            print "row_id: %s" %(item["row_id"])
-            print "  row_nodes:"
-            row_nodes[item["row_id"]] = []
-            for i in item["row_nodes"]:
-                print " node_id:%s yield:%f" %( i["node_id"], i["yield"])
-                row_nodes[item["row_id"]].append(i["node_id"])
-                row_nodes[item["row_id"]].append(i["yield"])
-
-
-
-        # Print allocated rows of each picker
-        n_pickers = log_data["sim_details"]["n_pickers"]
-        assert n_pickers == len(log_data["sim_details"]["picker_states"])
-        picker_ids = []
-        allocated_rows = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            picker_ids.append(item["picker_id"])
-            print "picker_id: %s" %(item["picker_id"])
-            print "  allocated_rows:"
-            allocated_rows[item["picker_id"]] = []
-            count = 1
-            for i in item["allocated_rows"]:
-                print "    %d: %s" %(count, i["row_id"])
-                allocated_rows[item["picker_id"]].append(i["row_id"])
-                count += 1 
- 
+        # allocated rows of each picker
+        allocated_rows = get_allocated_rows(log_data, verbose=False)
 
         # Time spent in each row for all rows in each picker case
-        n_pickers = log_data["sim_details"]["n_pickers"]
-        assert n_pickers == len(log_data["sim_details"]["picker_states"])
-        picker_ids = []
-        allocated_rows = {}
-        row_ids = []
-        for item in log_data["sim_details"]["picker_states"]:
-            picker_ids.append(item["picker_id"])
-            print "picker_id: %s" %(item["picker_id"])
-            print "  allocated_rows:"
-            allocated_rows[item["picker_id"]] = []
-            count = 1
-            for alloc_rows in item["allocated_rows"]:
-                print " %d: %s: Expected_duration_each_row: %d" %(count, alloc_rows["row_id"], alloc_rows["completion_time"] - alloc_rows["allocation_time"])                
-                allocated_rows[item["picker_id"]].append(alloc_rows["row_id"])
-                allocated_rows[item["picker_id"]].append(alloc_rows["completion_time"] - alloc_rows["allocation_time"])
-                count +=1
-                
-                
-             
-        # Get all state_0 times for all pickers
-        state_0_times = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            state_0_times[item["picker_id"]] = []
-            state_0_start = None
-            state_0_finish = None
-            MEAN = 0
-            SIGMA = 0
-            count = 0
-            for state in item["state_changes"]:
-                if state["mode"] == 0:
-                    if state_0_start is None:
-                        state_0_start = state["time"]
-                    else:
-                        pass
-                else:
-                    if state_0_start is None:
-                        pass
-                    else:
-                        state_0_finish = state["time"]
-                        state_0_times[item["picker_id"]].append(state_0_finish - state_0_start)
-                        count += 1
-                        MEAN = np.mean(state_0_times[item["picker_id"]])  # /len(state_3_times[item["picker_id"]])
-                        SIGMA = np.std(state_0_times[item["picker_id"]])
-                        state_0_start = None
-                        state_0_finish = None
-        print "--MODE:0-TRANSPORTING TO STORAGE-"        
-        print state_0_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
-        
-        # Get all state_1 times for all pickers
-        state_1_times = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            state_1_times[item["picker_id"]] = []
-            state_1_start = None
-            state_1_finish = None
-            MEAN = 0
-            SIGMA = 0
-            count = 0
-            for state in item["state_changes"]:
-                if state["mode"] == 1:
-                    if state_1_start is None:
-                        state_1_start = state["time"]
-                    else:
-                        pass
-                else:
-                    if state_1_start is None:
-                        pass
-                    else:
-                        state_1_finish = state["time"]
-                        state_1_times[item["picker_id"]].append(state_1_finish - state_1_start)
-                        count +=1
-                        MEAN = np.mean(state_1_times[item["picker_id"]])  # /len(state_3_times[item["picker_id"]])
-                        SIGMA = np.std(state_1_times[item["picker_id"]])
-                        state_1_start = None
-                        state_1_finish = None
-        print "--MODE:1-TRANSPORTING TO STORAGE-"        
-        print state_1_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
-        
-        # Get all state_2 times for all pickers
-        state_2_times = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            state_2_times[item["picker_id"]] = []
-            state_2_start = None
-            state_2_finish = None
-            MEAN = 0
-            SIGMA = 0
-            count = 0
-            for state in item["state_changes"]:
-                if state["mode"] == 2:
-                    if state_2_start is None:
-                        state_2_start = state["time"]
-                    else:
-                        pass
-                else:
-                    if state_2_start is None:
-                        pass
-                    else:
-                        state_2_finish = state["time"]
-                        state_2_times[item["picker_id"]].append(state_2_finish - state_2_start)
-                        count += 1
-                        MEAN = np.mean(state_2_times[item["picker_id"]])  # /len(state_3_times[item["picker_id"]])
-                        SIGMA = np.std(state_2_times[item["picker_id"]])
-                        state_2_start = None
-                        state_2_finish = None
-        print "--MODE:2-TRANSPORTING TO STORAGE-"        
-        print state_2_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
-        
-        
-               
-        # Get all state_3 times for all pickers
-        state_3_times = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            state_3_times[item["picker_id"]] = []
-            state_3_start = None
-            state_3_finish = None
-            MEAN = 0
-            SIGMA = 0
-            count = 0
-            for state in item["state_changes"]:
-                if state["mode"] == 3:
-                    if state_3_start is None:
-                        state_3_start = state["time"]
-                    else:
-                        pass
-                else:
-                    if state_3_start is None:
-                        pass
-                    else:
-                        state_3_finish = state["time"]
-                        state_3_times[item["picker_id"]].append(state_3_finish - state_3_start)
-                        count += 1                        
-                        MEAN = np.mean(state_3_times[item["picker_id"]])  # /len(state_3_times[item["picker_id"]])
-                        SIGMA = np.std(state_3_times[item["picker_id"]])
-                        state_3_start = None
-                        state_3_finish = None
-        print "--MODE:3-TRANSPORTING TO STORAGE-"        
+        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
 
-        print state_3_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=',count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
-        
+        # Get all state_0 times for all pickers
+        state_0_times = get_state_times(log_data, 0, "Idle", verbose=True)
+
+        # Get all state_1 times for all pickers
+        state_1_times = get_state_times(log_data, 1, "Transport to row node", verbose=True)
+
+        # Get all state_2 times for all pickers
+        state_2_times = get_state_times(log_data, 2, "Picking", verbose=True)
+
+        # Get all state_3 times for all pickers
+        state_3_times = get_state_times(log_data, 3, "Transport to storage", verbose=True)
+
         # Get all state_4 times for all pickers
-        state_4_times = {}
-        for item in log_data["sim_details"]["picker_states"]:
-            state_4_times[item["picker_id"]] = []
-            state_4_start = None
-            state_4_finish = None
-            MEAN = 0
-            SIGMA = 0
-            count = 0
-            for state in item["state_changes"]:
-                if state["mode"] == 4:
-                    if state_4_start is None:
-                        state_4_start = state["time"]
-                    else:
-                        pass
-                else:
-                    if state_4_start is None:
-                        pass
-                    else:
-                        state_4_finish = state["time"]
-                        state_4_times[item["picker_id"]].append(state_4_finish - state_4_start)
-                        count += 1 
-                        MEAN = np.mean(state_4_times[item["picker_id"]])  # /len(state_3_times[item["picker_id"]])
-                        SIGMA = np.std(state_4_times[item["picker_id"]])
-                        state_4_start = None
-                        state_4_finish = None
-        print "--MODE:4-TRANSPORTING TO STORAGE-"        
-        print state_4_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count,'MEAN=', MEAN, 'SIGMA=', SIGMA)
-        
-        
+        state_4_times = get_state_times(log_data, 4, "Unload at storage", verbose=True)
