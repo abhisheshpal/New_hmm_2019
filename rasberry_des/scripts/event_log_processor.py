@@ -41,6 +41,8 @@ if __name__ == "__main__":
         assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
         row_ids = []
         row_nodes = {}
+        mu = 0
+        sigma = 0
         for item in log_data["env_details"]["row_details"]:
             row_ids.append(item["row_id"])
             print "row_id: %s" %(item["row_id"])
@@ -50,10 +52,10 @@ if __name__ == "__main__":
                 print " node_id:%s yield:%f" %( i["node_id"], i["yield"])
                 row_nodes[item["row_id"]].append(i["node_id"])
                 row_nodes[item["row_id"]].append(i["yield"])
-
-
-
-        # Print allocated rows of each picker
+                
+       
+       
+       #Print allocated rows of each picker
         n_pickers = log_data["sim_details"]["n_pickers"]
         assert n_pickers == len(log_data["sim_details"]["picker_states"])
         picker_ids = []
@@ -119,6 +121,7 @@ if __name__ == "__main__":
         print "--MODE:0-TRANSPORTING TO STORAGE-"        
         print state_0_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
         
+        
         # Get all state_1 times for all pickers
         state_1_times = {}
         for item in log_data["sim_details"]["picker_states"]:
@@ -147,6 +150,7 @@ if __name__ == "__main__":
                         state_1_finish = None
         print "--MODE:1-TRANSPORTING TO STORAGE-"        
         print state_1_times, "%s %d %s %d %s %d" %('TRANSITION_COUNT=', count, 'MEAN=', MEAN, 'SIGMA=', SIGMA)
+        
         
         # Get all state_2 times for all pickers
         state_2_times = {}
