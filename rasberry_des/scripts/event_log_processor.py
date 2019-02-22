@@ -10,7 +10,10 @@ import os
 import sys
 import yaml
 import numpy
-
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+import time
 
 def get_node_yields(log_data, verbose=False):
     node_yields = {} # {node_id: yield}
@@ -60,6 +63,7 @@ def get_time_spent_in_rows(log_data, verbose=False):
             count +=1
     return time_spent_in_rows
 
+
 def get_state_times(log_data, state, state_str, verbose=False):
     state_times = {}
     if verbose: print "MODE:%d - %s" %(state, state_str)
@@ -70,6 +74,9 @@ def get_state_times(log_data, state, state_str, verbose=False):
         mean = 0
         sigma = 0
         count = 0
+#        plot_count = 0
+        min_time = 0.
+        max_time = 0.
         for state_info in item["state_changes"]:
             if state_info["mode"] == state:
                 if state_start is None:
@@ -86,11 +93,38 @@ def get_state_times(log_data, state, state_str, verbose=False):
                     state_start = None
                     state_finish = None
 
+
         mean = numpy.mean(state_times[item["picker_id"]])
         sigma = numpy.std(state_times[item["picker_id"]])
+        
+        min_time = np.min(state_times[item["picker_id"]])
+        max_time = np.max(state_times[item["picker_id"]])
+        n, bins, patches = plt.hist(state_times[item["picker_id"]], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
+        plt.xlabel('Time')
+        plt.ylabel('No. of pickers')
+        plt.title("%d - %s" %(state, state_str))
+        plt.show(block=False) 
+        plt.pause(1)
+        time.sleep(1)
+        plt.close()
+        
+        
+            
+        x=np.arange(min_time, max_time, .01)
+        plt.plot(x, 1/(sigma * np.sqrt(2 * np.pi)) * np.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
+        plt.xlabel('Time(in msec)')
+        plt.ylabel('Probability')
+        plt.title('Prio Probability distribution-' "%d - %s" %(state, state_str))
+        
+        plt.show(block=False) 
+        plt.pause(1)
+        time.sleep(1)
+        plt.close()
+        
         if verbose: print "picker_id: %s" %(item["picker_id"])
         if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
         if verbose: print "  ", state_times[item["picker_id"]]
+
     return state_times
 
 if __name__ == "__main__":
@@ -139,3 +173,4 @@ if __name__ == "__main__":
 
         # Get all state_4 times for all pickers
         state_4_times = get_state_times(log_data, 4, "Unload at storage", verbose=True)
+        
