@@ -65,7 +65,7 @@ if __name__ == "__main__":
                                                         n_topo_nav_rows, second_head_lane,
                                                         _yield_per_node, VERBOSE)
 
-    n_trials = 1
+    n_trials = 500
     min_n_pickers = 1#1
     max_n_pickers = 2#n_topo_nav_rows + 1
     min_n_robots = 0#0
@@ -278,7 +278,7 @@ if __name__ == "__main__":
                         print >> f_handle, "  n_pickers: %d" %(n_pickers)
                         print >> f_handle, "  n_robots: %d" %(n_robots)
                         print >> f_handle, "  sim_finish_time_simpy: %0.3f" %(finish_time_simpy)
-                        print >> f_handle, "  sim_finish_time_clock: %0.3f" %(finish_time_ros)
+                        print >> f_handle, "  sim_finish_time_clock: %0.3f" %(finish_time_ros - start_time_ros)
                         for item in farm.events:
                             if item[1] == "starting the process":
                                 print >> f_handle, "  start_time_simpy: %0.3f" %(float(item[0]))
