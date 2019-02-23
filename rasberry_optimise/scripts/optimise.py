@@ -18,7 +18,8 @@ def evaluate(individual):
     for i in range(NUM_RUNS):
         
         time_1 = time.time()
-        metrics, trajectory = ss.run_scenario(params)
+        metrics, trajectory, trajectory_ground_truth, trajectory_amcl \
+        = ss.run_scenario(params)
         time_2 = time.time()
         metric_array[i, :] = metrics
         
@@ -97,7 +98,7 @@ if __name__ == "__main__":
     WEIGHT_TIME = config_ga["weight_time"]
     WEIGHT_SMOOTH = config_ga["weight_smooth"]
     WEIGHT_LENGTH = config_ga["weight_length"]
-    WEIGHT_COORDS = config_ga["weight_coords"]
+    WEIGHT_PATH_ERROR = config_ga["weight_path_error"]
     WEIGHT_LOCALISATION_ERROR = config_ga["weight_localisation_error"]
     NUM_RUNS = config_ga["num_runs"]
     
@@ -114,7 +115,7 @@ if __name__ == "__main__":
     print "Setting weight_time = {}".format(WEIGHT_TIME)
     print "Setting weight_smooth = {}".format(WEIGHT_SMOOTH)
     print "Setting weight_length = {}".format(WEIGHT_LENGTH)
-    print "Setting weight_coords = {}".format(WEIGHT_COORDS)
+    print "Setting weight_path_error = {}".format(WEIGHT_PATH_ERROR)
     print "Setting weight_localisation_error = {}".format(WEIGHT_LOCALISATION_ERROR)
     print "Setting num_runs = {}".format(NUM_RUNS)
 #####################################################################################    
@@ -122,7 +123,7 @@ if __name__ == "__main__":
     
 #####################################################################################    
     # Create DEAP toolbox and register parameters for optimisation.
-    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_COORDS, WEIGHT_LOCALISATION_ERROR])
+    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_PATH_ERROR, WEIGHT_LOCALISATION_ERROR])
     weights = -1 * weights
     weights[1] = -1 * weights[1]
     

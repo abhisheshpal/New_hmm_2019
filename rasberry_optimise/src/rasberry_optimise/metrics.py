@@ -30,34 +30,29 @@ def get_trajectory_length(trajectory):
     return np.sum(d)
     
 
-def get_dist_from_coords(coords, trajectory):
-    """
-    """
-    trajectory = np.array(trajectory)[:, :2]
-    coords = np.array(coords)
-    indices_right = np.where(coords[:, 2] == 0)[0]
-    indices_left = np.where(coords[:, 2] == 1)[0]
-    coords_right = coords[:, :2][indices_right]
-    coords_left = coords[:, :2][indices_left]
+def get_path_error(trajectory, centres):
     
-    ses = np.empty(trajectory.shape[0])
-    for i in range(trajectory.shape[0]):
-        pos = trajectory[i, :]
-        
-        dx_right = coords_right[:, 0] - pos[0]
-        dy_right = coords_right[:, 1] - pos[1]
-        d_right = np.sqrt(dx_right**2 + dy_right**2)
-        closest_right = np.sort(d_right)[:2]
-        
-        dx_left = coords_left[:, 0] - pos[0]
-        dy_left = coords_left[:, 1] - pos[1]
-        d_left = np.sqrt(dx_left**2 + dy_left**2)
-        closest_left = np.sort(d_left)[:2]
-        
-        closest = np.hstack((closest_left, closest_right))
-        ses[i] = np.sum(closest**2)
-        
-    return np.mean(ses)
+    eds = []
+    trajectory_at_centres = get_trajectory_at_centres(trajectory, centres)
+    for pos, centre in zip(trajectory_at_centres, centres):
+        dx = pos[0] - centre[0]
+        dy = pos[1] - centre[1]
+        eds.append(np.sqrt(dx**2 + dy**2))
+    return np.mean(eds)
+    
+    
+def get_trajectory_at_centres(trajectory, centres):    
+    
+    trajectory_at_centres = []    
+    trajectory = np.array(trajectory)[:, :2]
+    for pos in centres:
+        dx = trajectory[:, 0] - pos[0]
+        dy = trajectory[:, 1] - pos[1]
+        ed = np.sqrt(dx**2 + dy**2)
+        index = np.argmin(ed)
+        pos_at_node = [trajectory[index][0], trajectory[index][1]]
+        trajectory_at_centres.append(pos_at_node)
+    return trajectory_at_centres
     
     
 def get_localisation_error(trajectory_ground_truth, trajectory_amcl):

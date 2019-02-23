@@ -28,6 +28,7 @@ find_package(catkin REQUIRED COMPONENTS
   tf
   nav_msgs
   message_filters
+  rosbag
 )
 
 ## System dependencies are found with CMake's conventions
