@@ -263,8 +263,14 @@ def get_tray_picking_times(log_data, verbose=False):
         if verbose: print "  ", state_times[item["picker_id"]]
     return state_times
 
-def get_state_change_counts(log_data, verbose=False):
+def get_state_change_counts(log_data, inc_same_states=[], verbose=False):
     # to process log_data from a single iteration
+    """
+    Keyword arguments:
+    log_data - data read from an event log, dict
+    inc_same_states - states for which same state transitions should be counted, list
+    verbose - controls sysout prints, bool
+    """
     state_changes = {}
     for item in log_data["sim_details"]["picker_states"]:
         picker_id = item["picker_id"]
@@ -276,7 +282,8 @@ def get_state_change_counts(log_data, verbose=False):
                 curr_mode = state_info["mode"]
             elif curr_mode == state_info["mode"]:
                 # same state - ignore
-                pass
+                if curr_mode in inc_same_states:
+                    state_changes[picker_id][curr_mode][curr_mode] += 1
             else:
                 # state change
                 state_changes[picker_id][curr_mode][state_info["mode"]] += 1
@@ -389,14 +396,16 @@ if __name__ == "__main__":
         tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
 
         # get state change probabilities
-        state_changes.append(get_state_change_counts(log_data, verbose=False))
+        state_changes.append(get_state_change_counts(log_data, inc_same_states=[], verbose=True))
+#        # get state change probabilities with same state changes while in picking
+#        state_changes.append(get_state_change_counts(log_data, inc_same_states=[2], verbose=True))
 
 #==============================================================================
 #     # single iter examples
 #==============================================================================
     gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
 
-    state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=False)
+    state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=True)
 
 
 #==============================================================================
