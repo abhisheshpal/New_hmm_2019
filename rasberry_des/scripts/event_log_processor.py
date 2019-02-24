@@ -124,25 +124,21 @@ def get_multi_iter_state_time_gauss(state_times, state, state_str, verbose=False
         if verbose:
             min_time = numpy.min(all_times[picker_id])
             max_time = numpy.max(all_times[picker_id])
-            n, bins, patches = matplotlib.pyplot.hist(all_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
-            matplotlib.pyplot.xlabel('Time')
-            matplotlib.pyplot.ylabel('No. of instances')
-            matplotlib.pyplot.title("%d - %s" %(state, state_str))
-            matplotlib.pyplot.show(block=False)
-            matplotlib.pyplot.pause(1)
-            time.sleep(1)
-            matplotlib.pyplot.close()
+            fig = matplotlib.pyplot.figure()
+            ax1 = fig.add_subplot(211)
+            n, bins, patches = ax1.hist(all_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
+            ax1.set_xlabel('Time')
+            ax1.set_ylabel('No. of instances')
+            ax1.set_title("%d - %s" %(state, state_str))
 
+            ax2 = fig.add_subplot(212)
             x = numpy.arange(min_time, max_time, .01)
-            matplotlib.pyplot.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
-            matplotlib.pyplot.xlabel('Time(in msec)')
-            matplotlib.pyplot.ylabel('Probability')
-            matplotlib.pyplot.title('Prio Probability distribution-' "%d - %s" %(state, state_str))
-
-            matplotlib.pyplot.show(block=False)
-            matplotlib.pyplot.pause(1)
-            time.sleep(1)
-            matplotlib.pyplot.close()
+            ax2.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
+            ax2.set_xlabel('Time (s)')
+            ax2.set_ylabel('Probability')
+            ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
+            fig.savefig("multi_iter distribution - state: %d - %s.png" %(state, state_str))
+            matplotlib.pyplot.close(fig)
 
     return gauss_distributions
 
@@ -164,27 +160,88 @@ def get_single_iter_state_time_gauss(state_times, state, state_str, verbose=Fals
         if verbose:
             min_time = numpy.min(state_times[picker_id])
             max_time = numpy.max(state_times[picker_id])
-            n, bins, patches = matplotlib.pyplot.hist(state_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
-            matplotlib.pyplot.xlabel('Time')
-            matplotlib.pyplot.ylabel('No. of instances')
-            matplotlib.pyplot.title("%d - %s" %(state, state_str))
-            matplotlib.pyplot.show(block=False)
-            matplotlib.pyplot.pause(1)
-            time.sleep(1)
-            matplotlib.pyplot.close()
+            fig = matplotlib.pyplot.figure()
+            ax1 = fig.add_subplot(211)
+            n, bins, patches = ax1.hist(state_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
+            ax1.set_xlabel('Time (s)')
+            ax1.set_ylabel('No. of instances')
+            ax1.set_title("%d - %s" %(state, state_str))
 
+            ax2 = fig.add_subplot(212)
             x = numpy.arange(min_time, max_time, .01)
-            matplotlib.pyplot.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
-            matplotlib.pyplot.xlabel('Time(in msec)')
-            matplotlib.pyplot.ylabel('Probability')
-            matplotlib.pyplot.title('Prio Probability distribution-' "%d - %s" %(state, state_str))
-
-            matplotlib.pyplot.show(block=False)
-            matplotlib.pyplot.pause(1)
-            time.sleep(1)
-            matplotlib.pyplot.close()
+            ax2.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
+            ax2.set_xlabel('Time (s)')
+            ax2.set_ylabel('Probability')
+            ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
+            fig.savefig("single_iter distribution - state: %d - %s.png" %(state, state_str))
+            matplotlib.pyplot.close(fig)
 
     return gauss_distributions
+
+def isclose(a, b, rel_tol=1e-06, abs_tol=0.0):
+    """to check two floats a and b are close (nearly equal)
+    """
+    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
+def get_tray_picking_times(log_data, verbose=False):
+    state_times = {}
+    if verbose: print "Picking Times per Tray"
+    for item in log_data["sim_details"]["picker_states"]:
+        state_times[item["picker_id"]] = []
+        state_start = None
+        state_finish = None
+        state_delta = 0.
+        mean = 0
+        sigma = 0
+        count = 0
+        tray_started = False
+        prev_state = None
+        for state_info in item["state_changes"]:
+            if tray_started:
+                if state_info["mode"] == 0:
+                    state_finish = state_info["time"]
+                    state_delta += (state_finish - state_start)
+                    prev_state = 0
+                elif state_info["mode"] == 1:
+                    prev_state = 1
+                elif state_info["mode"] == 2:
+                    if prev_state != 2:
+                        state_start = state_info["time"]
+                    prev_state = 2
+                elif state_info["mode"] == 3:
+                    state_finish = state_info["time"]
+                    state_delta += (state_finish - state_start)
+                    state_times[item["picker_id"]].append(state_delta)
+                    count += 1
+                    state_start = None
+                    state_finish = None
+                    state_delta = 0.
+                    tray_started = False
+                    prev_state = 3
+                elif state_info["mode"] == 4:
+                    prev_state = 4
+            else:
+                if state_info["mode"] == 0:
+                    prev_state = 0
+                elif state_info["mode"] == 1:
+                    prev_state = 1
+                elif state_info["mode"] == 2:
+                    state_start = state_info["time"]
+                    tray_started = True
+                    prev_state = 2
+                elif state_info["mode"] == 3:
+                    prev_state = 3
+                elif state_info["mode"] == 4:
+                    prev_state = 4
+
+        mean = numpy.mean(state_times[item["picker_id"]])
+        sigma = numpy.std(state_times[item["picker_id"]])
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
+        if verbose: print "  n_trays", len(state_times[item["picker_id"]])
+        if verbose: print "  ", state_times[item["picker_id"]]
+    return state_times
+
 
 if __name__ == "__main__":
     if len(sys.argv) <2:
@@ -197,6 +254,7 @@ if __name__ == "__main__":
     state_2_times = []
     state_3_times = []
     state_4_times = []
+    tray_picking_times = []
 
     logs_dir = os.path.abspath(sys.argv[1])
     for f_name in os.listdir(logs_dir):
@@ -242,6 +300,9 @@ if __name__ == "__main__":
         # Get all state_4 times for all pickers
         state_4_times.append(get_state_times(log_data, 4, "Unload at storage", verbose=True))
 
+        # Time spent for pickiing each full tray
+        tray_picking_times.append(get_tray_picking_times(log_data, True))
+
     # single iter example
     gauss_0_0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", verbose=True)
 
@@ -249,16 +310,17 @@ if __name__ == "__main__":
     gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", verbose=True)
 
     # get gaussian distributions of state_1 times
-    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 0, "Transport to row node", verbose=True)
+    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", verbose=True)
 
     # get gaussian distributions of state_2 times
-    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 0, "Picking", verbose=True)
+    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", verbose=True)
 
     # get gaussian distributions of state_3 times
-    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 0, "Transport to storage", verbose=True)
+    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", verbose=True)
 
     # get gaussian distributions of state_4 times
-    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 0, "Unload at storage", verbose=True)
+    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", verbose=True)
 
-
+    # get gaussian distributions of tray picking times
+    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", verbose=True)
 
