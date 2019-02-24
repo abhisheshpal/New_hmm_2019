@@ -12,9 +12,9 @@ import yaml
 import numpy
 import matplotlib.pyplot
 import math
-import time
 
 def get_node_yields(log_data, verbose=False):
+    # to process log_data from a single iteration
     node_yields = {} # {node_id: yield}
     n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]
     assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
@@ -31,6 +31,7 @@ def get_node_yields(log_data, verbose=False):
     return node_yields
 
 def get_allocated_rows(log_data, verbose=False):
+    # to process log_data from a single iteration
     allocated_rows = {} # {picker_id: [allcoated_row_id_1, allcoated_row_id_2, ...]}
     n_pickers = log_data["sim_details"]["n_pickers"]
     assert n_pickers == len(log_data["sim_details"]["picker_states"])
@@ -47,6 +48,7 @@ def get_allocated_rows(log_data, verbose=False):
     return allocated_rows
 
 def get_time_spent_in_rows(log_data, verbose=False):
+    # to process log_data from a single iteration
     # Time spent in each row for all rows in each picker case
     n_pickers = log_data["sim_details"]["n_pickers"]
     assert n_pickers == len(log_data["sim_details"]["picker_states"])
@@ -64,6 +66,7 @@ def get_time_spent_in_rows(log_data, verbose=False):
 
 
 def get_state_times(log_data, state, state_str, verbose=False):
+    # to process log_data from a single iteration
     state_times = {}
     if verbose: print "MODE:%d - %s" %(state, state_str)
     for item in log_data["sim_details"]["picker_states"]:
@@ -142,7 +145,8 @@ def get_multi_iter_state_time_gauss(state_times, state, state_str, verbose=False
 
     return gauss_distributions
 
-def get_single_iter_state_time_gauss(state_times, state, state_str, verbose=False):
+def get_single_iter_state_time_gauss(state_times, state, state_str, plot_data=False):
+    # to process log_data from a single iteration
     gauss_distributions = {} # {picker: {mean:value, sigma:value}}
     # state_times = {picker_01:[...], picker_02:[...]}
     picker_ids = state_times.keys()
@@ -157,7 +161,7 @@ def get_single_iter_state_time_gauss(state_times, state, state_str, verbose=Fals
         gauss_distributions[picker_id]["mean"] = mean
         gauss_distributions[picker_id]["sigma"] = sigma
 
-        if verbose:
+        if plot_data:
             min_time = numpy.min(state_times[picker_id])
             max_time = numpy.max(state_times[picker_id])
             fig = matplotlib.pyplot.figure()
@@ -184,6 +188,7 @@ def isclose(a, b, rel_tol=1e-06, abs_tol=0.0):
     return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 def get_tray_picking_times(log_data, verbose=False):
+    # to process log_data from a single iteration
     state_times = {}
     if verbose: print "Picking Times per Tray"
     for item in log_data["sim_details"]["picker_states"]:
@@ -220,6 +225,18 @@ def get_tray_picking_times(log_data, verbose=False):
                     prev_state = 3
                 elif state_info["mode"] == 4:
                     prev_state = 4
+                elif state_info["mode"] == 5:
+                    state_finish = state_info["time"]
+                    state_delta += (state_finish - state_start)
+                    state_times[item["picker_id"]].append(state_delta)
+                    count += 1
+                    state_start = None
+                    state_finish = None
+                    state_delta = 0.
+                    tray_started = False
+                    prev_state = 5
+                elif state_info["mode"] == 6:
+                    prev_state = 6
             else:
                 if state_info["mode"] == 0:
                     prev_state = 0
@@ -233,6 +250,10 @@ def get_tray_picking_times(log_data, verbose=False):
                     prev_state = 3
                 elif state_info["mode"] == 4:
                     prev_state = 4
+                elif state_info["mode"] == 5:
+                    prev_state = 5
+                elif state_info["mode"] == 6:
+                    prev_state = 6
 
         mean = numpy.mean(state_times[item["picker_id"]])
         sigma = numpy.std(state_times[item["picker_id"]])
@@ -241,6 +262,69 @@ def get_tray_picking_times(log_data, verbose=False):
         if verbose: print "  n_trays", len(state_times[item["picker_id"]])
         if verbose: print "  ", state_times[item["picker_id"]]
     return state_times
+
+def get_state_change_counts(log_data, verbose=False):
+    # to process log_data from a single iteration
+    state_changes = {}
+    for item in log_data["sim_details"]["picker_states"]:
+        picker_id = item["picker_id"]
+        state_changes[picker_id] = numpy.zeros((6,6))
+        curr_mode = None
+        for state_info in item["state_changes"]:
+            if curr_mode is None:
+                # first one
+                curr_mode = state_info["mode"]
+            elif curr_mode == state_info["mode"]:
+                # same state - ignore
+                pass
+            else:
+                # state change
+                state_changes[picker_id][curr_mode][state_info["mode"]] += 1
+                curr_mode = state_info["mode"]
+
+        if verbose: print "picker: %s" %(picker_id)
+        if verbose: print "  n_state_changes:\n", state_changes[picker_id]
+    return state_changes
+
+def get_multi_iter_state_change_probs(state_changes, verbose=False):
+    # to process state_changes from multiple iterations
+    combined_state_changes = {}
+    picker_ids = []
+
+    for picker_id in state_changes[0]:
+        picker_ids.append(picker_id)
+        combined_state_changes[picker_id] = numpy.zeros((6,6))
+
+    for item in state_changes:
+        for picker_id in item:
+            combined_state_changes[picker_id] += item[picker_id]
+
+    state_change_probs = {}
+    total_state_changes = {}
+    for picker_id in picker_ids:
+        if verbose: print "picker: %s" %(picker_id)
+        if verbose: print "  combined_state_changes:\n", combined_state_changes[picker_id]
+        total_state_changes[picker_id] = numpy.sum(combined_state_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
+        if verbose: print "  total_changes_from_each_state:\n", total_state_changes[picker_id]
+        state_change_probs[picker_id] = combined_state_changes[picker_id] / total_state_changes[picker_id]
+        if verbose: print "  state_change_probs:\n", state_change_probs[picker_id]
+
+    return state_change_probs
+
+def get_single_iter_state_change_probs(state_changes, verbose=False):
+    # to process state_changes from a single iteration
+    state_change_probs = {}
+    total_state_changes = {}
+    for picker_id in state_changes:
+        if verbose: print "picker: %s" %(picker_id)
+        if verbose: print "  n_state_changes:\n", state_changes[picker_id]
+        total_state_changes[picker_id] = numpy.sum(state_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
+        if verbose: print "  total_changes_from_each_state:\n", total_state_changes[picker_id]
+        state_change_probs[picker_id] = state_changes[picker_id] / total_state_changes[picker_id]
+        if verbose: print "  state_change_probs:\n", state_change_probs[picker_id]
+
+    return state_change_probs
+
 
 
 if __name__ == "__main__":
@@ -255,6 +339,7 @@ if __name__ == "__main__":
     state_3_times = []
     state_4_times = []
     tray_picking_times = []
+    state_changes = []
 
     logs_dir = os.path.abspath(sys.argv[1])
     for f_name in os.listdir(logs_dir):
@@ -301,26 +386,40 @@ if __name__ == "__main__":
         state_4_times.append(get_state_times(log_data, 4, "Unload at storage", verbose=True))
 
         # Time spent for pickiing each full tray
-        tray_picking_times.append(get_tray_picking_times(log_data, True))
+        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
 
-    # single iter example
-    gauss_0_0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", verbose=True)
+        # get state change probabilities
+        state_changes.append(get_state_change_counts(log_data, verbose=False))
+
+#==============================================================================
+#     # single iter examples
+#==============================================================================
+    gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
+
+    state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=False)
+
+
+#==============================================================================
+#     # multi-iter examples
+#==============================================================================
 
     # get gaussian distributions of state_0 times
-    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", verbose=True)
+    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True)
 
     # get gaussian distributions of state_1 times
-    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", verbose=True)
+    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True)
 
     # get gaussian distributions of state_2 times
-    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", verbose=True)
+    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True)
 
     # get gaussian distributions of state_3 times
-    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", verbose=True)
+    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True)
 
     # get gaussian distributions of state_4 times
-    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", verbose=True)
+    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True)
 
     # get gaussian distributions of tray picking times
-    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", verbose=True)
+    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True)
 
+    # state change probs from multiple iterations
+    state_chang_probs = get_multi_iter_state_change_probs(state_changes, verbose=True)
