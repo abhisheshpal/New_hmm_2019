@@ -102,7 +102,7 @@ def get_state_times(log_data, state, state_str, verbose=False):
 
     return state_times
 
-def get_multi_iter_state_time_gauss(state_times, state, state_str, verbose=False):
+def get_multi_iter_state_time_gauss(state_times, state, state_str, plot_data=False, verbose=False):
     gauss_distributions = {} # {picker: {mean:value, sigma:value}}
     # state_times = [{picker_01:[...], picker_02:[...]}]
     # assuming the number of pickers and picker ids are same in all iters
@@ -141,6 +141,7 @@ def get_multi_iter_state_time_gauss(state_times, state, state_str, verbose=False
             ax2.set_ylabel('Probability')
             ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
             fig.savefig("multi_iter distribution - state: %d - %s.png" %(state, state_str))
+            fig.subplots_adjust(left=0.125, bottom=None, right=0.9, top=0.9, wspace=0.5, hspace=0.2)
             matplotlib.pyplot.close(fig)
 
     return gauss_distributions
@@ -178,6 +179,7 @@ def get_single_iter_state_time_gauss(state_times, state, state_str, plot_data=Fa
             ax2.set_ylabel('Probability')
             ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
             fig.savefig("single_iter distribution - state: %d - %s.png" %(state, state_str))
+            fig.subplots_adjust(left=0.125, bottom=None, right=0.9, top=0.9, wspace=0.5, hspace=0.2)
             matplotlib.pyplot.close(fig)
 
     return gauss_distributions
@@ -413,22 +415,22 @@ if __name__ == "__main__":
 #==============================================================================
 
     # get gaussian distributions of state_0 times
-    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True)
+    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True, verbose=True)
 
     # get gaussian distributions of state_1 times
-    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True)
+    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
 
     # get gaussian distributions of state_2 times
-    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True)
+    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True, verbose=True)
 
     # get gaussian distributions of state_3 times
-    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True)
+    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
 
     # get gaussian distributions of state_4 times
-    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True)
+    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
 
     # get gaussian distributions of tray picking times
-    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True)
+    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
 
     # state change probs from multiple iterations
     state_chang_probs = get_multi_iter_state_change_probs(state_changes, verbose=True)
