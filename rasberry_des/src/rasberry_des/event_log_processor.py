@@ -13,6 +13,17 @@ import numpy
 import matplotlib.pyplot
 import math
 
+
+def get_picker_ids(log_data, verbose=False):
+    # to process log_data from a single iteration
+    picker_ids = []
+    n_pickers = log_data["sim_details"]["n_pickers"]
+    assert n_pickers == len(log_data["sim_details"]["picker_states"])
+    for item in log_data["sim_details"]["picker_states"]:
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        picker_ids.append(item["picker_id"])
+    return picker_ids
+
 def get_node_yields(log_data, verbose=False):
     # to process log_data from a single iteration
     node_yields = {} # {node_id: yield}
@@ -334,7 +345,17 @@ def get_single_iter_state_change_probs(state_changes, verbose=False):
 
     return state_change_probs
 
-
+def get_log_data(f_name, verbose=False):
+    f_handle = open(f_name, "r")
+    try:
+        log_data = yaml.load(f_handle)
+    except:
+        if verbose: print "Error loading file %s as a YAML file\nProceeding to next file" %(f_name)
+        log_data = None
+        f_handle.close()
+    else:
+        f_handle.close()
+    return log_data
 
 if __name__ == "__main__":
     if len(sys.argv) <2:
@@ -352,50 +373,43 @@ if __name__ == "__main__":
 
     logs_dir = os.path.abspath(sys.argv[1])
     for f_name in os.listdir(logs_dir):
-        f_name_split = f_name.split("_")
-        if not (os.path.isfile(logs_dir+"/"+f_name) and f_name_split[0][0] == "M"):
+        if not (os.path.isfile(logs_dir+"/"+f_name) and f_name.startswith("M") and f_name.endswith(".yaml")):
             continue
 
         print f_name
-
-        f_handle = open(logs_dir+"/"+f_name, "r")
-        try:
-            log_data = yaml.load(f_handle)
-        except:
+        log_data = get_log_data(logs_dir+"/"+f_name, verbose=False)
+        if log_data is None:
             print "Error loading file %s as a YAML file\nProceeding to next file" %(f_name)
-            f_handle.close()
             continue
-        else:
-            f_handle.close()
 
         n_trials += 1
 
-        # node yield associated with each row
-        node_yields = get_node_yields(log_data, verbose=False)
-
-        # allocated rows of each picker
-        allocated_rows = get_allocated_rows(log_data, verbose=False)
-
-        # Time spent in each row for all rows in each picker case
-        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
-
-        # Get all state_0 times for all pickers
-        state_0_times.append(get_state_times(log_data, 0, "Idle", verbose=True))
-
-        # Get all state_1 times for all pickers
-        state_1_times.append(get_state_times(log_data, 1, "Transport to row node", verbose=True))
-
-        # Get all state_2 times for all pickers
-        state_2_times.append(get_state_times(log_data, 2, "Picking", verbose=True))
-
-        # Get all state_3 times for all pickers
-        state_3_times.append(get_state_times(log_data, 3, "Transport to storage", verbose=True))
-
-        # Get all state_4 times for all pickers
-        state_4_times.append(get_state_times(log_data, 4, "Unload at storage", verbose=True))
-
-        # Time spent for pickiing each full tray
-        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
+#        # node yield associated with each row
+#        node_yields = get_node_yields(log_data, verbose=False)
+#
+#        # allocated rows of each picker
+#        allocated_rows = get_allocated_rows(log_data, verbose=False)
+#
+#        # Time spent in each row for all rows in each picker case
+#        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
+#
+#        # Get all state_0 times for all pickers
+#        state_0_times.append(get_state_times(log_data, 0, "Idle", verbose=True))
+#
+#        # Get all state_1 times for all pickers
+#        state_1_times.append(get_state_times(log_data, 1, "Transport to row node", verbose=True))
+#
+#        # Get all state_2 times for all pickers
+#        state_2_times.append(get_state_times(log_data, 2, "Picking", verbose=True))
+#
+#        # Get all state_3 times for all pickers
+#        state_3_times.append(get_state_times(log_data, 3, "Transport to storage", verbose=True))
+#
+#        # Get all state_4 times for all pickers
+#        state_4_times.append(get_state_times(log_data, 4, "Unload at storage", verbose=True))
+#
+#        # Time spent for pickiing each full tray
+#        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
 
         # get state change probabilities
         state_changes.append(get_state_change_counts(log_data, inc_same_states=[], verbose=True))
@@ -405,7 +419,7 @@ if __name__ == "__main__":
 #==============================================================================
 #     # single iter examples
 #==============================================================================
-    gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
+#    gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
 
     state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=True)
 
@@ -414,23 +428,23 @@ if __name__ == "__main__":
 #     # multi-iter examples
 #==============================================================================
 
-    # get gaussian distributions of state_0 times
-    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True, verbose=True)
-
-    # get gaussian distributions of state_1 times
-    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
-
-    # get gaussian distributions of state_2 times
-    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True, verbose=True)
-
-    # get gaussian distributions of state_3 times
-    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of state_4 times
-    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of tray picking times
-    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
+#    # get gaussian distributions of state_0 times
+#    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of state_1 times
+#    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of state_2 times
+#    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of state_3 times
+#    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of state_4 times
+#    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of tray picking times
+#    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
 
     # state change probs from multiple iterations
     state_chang_probs = get_multi_iter_state_change_probs(state_changes, verbose=True)
