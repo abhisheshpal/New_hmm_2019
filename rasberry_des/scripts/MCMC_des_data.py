@@ -3,18 +3,15 @@
 @author: abhishesh
 """
 import numpy as np
-#import event_log_processor.py as log1
-from scipy.stats import norm
 #import scipy as sp
+#import pandas as pd
 import matplotlib.pyplot as plt
 import math
-#import seaborn as snss
+#import random
+#import seaborn as sns
+from scipy.stats import norm
 
-#state_2_times = []
-#data = log1.get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True)
-#mu = np.mean(data)
-#sig = np.std(data)
-
+#data2 = np.random.uniform(low=0., high=25500., size=2000)
 
 data2= np.array([2166.8999999999996, 1090.4, 950.4000000000001, 2025.7999999999993, 2167.5, 1361.4000000000015, 672.7000000000007, 2017.5999999999985, 
          2182.1000000000004, 1624.2999999999993, 401.3999999999978, 2171.4000000000015, 2007.5, 1892.0, 268.40000000000146, 2166.5999999999985,
@@ -97,9 +94,13 @@ def cal_post_analytical(data, x, mu_0, sigma_0):            # x is equivalent to
     sigma_posterior = (1. / sigma_0**2 + n / sigma**2)**-1
     return norm(mu_posterior, np.sqrt(sigma_posterior)).pdf(x)
 
-def MCMC_Metro(data, prior_mu=np.mean(data1), prior_std=np.std(data1), mean_target=np.mean(data2), std_target=np.mean(data2),iterations=50, plot=False):
+def MCMC_Metro(data, prior_mu= np.mean(data1[:20]), prior_std= np.mean(data1[:20]), mean_target= np.mean(data2[:20]), std_target= np.mean(data2[:20]),iterations=10, plot=False):
 
- 
+#    prior_mu = np.mean(data1[:20])
+#    prior_std=np.std(data1[:20])
+#    mean_target=np.mean(data2[:20])
+#    std_target=np.mean(data2[:20])
+    
     mu_current_evidence = mean_target
     posterior = [mu_current_evidence]
     for i in range(iterations):
@@ -107,8 +108,8 @@ def MCMC_Metro(data, prior_mu=np.mean(data1), prior_std=np.std(data1), mean_targ
         mu_transition_proposal = norm(mu_current_evidence, std_target).rvs()    # random variates of given size 
 
         # Compute likelihood by multiplying probabilities of each data point
-        current_likelihood = norm(mu_current_evidence, 1.).pdf(data).prod()
-        proposal_likelihood = norm(mu_transition_proposal, 1.).pdf(data).prod()
+        current_likelihood = 1 #norm(mu_current_evidence, 1.).pdf(data).prod()
+        proposal_likelihood = 1 #- (norm(mu_transition_proposal, 1.).pdf(data).prod())
         
         # Compute prior probability of current and proposed mu        
         current_prior = norm(prior_mu, prior_std).pdf(mu_current_evidence)
@@ -123,6 +124,10 @@ def MCMC_Metro(data, prior_mu=np.mean(data1), prior_std=np.std(data1), mean_targ
         # Usually would include prior probability, which we neglect here for simplicity
         accept = np.random.rand() < acceptance_prob
         
+        if plot:
+            plot_proposal(mu_current_evidence, mu_transition_proposal, prior_mu, prior_std, data, accept, posterior, i)
+            pass
+        
         if accept:
             # Update position
             mu_current_evidence = mu_transition_proposal
@@ -131,12 +136,71 @@ def MCMC_Metro(data, prior_mu=np.mean(data1), prior_std=np.std(data1), mean_targ
         
     return posterior
 
+
+# Vizualization using plots
+
+def plot_proposal(mu_current_evidence, mu_transition_proposal, prior_mu, prior_std, data, accepted, trace, i):
+    from copy import copy
+    trace = copy(trace)
+    fig, (ax1, ax2, ax3, ax4) = plt.subplots(ncols=4, figsize=(16, 4))
+    fig.suptitle('Iteration %i' % (i + 1))
+#    x = np.linspace(-3, 3, 5000)
+    x=np.arange(min_time, max_time, .1)
+    color = 'g' if accepted else 'r'
+        
+   
+    # Plot for Likelihood
+    current_likelihood = norm(mu_current_evidence, 1).pdf(data).prod()
+    proposal_likelihood = norm(mu_transition_proposal, 1).pdf(data).prod()
+    y = norm(loc=mu_transition_proposal, scale=1).pdf(x)
+    n, bins, patches = plt.hist(data, bins=int(math.ceil((max_time-min_time)/5)), range=(min_time, max_time))
+#    sns.distplot(data, kde=False, norm_hist=True, ax=ax2)
+    ax2.plot(x, y, color=color)
+    ax2.axvline(mu_current_evidence, color='b', linestyle='--', label='mu_current_evidence')
+    ax2.axvline(mu_transition_proposal, color=color, linestyle='--', label='mu_transition_proposal')
+    #ax2.title('Proposal {}'.format('accepted' if accepted else 'rejected'))
+    ax2.annotate("", xy=(mu_transition_proposal, 0.2), xytext=(mu_current_evidence, 0.2),
+                 arrowprops=dict(arrowstyle="->", lw=2.))
+    ax2.set(title='likelihood(mu=%.2f) = %.2f\nlikelihood(mu=%.2f) = %.2f' % (mu_current_evidence, 1e14*current_likelihood, mu_transition_proposal, 1e14*proposal_likelihood))
+    
+ # Plotting prior
+    current_prior = norm(prior_mu, prior_std).pdf(mu_current_evidence)
+    proposal_prior = norm(prior_mu, prior_std).pdf(mu_transition_proposal)
+    prior = norm(prior_mu, prior_std).pdf(x)
+    ax1.plot(x, prior)  #mu = np.mean(data) # this is current mu
+                        #sigma = np.std(data) # # current sigma
+    ax1.plot([mu_current_evidence] * 2, [0, current_prior], marker='o', color='b')
+    ax1.plot([mu_transition_proposal] * 2, [0, proposal_prior], marker='o', color=color)
+    ax1.annotate("", xy=(mu_transition_proposal, 0.2), xytext=(mu_current_evidence, 0.2),
+                 arrowprops=dict(arrowstyle="->", lw=2.))
+    ax1.set(ylabel='Probability Density', title='current: prior(mu=%.2f) = %.2f\nproposal: prior(mu=%.2f) = %.2f' % (mu_current_evidence, current_prior, mu_transition_proposal, proposal_prior))
+    
+    # Posterior
+    posterior_analytical = cal_post_analytical(data, x, prior_mu, prior_std)
+    ax3.plot(x, posterior_analytical)
+    posterior_current = cal_post_analytical(data, mu_current_evidence, prior_mu, prior_std)
+    posterior_proposal = cal_post_analytical(data, mu_transition_proposal, prior_mu, prior_std)
+    ax3.plot([mu_current_evidence] * 2, [0, posterior_current], marker='o', color='b')
+    ax3.plot([mu_transition_proposal] * 2, [0, posterior_proposal], marker='o', color=color)
+    ax3.annotate("", xy=(mu_transition_proposal, 0.2), xytext=(mu_current_evidence, 0.2),
+                 arrowprops=dict(arrowstyle="->", lw=2.))
+    #x3.set(title=r'prior x likelihood $\propto$ posterior')
+    ax3.set(title='posterior(mu=%.2f) = %.5f\nposterior(mu=%.2f) = %.5f' % (mu_current_evidence, posterior_current, mu_transition_proposal, posterior_proposal))
+    
+    if accepted:
+        trace.append(mu_transition_proposal)
+    else:
+        trace.append(mu_current_evidence)
+    ax4.plot(trace)
+    ax4.set(xlabel='iteration', ylabel='mu', title='trace')
+    plt.tight_layout()
+    #plt.legend()
+    plt.show()
+
+
 if __name__ == '__main__':
 #    data2 = np.random.uniform(low=0., high=25500., size=2000)
 #    print data2
-    trace = [50]
-    MCMC_Metro(data2, plot=True)
-    cal_post_analytical(data2, 200, mu, sigma)
-
-
-
+    trace = [100]
+    MCMC_Metro(data1, plot=True)
+    cal_post_analytical(data1, 100, mu, sigma)
