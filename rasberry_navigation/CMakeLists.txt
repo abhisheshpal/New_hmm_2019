@@ -177,6 +177,7 @@ include_directories(
    scripts/delete_topo_nodes.py
    scripts/get_sim_topo_node_positions.py
    scripts/get_topo_node_positions.py
+   scripts/uni_to_bidirectional_edges.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

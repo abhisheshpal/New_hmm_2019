@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <launch>
     <arg name="use_carrot_planner" default="false"/>
-    <arg name="use_uv_params" default="false"/>
+    <arg name="use_omni" default="false"/>
 
     <!-- launch robot_pose_publisher -->
     <node pkg="robot_pose_publisher" type="robot_pose_publisher" name="robot_pose_publisher" respawn="true">
@@ -19,8 +19,8 @@
         <!--param name="controller_frequency" value="10.0"/>
         <param name="controller_patience" value="15.0"/>
         <param name="planner_frequency" value="0.5"/-->
-        <rosparam file="$(find rasberry_move_base)/config/dwa/dwa_planner_ros.yaml" command="load" unless="$(arg use_uv_params)"/>
-        <rosparam file="$(find rasberry_move_base)/config/dwa/dwa_planner_ros_uv.yaml" command="load" if="$(arg use_uv_params)"/>
+        <rosparam file="$(find rasberry_move_base)/config/dwa/dwa_planner_ros.yaml" command="load" unless="$(arg use_omni)"/>
+        <rosparam file="$(find rasberry_move_base)/config/dwa/dwa_planner_ros_omni.yaml" command="load" if="$(arg use_omni)"/>
 
         <rosparam file="$(find rasberry_move_base)/config/dwa/dwa_move_base_params.yaml" command="load"/>
         

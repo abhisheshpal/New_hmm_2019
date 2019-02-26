@@ -13,7 +13,9 @@
 
   <arg name="initial_cov_xx" default="0.0"/>
   <arg name="initial_cov_yy" default="0.0"/>
-  <arg name="initial_cov_aa" default="0.0"/>
+  <arg name="initial_cov_aa" default="i0.0"/>
+
+  <arg name="use_omni" default="false" />
 
 
   <!-- topic_tools/relay to merge two scans to scan topic for amcl and move_base -->
@@ -36,6 +38,8 @@
     <arg name="initial_cov_xx" value="$(arg initial_cov_xx)"/>
     <arg name="initial_cov_yy" value="$(arg initial_cov_yy)"/>
     <arg name="initial_cov_aa" value="$(arg initial_cov_aa)"/>
+
+    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
 </launch>
