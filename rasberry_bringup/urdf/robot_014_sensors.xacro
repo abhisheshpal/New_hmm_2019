@@ -55,7 +55,7 @@
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.7025 0.0 0.66" rpy="3.141593 0.0 0.0"/>
+    <origin xyz="0.707 0.000 0.686" rpy="3.141593 0.0 0.0"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
@@ -93,7 +93,7 @@
                stddev of 0.01m will put 99.7% of samples within 0.03m of the true
                reading. -->
           <mean>0.0</mean>
-          <stddev>0.05</stddev>
+          <stddev>0.01</stddev>
         </noise>
       </ray>
       <plugin name="$(arg robot_name)_hokuyo_node" filename="libgazebo_ros_laser.so">

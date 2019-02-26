@@ -11,16 +11,23 @@ find_package(catkin REQUIRED COMPONENTS
   mongodb_store
   rasberry_bringup
   rasberry_navigation
+  fake_localization
   rasberry_move_base
   rviz
   rospy
   actionlib
+  dynamic_reconfigure
   roslib
   gazebo_msgs
   geometry_msgs
   topological_navigation
   strands_navigation_msgs
   std_srvs
+  contact_monitor
+  topic_tools
+  tf
+  nav_msgs
+  message_filters
 )
 
 ## System dependencies are found with CMake's conventions
