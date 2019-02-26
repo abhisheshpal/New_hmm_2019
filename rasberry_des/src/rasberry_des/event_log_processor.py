@@ -13,6 +13,17 @@ import numpy
 import matplotlib.pyplot
 import math
 
+
+def get_picker_ids(log_data, verbose=False):
+    # to process log_data from a single iteration
+    picker_ids = []
+    n_pickers = log_data["sim_details"]["n_pickers"]
+    assert n_pickers == len(log_data["sim_details"]["picker_states"])
+    for item in log_data["sim_details"]["picker_states"]:
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        picker_ids.append(item["picker_id"])
+    return picker_ids
+
 def get_node_yields(log_data, verbose=False):
     # to process log_data from a single iteration
     node_yields = {} # {node_id: yield}
@@ -362,8 +373,7 @@ if __name__ == "__main__":
 
     logs_dir = os.path.abspath(sys.argv[1])
     for f_name in os.listdir(logs_dir):
-        f_name_split = f_name.split("_")
-        if not (os.path.isfile(logs_dir+"/"+f_name) and f_name_split[0][0] == "M"):
+        if not (os.path.isfile(logs_dir+"/"+f_name) and f_name.startswith("M") and f_name.endswith(".yaml")):
             continue
 
         print f_name
