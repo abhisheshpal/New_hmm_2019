@@ -12,12 +12,12 @@ no_go_layer:
   map_topic: /no_go_map
 
 global_inflation_layer:
-  inflation_radius: 0.5
-  cost_scaling_factor: 2.0
+  inflation_radius: 0.66
+  cost_scaling_factor: 0.97
 
 local_inflation_layer:
-  inflation_radius: 0.5
-  cost_scaling_factor: 2.0
+  inflation_radius: 0.66
+  cost_scaling_factor: 0.97
 
 obstacle_layer:
   max_obstacle_height: 2.0
@@ -29,10 +29,10 @@ obstacle_layer:
   
   track_unknown_space: true
   
-  observation_sources: fr_laser_scan_sensor bl_laser_scan_sensor
-#  observation_sources: fr_laser_scan_sensor
-  fr_laser_scan_sensor: {sensor_frame: hokuyo_fr, data_type: LaserScan, topic: /scan_fr, marking: true, clearing: true}
-  bl_laser_scan_sensor: {sensor_frame: hokuyo_bl, data_type: LaserScan, topic: /scan_bl, marking: true, clearing: true}
+  observation_sources: fl_laser_scan_sensor br_laser_scan_sensor
+#  observation_sources: fl_laser_scan_sensor
+  fl_laser_scan_sensor: {sensor_frame: hokuyo_fl, data_type: LaserScan, topic: /scan_fl, marking: true, clearing: true}
+  br_laser_scan_sensor: {sensor_frame: hokuyo_br, data_type: LaserScan, topic: /scan_br, marking: true, clearing: true}
 
 global_obstacle_layer:
   max_obstacle_height: 2.0
@@ -44,9 +44,9 @@ global_obstacle_layer:
 
   track_unknown_space: true
 
-  observation_sources: fr_laser_scan_sensor bl_laser_scan_sensor
-#  observation_sources: fr_laser_scan_sensor
-  fr_laser_scan_sensor: {sensor_frame: hokuyo_fr, data_type: LaserScan, topic: /scan_fr, marking: false, clearing: false}
-  bl_laser_scan_sensor: {sensor_frame: hokuyo_bl, data_type: LaserScan, topic: /scan_bl, marking: false, clearing: false}
+  observation_sources: fl_laser_scan_sensor br_laser_scan_sensor
+#  observation_sources: fl_laser_scan_sensor
+  fl_laser_scan_sensor: {sensor_frame: hokuyo_fl, data_type: LaserScan, topic: /scan_fl, marking: false, clearing: false}
+  br_laser_scan_sensor: {sensor_frame: hokuyo_br, data_type: LaserScan, topic: /scan_br, marking: false, clearing: false}
 #marking and clearing set to true for norway_poles_demo purposes
 
