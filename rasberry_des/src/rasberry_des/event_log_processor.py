@@ -41,6 +41,7 @@ def get_node_yields(log_data, verbose=False):
             node_yields[row_info["node_id"]] = row_info["yield"]
     return node_yields
 
+
 def get_allocated_rows(log_data, verbose=False):
     # to process log_data from a single iteration
     allocated_rows = {} # {picker_id: [allcoated_row_id_1, allcoated_row_id_2, ...]}
@@ -112,6 +113,25 @@ def get_state_times(log_data, state, state_str, verbose=False):
         if verbose: print "  ", state_times[item["picker_id"]]
 
     return state_times
+  
+
+def get_mode_nodes(log_data, state, state_str, verbose=False):
+    # to process log_data from a single iteration
+    state_nodes_dict = {}
+    if verbose: print "MODE:%d - %s" %(state, state_str)
+    for item in log_data["sim_details"]["picker_states"]:
+        state_nodes_dict[item["picker_id"]] = []
+        count = 0
+        for state_info in item["state_changes"]:
+            if state_info["mode"] == state:
+                state_nodes_dict[item["picker_id"]].append(state_info["node"])
+                count += 1
+        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "  ", state_nodes_dict[item["picker_id"]]
+
+    return state_nodes_dict
+    
+
 
 def get_multi_iter_state_time_gauss(state_times, state, state_str, plot_data=False, verbose=False):
     gauss_distributions = {} # {picker: {mean:value, sigma:value}}
@@ -383,7 +403,8 @@ if __name__ == "__main__":
             continue
 
         n_trials += 1
-
+        
+               
 #        # node yield associated with each row
 #        node_yields = get_node_yields(log_data, verbose=False)
 #
@@ -416,13 +437,28 @@ if __name__ == "__main__":
 #        # get state change probabilities with same state changes while in picking
 #        state_changes.append(get_state_change_counts(log_data, inc_same_states=[2], verbose=True))
 
+        # Get all state_0 node changes for all pickers
+        state_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
+        # Get all state_1 node changes for all pickers
+        state_node_change = get_mode_nodes(log_data, 1, "Transport to row node", verbose=True)
+        # Get all state_2 node changes for all pickers
+        state_node_change = get_mode_nodes(log_data, 2, "Picking", verbose=True)
+        # Get all state_3 node changes for all pickers
+        state_node_change = get_mode_nodes(log_data, 3, "Transport to storage", verbose=True)
+        # Get all state_4 node changes for all pickers
+        state_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
+
+
+
+
+
 #==============================================================================
 #     # single iter examples
 #==============================================================================
 #    gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
 
     state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=True)
-
+    
 
 #==============================================================================
 #     # multi-iter examples
