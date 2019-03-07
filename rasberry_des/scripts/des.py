@@ -65,15 +65,26 @@ if __name__ == "__main__":
                                                         n_topo_nav_rows, second_head_lane,
                                                         _yield_per_node, VERBOSE)
 
-    n_trials = 500
-    min_n_pickers = 1#1
-    max_n_pickers = 2#n_topo_nav_rows + 1
-    min_n_robots = 0#0
-    max_n_robots = 1#max_n_pickers
+    n_trials = 1
+    min_n_pickers = 1
+    max_n_pickers = 2
+#    max_n_pickers = n_topo_nav_rows + 1
+    min_n_robots = 0
+    max_n_robots = 1
+#    max_n_robots = max_n_pickers
 #    n_local_storages = n_topo_nav_rows
 #    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
     policies = ["uniform_utilisation"]
     use_cold_storage = False
+
+    # create log directory if does not exist already
+    if SAVE_STATS:
+        asc_time = time.asctime().split(" ")
+        log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_%s_%s" %(asc_time[5], asc_time[1], asc_time[3], asc_time[4].replace(":", "_")))
+        if os.path.exists(log_dir):
+            pass
+        else:
+            os.makedirs(log_dir)
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -191,7 +202,7 @@ if __name__ == "__main__":
                         time_now = time.time()*1000000
 
                         # event logs
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_events.yaml" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_events.yaml" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         # sim details
                         print >> f_handle, "# Environment details"
                         print >> f_handle, "env_details:"
@@ -326,7 +337,7 @@ if __name__ == "__main__":
                         f_handle.close()
 
 #                        # predictions log
-#                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+#                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
 #                        print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
 #                        print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
 #                        for picker_id in picker_ids:
@@ -340,7 +351,7 @@ if __name__ == "__main__":
 #                        f_handle.close()
 #
 #                        # des logs
-#                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+#                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
 #                        # no ros related calls here to ensure printing even when the pickers_only node is killed
 #                        # farm details
 #                        print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)

@@ -18,3 +18,5 @@ if __name__ == "__main__":
 
     rospy.init_node("check_des_fork_map_config_parameters", anonymous=True)
     missing_params = rasberry_des.config_utils.check_fork_map_config(config_file)
+    rospy.loginfo(missing_params)
+    rospy.sleep(1)

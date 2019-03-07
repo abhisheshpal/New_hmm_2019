@@ -1,0 +1,150 @@
+##-----------------------------------------------------------------------------
+# map related parameters
+# ----------------------
+# n_polytunnels: integer>=0, 0 - open farm, n (>0) - n polytunnels
+# n_farm_rows:
+#   func: none/copy, function to populate values for all rows
+#   value: array of integers, number of rows in the farm (n_polytunnels == 0)
+#                             or in a polytunnel (n_polytunnels >= 1). list
+#                             with one value for open farm, one (func = 'copy')
+#                             or n_polytunnels (func = 'none') values for
+#                             polytunnels
+# head_row_node_dist:
+#   func: none/copy, function to populate values for all rows
+#   value: array of floats, distance from head node to the first row node of
+#                           each row (values for all rows (func = 'none') or
+#                           for each polytunnels (func = 'copy'), or single
+#                           value (func = 'copy'))
+# x_offset:
+#   func: none/copy, function to populate values for all rows
+#   value: array of floats, x coordinates of LHS corner of farm (single value)
+#                           or each polytunnel (n_polytunnel values or single
+#                           value to be copied to all polytunnels).
+# y_offset: float, y coordinate of LHS corner of farm / first polytunnel. All
+#                  rows are assumed to be above (+Y) it.
+# row_node_dist:
+#   func: none/copy, function to populate values for all rows
+#   value: array of floats, distance between two nodes in each row (values for
+#                           all rows (func = 'none') or for each polytunnels
+#                           (func = 'copy'), or single value (func = 'copy')),m
+# row_length:
+#   func: none/copy, function to populate values for all rows
+#   value: array of floats, length of rows (values for all rows (func = 'none')
+#                           or for each polytunnels (func = 'copy'), or single
+#                           value (func = 'copy')), m
+# row_spacing:
+#   func: none/copy, function to populate values for all rows
+#   value: array of floats, spacing between two rows in the farm (values for
+#                           all rows (func = 'none') or for each polytunnels
+#                           (func = 'copy'), or single value (func = 'copy')),m
+# yield_per_node:
+#   func: none/copy/gauss, function to populate values for all rows
+#   value: array of floats, yield at a topo_nav node (from the node to the
+#                           next), per row (values for all rows
+#                           (n_polytunnels = 0) or all polytunnels, or mu and
+#                           sigma), g
+# second_head_lane: true/false, a secondary head lane at the other end
+# n_local_storages: integer>0, number of local storage stations
+# dist_to_cold_storage: float, distance to the cold storage from first node of
+#                              primary head lane, m (optional)
+##-----------------------------------------------------------------------------
+n_polytunnels: 0
+n_farm_rows:
+  func: copy
+  value: [1]
+head_row_node_dist:
+  func: copy
+  value: [1.5]
+x_offset:
+  func: copy
+  value: [2.5]
+y_offset: 0.
+row_node_dist:
+  func: copy
+  value: [5.0]
+row_length:
+  func: copy
+  value: [120.0]
+row_spacing:
+  func: copy
+  value: [1.5]
+yield_per_node:
+  func: gauss
+  value: [0.065, 0.0013]
+second_head_lane: true
+n_local_storages: 2
+dist_to_cold_storage: 250.0
+
+##-----------------------------------------------------------------------------
+# des related parameters
+# ----------------------
+# map_name: name of the topological map
+# des_env: simpy or ros, type of environment to run DES. simpy - as fast as
+#                        possible, ros - realtime (scalable)
+##-----------------------------------------------------------------------------
+map_name: single_bed
+des_env: simpy
+
+##-----------------------------------------------------------------------------
+# picker related parameters
+# ----------------------
+# n_pickers: integer > 0, number of pickers
+# picker_picking_rate:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, speed of pickers while picking (values for all
+#                           pickers, or mu and sigma), m/s
+# picker_transportation_rate:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, transportation speed of pickers (values for all
+#                           pickers, or mu and sigma), m/s
+# picker_max_n_trays:
+#   func: none/copy, function to populate values for all pickers
+#   value: array of integers, maximum number of trays that can be carried by
+#                             each pickers (values for all pickers, or single
+#                             value to be copied)
+# picker_unloading_time:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, time required by each picker to unload a tray at
+#                           local storage / robot (values for all pickers, or
+#                           mu and sigma), s
+# tray_capacity: 3000 # capacity of each tray, g
+##-----------------------------------------------------------------------------
+n_pickers: 2
+picker_picking_rate:
+  func: copy
+  value: [0.0375]
+picker_transportation_rate:
+  func: copy
+  value: [1.0]
+picker_max_n_trays:
+  func: copy
+  value: [1]
+picker_unloading_time:
+  func: copy
+  value: [110.0]
+tray_capacity: 1
+
+##-----------------------------------------------------------------------------
+# robot related parameters
+# ----------------------
+# n_robots: integer >= 0, number of robots in the farm
+# robot_transportation_rate: array of floats, speed of a robot (values for all
+#                                             robots, or single value to be
+#                                             copied), m/s
+# robot_max_n_trays:
+#   func: none/copy, function to populate values for all robots
+#   value: array of integers, maximum number of trays that can be carried by
+#                             the robot (values for all robots, or single
+#                             value to be copied)
+# robot_unloading_time: array of floats, time required by the robot to unload
+#                                        a tray at local storage (values for
+#                                        all pickers, or single value to be
+#                                        copied), s
+##-----------------------------------------------------------------------------
+n_robots: 0
+robot_transportation_rate: [1.0]
+robot_max_n_trays:
+  func: copy
+  value: [4]
+robot_unloading_time: [110.0]
+
