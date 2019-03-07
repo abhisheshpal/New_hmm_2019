@@ -24,7 +24,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: -250.0
+        x: -5.0
         y: 0.75
         z: 0.0
     verts:
@@ -1499,10 +1499,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: edge_row_pri_head_00
+      edge_id: edge_00_24_25
       inflation_radius: 0.0
       map_2d: ''
-      node: sec_hn-00
+      node: rn-00-25
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1517,6 +1517,3966 @@
         z: 0.0
       position:
         x: 122.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-25
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_25_24
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-24
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_25_26
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-26
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-25
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 127.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-26
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_26_25
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-25
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_26_27
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-27
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-26
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 132.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-27
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_27_26
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-26
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_27_28
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-28
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-27
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 137.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-28
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_28_27
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-27
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_28_29
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-29
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-28
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 142.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-29
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_29_28
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-28
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_29_30
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-30
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-29
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 147.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-30
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_30_29
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-29
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_30_31
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-31
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-30
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 152.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-31
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_31_30
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-30
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_31_32
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-32
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-31
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 157.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-32
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_32_31
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-31
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_32_33
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-33
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-32
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 162.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-33
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_33_32
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-32
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_33_34
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-34
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-33
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 167.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-34
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_34_33
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-33
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_34_35
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-35
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-34
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 172.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-35
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_35_34
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-34
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_35_36
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-36
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-35
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 177.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-36
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_36_35
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-35
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_36_37
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-37
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-36
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 182.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-37
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_37_36
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-36
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_37_38
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-38
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-37
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 187.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-38
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_38_37
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-37
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_38_39
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-39
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-38
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 192.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-39
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_39_38
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-38
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_39_40
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-39
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 197.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-40
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_40_39
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-39
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_40_41
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-40
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 202.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-41
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_41_40
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_41_42
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-41
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 207.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-42
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_42_41
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_42_43
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-42
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 212.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-43
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_43_42
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_43_44
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-43
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 217.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-44
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_44_43
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_44_45
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-44
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 222.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-45
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_45_44
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_45_46
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-45
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 227.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-46
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_46_45
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_46_47
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-46
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 232.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-47
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_47_46
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_47_48
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-47
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 237.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-48
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_48_47
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_48_49
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-48
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 242.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-49
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_49_48
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_49_50
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-50
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-49
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 247.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-50
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_50_49
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_50_51
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-51
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-50
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 252.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-51
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_51_50
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-50
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_51_52
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-52
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-51
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 257.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-52
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_52_51
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-51
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_52_53
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-53
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-52
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 262.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-53
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_53_52
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-52
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_53_54
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-54
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-53
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 267.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-54
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_54_53
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-53
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_54_55
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-55
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-54
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 272.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-55
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_55_54
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-54
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_55_56
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-56
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-55
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 277.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-56
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_56_55
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-55
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_56_57
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-57
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-56
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 282.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-57
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_57_56
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-56
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_57_58
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-58
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-57
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 287.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-58
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_58_57
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-57
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_58_59
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-59
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-58
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 292.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-59
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_59_58
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-58
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_59_60
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-60
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-59
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 297.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-60
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_60_59
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-59
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_60_61
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-61
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-60
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 302.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-61
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_61_60
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-60
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_61_62
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-62
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-61
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 307.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-62
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_62_61
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-61
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_62_63
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-63
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-62
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 312.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-63
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_63_62
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-62
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_63_64
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-64
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-63
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 317.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-64
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_64_63
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-63
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_64_65
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-65
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-64
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 322.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-65
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_65_64
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-64
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_65_66
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-66
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-65
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 327.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-66
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_66_65
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-65
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_66_67
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-67
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-66
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 332.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-67
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_67_66
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-66
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_67_68
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-68
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-67
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 337.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-68
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_68_67
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-67
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_68_69
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-69
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-68
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 342.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-69
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_69_68
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-68
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_69_70
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-70
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-69
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 347.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-70
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_70_69
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-69
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_70_71
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-71
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-70
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 352.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-71
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_71_70
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-70
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_71_72
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-72
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-71
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 357.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-72
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_72_71
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-71
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_72_73
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-72
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 362.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-73
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_73_72
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-72
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_73_74
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-74
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-73
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 367.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-74
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_74_73
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_74_75
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-75
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-74
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 372.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-75
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_75_74
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-74
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_75_76
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-76
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-75
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 377.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-76
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_76_75
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-75
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_76_77
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-77
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-76
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 382.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-77
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_77_76
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-76
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_77_78
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-78
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-77
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 387.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-78
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_78_77
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-77
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_78_79
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-79
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-78
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 392.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-79
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_79_78
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-78
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_79_80
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-80
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-79
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 397.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-80
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_80_79
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-79
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_80_81
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-81
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-80
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 402.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-81
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_81_80
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-80
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_81_82
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-82
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-81
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 407.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-82
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_82_81
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-81
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_82_83
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-82
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 412.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-83
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_83_82
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-82
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_83_84
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-84
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-83
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 417.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-84
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_84_83
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_84_85
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-85
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-84
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 422.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-85
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_85_84
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-84
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_85_86
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-86
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-85
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 427.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-86
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_86_85
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-85
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_86_87
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-87
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-86
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 432.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-87
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_87_86
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-86
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_87_88
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-88
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-87
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 437.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-88
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_88_87
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-87
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_88_89
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-89
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-88
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 442.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-89
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_89_88
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-88
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_89_90
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-90
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-89
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 447.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-90
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_90_89
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-89
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_90_91
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-91
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-90
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 452.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-91
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_91_90
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-90
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_91_92
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-92
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-91
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 457.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-92
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_92_91
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-91
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_92_93
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-93
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-92
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 462.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-93
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_93_92
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-92
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_93_94
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-94
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-93
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 467.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-94
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_94_93
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-93
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_94_95
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-95
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-94
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 472.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-95
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_95_94
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-94
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_00_95_96
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-96
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-95
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 477.5
+        y: 0.75
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-00-96
+    pointset: single_bed
+    tag:
+    - row_00
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_00_96_95
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-00-95
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_row_pri_head_00
+      inflation_radius: 0.0
+      map_2d: ''
+      node: sec_hn-00
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-00-96
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 482.5
         y: 0.75
         z: 0.0
     verts:
@@ -2874,10 +6834,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: edge_row_pri_head_01
+      edge_id: edge_01_24_25
       inflation_radius: 0.0
       map_2d: ''
-      node: sec_hn-01
+      node: rn-01-25
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2915,6 +6875,3966 @@
     yaw_goal_tolerance: 0.1
 - meta:
     map: ''
+    node: rn-01-25
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_25_24
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-24
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_25_26
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-26
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-25
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 127.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-26
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_26_25
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-25
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_26_27
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-27
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-26
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 132.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-27
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_27_26
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-26
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_27_28
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-28
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-27
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 137.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-28
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_28_27
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-27
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_28_29
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-29
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-28
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 142.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-29
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_29_28
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-28
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_29_30
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-30
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-29
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 147.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-30
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_30_29
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-29
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_30_31
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-31
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-30
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 152.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-31
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_31_30
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-30
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_31_32
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-32
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-31
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 157.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-32
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_32_31
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-31
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_32_33
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-33
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-32
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 162.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-33
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_33_32
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-32
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_33_34
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-34
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-33
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 167.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-34
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_34_33
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-33
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_34_35
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-35
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-34
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 172.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-35
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_35_34
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-34
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_35_36
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-36
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-35
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 177.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-36
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_36_35
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-35
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_36_37
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-37
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-36
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 182.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-37
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_37_36
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-36
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_37_38
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-38
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-37
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 187.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-38
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_38_37
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-37
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_38_39
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-39
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-38
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 192.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-39
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_39_38
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-38
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_39_40
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-39
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 197.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-40
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_40_39
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-39
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_40_41
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-40
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 202.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-41
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_41_40
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_41_42
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-41
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 207.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-42
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_42_41
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_42_43
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-42
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 212.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-43
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_43_42
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_43_44
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-43
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 217.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-44
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_44_43
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_44_45
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-44
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 222.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-45
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_45_44
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_45_46
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-45
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 227.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-46
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_46_45
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_46_47
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-46
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 232.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-47
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_47_46
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_47_48
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-47
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 237.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-48
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_48_47
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_48_49
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-48
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 242.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-49
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_49_48
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_49_50
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-50
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-49
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 247.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-50
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_50_49
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_50_51
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-51
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-50
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 252.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-51
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_51_50
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-50
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_51_52
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-52
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-51
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 257.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-52
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_52_51
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-51
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_52_53
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-53
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-52
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 262.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-53
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_53_52
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-52
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_53_54
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-54
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-53
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 267.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-54
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_54_53
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-53
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_54_55
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-55
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-54
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 272.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-55
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_55_54
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-54
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_55_56
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-56
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-55
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 277.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-56
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_56_55
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-55
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_56_57
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-57
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-56
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 282.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-57
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_57_56
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-56
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_57_58
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-58
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-57
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 287.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-58
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_58_57
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-57
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_58_59
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-59
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-58
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 292.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-59
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_59_58
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-58
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_59_60
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-60
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-59
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 297.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-60
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_60_59
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-59
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_60_61
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-61
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-60
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 302.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-61
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_61_60
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-60
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_61_62
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-62
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-61
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 307.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-62
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_62_61
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-61
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_62_63
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-63
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-62
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 312.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-63
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_63_62
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-62
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_63_64
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-64
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-63
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 317.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-64
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_64_63
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-63
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_64_65
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-65
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-64
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 322.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-65
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_65_64
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-64
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_65_66
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-66
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-65
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 327.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-66
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_66_65
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-65
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_66_67
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-67
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-66
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 332.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-67
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_67_66
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-66
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_67_68
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-68
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-67
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 337.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-68
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_68_67
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-67
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_68_69
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-69
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-68
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 342.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-69
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_69_68
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-68
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_69_70
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-70
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-69
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 347.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-70
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_70_69
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-69
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_70_71
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-71
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-70
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 352.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-71
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_71_70
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-70
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_71_72
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-72
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-71
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 357.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-72
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_72_71
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-71
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_72_73
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-72
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 362.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-73
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_73_72
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-72
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_73_74
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-74
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-73
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 367.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-74
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_74_73
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_74_75
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-75
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-74
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 372.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-75
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_75_74
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-74
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_75_76
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-76
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-75
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 377.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-76
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_76_75
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-75
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_76_77
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-77
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-76
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 382.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-77
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_77_76
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-76
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_77_78
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-78
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-77
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 387.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-78
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_78_77
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-77
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_78_79
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-79
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-78
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 392.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-79
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_79_78
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-78
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_79_80
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-80
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-79
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 397.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-80
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_80_79
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-79
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_80_81
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-81
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-80
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 402.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-81
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_81_80
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-80
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_81_82
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-82
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-81
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 407.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-82
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_82_81
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-81
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_82_83
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-82
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 412.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-83
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_83_82
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-82
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_83_84
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-84
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-83
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 417.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-84
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_84_83
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_84_85
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-85
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-84
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 422.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-85
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_85_84
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-84
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_85_86
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-86
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-85
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 427.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-86
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_86_85
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-85
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_86_87
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-87
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-86
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 432.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-87
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_87_86
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-86
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_87_88
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-88
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-87
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 437.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-88
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_88_87
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-87
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_88_89
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-89
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-88
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 442.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-89
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_89_88
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-88
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_89_90
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-90
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-89
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 447.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-90
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_90_89
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-89
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_90_91
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-91
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-90
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 452.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-91
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_91_90
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-90
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_91_92
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-92
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-91
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 457.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-92
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_92_91
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-91
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_92_93
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-93
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-92
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 462.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-93
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_93_92
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-92
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_93_94
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-94
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-93
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 467.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-94
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_94_93
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-93
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_94_95
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-95
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-94
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 472.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-95
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_95_94
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-94
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_01_95_96
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-96
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-95
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 477.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
+    node: rn-01-96
+    pointset: single_bed
+    tag:
+    - row_01
+  node:
+    edges:
+    - action: move_base
+      edge_id: edge_01_96_95
+      inflation_radius: 0.0
+      map_2d: ''
+      node: rn-01-95
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: edge_row_pri_head_01
+      inflation_radius: 0.0
+      map_2d: ''
+      node: sec_hn-01
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: ''
+    name: rn-01-96
+    pointset: single_bed
+    pose:
+      orientation:
+        w: 1.0
+        x: 0.0
+        y: 0.0
+        z: 0.0
+      position:
+        x: 482.5
+        y: 2.25
+        z: 0.0
+    verts:
+    - x: 0.689999997616
+      y: 0.287000000477
+    - x: 0.287000000477
+      y: 0.689999997616
+    - x: -0.287000000477
+      y: 0.689999997616
+    - x: -0.689999997616
+      y: 0.287000000477
+    - x: -0.689999997616
+      y: -0.287000000477
+    - x: -0.287000000477
+      y: -0.689999997616
+    - x: 0.287000000477
+      y: -0.689999997616
+    - x: 0.689999997616
+      y: -0.287000000477
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: ''
     node: sec_hn-00
     pointset: single_bed
     tag:
@@ -2925,7 +10845,7 @@
       edge_id: edge_pri_head_row_00
       inflation_radius: 0.0
       map_2d: ''
-      node: rn-00-24
+      node: rn-00-96
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -2946,7 +10866,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 124.0
+        x: 484.0
         y: 0.75
         z: 0.0
     verts:
@@ -2987,7 +10907,7 @@
       edge_id: edge_pri_head_row_01
       inflation_radius: 0.0
       map_2d: ''
-      node: rn-01-24
+      node: rn-01-96
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3001,7 +10921,7 @@
         y: 0.0
         z: 0.0
       position:
-        x: 124.0
+        x: 484.0
         y: 2.25
         z: 0.0
     verts:

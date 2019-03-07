@@ -64,7 +64,7 @@ row_node_dist:
   value: [5.0]
 row_length:
   func: copy
-  value: [120.0]
+  value: [480.0]
 row_spacing:
   func: copy
   value: [1.5]
@@ -73,7 +73,7 @@ yield_per_node:
   value: [0.065, 0.0013]
 second_head_lane: true
 n_local_storages: 2
-dist_to_cold_storage: 250.0
+dist_to_cold_storage: 5.0
 
 ##-----------------------------------------------------------------------------
 # des related parameters
