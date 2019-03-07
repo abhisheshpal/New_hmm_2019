@@ -297,7 +297,7 @@ if __name__ == "__main__":
                                 print >> f_handle, "  finish_allocation_time_simpy: %0.3f" %(float(item[0]))
                             if item[1] == "finished picking":
                                 print >> f_handle, "  finish_picking_time_simpy: %0.3f" %(float(item[0]))
-                        print >> f_handle, "# picker_states:"
+                        print >> f_handle, "# picker_modes:"
                         print >> f_handle, "# 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,"
                         print >> f_handle, "# 4: waiting for unload at storage, 5: waiting for loading on robot"
                         print >> f_handle, "# 6: transporting to local storage from cold storage"

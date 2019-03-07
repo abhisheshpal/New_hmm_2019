@@ -15,6 +15,17 @@ import math
 
 
 def get_picker_ids(log_data, verbose=False):
+    """get_picker_ids - gets picker_ids from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    picker_ids - list of picker_ids
+    """
     # to process log_data from a single iteration
     picker_ids = []
     n_pickers = log_data["sim_details"]["n_pickers"]
@@ -25,6 +36,17 @@ def get_picker_ids(log_data, verbose=False):
     return picker_ids
 
 def get_node_yields(log_data, verbose=False):
+    """get_node_yields - gets node_yields from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    node_yields - {node_id: yield}
+    """
     # to process log_data from a single iteration
     node_yields = {} # {node_id: yield}
     n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]
@@ -43,6 +65,17 @@ def get_node_yields(log_data, verbose=False):
 
 
 def get_allocated_rows(log_data, verbose=False):
+    """get_allocated_rows - gets rows allocated from each picker from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    allocated_rows - {picker_id: [row_ids]}
+    """
     # to process log_data from a single iteration
     allocated_rows = {} # {picker_id: [allcoated_row_id_1, allcoated_row_id_2, ...]}
     n_pickers = log_data["sim_details"]["n_pickers"]
@@ -60,6 +93,18 @@ def get_allocated_rows(log_data, verbose=False):
     return allocated_rows
 
 def get_time_spent_in_rows(log_data, verbose=False):
+    """get_time_spent_in_rows - gets rough measures of time each picker spent
+    in rows from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    time_spent_in_rows - {picker_id: {row_id: time}}
+    """
     # to process log_data from a single iteration
     # Time spent in each row for all rows in each picker case
     n_pickers = log_data["sim_details"]["n_pickers"]
@@ -77,74 +122,115 @@ def get_time_spent_in_rows(log_data, verbose=False):
     return time_spent_in_rows
 
 
-def get_state_times(log_data, state, state_str, verbose=False):
+def get_mode_times(log_data, mode, mode_str, verbose=False):
+    """get_mode_times - gets times a picker spent in a given mode from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    mode - mode of interest
+    mode_str - mode string, for printing
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_times - {picker_id: [times]}
+    """
+
     # to process log_data from a single iteration
-    state_times = {}
-    if verbose: print "MODE:%d - %s" %(state, state_str)
+    mode_times = {}
+    if verbose: print "MODE:%d - %s" %(mode, mode_str)
     for item in log_data["sim_details"]["picker_states"]:
-        state_times[item["picker_id"]] = []
-        state_start = None
-        state_finish = None
+        mode_times[item["picker_id"]] = []
+        mode_start = None
+        mode_finish = None
         mean = 0
         sigma = 0
         count = 0
-        for state_info in item["state_changes"]:
-            if state_info["mode"] == state:
-                if state_start is None:
-                    state_start = state_info["time"]
+        for mode_info in item["mode_changes"]:
+            if mode_info["mode"] == mode:
+                if mode_start is None:
+                    mode_start = mode_info["time"]
                 else:
                     pass
             else:
-                if state_start is None:
+                if mode_start is None:
                     pass
                 else:
-                    state_finish = state_info["time"]
-                    state_times[item["picker_id"]].append(state_finish - state_start)
+                    mode_finish = mode_info["time"]
+                    mode_times[item["picker_id"]].append(mode_finish - mode_start)
                     count += 1
-                    state_start = None
-                    state_finish = None
+                    mode_start = None
+                    mode_finish = None
 
 
-        mean = numpy.mean(state_times[item["picker_id"]])
-        sigma = numpy.std(state_times[item["picker_id"]])
+        mean = numpy.mean(mode_times[item["picker_id"]])
+        sigma = numpy.std(mode_times[item["picker_id"]])
 
         if verbose: print "picker_id: %s" %(item["picker_id"])
         if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
-        if verbose: print "  ", state_times[item["picker_id"]]
+        if verbose: print "  ", mode_times[item["picker_id"]]
 
-    return state_times
-  
+    return mode_times
 
-def get_mode_nodes(log_data, state, state_str, verbose=False):
+
+def get_mode_nodes(log_data, mode, mode_str, verbose=False):
+    """get_mode_nodes - gets nodes a picker was in, in a given mode, from a log_data file
+
+    Keyword arguments:
+
+    log_data - data dict loaded from a yaml log file
+    mode - mode of interest
+    mode_str - mode string (for printing)
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_nodes - {picker_id: [nodes]}
+    """
     # to process log_data from a single iteration
-    state_nodes_dict = {}
-    if verbose: print "MODE:%d - %s" %(state, state_str)
+    mode_nodes = {}
+    if verbose: print "MODE:%d - %s" %(mode, mode_str)
     for item in log_data["sim_details"]["picker_states"]:
-        state_nodes_dict[item["picker_id"]] = []
+        mode_nodes[item["picker_id"]] = []
         count = 0
-        for state_info in item["state_changes"]:
-            if state_info["mode"] == state:
-                state_nodes_dict[item["picker_id"]].append(state_info["node"])
+        for mode_info in item["mode_changes"]:
+            if mode_info["mode"] == mode:
+                mode_nodes[item["picker_id"]].append(mode_info["node"])
                 count += 1
         if verbose: print "picker_id: %s" %(item["picker_id"])
-        if verbose: print "  ", state_nodes_dict[item["picker_id"]]
+        if verbose: print "  ", mode_nodes[item["picker_id"]]
 
-    return state_nodes_dict
-    
+    return mode_nodes
 
 
-def get_multi_iter_state_time_gauss(state_times, state, state_str, plot_data=False, verbose=False):
+def get_multi_iter_mode_time_gauss(mode_times, mode, mode_str, plot_data=False, verbose=False):
+    """get_multi_iter_mode_time_gauss - gets the mean and std of the gaussian
+     for all pickers, from mode_times from multiple iterations
+
+    Keyword arguments:
+
+    mode_times - list of mode_times from log files obtained from different iterations
+    mode - mode of interest
+    mode_str - mode string (for printing)
+    plot_data - enable/disable plotting
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    gauss_distributions - {picker_id: {mean: value, std: value}}
+    """
     gauss_distributions = {} # {picker: {mean:value, sigma:value}}
-    # state_times = [{picker_01:[...], picker_02:[...]}]
+    # mode_times = [{picker_01:[...], picker_02:[...]}]
     # assuming the number of pickers and picker ids are same in all iters
-    picker_ids = state_times[0].keys()
+    picker_ids = mode_times[0].keys()
     all_times = {}
     for picker_id in picker_ids:
         all_times[picker_id] = []
         gauss_distributions[picker_id] = {}
 
     # get all times from each picker
-    for item in state_times:
+    for item in mode_times:
         for picker_id in item:
             all_times[picker_id].extend(item[picker_id])
 
@@ -163,209 +249,294 @@ def get_multi_iter_state_time_gauss(state_times, state, state_str, plot_data=Fal
             n, bins, patches = ax1.hist(all_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
             ax1.set_xlabel('Time')
             ax1.set_ylabel('No. of instances')
-            ax1.set_title("%d - %s" %(state, state_str))
+            ax1.set_title("%d - %s" %(mode, mode_str))
 
             ax2 = fig.add_subplot(212)
             x = numpy.arange(min_time, max_time, .01)
             ax2.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
             ax2.set_xlabel('Time (s)')
             ax2.set_ylabel('Probability')
-            ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
-            fig.savefig("multi_iter distribution - state: %d - %s.png" %(state, state_str))
+            ax2.set_title('Prio Probability distribution-' "%d - %s" %(mode, mode_str))
+            fig.savefig("multi_iter distribution - mode: %d - %s.png" %(mode, mode_str))
             fig.subplots_adjust(left=0.125, bottom=None, right=0.9, top=0.9, wspace=0.5, hspace=0.2)
             matplotlib.pyplot.close(fig)
 
     return gauss_distributions
 
-def get_single_iter_state_time_gauss(state_times, state, state_str, plot_data=False):
+def get_single_iter_mode_time_gauss(mode_times, mode, mode_str, plot_data=False):
+    """get_multi_iter_mode_time_gauss - gets the mean and std of the gaussian
+     for all pickers, from mode_times from single iteration
+
+    Keyword arguments:
+
+    mode_times - mode_times from log files obtained from different iterations
+    mode - mode of interest
+    mode_str - mode string (for printing)
+    plot_data - enable/disable plotting
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    gauss_distributions - {picker_id: {mean: value, std: value}}
+    """
     # to process log_data from a single iteration
     gauss_distributions = {} # {picker: {mean:value, sigma:value}}
-    # state_times = {picker_01:[...], picker_02:[...]}
-    picker_ids = state_times.keys()
+    # mode_times = {picker_01:[...], picker_02:[...]}
+    picker_ids = mode_times.keys()
 
     for picker_id in picker_ids:
         gauss_distributions[picker_id] = {}
 
     for picker_id in picker_ids:
-        mean = numpy.mean(state_times[picker_id])
-        sigma = numpy.std(state_times[picker_id])
+        mean = numpy.mean(mode_times[picker_id])
+        sigma = numpy.std(mode_times[picker_id])
 
         gauss_distributions[picker_id]["mean"] = mean
         gauss_distributions[picker_id]["sigma"] = sigma
 
         if plot_data:
-            min_time = numpy.min(state_times[picker_id])
-            max_time = numpy.max(state_times[picker_id])
+            min_time = numpy.min(mode_times[picker_id])
+            max_time = numpy.max(mode_times[picker_id])
             fig = matplotlib.pyplot.figure()
             ax1 = fig.add_subplot(211)
-            n, bins, patches = ax1.hist(state_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
+            n, bins, patches = ax1.hist(mode_times[picker_id], bins=int(math.ceil((max_time-min_time)/(0.01*(max_time-min_time)))), range=(min_time, max_time))
             ax1.set_xlabel('Time (s)')
             ax1.set_ylabel('No. of instances')
-            ax1.set_title("%d - %s" %(state, state_str))
+            ax1.set_title("%d - %s" %(mode, mode_str))
 
             ax2 = fig.add_subplot(212)
             x = numpy.arange(min_time, max_time, .01)
             ax2.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
             ax2.set_xlabel('Time (s)')
             ax2.set_ylabel('Probability')
-            ax2.set_title('Prio Probability distribution-' "%d - %s" %(state, state_str))
-            fig.savefig("single_iter distribution - state: %d - %s.png" %(state, state_str))
+            ax2.set_title('Prio Probability distribution-' "%d - %s" %(mode, mode_str))
+            fig.savefig("single_iter distribution - mode: %d - %s.png" %(mode, mode_str))
             fig.subplots_adjust(left=0.125, bottom=None, right=0.9, top=0.9, wspace=0.5, hspace=0.2)
             matplotlib.pyplot.close(fig)
 
     return gauss_distributions
 
 def isclose(a, b, rel_tol=1e-06, abs_tol=0.0):
-    """to check two floats a and b are close (nearly equal)
+    """isclose - to check two floats a and b are close (nearly equal)
+
+    Keyword arguments:
+
+    a - value 1
+    b - value 2
+
+    Returns:
+
+    isclose - True / False
     """
     return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
 
 def get_tray_picking_times(log_data, verbose=False):
+    """get_tray_picking_times - gets tray picking times of all pickers from
+    log_data from a single iteration. As a tray could be filled from more than
+    one row, depending on where it started, it is different from mode-2 times.
+
+    Keyword arguments:
+
+    log_data - log data loaded from an event log yaml file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_times - {picker_id: [tray_picking_times]}
+    """
+
     # to process log_data from a single iteration
-    state_times = {}
+    mode_times = {}
     if verbose: print "Picking Times per Tray"
     for item in log_data["sim_details"]["picker_states"]:
-        state_times[item["picker_id"]] = []
-        state_start = None
-        state_finish = None
-        state_delta = 0.
+        mode_times[item["picker_id"]] = []
+        mode_start = None
+        mode_finish = None
+        mode_delta = 0.
         mean = 0
         sigma = 0
         count = 0
         tray_started = False
-        prev_state = None
-        for state_info in item["state_changes"]:
+        prev_mode = None
+        for mode_info in item["mode_changes"]:
             if tray_started:
-                if state_info["mode"] == 0:
-                    state_finish = state_info["time"]
-                    state_delta += (state_finish - state_start)
-                    prev_state = 0
-                elif state_info["mode"] == 1:
-                    prev_state = 1
-                elif state_info["mode"] == 2:
-                    if prev_state != 2:
-                        state_start = state_info["time"]
-                    prev_state = 2
-                elif state_info["mode"] == 3:
-                    state_finish = state_info["time"]
-                    state_delta += (state_finish - state_start)
-                    state_times[item["picker_id"]].append(state_delta)
+                if mode_info["mode"] == 0:
+                    mode_finish = mode_info["time"]
+                    mode_delta += (mode_finish - mode_start)
+                    prev_mode = 0
+                elif mode_info["mode"] == 1:
+                    prev_mode = 1
+                elif mode_info["mode"] == 2:
+                    if prev_mode != 2:
+                        mode_start = mode_info["time"]
+                    prev_mode = 2
+                elif mode_info["mode"] == 3:
+                    mode_finish = mode_info["time"]
+                    mode_delta += (mode_finish - mode_start)
+                    mode_times[item["picker_id"]].append(mode_delta)
                     count += 1
-                    state_start = None
-                    state_finish = None
-                    state_delta = 0.
+                    mode_start = None
+                    mode_finish = None
+                    mode_delta = 0.
                     tray_started = False
-                    prev_state = 3
-                elif state_info["mode"] == 4:
-                    prev_state = 4
-                elif state_info["mode"] == 5:
-                    state_finish = state_info["time"]
-                    state_delta += (state_finish - state_start)
-                    state_times[item["picker_id"]].append(state_delta)
+                    prev_mode = 3
+                elif mode_info["mode"] == 4:
+                    prev_mode = 4
+                elif mode_info["mode"] == 5:
+                    mode_finish = mode_info["time"]
+                    mode_delta += (mode_finish - mode_start)
+                    mode_times[item["picker_id"]].append(mode_delta)
                     count += 1
-                    state_start = None
-                    state_finish = None
-                    state_delta = 0.
+                    mode_start = None
+                    mode_finish = None
+                    mode_delta = 0.
                     tray_started = False
-                    prev_state = 5
-                elif state_info["mode"] == 6:
-                    prev_state = 6
+                    prev_mode = 5
+                elif mode_info["mode"] == 6:
+                    prev_mode = 6
             else:
-                if state_info["mode"] == 0:
-                    prev_state = 0
-                elif state_info["mode"] == 1:
-                    prev_state = 1
-                elif state_info["mode"] == 2:
-                    state_start = state_info["time"]
+                if mode_info["mode"] == 0:
+                    prev_mode = 0
+                elif mode_info["mode"] == 1:
+                    prev_mode = 1
+                elif mode_info["mode"] == 2:
+                    mode_start = mode_info["time"]
                     tray_started = True
-                    prev_state = 2
-                elif state_info["mode"] == 3:
-                    prev_state = 3
-                elif state_info["mode"] == 4:
-                    prev_state = 4
-                elif state_info["mode"] == 5:
-                    prev_state = 5
-                elif state_info["mode"] == 6:
-                    prev_state = 6
+                    prev_mode = 2
+                elif mode_info["mode"] == 3:
+                    prev_mode = 3
+                elif mode_info["mode"] == 4:
+                    prev_mode = 4
+                elif mode_info["mode"] == 5:
+                    prev_mode = 5
+                elif mode_info["mode"] == 6:
+                    prev_mode = 6
 
-        mean = numpy.mean(state_times[item["picker_id"]])
-        sigma = numpy.std(state_times[item["picker_id"]])
+        mean = numpy.mean(mode_times[item["picker_id"]])
+        sigma = numpy.std(mode_times[item["picker_id"]])
         if verbose: print "picker_id: %s" %(item["picker_id"])
         if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
-        if verbose: print "  n_trays", len(state_times[item["picker_id"]])
-        if verbose: print "  ", state_times[item["picker_id"]]
-    return state_times
+        if verbose: print "  n_trays", len(mode_times[item["picker_id"]])
+        if verbose: print "  ", mode_times[item["picker_id"]]
+    return mode_times
 
-def get_state_change_counts(log_data, inc_same_states=[], verbose=False):
-    # to process log_data from a single iteration
-    """
+def get_mode_change_counts(log_data, inc_same_modes=[], verbose=False):
+    """get_mode_change_counts - get number of times a picker changed from one mode to another
+
     Keyword arguments:
+
     log_data - data read from an event log, dict
-    inc_same_states - states for which same state transitions should be counted, list
+    inc_same_modes - modes for which same mode transitions should be counted, list
     verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_changes - {picker_id: np.array(n_modes x n_modes)}
+                   element [from_mode][to_mode]  of array gives the number of
+                   times the picker changed mode from from_mode to to_mode
     """
-    state_changes = {}
+    # to process log_data from a single iteration
+    mode_changes = {}
     for item in log_data["sim_details"]["picker_states"]:
         picker_id = item["picker_id"]
-        state_changes[picker_id] = numpy.zeros((6,6))
+        mode_changes[picker_id] = numpy.zeros((6,6))
         curr_mode = None
-        for state_info in item["state_changes"]:
+        for mode_info in item["mode_changes"]:
             if curr_mode is None:
                 # first one
-                curr_mode = state_info["mode"]
-            elif curr_mode == state_info["mode"]:
-                # same state - ignore
-                if curr_mode in inc_same_states:
-                    state_changes[picker_id][curr_mode][curr_mode] += 1
+                curr_mode = mode_info["mode"]
+            elif curr_mode == mode_info["mode"]:
+                # same mode - ignore
+                if curr_mode in inc_same_modes:
+                    mode_changes[picker_id][curr_mode][curr_mode] += 1
             else:
-                # state change
-                state_changes[picker_id][curr_mode][state_info["mode"]] += 1
-                curr_mode = state_info["mode"]
+                # mode change
+                mode_changes[picker_id][curr_mode][mode_info["mode"]] += 1
+                curr_mode = mode_info["mode"]
 
         if verbose: print "picker: %s" %(picker_id)
-        if verbose: print "  n_state_changes:\n", state_changes[picker_id]
-    return state_changes
+        if verbose: print "  n_mode_changes:\n", mode_changes[picker_id]
+    return mode_changes
 
-def get_multi_iter_state_change_probs(state_changes, verbose=False):
-    # to process state_changes from multiple iterations
-    combined_state_changes = {}
+def get_multi_iter_mode_change_probs(mode_changes, verbose=False):
+    """get_multi_iter_mode_change_probs - get the probability of changes
+    for a picker from from one mode to another, from multiple iterations
+
+    Keyword arguments:
+
+    mode_changes - list of mode change counts from multiple iterations
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_change_probs - {picker_id: np.array(n_modes x n_modes)}
+                   element [from_mode][to_mode]  of array gives the probability
+                   of the picker changing mode from from_mode to to_mode
+    """
+    # to process mode_changes from multiple iterations
+    combined_mode_changes = {}
     picker_ids = []
 
-    for picker_id in state_changes[0]:
+    for picker_id in mode_changes[0]:
         picker_ids.append(picker_id)
-        combined_state_changes[picker_id] = numpy.zeros((6,6))
+        combined_mode_changes[picker_id] = numpy.zeros((6,6))
 
-    for item in state_changes:
+    for item in mode_changes:
         for picker_id in item:
-            combined_state_changes[picker_id] += item[picker_id]
+            combined_mode_changes[picker_id] += item[picker_id]
 
-    state_change_probs = {}
-    total_state_changes = {}
+    mode_change_probs = {}
+    total_mode_changes = {}
     for picker_id in picker_ids:
         if verbose: print "picker: %s" %(picker_id)
-        if verbose: print "  combined_state_changes:\n", combined_state_changes[picker_id]
-        total_state_changes[picker_id] = numpy.sum(combined_state_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
-        if verbose: print "  total_changes_from_each_state:\n", total_state_changes[picker_id]
-        state_change_probs[picker_id] = combined_state_changes[picker_id] / total_state_changes[picker_id]
-        if verbose: print "  state_change_probs:\n", state_change_probs[picker_id]
+        if verbose: print "  combined_mode_changes:\n", combined_mode_changes[picker_id]
+        total_mode_changes[picker_id] = numpy.sum(combined_mode_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
+        if verbose: print "  total_changes_from_each_mode:\n", total_mode_changes[picker_id]
+        mode_change_probs[picker_id] = combined_mode_changes[picker_id] / total_mode_changes[picker_id]
+        if verbose: print "  mode_change_probs:\n", mode_change_probs[picker_id]
 
-    return state_change_probs
+    return mode_change_probs
 
-def get_single_iter_state_change_probs(state_changes, verbose=False):
-    # to process state_changes from a single iteration
-    state_change_probs = {}
-    total_state_changes = {}
-    for picker_id in state_changes:
+def get_single_iter_mode_change_probs(mode_changes, verbose=False):
+    """get_single_iter_mode_change_probs - get the probability of changes
+    for a picker from from one mode to another, from single iteration
+
+    Keyword arguments:
+
+    mode_changes - list of mode change counts from multiple iterations
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    mode_change_probs - {picker_id: np.array(n_modes x n_modes)}
+                   element [from_mode][to_mode]  of array gives the probability
+                   of the picker changing mode from from_mode to to_mode
+    """
+    # to process mode_changes from a single iteration
+    mode_change_probs = {}
+    total_mode_changes = {}
+    for picker_id in mode_changes:
         if verbose: print "picker: %s" %(picker_id)
-        if verbose: print "  n_state_changes:\n", state_changes[picker_id]
-        total_state_changes[picker_id] = numpy.sum(state_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
-        if verbose: print "  total_changes_from_each_state:\n", total_state_changes[picker_id]
-        state_change_probs[picker_id] = state_changes[picker_id] / total_state_changes[picker_id]
-        if verbose: print "  state_change_probs:\n", state_change_probs[picker_id]
+        if verbose: print "  n_mode_changes:\n", mode_changes[picker_id]
+        total_mode_changes[picker_id] = numpy.sum(mode_changes[picker_id], axis=1, dtype=numpy.float64).reshape((6,1))
+        if verbose: print "  total_changes_from_each_mode:\n", total_mode_changes[picker_id]
+        mode_change_probs[picker_id] = mode_changes[picker_id] / total_mode_changes[picker_id]
+        if verbose: print "  mode_change_probs:\n", mode_change_probs[picker_id]
 
-    return state_change_probs
+    return mode_change_probs
 
 def get_log_data(f_name, verbose=False):
+    """get_log_data - get log data from event log file (yaml format)
+
+    Keyword arguments:
+
+    f_name - name of the log file
+    verbose - controls sysout prints, bool
+
+    Returns:
+
+    log_data - data loaded from the event log file
+    """
     f_handle = open(f_name, "r")
     try:
         log_data = yaml.load(f_handle)
@@ -383,13 +554,13 @@ if __name__ == "__main__":
         exit()
 
     n_trials = 0
-    state_0_times = []
-    state_1_times = []
-    state_2_times = []
-    state_3_times = []
-    state_4_times = []
+    mode_0_times = []
+    mode_1_times = []
+    mode_2_times = []
+    mode_3_times = []
+    mode_4_times = []
     tray_picking_times = []
-    state_changes = []
+    mode_changes = []
 
     logs_dir = os.path.abspath(sys.argv[1])
     for f_name in os.listdir(logs_dir):
@@ -403,8 +574,8 @@ if __name__ == "__main__":
             continue
 
         n_trials += 1
-        
-               
+
+
 #        # node yield associated with each row
 #        node_yields = get_node_yields(log_data, verbose=False)
 #
@@ -414,39 +585,39 @@ if __name__ == "__main__":
 #        # Time spent in each row for all rows in each picker case
 #        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
 #
-#        # Get all state_0 times for all pickers
-#        state_0_times.append(get_state_times(log_data, 0, "Idle", verbose=True))
+#        # Get all mode_0 times for all pickers
+#        mode_0_times.append(get_mode_times(log_data, 0, "Idle", verbose=True))
 #
-#        # Get all state_1 times for all pickers
-#        state_1_times.append(get_state_times(log_data, 1, "Transport to row node", verbose=True))
+#        # Get all mode_1 times for all pickers
+#        mode_1_times.append(get_mode_times(log_data, 1, "Transport to row node", verbose=True))
 #
-#        # Get all state_2 times for all pickers
-#        state_2_times.append(get_state_times(log_data, 2, "Picking", verbose=True))
+#        # Get all mode_2 times for all pickers
+#        mode_2_times.append(get_mode_times(log_data, 2, "Picking", verbose=True))
 #
-#        # Get all state_3 times for all pickers
-#        state_3_times.append(get_state_times(log_data, 3, "Transport to storage", verbose=True))
+#        # Get all mode_3 times for all pickers
+#        mode_3_times.append(get_mode_times(log_data, 3, "Transport to storage", verbose=True))
 #
-#        # Get all state_4 times for all pickers
-#        state_4_times.append(get_state_times(log_data, 4, "Unload at storage", verbose=True))
+#        # Get all mode_4 times for all pickers
+#        mode_4_times.append(get_mode_times(log_data, 4, "Unload at storage", verbose=True))
 #
 #        # Time spent for pickiing each full tray
 #        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
 
-        # get state change probabilities
-        state_changes.append(get_state_change_counts(log_data, inc_same_states=[], verbose=True))
-#        # get state change probabilities with same state changes while in picking
-#        state_changes.append(get_state_change_counts(log_data, inc_same_states=[2], verbose=True))
+        # get mode change probabilities
+        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[], verbose=True))
+#        # get mode change probabilities with same mode changes while in picking
+#        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[2], verbose=True))
 
-        # Get all state_0 node changes for all pickers
-        state_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
-        # Get all state_1 node changes for all pickers
-        state_node_change = get_mode_nodes(log_data, 1, "Transport to row node", verbose=True)
-        # Get all state_2 node changes for all pickers
-        state_node_change = get_mode_nodes(log_data, 2, "Picking", verbose=True)
-        # Get all state_3 node changes for all pickers
-        state_node_change = get_mode_nodes(log_data, 3, "Transport to storage", verbose=True)
-        # Get all state_4 node changes for all pickers
-        state_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
+        # Get all mode_0 node changes for all pickers
+        mode_0_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
+        # Get all mode_1 node changes for all pickers
+        mode_1_node_change = get_mode_nodes(log_data, 1, "Transport to row node", verbose=True)
+        # Get all mode_2 node changes for all pickers
+        mode_2_node_change = get_mode_nodes(log_data, 2, "Picking", verbose=True)
+        # Get all mode_3 node changes for all pickers
+        mode_3_node_change = get_mode_nodes(log_data, 3, "Transport to storage", verbose=True)
+        # Get all mode_4 node changes for all pickers
+        mode_4_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
 
 
 
@@ -455,32 +626,32 @@ if __name__ == "__main__":
 #==============================================================================
 #     # single iter examples
 #==============================================================================
-#    gauss_0_iter0 = get_single_iter_state_time_gauss(state_0_times[0], 0, "Idle", plot_data=True)
+#    gauss_0_iter0 = get_single_iter_mode_time_gauss(mode_0_times[0], 0, "Idle", plot_data=True)
 
-    state_change_probs_iter0 = get_single_iter_state_change_probs(state_changes[0], verbose=True)
-    
+    mode_change_probs_iter0 = get_single_iter_mode_change_probs(mode_changes[0], verbose=True)
+
 
 #==============================================================================
 #     # multi-iter examples
 #==============================================================================
 
-#    # get gaussian distributions of state_0 times
-#    gauss_0 = get_multi_iter_state_time_gauss(state_0_times, 0, "Idle", plot_data=True, verbose=True)
+#    # get gaussian distributions of mode_0 times
+#    gauss_0 = get_multi_iter_mode_time_gauss(mode_0_times, 0, "Idle", plot_data=True, verbose=True)
 #
-#    # get gaussian distributions of state_1 times
-#    gauss_1 = get_multi_iter_state_time_gauss(state_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
+#    # get gaussian distributions of mode_1 times
+#    gauss_1 = get_multi_iter_mode_time_gauss(mode_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
 #
-#    # get gaussian distributions of state_2 times
-#    gauss_2 = get_multi_iter_state_time_gauss(state_2_times, 2, "Picking", plot_data=True, verbose=True)
+#    # get gaussian distributions of mode_2 times
+#    gauss_2 = get_multi_iter_mode_time_gauss(mode_2_times, 2, "Picking", plot_data=True, verbose=True)
 #
-#    # get gaussian distributions of state_3 times
-#    gauss_3 = get_multi_iter_state_time_gauss(state_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
+#    # get gaussian distributions of mode_3 times
+#    gauss_3 = get_multi_iter_mode_time_gauss(mode_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
 #
-#    # get gaussian distributions of state_4 times
-#    gauss_4 = get_multi_iter_state_time_gauss(state_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
+#    # get gaussian distributions of mode_4 times
+#    gauss_4 = get_multi_iter_mode_time_gauss(mode_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
 #
 #    # get gaussian distributions of tray picking times
-#    gauss_2_tray = get_multi_iter_state_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
+#    gauss_2_tray = get_multi_iter_mode_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
 
-    # state change probs from multiple iterations
-    state_chang_probs = get_multi_iter_state_change_probs(state_changes, verbose=True)
+    # mode change probs from multiple iterations
+    mode_change_probs = get_multi_iter_mode_change_probs(mode_changes, verbose=True)
