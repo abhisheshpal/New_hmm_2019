@@ -174,6 +174,8 @@ def get_mode_times(log_data, mode, mode_str, verbose=False):
     return mode_times
 
 
+#-------------------------------------------
+
 def get_mode_nodes(log_data, mode, mode_str, verbose=False):
     """get_mode_nodes - gets nodes a picker was in, in a given mode, from a log_data file
 
@@ -202,6 +204,8 @@ def get_mode_nodes(log_data, mode, mode_str, verbose=False):
         if verbose: print "  ", mode_nodes[item["picker_id"]]
 
     return mode_nodes
+
+#----------------------------------------------
 
 
 def get_multi_iter_mode_time_gauss(mode_times, mode, mode_str, plot_data=False, verbose=False):
@@ -305,7 +309,7 @@ def get_single_iter_mode_time_gauss(mode_times, mode, mode_str, plot_data=False)
             ax1.set_title("%d - %s" %(mode, mode_str))
 
             ax2 = fig.add_subplot(212)
-            x = numpy.arange(min_time, max_time, .01)
+            x = numpy.arange(min_time, max_time, .001)
             ax2.plot(x, 1/(sigma * numpy.sqrt(2 * numpy.pi)) * numpy.exp( - (x - mean)**2 / (2 * sigma**2) ), linewidth=2, color='r')
             ax2.set_xlabel('Time (s)')
             ax2.set_ylabel('Probability')
@@ -581,8 +585,6 @@ if __name__ == "__main__":
 
         # allocated rows of each picker
         allocated_rows = get_allocated_rows(log_data, verbose=False)
-        print "here"
-        print allocated_rows
 
         # Time spent in each row for all rows in each picker case
         time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
@@ -610,21 +612,21 @@ if __name__ == "__main__":
         # get mode change probabilities with same mode changes while in picking
         mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[2], verbose=True))
 
-        # Get all mode_0 node changes for all pickers
-        mode_0_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
-        print mode_0_node_change
-        # Get all mode_1 node changes for all pickers
-        mode_1_node_change = get_mode_nodes(log_data, 1, "Transport to row node", verbose=True)
-        print mode_1_node_change
-        # Get all mode_2 node changes for all pickers
-        mode_2_node_change = get_mode_nodes(log_data, 2, "Picking", verbose=True)
-        print mode_2_node_change        
-        # Get all mode_3 node changes for all pickers
-        mode_3_node_change = get_mode_nodes(log_data, 3, "Transport to storage", verbose=True)
-        print mode_3_node_change        
-        # Get all mode_4 node changes for all pickers
-        mode_4_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
-        print mode_4_node_change
+#        # Get all mode_0 node changes for all pickers
+#        mode_0_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
+#        #print mode_0_node_change
+#        # Get all mode_1 node changes for all pickers
+#        mode_1_node_change = get_mode_nodes(log_data, 1, "Transport to row node", verbose=True)
+#        #print mode_1_node_change
+#        # Get all mode_2 node changes for all pickers
+#        mode_2_node_change = get_mode_nodes(log_data, 2, "Picking", verbose=True)
+#        #print mode_2_node_change        
+#        # Get all mode_3 node changes for all pickers
+#        mode_3_node_change = get_mode_nodes(log_data, 3, "Transport to storage", verbose=True)
+#        #print mode_3_node_change        
+#        # Get all mode_4 node changes for all pickers
+#        mode_4_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
+#        #print mode_4_node_change
 
 
 
@@ -633,31 +635,31 @@ if __name__ == "__main__":
 #     # single iter examples
 #==============================================================================
     gauss_0_iter0 = get_single_iter_mode_time_gauss(mode_0_times[0], 0, "Idle", plot_data=True)
-
+#
     mode_change_probs_iter0 = get_single_iter_mode_change_probs(mode_changes[0], verbose=True)
 
 
 #==============================================================================
 #     # multi-iter examples
 #==============================================================================
-
-    # get gaussian distributions of mode_0 times
-    gauss_0 = get_multi_iter_mode_time_gauss(mode_0_times, 0, "Idle", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_1 times
-    gauss_1 = get_multi_iter_mode_time_gauss(mode_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_2 times
-    gauss_2 = get_multi_iter_mode_time_gauss(mode_2_times, 2, "Picking", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_3 times
-    gauss_3 = get_multi_iter_mode_time_gauss(mode_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_4 times
-    gauss_4 = get_multi_iter_mode_time_gauss(mode_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of tray picking times
-    gauss_2_tray = get_multi_iter_mode_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_0 times
+#    gauss_0 = get_multi_iter_mode_time_gauss(mode_0_times, 0, "Idle", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_1 times
+#    gauss_1 = get_multi_iter_mode_time_gauss(mode_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_2 times
+#    gauss_2 = get_multi_iter_mode_time_gauss(mode_2_times, 2, "Picking", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_3 times
+#    gauss_3 = get_multi_iter_mode_time_gauss(mode_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_4 times
+#    gauss_4 = get_multi_iter_mode_time_gauss(mode_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of tray picking times
+#    gauss_2_tray = get_multi_iter_mode_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
 
     # mode change probs from multiple iterations
-    mode_change_probs = get_multi_iter_mode_change_probs(mode_changes, verbose=True)
+#    mode_change_probs = get_multi_iter_mode_change_probs(mode_changes, verbose=True)
