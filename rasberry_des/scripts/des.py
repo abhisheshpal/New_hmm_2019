@@ -80,7 +80,10 @@ if __name__ == "__main__":
     # create log directory if does not exist already
     if SAVE_STATS:
         asc_time = time.asctime().split(" ")
-        log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_%s_%s" %(asc_time[5], asc_time[1], asc_time[3], asc_time[4].replace(":", "_")))
+        if asc_time[2] == "":
+            log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_0%s_%s" %(asc_time[5], asc_time[1], asc_time[3], asc_time[4].replace(":", "_")))
+        else:
+            log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_%s_%s" %(asc_time[4], asc_time[1], asc_time[2], asc_time[3].replace(":", "_")))
         if os.path.exists(log_dir):
             pass
         else:
