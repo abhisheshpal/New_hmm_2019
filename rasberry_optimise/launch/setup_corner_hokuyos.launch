@@ -1,0 +1,96 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="db_path" default="$(env HOME)/mongodb"/>
+  <arg name="use_rviz" default="true"/>
+
+  <!-- Robot arguments -->
+  <arg name="with_teleoperation" default="false" />
+  <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_014.yaml"/>
+  <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_014_sensors_corner_hokuyos.xacro"/>
+
+  <!-- Gazebo arguments -->
+  <arg name="world_name" default="riseholme_0.0-0.005" />
+  <arg name="with_gui" default="true" />
+
+  <!-- Map arguments -->
+  <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml" />
+  <arg name="use_no_go_map" default="true" />
+  <arg name="no_go_map" default="$(find rasberry_navigation)/maps/riseholme_sim_no_go.yaml" />
+  <arg name="topo_map" default="riseholme_bidirectional_sim" />
+
+  <!-- Localisation arguments -->
+  <arg name="use_fake_localisation" default="false"/>
+
+  <!-- Move base arguments -->
+  <arg name="use_carrot_planner" default="false"/>
+  <arg name="use_teb_planner" default="false"/>
+
+  <arg name="use_omni" default="false" />
+ 
+  <!-- Mongo database -->
+  <include file="$(find mongodb_store)/launch/mongodb_store.launch">
+    <arg name="db_path" value="$(arg db_path)" />
+  </include>
+
+  <!-- Robot and Gazebo bringup -->
+  <include file="$(find rasberry_bringup)/launch/robot_bringup.launch">
+    <arg name="with_teleoperation" value="$(arg with_teleoperation)" />
+    <arg name="robot_model" value="$(arg robot_model)" />
+    <arg name="model_extras" value="$(arg model_extras)" />
+    <arg name="simple_sim" value="true" />
+    <arg name="world_name" value="$(arg world_name)" />
+    <arg name="with_gui" value="$(arg with_gui)" />
+  </include>
+
+  <!-- Gazebo collision detection -->
+  <node pkg="contact_monitor" type="contactMonitor" name="contact" />
+  <node name="contact_throttler" type="throttle" pkg="topic_tools" args="messages /collision_data 30 /collision_data_throttled"/>
+
+  <!-- Metric maps -->
+  <include file="$(find rasberry_navigation)/launch/map_server.launch">
+    <arg name="map" value="$(arg map)" />
+    <arg name="use_no_go_map" value="$(arg use_no_go_map)" />
+    <arg name="no_go_map" value="$(arg no_go_map)" />
+  </include>
+
+  <!-- Topological map -->
+  <include file="$(find rasberry_navigation)/launch/topological_map_manager_central.launch">
+    <arg name="map" value="$(arg topo_map)" />
+  </include>
+
+  <!-- Localisation -->
+  <node name="fake_localization" pkg="fake_localization" type="fake_localization" if="$(arg use_fake_localisation)">
+    <remap from="base_pose_ground_truth" to="odometry/gazebo" /> 
+    <param name="odom_frame_id" type="string" value="odom"/>
+    <param name="base_frame_id" type="string" value="base_link"/>
+  </node>
+
+  <include file="$(find rasberry_navigation)/launch/rasberry_localisation_corner_hokuyos.launch" unless="$(arg use_fake_localisation)" >
+    <arg name="use_imu" value="false" />
+    <arg name="publish_tf" value="false" />
+    <arg name="use_omni" value="$(arg use_omni)" />
+  </include>
+
+  <!-- Move base bringup -->
+  <include file="$(find rasberry_move_base)/launch/move_base_teb_corner_hokuyos.launch" if="$(arg use_teb_planner)">
+    <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
+    <arg name="use_omni" default="$(arg use_omni)" />
+  </include>
+
+  <include file="$(find rasberry_move_base)/launch/move_base_dwa_corner_hokuyos.launch" unless="$(arg use_teb_planner)">
+    <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
+    <arg name="use_omni" default="$(arg use_omni)" />
+  </include>
+
+  <!-- Topological navigation bringup -->
+  <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
+    <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
+    <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
+  </include>
+
+  <!-- Run rviz -->
+  <node pkg="rviz" type="rviz" name="rviz" args="-d $(find rasberry_bringup)/resources/topological_navigation.rviz" if="$(arg use_rviz)"/>
+
+
+</launch>
