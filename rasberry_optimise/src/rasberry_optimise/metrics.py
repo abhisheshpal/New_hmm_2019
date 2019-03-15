@@ -15,8 +15,8 @@ def scorepath(path, tickspersec=10, fun_radspersec2dollarspersec=(lambda dth : -
 
     L = list(map(fun_radspertick2dollarspertick, dths))   #lagrangian
 
-    cost_dollars = sum(L)
-    return cost_dollars
+    rotation_cost = -sum(L)
+    return rotation_cost
     
 
 def get_trajectory_length(trajectory):
@@ -74,12 +74,8 @@ def get_localisation_error(trajectory_ground_truth, trajectory_amcl):
     dys = ys_ground_truth - ys_amcl
     dthetas = 180 - np.abs(np.abs(thetas_ground_truth - thetas_amcl) - 180)
     
-    euclids = np.sqrt(dxs**2 + dys**2 + dthetas**2)
-    euclids_positions = np.sqrt(dxs**2 + dys**2)
-    
-    pose_error = np.mean(euclids)
-    position_error = np.mean(euclids_positions)
+    position_error = np.mean(np.sqrt(dxs**2 + dys**2))
     orientation_error = np.mean(dthetas) / (np.pi/180)     
     
-    return pose_error, position_error, orientation_error
+    return position_error, orientation_error
 #####################################################################################

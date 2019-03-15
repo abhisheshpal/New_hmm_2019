@@ -251,7 +251,7 @@ class scenario_server(object):
                 
                 # Get metrics
                 t = (time_2-time_1).to_sec()
-                cost_dollars = scorepath(np.array(trajectory_amcl))
+                rotation_cost = scorepath(np.array(trajectory_amcl))
                 trajectory_length = get_trajectory_length(trajectory_amcl)
                 
                 if self.centres is not None:
@@ -259,29 +259,29 @@ class scenario_server(object):
                 else:
                     path_error = 0.0
                     
-                pose_error, position_error, orientation_error = get_localisation_error(trajectory_ground_truth, trajectory_amcl)
+                position_error, orientation_error = get_localisation_error(trajectory_ground_truth, trajectory_amcl)
                 
                 print "Completed scenario in {} seconds".format(t)
-                print "Rotation cost = {} dollars".format(cost_dollars)
+                print "Rotation cost = {}".format(rotation_cost)
                 print "Length of trajectory = {} meters".format(trajectory_length)
                 print "Path error = {} meters".format(path_error)
-                print "Mean pose error = {}".format(pose_error)                
                 print "Mean position error = {} meters".format(position_error) 
                 print "Mean orientation error = {} degrees".format(orientation_error) 
                 
             else:
                 t = self.max_wait_time.to_sec()
-                cost_dollars = -10e5
+                rotation_cost = 10e5
                 trajectory_length = 10e5
                 path_error = 10e5
-                pose_error = 10e5
+                position_error = 10e5
+                orientation_error = 10e5
                 print "Failed to complete scenario in maximum alloted time of {} seconds".format(t)
                 
         except rospy.ROSException:
             pass
         
         else:
-            metrics = (t, cost_dollars, trajectory_length, path_error, pose_error)
+            metrics = (t, rotation_cost, trajectory_length, path_error, position_error, orientation_error)
             return metrics, trajectory, trajectory_ground_truth, trajectory_amcl
             
             
@@ -299,28 +299,15 @@ class scenario_server(object):
             
             
     def rp_callback(self, msg):
-        robot_pose = self.get_pose(msg) 
+        robot_pose = get_pose(msg) 
         self.robot_poses.append(robot_pose)        
             
             
     def rp_filtered_callback(self, msg_rp, msg_amcl):
-        robot_pose = self.get_pose(msg_rp) 
-        amcl_pose = self.get_pose(msg_amcl) 
+        robot_pose = get_pose(msg_rp) 
+        amcl_pose = get_pose(msg_amcl) 
         self.robot_poses_filtered.append(robot_pose)
         self.amcl_poses_filtered.append(amcl_pose)
-            
-            
-    def get_pose(self, msg):
-        """Get robot poses and append them to a list to form the robot's trajectory.
-        """
-        x = msg.pose.pose.position.x
-        y = msg.pose.pose.position.y
-        xq = msg.pose.pose.orientation.x
-        yq = msg.pose.pose.orientation.y
-        zq = msg.pose.pose.orientation.z
-        wq = msg.pose.pose.orientation.w
-        roll, pitch, yaw = tf.transformations.euler_from_quaternion([xq, yq, zq, wq])
-        return [x, y, yaw]
         
 
     def contact_callback(self, msg):

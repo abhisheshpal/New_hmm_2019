@@ -3,19 +3,21 @@ ngen: 100              # The number of generations.
 init_popsize: 100      # Initial population size before first selection is carried out.
 indpb: 0.1             # Independent probability for each attribute (parameter) to be mutated.
 c: 3.0                 # Sets std of Gaussian mutation. c stds cover half width of parameter range (as set in parameter config file).
-tournsize: 5           # The number of individuals participating in each selection tournament.
+tournsize: 5           # The number of individuals participating in each selection tournament. Set to zero to select the mu individuals with highest fitness.
 mu: 50                 # The number of individuals to select for the next generation.
 lambda: 20             # The number of children to produce at each generation.
 cxpb: 0.5              # The probability that an offspring is produced by crossover.
 mutpb: 0.5             # The probability that an offspring is produced by mutation.
 
-weight_time:   0.0                 # Weighting assigned to the "time to complete scenario" metric (GA will try to minimise). Sould be positive.
-weight_smooth: 0.0                 # Weighting assigned to the smoothness metric (GA will try to maximise). Sould be positive.
-weight_length: 0.0                 # Weighting assigned to the "length of trajectory" metric (GA will try to minimise). Sould be positive.
-weight_path_error: 1.0                 # Weighting assigned to the "average squared distance from coordinates" metric (GA will try to minimise). Sould be positive.
-weight_localisation_error: 0.0     # Weighting assigned to the amcl localisation error metric (GA will try to minimise). Sould be positive.
+weight_time: -1.0                      # Weighting assigned to the "time to complete scenario" metric.
+weight_rotation: -0.0                  # Weighting assigned to the rotation cost metric.
+weight_length: -0.0                    # Weighting assigned to the "length of trajectory" metric.
+weight_path_error: -0.0                # Weighting assigned to the "average squared distance from coordinates" metric.
+weight_position_error: -0.0            # Weighting assigned to the position error metric.
+weight_orientation_error: -0.0         # Weighting assigned to the orientation error metric (GA will try to minimise).
+multi_objective: true
 
 num_runs: 1    # run scenario num_runs times for a given param set to get median (more robust) metrics to be passed to the GA. 
 
-save_path: "/home/adam/Documents/SagaRobotics/RASberry/optim/data" # optional location to save data (defaults to rasberry_optimise package directory)
+save_path: "/home/adam/Documents/SagaRobotics/RASberry/optim/sim_data" # optional location to save data (defaults to rasberry_optimise package directory)
 
