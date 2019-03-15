@@ -64,8 +64,8 @@ windows:
 - name: robot
   panes:
   - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors_corner_hokuyos.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD use_gui:=$USE_GUI
-  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_fl" ip_address:="192.168.0.10" angle_min:=-2.36 angle_max:=2.36 node_name:="urg_node_fl" topic_name:="scan_fl"
-  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_br" ip_address:="192.168.0.11" angle_min:=-2.36 angle_max:=2.36 node_name:="urg_node_br" topic_name:="scan_br"
+  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_fl" ip_address:="192.168.0.10" angle_min:=-2.18 angle_max:=2.36 node_name:="urg_node_fl" topic_name:="scan_fl"
+  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_br" ip_address:="192.168.0.11" angle_min:=-2.18 angle_max:=2.36 node_name:="urg_node_br" topic_name:="scan_br"
   - roslaunch rasberry_bringup xsens_driver.launch
 - name: localisation
   panes:
