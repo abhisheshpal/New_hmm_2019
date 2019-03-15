@@ -4,15 +4,12 @@
 # min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
+
 /move_base/TebLocalPlannerROS:
-  dt_ref: # dt_hysteresis constrained to be 10% of dt_ref as recommended here http://wiki.ros.org/teb_local_planner
+  dt_ref:         # dt_hysteresis constrained to be 10% of dt_ref as recommended here http://wiki.ros.org/teb_local_planner
     type: "float"
     min: 0.02
     max: 1.0
-#  dt_hysteresis: 
-#    type: "float"
-#    min: 0.01
-#    max: 1.0
   global_plan_overwrite_orientation: 
     type: "bool"
   global_plan_viapoint_sep: 
@@ -23,6 +20,10 @@
     type: "float"
     min: 1.0
     max: 5.0
+  max_number_classes: 
+    type: "int"
+    min: 1
+    max: 10
   min_obstacle_dist: 
     type: "float"
     min: 0.1
@@ -35,42 +36,38 @@
     type: "int"
     min: 2
     max: 10
-  penalty_epsilon: # should be < min(max_vel_x, max_vel_x_backwards, max_vel_theta, acc_lim_x). Default = 0.1, min possible: 0.0, max possible: 1.0
+  penalty_epsilon:   # should be < min(max_vel_x, max_vel_x_backwards, max_vel_theta, acc_lim_x). Default = 0.1, min possible = 0.0, max possible = 1.0
     type: "float"
     min: 0.01
     max: 0.19
-  weight_max_vel_x: 
-    type: "float"
-    min: 0.5
-    max: 10.0
-  weight_max_vel_theta: 
-    type: "float"
-    min: 0.5
-    max: 10.0
-  weight_acc_lim_x: 
-    type: "float"
-    min: 0.5
-    max: 5.0
   weight_acc_lim_theta: 
     type: "float"
     min: 0.5
     max: 5.0
-  weight_optimaltime: 
+  weight_acc_lim_x: 
     type: "float"
-    min: 0.2
+    min: 0.5
     max: 5.0
+  weight_max_vel_theta: 
+    type: "float"
+    min: 0.5
+    max: 10.0
+  weight_max_vel_x: 
+    type: "float"
+    min: 0.5
+    max: 10.0
   weight_obstacle: 
     type: "int"
     min: 10
     max: 100
+  weight_optimaltime: 
+    type: "float"
+    min: 0.2
+    max: 5.0
   weight_viapoint: 
     type: "float"
     min: 0.1
     max: 2.0
-  max_number_classes: 
-    type: "int"
-    min: 1
-    max: 10
 
 #/move_base/local_costmap/local_inflation_layer:
 #  inflation_radius: 
@@ -81,4 +78,3 @@
 #    type: "float"
 #    min: 0.05
 #    max: 10.0
-
