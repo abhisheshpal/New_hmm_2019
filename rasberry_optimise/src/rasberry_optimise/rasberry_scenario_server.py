@@ -251,11 +251,11 @@ class scenario_server(object):
                 
                 # Get metrics
                 t = (time_2-time_1).to_sec()
-                rotation_cost = scorepath(np.array(trajectory_amcl))
-                trajectory_length = get_trajectory_length(trajectory_amcl)
+                rotation_cost = scorepath(np.array(trajectory))
+                trajectory_length = get_trajectory_length(trajectory)
                 
                 if self.centres is not None:
-                    path_error = get_path_error(trajectory_amcl, self.centres)
+                    path_error = get_path_error(trajectory, self.centres)
                 else:
                     path_error = 0.0
                     
