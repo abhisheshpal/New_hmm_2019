@@ -4,6 +4,7 @@ import rospy, sys, random, time, datetime, pickle, os, numpy as np
 from rasberry_optimise.utils import *
 from rasberry_optimise.rasberry_scenario_server import scenario_server
 from deap import base, creator, tools, algorithms
+import rospkg
 
 
 def evaluate(individual):
@@ -250,6 +251,8 @@ if __name__ == "__main__":
 
 #####################################################################################    
     # Save data.
+    rospack = rospkg.RosPack()
+    base_dir = rospack.get_path("rasberry_optimise") 
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
     else:
