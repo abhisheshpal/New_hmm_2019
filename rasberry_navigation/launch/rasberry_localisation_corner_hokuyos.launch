@@ -19,8 +19,8 @@
 
 
   <!-- topic_tools/relay to merge two scans to scan topic for amcl and move_base -->
-  <node pkg="topic_tools" type="relay" name="scan_fr_scan" args="scan_fr scan" />
-  <node pkg="topic_tools" type="relay" name="scan_bl_scan" args="scan_bl scan" />
+  <node pkg="topic_tools" type="relay" name="scan_fl_scan" args="scan_fl scan" />
+  <node pkg="topic_tools" type="relay" name="scan_br_scan" args="scan_br scan" />
 
   <!-- imu-ekf localization for odom-to-base_link -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">

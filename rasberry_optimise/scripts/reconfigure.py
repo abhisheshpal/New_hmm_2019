@@ -22,7 +22,7 @@ if __name__ == "__main__":
     
     rospy.init_node("reconfigure", anonymous=True)
     
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         rospy.loginfo("usage is reconfigure.py path_to_parameters_json parameter_index path_to_parameters_yaml")
         exit()
     else:
