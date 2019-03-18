@@ -3,6 +3,6 @@ start_node: WayPoint59
 goal_node: WayPoint35
 robot_name: thorvald_ii
 max_wait_time: 210 # time (seconds) allowed to complete scenario.
-coords_file: pole_coords.json # optional - the GA will try to minimise the squared Euclidean distance between the robot and the coordinates in this file.
+centres: centres_row3_sim.json # optional - the GA will try to minimise distance to centre path
 
-# Note on coords_file: should be located in `/rasberry_optimise/resources`
+# Note on centres file: should be located in `/rasberry_optimise/resources`

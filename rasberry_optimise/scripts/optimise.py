@@ -4,7 +4,7 @@ import rospy, sys, random, time, datetime, pickle, os, numpy as np
 from rasberry_optimise.utils import *
 from rasberry_optimise.rasberry_scenario_server import scenario_server
 from deap import base, creator, tools, algorithms
-import rospack
+import rospkg
 
 
 def evaluate(individual):
@@ -15,11 +15,12 @@ def evaluate(individual):
     # Make dictionary of parameters to pass to the scenario server.
     params = make_param_dict(config_params, individual)
 
-    metric_array = np.empty((NUM_RUNS, 5))
+    metric_array = np.empty((NUM_RUNS, 6))
     for i in range(NUM_RUNS):
 
         time_1 = time.time()
-        metrics, trajectory = ss.run_scenario(params)
+        metrics, trajectory, trajectory_ground_truth, trajectory_amcl \
+        = ss.run_scenario(params)
         time_2 = time.time()
         metric_array[i, :] = metrics
 
@@ -35,12 +36,18 @@ def evaluate(individual):
 
 
     t = np.median(metric_array[:, 0])
-    cost_dollars = np.median(metric_array[:, 1])
+    rotation_cost = np.median(metric_array[:, 1])
     trajectory_length = np.median(metric_array[:, 2])
     dist_from_coords = np.median(metric_array[:, 3])
-    localisation_error = np.median(metric_array[:, 4])
+    position_error = np.median(metric_array[:, 4])
+    orientation_error = np.median(metric_array[:, 5])
 
-    return (t, cost_dollars, trajectory_length, dist_from_coords, localisation_error)
+    metrics = (t, rotation_cost, trajectory_length, dist_from_coords, position_error, orientation_error)
+
+    if MULTI_OBJECTIVE:
+        metrics = (np.sum(np.array(weights_multi) * np.array(metrics)),)
+
+    return metrics
 
 
 def checkBounds(mins, maxs):
@@ -96,10 +103,12 @@ if __name__ == "__main__":
     CXPB = config_ga["cxpb"]
     MUTPB = config_ga["mutpb"]
     WEIGHT_TIME = config_ga["weight_time"]
-    WEIGHT_SMOOTH = config_ga["weight_smooth"]
+    WEIGHT_ROTATION = config_ga["weight_rotation"]
     WEIGHT_LENGTH = config_ga["weight_length"]
-    WEIGHT_COORDS = config_ga["weight_coords"]
-    WEIGHT_LOCALISATION_ERROR = config_ga["weight_localisation_error"]
+    WEIGHT_PATH_ERROR = config_ga["weight_path_error"]
+    WEIGHT_POSITION_ERROR = config_ga["weight_position_error"]
+    WEIGHT_ORIENTATION_ERROR = config_ga["weight_orientation_error"]
+    MULTI_OBJECTIVE = config_ga["multi_objective"]
     NUM_RUNS = config_ga["num_runs"]
 
     print "\nSetting hyper-parameters of the genetic algorithm ..."
@@ -113,21 +122,26 @@ if __name__ == "__main__":
     print "Setting cxpb = {}".format(CXPB)
     print "Setting mutpb = {}".format(MUTPB)
     print "Setting weight_time = {}".format(WEIGHT_TIME)
-    print "Setting weight_smooth = {}".format(WEIGHT_SMOOTH)
+    print "Setting weight_rotation = {}".format(WEIGHT_ROTATION)
     print "Setting weight_length = {}".format(WEIGHT_LENGTH)
-    print "Setting weight_coords = {}".format(WEIGHT_COORDS)
-    print "Setting weight_localisation_error = {}".format(WEIGHT_LOCALISATION_ERROR)
+    print "Setting weight_path_error = {}".format(WEIGHT_PATH_ERROR)
+    print "Setting weight_position_error = {}".format(WEIGHT_POSITION_ERROR)
+    print "Setting weight_orientation_error = {}".format(WEIGHT_ORIENTATION_ERROR)
+    print "Setting multi_objective = {}".format(MULTI_OBJECTIVE)
     print "Setting num_runs = {}".format(NUM_RUNS)
 #####################################################################################
 
 
 #####################################################################################
     # Create DEAP toolbox and register parameters for optimisation.
-    weights = np.array([WEIGHT_TIME, WEIGHT_SMOOTH, WEIGHT_LENGTH, WEIGHT_COORDS, WEIGHT_LOCALISATION_ERROR])
-    weights = -1 * weights
-    weights[1] = -1 * weights[1]
+    weights = (WEIGHT_TIME, WEIGHT_ROTATION, WEIGHT_LENGTH, WEIGHT_PATH_ERROR,
+               WEIGHT_POSITION_ERROR, WEIGHT_ORIENTATION_ERROR)
 
-    creator.create("FitnessMulti", base.Fitness, weights=tuple(weights))
+    if MULTI_OBJECTIVE:
+        weights_multi = weights
+        weights = (1.0,)
+
+    creator.create("FitnessMulti", base.Fitness, weights=weights)
     creator.create("Individual", list, fitness=creator.FitnessMulti)
     toolbox = base.Toolbox()
 
@@ -237,6 +251,7 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Save data.
+    rospack = rospkg.RosPack()
     base_dir = rospack.get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
@@ -250,9 +265,9 @@ if __name__ == "__main__":
     save_data_to_json(save_dir + "/hof.json", [ind for ind in hof])
     save_data_to_json(save_dir + "/pop.json", pop)
     save_data_to_json(save_dir + "/data.json", data)
-
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
-    pickle.dump(config_scenario, open(save_dir + "/config_scenario.p", "wb"))
-    pickle.dump(config_params, open(save_dir + "/config_params.p", "wb"))
-    pickle.dump(config_ga, open(save_dir + "/config_ga.p", "wb"))
+
+    save_data_to_yaml(save_dir + "/config_scenario.yaml", config_scenario)
+    save_data_to_yaml(save_dir + "/config_params.yaml", config_params)
+    save_data_to_yaml(save_dir + "/config_ga.yaml", config_ga)
 #####################################################################################
