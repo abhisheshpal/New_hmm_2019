@@ -1,6 +1,0 @@
-free_thresh: 0.196
-image: riseholme_sim_no_go.pgm
-negate: 0
-occupied_thresh: 0.65
-origin: [-15.049999999999997, -13.849999999999994, 0.0]
-resolution: 0.05

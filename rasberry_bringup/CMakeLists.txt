@@ -174,13 +174,9 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 
-install(PROGRAMS
-  scripts/start_multisim.sh
-  scripts/start_sim.sh
-  scripts/start_sim_norway_poles_unified.sh
-  scripts/start_sim_riseholme_unified.sh
-  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
-)
+#install(PROGRAMS
+#  DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+#)
 
 ## Mark executables and/or libraries for installation
 # install(TARGETS ${PROJECT_NAME} ${PROJECT_NAME}_node
