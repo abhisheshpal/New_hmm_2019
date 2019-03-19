@@ -9,7 +9,7 @@ import rospkg
 
 def evaluate(individual):
     """Run the test scenario (move from start node to goal node) given a set of
-       parameters (individual) and get fitness metrics.
+       parameters (individual) and get metrics.
     """
 
     # Make dictionary of parameters to pass to the scenario server.
@@ -38,11 +38,11 @@ def evaluate(individual):
     t = np.median(metric_array[:, 0])
     rotation_cost = np.median(metric_array[:, 1])
     trajectory_length = np.median(metric_array[:, 2])
-    dist_from_coords = np.median(metric_array[:, 3])
+    path_error = np.median(metric_array[:, 3])
     position_error = np.median(metric_array[:, 4])
     orientation_error = np.median(metric_array[:, 5])
 
-    metrics = (t, rotation_cost, trajectory_length, dist_from_coords, position_error, orientation_error)
+    metrics = (t, rotation_cost, trajectory_length, path_error, position_error, orientation_error)
 
     if MULTI_OBJECTIVE:
         metrics = (np.sum(np.array(weights_multi) * np.array(metrics)),)
@@ -252,11 +252,9 @@ if __name__ == "__main__":
 #####################################################################################
     # Save data.
     rospack = rospkg.RosPack()
-    base_dir = rospack.get_path("rasberry_optimise")
+    save_path = rospack.get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
-    else:
-        save_path = base_dir
 
     save_dir = os.path.join(save_path,
     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
