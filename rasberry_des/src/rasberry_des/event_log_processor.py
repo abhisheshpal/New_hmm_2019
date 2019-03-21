@@ -92,7 +92,7 @@ def get_allocated_rows(log_data, verbose=False):
             count += 1
     return allocated_rows
 
-#--------------ON GOING WORK-------------------------
+#--------------DONE for getting Node_dist GOING WORK-------------------------
 
 """
 Create two functions , one for getting the difference between the X coordinates of the consecutive nodes
@@ -100,117 +100,122 @@ second function for (by using function one) getting the rates of the modes based
 consecutive nodes. 
 
 """
-def get_node_cord(log_data, verbose= False):
-
-#    row_node = []
-    n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]     
-    assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
-    
-    x = None
-    y = None
-    x_new = None
-    y_new = None
-#    node_ids = []
-    xy_diff = [] 
-    count = 0
-    for item in log_data["env_details"]["row_details"]:
-        for rows in item["row_id"]: 
-#        row_node.append(item["row_id"])
-#    for rows in item["row_details"]:
-#        row_node[item["row_id"]] = []
-            for row_nod in rows["row_nodes"]:
-    #            row_node(item["row_id"]) = node_ids.append(row_node["node_id"])
-    #            row_node[item["row_id"]].append(row_node["node_id"])
-              for all_nodes in row_nod["node_id"]:
-                  if x and y is None:
-                    x_new = x + all_nodes["X"]
-                    y_new = y + all_nodes["Y"]
-                    xy_diff = math.sqrt(x_new^2 - y_new^2)       
-                  else:
-                    xy_diff = math.sqrt((x_new-x)^2 - (y_new-y)^2)
-#                    row_node[item["row_id"]["node_id"]].append(xy_diff)  
-                    count += 1
-                    x = None
-                    y = None
-                    x_new = None
-                    y_new = None
-                  
-    return xy_diff
-                
-#def get_node_cord_diff(log_data, verbose=False):
-#    row_node = {}
+#def get_node_cord(log_data, mode, mode_str, verbose= False):
+#
+#    
 #    n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]     
 #    assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
-#    row_ids = []            # created list to store row_id 
-##    row_node = {}           # created dict to store row_nodes
-#    node_coordinates_X = [] # {node_id: X, Y}  # created a list to store coordinate X   
-##    head_nodes = {}         # created dict to store head_nodes
-#    count = 0
-#    X_coord_diff = 0
+#    node_ids = []
+#    node_coords = {} 
+#    node_dists = {}
 #    for item in log_data["env_details"]["row_details"]:
-#        row_ids.append(item["row_id"])   # append the row_ids list with row_id
-#        if verbose: print "row_id: %s" %(item["row_id"])    # print row_id: []
-##        if verbose: print "  row_nodes:"                    # print row_nodes:
-#        row_node[item["row_id"]] = {}   # initialize row_node dict with key row_id: _value_ 
-#        for node_info in item["row_nodes"]:
-#            for node_ids in node_info["node_id"]:
-#                node_coordinates_X = node_info["X"]
-#                node_coordinates_X.append(node_info["X"])
-#                row_node.append(item["node_id"])
-#                X_coord_diff =  node_coordinates_X.append(node_info["X"]) - node_coordinates_X
-#                count += 1
-#                if verbose: print "%d node_id:%s X: %0.3f" %(count, node_info["node_id"], node_info["X"])
+#        for node in item["row_nodes"]:
+#           if node["node_id"] not in node_ids:
+#               node_ids.append(node["node_id"])
+#               node_coords[node["node_id"]] = {"x":node["x"], "y":node["y"]}
+#
+#    for node_1 in node_ids:
+#        for node_2 in node_ids:
+#            if node_1 == node_2:
+#                pass
+#            else:
+#                node_dists[(node_1, node_2)] = numpy.hypot(node_coords[node_1]["x"] - node_coords[node_2]["x"],
+#                                                           node_coords[node_1]["y"] - node_coords[node_2]["y"])
+#                node_dists[(node_2, node_1)] = node_dists[(node_1, node_2)]
 #                
-#    return X_coord_diff
+#    return node_dists 
 
+#--------------------trying ---------------
 
-def get_mode_rate(log_data, mode, mode_str, verbose=False):
-    """get_mode_rate - gets rate of a picker in a given mode when traversing between the nodes 
+def get_node_cord(log_data, mode, mode_str, verbose= False):
+
     
-    Keyword arguments:
+    n_topo_nav_rows = log_data["env_details"]["n_topo_nav_rows"]     
+    assert n_topo_nav_rows == len(log_data["env_details"]["row_details"])
+    node_ids = []
+    node_coords = {} 
+    node_dists = {}
+    for item in log_data["env_details"]["row_details"]:
+        for node in item["row_nodes"]:
+           if node["node_id"] not in node_ids:
+               node_ids.append(node["node_id"])
+               node_coords[node["node_id"]] = {"x":node["x"], "y":node["y"]}
 
-    log_data - data dict loaded from a yaml log file
-    mode - mode of interest
-    mode_str - mode string, for printing
-    verbose - controls sysout prints, bool
-
-    Returns:
-
-    mode_rate - {picker_id: [rate]}
-    """
-
-    mode_rate = {}
+    for node_1 in node_ids:
+        for node_2 in node_ids:
+            if node_1 == node_2:
+                pass
+            else:
+                node_dists[(node_1, node_2)] = numpy.hypot(node_coords[node_1]["x"] - node_coords[node_2]["x"],
+                                                           node_coords[node_1]["y"] - node_coords[node_2]["y"])
+                node_dists[(node_2, node_1)] = node_dists[(node_1, node_2)] 
+                
+    
+    mode_rate = {}  # To store rates {mode : [rates]}
     if verbose: print "MODE:%d - %s" %(mode, mode_str)
     for item in log_data["sim_details"]["picker_states"]:
-        mode_rate[item["picker_id"]] = []
+        
         mode_start = None
+        mode_finish = None
+        node_s = None
+        node_f = None
         mean = 0
         sigma = 0
         count = 0
-        rate = 0
-        get_node_id = 0
-        for mode_info in item["state_changes"]:
+        rates = 0
+        node_diff = 0
+        node_id_list = []
+        for mode_info in item["state_changes"]:    # 'item' is used to get the element of a list but not Dict
+            mode_rate[mode_info["mode"]] = []            
             if mode_info["mode"] == mode:
                 if mode_start is None:
-                    mode_start = mode_info["time"]
-                    get_node_id = get_node_cord(log_data, verbose=False)
-                    rate = get_node_id / mode_start
-          
+                    if node_s is None:
+                        node_s = mode_info["node"]   # store first node_id of mode
+                        mode_start = mode_info["time"]      # store time of mode
+                    else:
+                        pass
                 else:
-                    mode_rate[item["picker_id"]].append(rate)
-                    count += 1
+                    pass
+            else:
+                if mode_start is None:
+                    if node_s is None:
+                        pass
+                    pass
+                else:
+                    node_f = mode_info["node"]    # store second node_id of mode
+                    mode_finish = mode_info["time"]  # store time of mode
+                    time_diff = mode_finish - mode_start
+                    if node_s == node_f:
+                        pass
+                    else:
+                        node_id_list = [(node_s, node_f), (node_f, node_s) ]  # create a list to store [(node_s, node_f)]
+                        print node_id_list
+                    # get node_s - node_f from the dictionary we created above node_dists[(node_2, node_1)]
+                    for i in node_dists.keys():   # check if i keyword in dict node_dists
+                        for j in node_id_list:       # check if j in list 
+                            if j == i:
+                                node_diff = node_dists.values() 
+                                print "node: %0.3f"%(node_diff)
+                            else:
+                                pass
+                            rates = numpy.divide(node_diff, time_diff)   # calculate the 'rate' of each node_s - node_f with the time
+#                            print rates                             
+                            mode_rate[mode_info["mode"]].append(rates)     # append the rate in the dict mode_times
+                    
+                    
+                    count += 1 
                     mode_start = None
-                    get_node_id = 0
+                    mode_finish = None                     
+                    
+        mean = numpy.mean(mode_rate[mode_info["mode"]])
+        sigma = numpy.std(mode_rate[mode_info["mode"]])
 
-        mean = numpy.mean(mode_rate[item["picker_id"]])
-        sigma = numpy.std(mode_rate[item["picker_id"]])
-
-        if verbose: print "picker_id: %s" %(item["picker_id"])
+        if verbose: print "mode: %s" %(mode_info["mode"])
         if verbose: print "  transition count: %d, mean_time: %0.3f, std: %0.3f" %(count, mean, sigma)
-        if verbose: print "  ", mode_rate[item["picker_id"]]
+        if verbose: print "  ", mode_rate[mode_info["mode"]]
 
     return mode_rate
-
+ 
 #--------------------------------------------------------
 
 def get_time_spent_in_rows(log_data, verbose=False):
@@ -701,37 +706,37 @@ if __name__ == "__main__":
         n_trials += 1
 
 
-        # node yield associated with each row
-        node_yields = get_node_yields(log_data, verbose=False)
-
-        # allocated rows of each picker
-        allocated_rows = get_allocated_rows(log_data, verbose=False)
-
-        # Time spent in each row for all rows in each picker case
-        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
-
-        # Get all mode_0 times for all pickers
-        mode_0_times.append(get_mode_times(log_data, 0, "Idle", verbose=True))
-
-        # Get all mode_1 times for all pickers
-        mode_1_times.append(get_mode_times(log_data, 1, "Transport to row node", verbose=True))
-
-        # Get all mode_2 times for all pickers
-        mode_2_times.append(get_mode_times(log_data, 2, "Picking", verbose=True))
-
-        # Get all mode_3 times for all pickers
-        mode_3_times.append(get_mode_times(log_data, 3, "Transport to storage", verbose=True))
-
-        # Get all mode_4 times for all pickers
-        mode_4_times.append(get_mode_times(log_data, 4, "Unload at storage", verbose=True))
-
-        # Time spent for pickiing each full tray
-        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
-
-        # get mode change probabilities
-        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[], verbose=True))
-        # get mode change probabilities with same mode changes while in picking
-        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[2], verbose=True))
+#        # node yield associated with each row
+#        node_yields = get_node_yields(log_data, verbose=False)
+#
+#        # allocated rows of each picker
+#        allocated_rows = get_allocated_rows(log_data, verbose=False)
+#
+#        # Time spent in each row for all rows in each picker case
+#        time_spent_in_row = get_time_spent_in_rows(log_data, verbose=False)
+#
+#        # Get all mode_0 times for all pickers
+#        mode_0_times.append(get_mode_times(log_data, 0, "Idle", verbose=True))
+#
+#        # Get all mode_1 times for all pickers
+#        mode_1_times.append(get_mode_times(log_data, 1, "Transport to row node", verbose=True))
+#
+#        # Get all mode_2 times for all pickers
+#        mode_2_times.append(get_mode_times(log_data, 2, "Picking", verbose=True))
+#
+#        # Get all mode_3 times for all pickers
+#        mode_3_times.append(get_mode_times(log_data, 3, "Transport to storage", verbose=True))
+#
+#        # Get all mode_4 times for all pickers
+#        mode_4_times.append(get_mode_times(log_data, 4, "Unload at storage", verbose=True))
+#
+#        # Time spent for pickiing each full tray
+#        tray_picking_times.append(get_tray_picking_times(log_data, verbose=False))
+#
+#        # get mode change probabilities
+#        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[], verbose=True))
+#        # get mode change probabilities with same mode changes while in picking
+#        mode_changes.append(get_mode_change_counts(log_data, inc_same_modes=[2], verbose=True))
 
 #        # Get all mode_0 node changes for all pickers
 #        mode_0_node_change = get_mode_nodes(log_data, 0, "Idle", verbose=True)
@@ -749,42 +754,54 @@ if __name__ == "__main__":
 #        mode_4_node_change = get_mode_nodes(log_data, 4, "Unload at storage", verbose=True)
 #        #print mode_4_node_change
 
-        get_rates_node = get_mode_rate(log_data, 0, "Idle", verbose=True)
-        print "here: %s" %(get_rates_node)
+               
+        get_rates_node_0 =  get_node_cord(log_data, 0, "Idle", verbose= True)
+        print "here: %s" %(get_rates_node_0)
+        
+        get_rates_node_1 =  get_node_cord(log_data, 1, "Transport to row node", verbose= True)
+        print "here: %s" %(get_rates_node_0)
+        
+        get_rates_node_2 =  get_node_cord(log_data, 2, "Picking", verbose= True)
+        print "here: %s" %(get_rates_node_2)
+        
+        get_rates_node_3 =  get_node_cord(log_data, 3, "Transport to storage", verbose= True)
+        print "here: %s" %(get_rates_node_3)
 
+        get_rates_node_4 =  get_node_cord(log_data, 4, "Unload at storage", verbose= True)
+        print "here: %s" %(get_rates_node_4)
 
 
 
 #==============================================================================
 #     # single iter examples
 #==============================================================================
-    gauss_0_iter0 = get_single_iter_mode_time_gauss(mode_0_times[0], 0, "Idle", plot_data=True)
-#
-    mode_change_probs_iter0 = get_single_iter_mode_change_probs(mode_changes[0], verbose=True)
+#    gauss_0_iter0 = get_single_iter_mode_time_gauss(mode_0_times[0], 0, "Idle", plot_data=True)
+##
+#    mode_change_probs_iter0 = get_single_iter_mode_change_probs(mode_changes[0], verbose=True)
 
 
 #==============================================================================
 #     # multi-iter examples
 #==============================================================================
 
-    # get gaussian distributions of mode_0 times
-    gauss_0 = get_multi_iter_mode_time_gauss(mode_0_times, 0, "Idle", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_1 times
-    gauss_1 = get_multi_iter_mode_time_gauss(mode_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_2 times
-    gauss_2 = get_multi_iter_mode_time_gauss(mode_2_times, 2, "Picking", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_3 times
-    gauss_3 = get_multi_iter_mode_time_gauss(mode_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of mode_4 times
-    gauss_4 = get_multi_iter_mode_time_gauss(mode_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
-
-    # get gaussian distributions of tray picking times
-
-    gauss_2_tray = get_multi_iter_mode_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
-
-    # mode change probs from multiple iterations
-    mode_change_probs = get_multi_iter_mode_change_probs(mode_changes, verbose=True)
+#    # get gaussian distributions of mode_0 times
+#    gauss_0 = get_multi_iter_mode_time_gauss(mode_0_times, 0, "Idle", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_1 times
+#    gauss_1 = get_multi_iter_mode_time_gauss(mode_1_times, 1, "Transport to row node", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_2 times
+#    gauss_2 = get_multi_iter_mode_time_gauss(mode_2_times, 2, "Picking", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_3 times
+#    gauss_3 = get_multi_iter_mode_time_gauss(mode_3_times, 3, "Transport to storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of mode_4 times
+#    gauss_4 = get_multi_iter_mode_time_gauss(mode_4_times, 4, "Unload at storage", plot_data=True, verbose=True)
+#
+#    # get gaussian distributions of tray picking times
+#
+#    gauss_2_tray = get_multi_iter_mode_time_gauss(tray_picking_times, 2, "Tray Picking", plot_data=True, verbose=True)
+#
+#    # mode change probs from multiple iterations
+#    mode_change_probs = get_multi_iter_mode_change_probs(mode_changes, verbose=True)
