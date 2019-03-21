@@ -10,7 +10,7 @@
   <link name="$(arg tf_prefix)/velodyne"/>
 
   <!-- Hokuyo Laser -->
-  <link name="$(arg tf_prefix)/hokuyo_fl">
+  <link name="$(arg tf_prefix)/hokuyo_front">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -33,7 +33,7 @@
   </link>
 
  <!-- Hokuyo Laser -->
-  <link name="$(arg tf_prefix)/hokuyo_br">
+  <link name="$(arg tf_prefix)/hokuyo_back">
     <collision>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
@@ -75,16 +75,16 @@
     <origin xyz="-0.005 0.2605 0.682" rpy="0 0 0"/>
   </joint>
 
-   <joint name="base_sens_hokuyo_fl" type="fixed">
+   <joint name="base_sens_hokuyo_front" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
-    <child link="$(arg tf_prefix)/hokuyo_fl"/>
+    <child link="$(arg tf_prefix)/hokuyo_front"/>
     <axis xyz="0 1 0" />
     <origin xyz="0.700 0.485 0.705" rpy="0.0 0.0 0.79"/>
   </joint>
 
-   <joint name="base_sens_hokuyo_br" type="fixed">
+   <joint name="base_sens_hokuyo_back" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
-    <child link="$(arg tf_prefix)/hokuyo_br"/>
+    <child link="$(arg tf_prefix)/hokuyo_back"/>
     <axis xyz="0 1 0" />
     <origin xyz="-0.700 -0.485 0.705" rpy="0.0 0.0 -2.36"/>
   </joint>
@@ -97,8 +97,8 @@
   </joint>
 
   <!--hokuyo-->
-  <gazebo reference="$(arg tf_prefix)/hokuyo_fl">
-    <sensor name="$(arg robot_name)_head_hokuyo_fl_sensor" type="ray">
+  <gazebo reference="$(arg tf_prefix)/hokuyo_front">
+    <sensor name="$(arg robot_name)_head_hokuyo_front_sensor" type="ray">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>40</update_rate>
@@ -127,16 +127,16 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="$(arg robot_name)_hokuyo_fl_node" filename="libgazebo_ros_laser.so">
-        <topicName>scan_fl</topicName>
-        <frameName>hokuyo_fl</frameName>
+      <plugin name="$(arg robot_name)_hokuyo_front_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan_front</topicName>
+        <frameName>hokuyo_front</frameName>
       </plugin>
     </sensor>
   </gazebo>
 
   <!--hokuyo-->
-  <gazebo reference="$(arg tf_prefix)/hokuyo_br">
-    <sensor name="$(arg robot_name)_head_hokuyo_br_sensor" type="ray">
+  <gazebo reference="$(arg tf_prefix)/hokuyo_back">
+    <sensor name="$(arg robot_name)_head_hokuyo_back_sensor" type="ray">
       <pose>0 0 0 0 0 0</pose>
       <visualize>true</visualize>
       <update_rate>40</update_rate>
@@ -165,9 +165,9 @@
           <stddev>0.01</stddev>
         </noise>
       </ray>
-      <plugin name="$(arg robot_name)_hokuyo_br_node" filename="libgazebo_ros_laser.so">
-        <topicName>scan_br</topicName>
-        <frameName>hokuyo_br</frameName>
+      <plugin name="$(arg robot_name)_hokuyo_back_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan_back</topicName>
+        <frameName>hokuyo_back</frameName>
       </plugin>
     </sensor>
   </gazebo>
