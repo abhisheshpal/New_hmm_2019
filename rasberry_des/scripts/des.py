@@ -61,8 +61,10 @@ if __name__ == "__main__":
     n_local_storages = config_params["n_local_storages"]
 
     topo_graph = rasberry_des.topo.TopologicalForkGraph(n_polytunnels, n_farm_rows,
-                                                        n_topo_nav_rows, second_head_lane,
-                                                        _yield_per_node, VERBOSE)
+                                                        n_topo_nav_rows, second_head_lane, VERBOSE)
+
+    topo_graph.set_row_info()
+    topo_graph.set_node_yields(_yield_per_node)
 
     n_trials = 1
     min_n_pickers = 1

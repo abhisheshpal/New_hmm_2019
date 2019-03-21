@@ -162,7 +162,7 @@ def graph_param_to_poly_list(param, list_object, n_polytunnels, func):
         msg = "%s must either be a list" %(param)
         raise Exception(msg)
 
-    if n_polytunnels == 0 or n_polytunnels == 1:
+    if n_polytunnels == 1:
         # func can be ignored as only one value is necessary
         if len(list_object) != 1:
             msg = "%s must be a list of size 1 for n_polytunnels = %d" %(param, n_polytunnels)
@@ -195,6 +195,7 @@ def get_fork_map_config_parameters(config_file):
 
     map_name = config_data["map_name"]
     n_polytunnels = config_data["n_polytunnels"]
+    assert n_polytunnels > 0
 
     n_farm_rows = graph_param_to_poly_list("n_farm_rows",
                                            config_data["n_farm_rows"]["value"],
@@ -203,12 +204,9 @@ def get_fork_map_config_parameters(config_file):
 
     # n_rows+1 picking rows are needed, all except first and last (in a polytunnel)
     # rows are forward and reverse. first and last are forward/reverse only
-    if n_polytunnels == 0:
-        n_topo_nav_rows = n_farm_rows[0] + 1
-    else:
-        n_topo_nav_rows = 0
-        for i in range(n_polytunnels):
-            n_topo_nav_rows += n_farm_rows[i] + 1
+    n_topo_nav_rows = 0
+    for i in range(n_polytunnels):
+        n_topo_nav_rows += n_farm_rows[i] + 1
 
     head_row_node_dist = graph_param_list_check("head_row_node_dist",
                                                 config_data["head_row_node_dist"]["value"],
