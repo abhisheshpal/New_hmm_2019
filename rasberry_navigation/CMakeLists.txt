@@ -9,6 +9,7 @@ project(rasberry_navigation)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   amcl
+  ira_laser_tools
   map_server
   monitored_navigation
   nav_msgs
