@@ -18,14 +18,14 @@
   </include>
 
   <!-- topological navigation -->
-  <!--include file="$(find topological_navigation)/launch/topological_navigation.launch">
+  <include file="$(find topological_navigation)/launch/topological_navigation.launch">
     <arg name="map" value="$(arg tmap)"/>
-  </include-->
+  </include>
   <!--node pkg="topological_navigation" type="map_manager.py" name="topological_map_manager" args="$(arg tmap)" respawn="true"/-->
 
-  <include file="$(find rasberry_navigation)/launch/topological_map_manager_central.launch">
+  <!--include file="$(find rasberry_navigation)/launch/topological_map_manager_central.launch">
     <arg name="map" value="$(arg tmap)" />
-  </include>
+  </include-->
 
   <node pkg="rasberry_des" type="mimic_longpicks.py" name="mimic_longpicks" args="$(arg config_file)" />
 

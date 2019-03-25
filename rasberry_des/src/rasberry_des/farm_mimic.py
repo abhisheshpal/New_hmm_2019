@@ -23,4 +23,4 @@ class FarmMimic(rasberry_des.farm.Farm):
         pickers -- picker agent objects
         policy -- "lexicographical", "shortest_distance", "uniform_utilisation"
         """
-        super(rasberry_des.farm.Farm, self).__init__(name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, verbose)
+        super(FarmMimic, self).__init__(name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, verbose)

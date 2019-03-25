@@ -104,14 +104,22 @@ class TopologicalForkGraphMimic(rasberry_des.topo.TopologicalForkGraph):
         storage_nodes = {}
         count = 0
         for storage in local_storage_nodes:
+            rospy.loginfo(storage)
+            rospy.loginfo(self.get_node(storage))
             storage_nodes[storage] = self.get_node(storage)
             self.local_storages[storage] = local_storages[count]
             count += 1
 
+        rospy.loginfo(self.head_nodes)
+        rospy.loginfo(self.row_info)
+
         for row_id in self.row_ids:
             dist = float("inf")
-            head_node = self.get_node(self.head_nodes[row_id])
+            head_node = self.get_node(self.head_nodes[row_id][0])
             for storage in local_storage_nodes:
+                rospy.loginfo(row_id)
+                rospy.loginfo(head_node)
+                rospy.loginfo(storage)
                 dist_to_storage = numpy.hypot(head_node.pose.position.x - storage_nodes[storage].pose.position.x,
                                head_node.pose.position.y - storage_nodes[storage].pose.position.y)
                 if dist_to_storage < dist:

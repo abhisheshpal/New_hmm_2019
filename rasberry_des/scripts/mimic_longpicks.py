@@ -14,6 +14,7 @@ import rospy
 import rasberry_des.picker_mimic
 import rasberry_des.config_utils_mimic
 import rasberry_des.topo_mimic
+import rasberry_des.farm_mimic
 
 RANDOM_SEED = 1111
 SIM_RT_FACTOR = 1.0
@@ -67,6 +68,7 @@ if __name__ == "__main__":
     if config_params["second_head_lane"]:
         topo_graph.set_row_info(config_params["pri_head_nodes"], config_params["row_nodes"], config_params["sec_head_nodes"])
     else:
+        rospy.loginfo(config_params["pri_head_nodes"])
         topo_graph.set_row_info(config_params["pri_head_nodes"], config_params["row_nodes"])
     # set node_yields
     topo_graph.set_node_yields(config_params["yield_per_node"])
