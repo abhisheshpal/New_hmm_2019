@@ -59,18 +59,17 @@ class TopologicalForkGraphMimic(rasberry_des.topo.TopologicalForkGraph):
                 self.head_nodes["row-%02d" %(i)].append(sec_head_nodes[i])
 
         self.row_nodes = {"row-%02d" %(i):[] for i in range(self.n_topo_nav_rows)}
-        rospy.loginfo(row_nodes)
-        rospy.loginfo(len(row_nodes))
+
         rospy.sleep(1)
         for i in range(self.n_topo_nav_rows):
-            rospy.loginfo(i)
-            rospy.sleep(0.3)
+#            rospy.sleep(0.3)
             for node_name in row_nodes[i]:
                 node_found = False
                 for node in self.topo_map.nodes:
                     if node_name in node.name:
                         self.row_nodes["row-%02d" %(i)].append(node.name)
                         node_found = True
+                        break
                 if not node_found:
                     msg = "node - %s not found in topological_map topic" %(node_name)
                     rospy.logerr(msg)
@@ -112,6 +111,7 @@ class TopologicalForkGraphMimic(rasberry_des.topo.TopologicalForkGraph):
 
         rospy.loginfo(self.head_nodes)
         rospy.loginfo(self.row_info)
+        rospy.loginfo(self.row_ids)
 
         for row_id in self.row_ids:
             dist = float("inf")

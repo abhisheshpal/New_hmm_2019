@@ -17,8 +17,8 @@ import rasberry_des.topo_mimic
 import rasberry_des.farm_mimic
 
 RANDOM_SEED = 1111
-SIM_RT_FACTOR = 1.0
-VERBOSE = False
+SIM_RT_FACTOR = 0.5
+VERBOSE = True
 
 random.seed(RANDOM_SEED)
 numpy.random.seed(RANDOM_SEED)

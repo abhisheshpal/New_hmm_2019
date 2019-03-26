@@ -30,6 +30,8 @@ class PickerMimic(rasberry_des.picker.Picker):
         self.pose = geometry_msgs.msg.PoseStamped()
         self.pose.header.frame_id = "map"
 
+        self.publish_pose(self.curr_node)
+
 
     def go_to_node(self, goal_node, nav_speed):
         """Simpy process to Mimic moving to the goal_node by publishing new position based on speed
@@ -47,11 +49,18 @@ class PickerMimic(rasberry_des.picker.Picker):
             yield self.env.timeout(travel_time)
 
             self.curr_node = route_nodes[i + 1]
+            self.publish_pose(self.curr_node)
 
         self.loginfo("%s reached %s" %(self.picker_id, goal_node))
-        self.closest_node_pub.publish(goal_node)
-        self.current_node_pub.publish(goal_node)
-        self.pose.pose.position = self.graph.get_node(goal_node).pose.position
+
+        yield self.env.timeout(self.process_timeout)
+
+    def publish_pose(self, node):
+        """
+        """
+        self.closest_node_pub.publish(node)
+        self.current_node_pub.publish(node)
+        self.pose.pose.position = self.graph.get_node(node).pose.position
         if self.picking_dir is None or self.picking_dir == "forward":
             self.pose.pose.orientation.x = 0.
             self.pose.pose.orientation.y = 0.
@@ -64,4 +73,4 @@ class PickerMimic(rasberry_des.picker.Picker):
             self.pose.pose.orientation.w = 0.
         self.pose_pub.publish(self.pose)
 
-        yield self.env.timeout(self.process_timeout)
+        rospy.sleep(0.1)
