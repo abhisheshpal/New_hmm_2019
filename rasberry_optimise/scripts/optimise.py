@@ -8,50 +8,50 @@ import rospkg
 
 
 def evaluate(individual):
-    """Run the test scenario (move from start node to goal node) given a set of 
-       parameters (individual) and get fitness metrics.
+    """Run the test scenario (move from start node to goal node) given a set of
+       parameters (individual) and get metrics.
     """
-    
+
     # Make dictionary of parameters to pass to the scenario server.
     params = make_param_dict(config_params, individual)
     
     metric_array = np.empty((NUM_RUNS, 6))
     for i in range(NUM_RUNS):
-        
+
         time_1 = time.time()
         metrics, trajectory, trajectory_ground_truth, trajectory_amcl \
         = ss.run_scenario(params)
         time_2 = time.time()
         metric_array[i, :] = metrics
-        
+
         eval_calls.append(1)
         times.append(time_2-time_1)
         data.append([individual, metrics])
-    
+
         evals_remaining = tot_eval_calls - np.sum(eval_calls)
         time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
-        
+
         print "Evaluations remaining (estimated): {}/{}".format(evals_remaining, tot_eval_calls)
         print "Estimated time to complete: {} hours".format(time_to_complete)
-    
-        
+
+
     t = np.median(metric_array[:, 0])
     rotation_cost = np.median(metric_array[:, 1])
     trajectory_length = np.median(metric_array[:, 2])
-    dist_from_coords = np.median(metric_array[:, 3])
+    path_error = np.median(metric_array[:, 3])
     position_error = np.median(metric_array[:, 4])
     orientation_error = np.median(metric_array[:, 5])
     
-    metrics = (t, rotation_cost, trajectory_length, dist_from_coords, position_error, orientation_error)
-    
+    metrics = (t, rotation_cost, trajectory_length, path_error, position_error, orientation_error)
+
     if MULTI_OBJECTIVE:
         metrics = (np.sum(np.array(weights_multi) * np.array(metrics)),)
     
     return metrics
 
-    
+
 def checkBounds(mins, maxs):
-    """Make sure that crossover/mutation doesn't produce a parameter that falls out 
+    """Make sure that crossover/mutation doesn't produce a parameter that falls out
        of bounds.
     """
     def decorator(func):
@@ -65,13 +65,13 @@ def checkBounds(mins, maxs):
                         child[i] = mins[i]
             return offspring
         return wrapper
-    return decorator    
+    return decorator
 #####################################################################################
 
 
 #####################################################################################
 if __name__ == "__main__":
-    
+
     rospy.init_node("optimiser", anonymous=True, disable_signals=True)
 
     if len(sys.argv) < 4:
@@ -83,14 +83,14 @@ if __name__ == "__main__":
         config_scenario_path = sys.argv[1]
         config_parameters_path = sys.argv[2]
         config_ga_path = sys.argv[3]
-        
+
     # Get configuration for the optimisation procedure.
     config_scenario = load_data_from_yaml(config_scenario_path)
     config_params = load_data_from_yaml(config_parameters_path)
     config_ga = load_data_from_yaml(config_ga_path)
 #####################################################################################
-    
-    
+
+
 #####################################################################################
     # Set hyper-parameters of the GA.
     NGEN = config_ga["ngen"]
@@ -110,7 +110,7 @@ if __name__ == "__main__":
     WEIGHT_ORIENTATION_ERROR = config_ga["weight_orientation_error"]
     MULTI_OBJECTIVE = config_ga["multi_objective"]
     NUM_RUNS = config_ga["num_runs"]
-    
+
     print "\nSetting hyper-parameters of the genetic algorithm ..."
     print "Setting ngen = {}".format(NGEN)
     print "Setting popsize = {}".format(POPSIZE)
@@ -129,10 +129,10 @@ if __name__ == "__main__":
     print "Setting weight_orientation_error = {}".format(WEIGHT_ORIENTATION_ERROR)
     print "Setting multi_objective = {}".format(MULTI_OBJECTIVE)
     print "Setting num_runs = {}".format(NUM_RUNS)
-#####################################################################################    
-    
-    
-#####################################################################################    
+#####################################################################################
+
+
+#####################################################################################
     # Create DEAP toolbox and register parameters for optimisation.
     weights = (WEIGHT_TIME, WEIGHT_ROTATION, WEIGHT_LENGTH, WEIGHT_PATH_ERROR, 
                WEIGHT_POSITION_ERROR, WEIGHT_ORIENTATION_ERROR)
@@ -143,80 +143,80 @@ if __name__ == "__main__":
     
     creator.create("FitnessMulti", base.Fitness, weights=weights)
     creator.create("Individual", list, fitness=creator.FitnessMulti)
-    toolbox = base.Toolbox()        
-    
+    toolbox = base.Toolbox()
+
     rcnfsrvs = config_params.keys()
     attributes = []
     sigmas = [] # std of gaussian mutation
     mins = []
     maxs = []
-    
+
     print "\nRegistering the following parameters for optimisation ..."
     for i, rcnfsrv in enumerate(rcnfsrvs):
         param_names = config_params.values()[i].keys()
-        
+
         for param_name in param_names:
             attr = rcnfsrv + "/" + param_name
             print attr
-            
+
             if config_params.values()[i][param_name]['type'] == "float":
                 attr_min = config_params.values()[i][param_name]['min']
                 attr_max = config_params.values()[i][param_name]['max']
                 toolbox.register(attr, random.uniform, attr_min, attr_max)
-                
+
                 sigmas.append((0.5 * (attr_max - attr_min)) / C)
                 mins.append(attr_min)
                 maxs.append(attr_max)
-                
+
             elif config_params.values()[i][param_name]['type'] == "int":
                 attr_min = config_params.values()[i][param_name]['min']
                 attr_max = config_params.values()[i][param_name]['max']
-                toolbox.register(attr, random.randint, attr_min, attr_max) 
-                
+                toolbox.register(attr, random.randint, attr_min, attr_max)
+
                 sigmas.append((0.5 * (attr_max - attr_min)) / C)
                 mins.append(attr_min)
                 maxs.append(attr_max)
-                
+
             elif config_params.values()[i][param_name]['type'] == "bool":
                 toolbox.register(attr, random.randint, 0, 1)
-                
+
                 sigmas.append(1.0)
                 mins.append(0)
                 maxs.append(1)
-                
+
             else:
                 print "Please set {} to type `float`, `int` or `bool` in parameter configuration file.".format(param_name)
                 sys.exit()
-                
+
             attributes.append(toolbox.__getattribute__(attr))
-            
+
     print "\n"
-#####################################################################################            
-            
+#####################################################################################
+
 
 #####################################################################################
     # Register the DEAP operators.
-            
+
     toolbox.register("individual", tools.initCycle, creator.Individual, attributes, n=1)
     toolbox.register("population", tools.initRepeat, list, toolbox.individual)
 
     toolbox.register("mate", tools.cxTwoPoint)
-    toolbox.register("mutate", tools.mutGaussian, mu=[0]*len(sigmas), sigma=sigmas, 
+    toolbox.register("mutate", tools.mutGaussian, mu=[0]*len(sigmas), sigma=sigmas,
                      indpb=INDPB)
-                     
+
     toolbox.decorate("mate", checkBounds(mins, maxs))
-    toolbox.decorate("mutate", checkBounds(mins, maxs))                     
-    
+    toolbox.decorate("mutate", checkBounds(mins, maxs))
+
     if TOURNSIZE == 0:
         toolbox.register("select", tools.selBest)
-    else:                  
-        toolbox.register("select", tools.selTournament, tournsize=TOURNSIZE) 
-        
-    toolbox.register("evaluate", evaluate)  
-#####################################################################################    
-    
+    else:
+        toolbox.register("select", tools.selTournament, tournsize=TOURNSIZE)
 
-#####################################################################################    
+    toolbox.register("evaluate", evaluate)
+#####################################################################################
+
+
+#####################################################################################
     # For recording the best params (hall of fame) and logging statistics.
     hof = tools.HallOfFame(100)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
@@ -242,26 +242,24 @@ if __name__ == "__main__":
     data = []
     tot_eval_calls = NUM_RUNS * (int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE) # average
     initial_pop = toolbox.population(POPSIZE)
-    
-    pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU, 
-    lambda_=LAMBDA_, cxpb=CXPB, mutpb=MUTPB, ngen=NGEN, stats=stats, halloffame=hof, 
-    verbose=True)
-#####################################################################################    
-    
 
-#####################################################################################    
+    pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU,
+    lambda_=LAMBDA_, cxpb=CXPB, mutpb=MUTPB, ngen=NGEN, stats=stats, halloffame=hof,
+    verbose=True)
+#####################################################################################
+
+
+#####################################################################################
     # Save data.
     rospack = rospkg.RosPack()
-    base_dir = rospack.get_path("rasberry_optimise") 
+    save_path = rospack.get_path("rasberry_optimise") 
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
-    else:
-        save_path = base_dir
-        
-    save_dir = os.path.join(save_path, 
+
+    save_dir = os.path.join(save_path,
     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
-    os.mkdir(save_dir)      
-    
+    os.mkdir(save_dir)
+
     save_data_to_json(save_dir + "/hof.json", [ind for ind in hof])
     save_data_to_json(save_dir + "/pop.json", pop)
     save_data_to_json(save_dir + "/data.json", data)
