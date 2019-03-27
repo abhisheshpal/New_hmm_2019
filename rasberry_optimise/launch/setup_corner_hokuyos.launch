@@ -19,9 +19,6 @@
   <arg name="no_go_map" default="$(find rasberry_navigation)/maps/riseholme_sim_no_go.yaml" />
   <arg name="topo_map" default="riseholme_bidirectional_sim" />
 
-  <!-- Localisation arguments -->
-  <arg name="use_fake_localisation" default="false"/>
-
   <!-- Move base arguments -->
   <arg name="use_carrot_planner" default="false"/>
   <arg name="use_teb_planner" default="false"/>
@@ -57,19 +54,6 @@
   <!-- Topological map -->
   <include file="$(find rasberry_navigation)/launch/topological_map_manager_central.launch">
     <arg name="map" value="$(arg topo_map)" />
-  </include>
-
-  <!-- Localisation -->
-  <node name="fake_localization" pkg="fake_localization" type="fake_localization" if="$(arg use_fake_localisation)">
-    <remap from="base_pose_ground_truth" to="odometry/gazebo" /> 
-    <param name="odom_frame_id" type="string" value="odom"/>
-    <param name="base_frame_id" type="string" value="base_link"/>
-  </node>
-
-  <include file="$(find rasberry_navigation)/launch/rasberry_localisation_corner_hokuyos.launch" unless="$(arg use_fake_localisation)" >
-    <arg name="use_imu" value="false" />
-    <arg name="publish_tf" value="false" />
-    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
   <!-- Move base bringup -->

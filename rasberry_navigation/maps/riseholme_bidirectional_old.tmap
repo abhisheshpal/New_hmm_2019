@@ -4919,7 +4919,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint57
@@ -5468,7 +5468,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint64
@@ -5802,7 +5802,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint67
@@ -5953,7 +5953,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint68
@@ -6020,7 +6020,7 @@
     - x: 1.19902324677
       y: -0.752370893955
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint69
@@ -6115,7 +6115,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint7
@@ -6221,7 +6221,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint71
@@ -6274,7 +6274,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint72
@@ -6327,7 +6327,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint73
@@ -6478,7 +6478,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint74
@@ -6629,7 +6629,7 @@
     - x: 0.689999997616
       y: -0.287000000477
     xy_goal_tolerance: 0.3
-    yaw_goal_tolerance: 0.1
+    yaw_goal_tolerance: 6.28
 - meta:
     map: riseholme
     node: WayPoint75
