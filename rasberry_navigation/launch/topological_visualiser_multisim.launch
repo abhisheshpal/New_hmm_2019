@@ -6,7 +6,10 @@
 
   <group ns="$(arg robot_name)">
 
-    <node pkg="topological_navigation" type="visualise_map.py" name="visualise_map" output="screen" args="$(arg map)"/>
+    <node pkg="topological_navigation" type="visualise_map.py" name="topological_visualisation" output="screen" args="$(arg map)">
+      <remap from="topological_map" to="/topological_map" />
+      <remap from="topological_map_zones/feedback" to="/topological_map_zones/feedback" />
+    </node>
 
   </group>
 
