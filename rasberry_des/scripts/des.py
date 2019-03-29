@@ -67,7 +67,7 @@ if __name__ == "__main__":
 
     n_trials = 1
     min_n_pickers = 1
-    max_n_pickers = 2
+    max_n_pickers = 3
 #    max_n_pickers = n_topo_nav_rows + 1
     min_n_robots = 0
     max_n_robots = 1
@@ -256,7 +256,7 @@ if __name__ == "__main__":
                                     print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(head_node).pose.position.x)
                                     print >> f_handle, "        y: %0.3f" %(topo_graph.get_node(head_node).pose.position.y)
                                 print >> f_handle, "     row_nodes:"
-                                for i in range(1, n_row_nodes):
+                                for i in range(n_row_nodes):
                                     node_name = topo_graph.row_nodes[row_id][i]
                                     print >> f_handle, "     -  node_id: %s" %(node_name)
                                     print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(node_name).pose.position.x,)
