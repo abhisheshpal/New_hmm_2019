@@ -1,9 +1,9 @@
 <?xml version="1.0" ?>
 <launch>
 
-  <arg name="parameters" default="$(find rasberry_optimise)/resources/optim_params/dwa_utn/dwa_utn.json" />
+  <arg name="parameters" default="$(find rasberry_optimise)/resources/optim_params/dwa_utn_fw/dwa_utn_fw.json" />
   <arg name="parameter_index" default="0" />
-  <arg name="config_parameters" default="$(find rasberry_optimise)/resources/optim_params/dwa_utn/dwa_utn.yaml" />   
+  <arg name="config_parameters" default="$(find rasberry_optimise)/resources/optim_params/dwa_utn_fw/dwa_utn_fw.yaml" />   
 
   <!-- Reconfigure -->
   <node pkg="rasberry_optimise" type="reconfigure.py" name="reconfigure" output="screen" 
