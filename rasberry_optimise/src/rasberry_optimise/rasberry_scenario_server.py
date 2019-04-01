@@ -36,14 +36,12 @@ class scenario_server(object):
         self.robot_name = config_scenario["robot_name"]
         self.max_wait_time = rospy.Duration(config_scenario["max_wait_time"])
         
-        if "coords_file" in config_scenario.keys():
-            self.coords_file = config_scenario["coords_file"]
+        if "centres" in config_scenario.keys():
             rospack = rospkg.RosPack()
             base_dir = rospack.get_path("rasberry_optimise")    
-            coords_file = base_dir + "/resources/" + self.coords_file
-            self.coords = load_data_from_json(coords_file)
+            self.centres = load_data_from_json(base_dir + "/resources/" + config_scenario["centres"])
         else:
-            self.coords_file = None
+            self.centres = None
             
         
         try:
@@ -253,38 +251,38 @@ class scenario_server(object):
                 
                 # Get metrics
                 t = (time_2-time_1).to_sec()
-                cost_dollars = scorepath(np.array(trajectory))
+                rotation_cost = scorepath(np.array(trajectory))
                 trajectory_length = get_trajectory_length(trajectory)
                 
-                if self.coords_file is not None:
-                    dist_from_coords = get_dist_from_coords(self.coords, trajectory)
+                if self.centres is not None:
+                    path_error = get_path_error(trajectory, self.centres)
                 else:
-                    dist_from_coords = 0.0
+                    path_error = 0.0
                     
-                pose_error, position_error, orientation_error = get_localisation_error(trajectory_ground_truth, trajectory_amcl)
+                position_error, orientation_error = get_localisation_error(trajectory_ground_truth, trajectory_amcl)
                 
                 print "Completed scenario in {} seconds".format(t)
-                print "Rotation cost = {} dollars".format(cost_dollars)
+                print "Rotation cost = {}".format(rotation_cost)
                 print "Length of trajectory = {} meters".format(trajectory_length)
-                print "Sum squared distance from coordinates = {} meters squared".format(dist_from_coords)
-                print "Mean pose error = {}".format(pose_error)                
+                print "Path error = {} meters".format(path_error)
                 print "Mean position error = {} meters".format(position_error) 
                 print "Mean orientation error = {} degrees".format(orientation_error) 
                 
             else:
                 t = self.max_wait_time.to_sec()
-                cost_dollars = -10e5
+                rotation_cost = 10e5
                 trajectory_length = 10e5
-                dist_from_coords = 10e5
-                pose_error = 10e5
+                path_error = 10e5
+                position_error = 10e5
+                orientation_error = 10e5
                 print "Failed to complete scenario in maximum alloted time of {} seconds".format(t)
                 
         except rospy.ROSException:
             pass
         
         else:
-            metrics = (t, cost_dollars, trajectory_length, dist_from_coords, pose_error)
-            return metrics, trajectory
+            metrics = (t, rotation_cost, trajectory_length, path_error, position_error, orientation_error)
+            return metrics, trajectory, trajectory_ground_truth, trajectory_amcl
             
             
     def do_reconf(self, rcnfclient, params):
@@ -301,28 +299,15 @@ class scenario_server(object):
             
             
     def rp_callback(self, msg):
-        robot_pose = self.get_pose(msg) 
+        robot_pose = get_pose(msg) 
         self.robot_poses.append(robot_pose)        
             
             
     def rp_filtered_callback(self, msg_rp, msg_amcl):
-        robot_pose = self.get_pose(msg_rp) 
-        amcl_pose = self.get_pose(msg_amcl) 
+        robot_pose = get_pose(msg_rp) 
+        amcl_pose = get_pose(msg_amcl) 
         self.robot_poses_filtered.append(robot_pose)
         self.amcl_poses_filtered.append(amcl_pose)
-            
-            
-    def get_pose(self, msg):
-        """Get robot poses and append them to a list to form the robot's trajectory.
-        """
-        x = msg.pose.pose.position.x
-        y = msg.pose.pose.position.y
-        xq = msg.pose.pose.orientation.x
-        yq = msg.pose.pose.orientation.y
-        zq = msg.pose.pose.orientation.z
-        wq = msg.pose.pose.orientation.w
-        roll, pitch, yaw = tf.transformations.euler_from_quaternion([xq, yq, zq, wq])
-        return [x, y, yaw]
         
 
     def contact_callback(self, msg):

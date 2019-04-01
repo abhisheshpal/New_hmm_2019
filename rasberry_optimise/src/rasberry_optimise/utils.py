@@ -1,11 +1,16 @@
 #!/usr/bin/env python
 from __future__ import division
-import yaml, json
+import yaml, json, tf
 
 
 def load_data_from_yaml(filename):
     with open(filename,'r') as f:
         return yaml.load(f)
+
+        
+def save_data_to_yaml(filename, data):
+    with open(filename,'w') as f:
+        return yaml.dump(data, f)
 
         
 def load_data_from_json(filename):
@@ -63,4 +68,26 @@ def make_param_dict(config_params, individual):
             params[rcnfsrv2][param2] = params[rcnfsrv1][param2]
             
     return params
+    
+    
+def get_trajectory(bag):
+    ts = []
+    trajectory = []
+    for topic, msg, t in bag.read_messages(topics=["/amcl_pose"]):
+        ts.append(t.to_sec())
+        trajectory.append(get_pose(msg))            
+    return ts[-1] - ts[0], trajectory
+    
+
+def get_pose(msg):
+    """Get robot poses and append them to a list to form the robot's trajectory.
+    """
+    x = msg.pose.pose.position.x
+    y = msg.pose.pose.position.y
+    xq = msg.pose.pose.orientation.x
+    yq = msg.pose.pose.orientation.y
+    zq = msg.pose.pose.orientation.z
+    wq = msg.pose.pose.orientation.w
+    roll, pitch, yaw = tf.transformations.euler_from_quaternion([xq, yq, zq, wq])
+    return [x, y, yaw]    
 #####################################################################################
