@@ -34,7 +34,7 @@ class HMModel(object):
                         (n_states x n_states+1) additional state as a means for querying
         init_state_prob -- array of initial state probabilities, (n_states)
         """
-        self.n_states = n_states        
+        self.n_states = n_states
         if from_file:
             assert f_name is not None
             # create CtHMM from file
@@ -55,20 +55,20 @@ class HMModel(object):
         chmm.set_params_from_file( "state2_cthmm.npz" )
         """
         self._model = hmms.CtHMM.from_file(f_name)
-    
+
     def to_file(self, f_name):
         self._model.save_params(f_name)
-    
+
     def generate_random(self, sample_len, sample_step, verbose=False):
         """generates predictions from a random initial state (decided based on the state probs)
         """
         # sample uniformly
         t_seq = range(0,sample_len, sample_step)
         t_seq, s_seq, e_seq = self._model.generate(len(t_seq), time=t_seq)
-    
+
         #resize plot
         plt.rcParams['figure.figsize'] = [20,20]
-    
+
         hmms.plot_hmm(s_seq, e_seq, time=t_seq )
         if verbose:
             print(t_seq)
@@ -97,7 +97,7 @@ class HMModel(object):
         # set the last "unknown" observation time:
         t_seq[-1] = t_seq[-2] + predict_time
 
-        if verbose: 
+        if verbose:
             print(t_seq, e_seq)
 
         # run Viterbi algorithm for the CtHMM
@@ -124,7 +124,7 @@ class HMModel(object):
         # KL can be used here as a measure of certainty to some extend, used to compare against uniform distribution,
         # the longer into the future the prediction, the closer KL is to 0
         D_KL = np.sum(np.multiply(post_distribution, np.log(np.divide(post_distribution, uniform))))
-        if verbose: 
+        if verbose:
             print("Kullback–Leibler divergence (high is good in this case, as I compare against uniform): %f" % D_KL)
 
         return (s_seq[-1], D_KL, post_distribution)
@@ -132,17 +132,17 @@ class HMModel(object):
     def check_prediction_probs(self, obs, forecast_max, forecast_steps, verbose=False):
         """
         Keyword arguments:
-        
+
         obs -- initial observations
         forecast_max -- max time to forecast
         forecast_steps -- time steps to be taken to reach forecast_max
         """
-    
+
         posteriors = []
         states = {}
         kls = []
         times = []
-    
+
         # try forecasting for several time steps:
         for i in np.linspace(1, forecast_max, forecast_steps):  # Return evenly spaced numbers over a specified interval (start,stop, Num = int).
             (state, kl, posterior) = self._model.predict(
@@ -154,23 +154,23 @@ class HMModel(object):
             posteriors.append(posterior)
             states[i] = state
             kls.append(kl)
-    
+
         # plot the posterior probabilities
         plt.plot(times, posteriors, '-x')
-    
+
         # plot the KL divergence (certainty)
         plt.plot(times, kls, linewidth=3)
-    
+
         legend = list(range(0, self.n_states))
         legend.append('KL')
         plt.legend(legend)
         plt.show()
-        
+
         if verbose:
             print('state predictions:\n%s' % pformat(states))
-        
+
         return times, states, kls, posteriors
-    
+
 
 
 if __name__ == "__main__":
@@ -183,22 +183,22 @@ if __name__ == "__main__":
 
     n_states = 5 #number of picker modes
 
-    # defining a very simple state map 
+    # defining a very simple state map
     state_map = np.eye(n_states, k=1) # create identity matrix with N_nodes rows with diagonal element as 1.
     state_map[-1,1] = 1                 # replace last row, first column element with 1
     state_map[2,0] = 0.142
     state_map[2,-2] = 0.857
 
     print (state_map)
-    
+
     # reversing not needed for modes
-        
+
     # summing all column of adjency matrix
     rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
                                   #so that it can help in defining Q in next step
 
     # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
-    # TODO: transition rates are not constant across the modes 
+    # TODO: transition rates are not constant across the modes
     # expected mean rate in seconds
     _rate = 5.0
     _lambda = 1.0/_rate
@@ -253,26 +253,378 @@ if __name__ == "__main__":
 # to predict the node at which the picker would be, from an initial observation.
 # these models should be similar to the mode_model section above, using the HMModel class
 
+
 #==============================================================================
 # mode0_node_model
 #==============================================================================
+# My experiment for prediction of emmission states within STATE (MODE) 0
+#(as state0 consists of several node transition in a unidirectional way):
+
+# It seems that there is no transition between the nodes as in idle state 0, the picker will only spend
+
+    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+                    # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
+                    # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
+    # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
+    # defining a very simple state map -- Here state map = topo_node pattern.
+
+    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
+    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
+    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+
+    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
+    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
+
+    # Join the two ROWS in a cyclic pattern
+    state_map = np.concatenate((state_map1, state_map2))
+    print (state_map)
+
+    # summing all column of adjency matrix
+    rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
+                                  #so that it can help in defining Q in next step
+
+    # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
+    # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
+    # expected mean rate in seconds
+    _rate = 0.01  # The rate is calculated from DES
+    _lambda = 1.0/_rate
+    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+
+    # MODE = 0
+    # creating observation matrix based on DES data, each node has ~1.0% prob to emit the state itself as observation except for nodes pri-hn-00 node
+    # and for rn-00-96 or rn-01-96 node. And another ~10% for neighbouring states each (confusing them). and +.1% for all observations for numerical stability
+
+    #DONE : TODO: these observation probabilities are also absurd as of now
+    B_pre = np.ones(n_states) * .001 + np.eye(n_states) * .01 + np.eye(n_states, k=1) * .01 + np.eye(n_states, k=-1) * .01
+    B_pre[0,0] = 0.97           # for pri-hn-00 node
+    B_pre[-1,-1] = 0.97         # for rn-00-96 or rn-01-96 node
+
+    # Pi is the vector of initial state probabilities. Assuming uniform here
+    # (We may make a stronger assumption here at some point)
+    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
+
+    # Create CtHMM by given parameters.
+    mode_model = HMModel(n_states, False, None, Q, B_pre, Pi)
+    # save model
+    mode_model.to_file("mode_model")
+    # load model from file
+#    mode_model = HMModel(N_nodes, True, "mode_model.npz")
+
+    # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
+    t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=60, sample_step=2)
+
+    # TODO: we can change the obs nodes once the model is fixed
+    # predict for a specific time from an initial observation
+    (state, KL, posteriors) = mode_model.predict(
+                                                 # start with some observations assumed to have made up to a point
+                                                 obs=np.array([0,1,2,3,4]),
+                                                 # the time horizon to predict to
+                                                 predict_time=60,
+                                                 # we want to see stuff here
+                                                 verbose=True
+                                                 )
+
+    # forecast max seconds
+    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=60., forecast_steps=60, verbose=True)
 
 
 #==============================================================================
 # mode1_node_model
 #==============================================================================
-    
+
+# My experiment for prediction of emmission states within STATE 1
+#(as state1 consists of several node transition in a unidirectional way):
+
+
+    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+                    # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
+                    # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
+    # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
+    # defining a very simple state map -- Here state map = topo_node pattern.
+
+    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
+    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
+    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+
+    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
+
+    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
+
+    # Join the two ROWS in a cyclic pattern
+    state_map = np.concatenate((state_map1, state_map2))
+    print (state_map)
+
+    # summing all column of adjency matrix
+    rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
+                                  #so that it can help in defining Q in next step
+
+    # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
+    # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
+    # expected mean rate in seconds
+    _rate = 0.063  # The rate is calculated from DES
+    _lambda = 1.0/_rate
+    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+
+    # MODE = 1
+    # creating observation matrix based on DES data, each node has ~1.0% prob to emit the state itself as observation
+    # and another ~60% for neighbouring nodes in forward direction and ~28% for neighbouring nodes in reverse direction each.
+    # and +.1% for all observations for numerical stability
+
+    #TODO: these observation probabilities are also absurd as of now
+    B_pre = np.ones(n_states) * .001 + np.eye(n_states) * .01 + np.eye(n_states, k=1) * .6 + np.eye(n_states, k=-1) * .28
+
+    # Pi is the vector of initial state probabilities. Assuming uniform here
+    # (We may make a stronger assumption here at some point)
+    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
+
+    # Create CtHMM by given parameters.
+    mode_model = HMModel(n_states, False, None, Q, B_pre, Pi)
+    # save model
+    mode_model.to_file("mode_model")
+    # load model from file
+#    mode_model = HMModel(N_nodes, True, "mode_model.npz")
+
+    # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
+    t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=60, sample_step=2)
+
+    # predict for a specific time from an initial observation
+    (state, KL, posteriors) = mode_model.predict(
+                                                 # start with some observations assumed to have made up to a point
+                                                 obs=np.array([0,1,2,3,4]),
+                                                 # the time horizon to predict to
+                                                 predict_time=60,
+                                                 # we want to see stuff here
+                                                 verbose=True
+                                                 )
+
+    # forecast max seconds
+    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=60., forecast_steps=60, verbose=True)
+
 
 #==============================================================================
 # mode2_node_model
 #==============================================================================
-    
+
+# My experiment for prediction of emmission states within STATE 2
+#(as state2 consists of several node transition in a unidirectional way in forward direction):
+
+    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+                    # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
+                    # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
+    # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
+    # defining a very simple state map -- Here state map = topo_node pattern.
+
+    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
+    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
+    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+
+    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
+
+    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
+
+    # Join the two ROWS in a cyclic pattern
+    state_map = np.concatenate((state_map1, state_map2))
+    print (state_map)
+
+    # summing all column of adjency matrix
+    rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
+                                  #so that it can help in defining Q in next step
+
+    # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
+    # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
+    # expected mean rate in seconds
+    _rate = 0.002  # The rate is calculated from DES
+    _lambda = 1.0/_rate
+    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+
+
+    # MODE = 2
+    # creating observation matrix based on DES data, each node has ~1.0% prob to emit the state itself as observation
+    # and another ~97% for neighbouring nodes in forward direction and ~1% for neighbouring nodes in reverse direction each.
+    # and +.1% for all observations for numerical stability
+
+    #TODO: these observation probabilities are also absurd as of now
+    B_pre = np.ones(n_states) * .001 + np.eye(n_states) * .01 + np.eye(n_states, k=1) * .97 + np.eye(n_states, k=-1) * .01
+
+    # Pi is the vector of initial state probabilities. Assuming uniform here
+    # (We may make a stronger assumption here at some point)
+    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
+
+    # Create CtHMM by given parameters.
+    mode_model = HMModel(n_states, False, None, Q, B_pre, Pi)
+    # save model
+    mode_model.to_file("mode_model")
+    # load model from file
+#    mode_model = HMModel(N_nodes, True, "mode_model.npz")
+
+    # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
+    t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=60, sample_step=2)
+
+    # predict for a specific time from an initial observation
+    (state, KL, posteriors) = mode_model.predict(
+                                                 # start with some observations assumed to have made up to a point
+                                                 obs=np.array([0,1,2,3,4]),
+                                                 # the time horizon to predict to
+                                                 predict_time=60,
+                                                 # we want to see stuff here
+                                                 verbose=True
+                                                 )
+
+    # forecast max seconds
+    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=60., forecast_steps=60, verbose=True)
 
 #==============================================================================
 # mode3_node_model
 #==============================================================================
-   
+# My experiment for prediction of emmission states within STATE(MODE) 3
+#(as state3 consists of several node transition in a unidirectional way):
+
+# NOTE : In State 3, picker will always move in backward direction w.r.t pri-hn-00 or pri-hn-01 ---
+        #Also, we haven't considered picking event (state2) in backward direction hence here also we will ingnore this case.
+
+    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+                    # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
+                    # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
+    # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
+    # defining a very simple state map -- Here state map = topo_node pattern.
+
+    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
+    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
+    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+
+    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
+
+    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
+
+    # Join the two ROWS in a cyclic pattern
+    state_map = np.concatenate((state_map1, state_map2))
+    print (state_map)
+
+    # summing all column of adjency matrix
+    rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
+                                  #so that it can help in defining Q in next step
+
+    # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
+    # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
+    # expected mean rate in seconds
+    _rate = 0.062  # The rate is calculated from DES
+    _lambda = 1.0/_rate
+    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+
+    # MODE = 3
+    # creating observation matrix based on DES data, each node has ~1.0% prob to emit the state itself as observation
+    # and another ~1% for neighbouring nodes in forward direction and ~97% for neighbouring nodes in reverse direction each.
+    # and +.1% for all observations for numerical stability
+
+    #TODO: these observation probabilities are also absurd as of now
+    # DONE : Based on DES we have seen the frequency of occurance of each node during transition by Picker in MODE 3
+    B_pre = np.ones(n_states) * .001 + np.eye(n_states) * .01 + np.eye(n_states, k=1) * .01 + np.eye(n_states, k=-1) * .97
+
+   # Pi is the vector of initial state probabilities. Assuming uniform here
+    # (We may make a stronger assumption here at some point)
+    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
+
+    # Create CtHMM by given parameters.
+    mode_model = HMModel(n_states, False, None, Q, B_pre, Pi)
+    # save model
+    mode_model.to_file("mode_model")
+    # load model from file
+#    mode_model = HMModel(N_nodes, True, "mode_model.npz")
+
+    # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
+    t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=60, sample_step=2)
+
+    # predict for a specific time from an initial observation
+    (state, KL, posteriors) = mode_model.predict(
+                                                 # start with some observations assumed to have made up to a point
+                                                 obs=np.array([0,1,2,3,4]),
+                                                 # the time horizon to predict to
+                                                 predict_time=60,
+                                                 # we want to see stuff here
+                                                 verbose=True
+                                                 )
+
+    # forecast max seconds
+    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=60., forecast_steps=60, verbose=True)
+
 #==============================================================================
 # mode4_node_model
 #==============================================================================
-   
+# for MODE 4 , the NODES where picker stayed or transit were which were observed was pri-hn-00 , hence we will try to give max. Observed
+# likelihood(B)
+
+    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+                    # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
+                    # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
+    # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
+    # defining a very simple state map -- Here state map = topo_node pattern.
+
+    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
+    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
+    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+
+    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
+
+    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
+
+    # Join the two ROWS in a cyclic pattern
+    state_map = np.concatenate((state_map1, state_map2))
+    print (state_map)
+
+    # summing all column of adjency matrix
+    rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,
+                                  #so that it can help in defining Q in next step
+
+    # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
+    # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
+    # expected mean rate in seconds
+    _rate = 0.009  # The rate is calculated from DES
+    _lambda = 1.0/_rate
+    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+
+   # MODE = 4
+    # creating observation matrix based on DES data, each node has ~10.0% prob to emit the state itself as observation except for nodes pri-hn-00 node (above 80%)
+    # and another ~1% for neighbouring nodes in forward direction and ~1% for neighbouring nodes in reverse direction each.
+    # and +.1% for all observations for numerical stability
+
+    #TODO: these observation probabilities are also absurd as of now
+    # DONE : Based on DES we have seen the frequency of occurance of each node during transition by Picker
+    B_pre = np.ones(n_states) * .001 + np.eye(n_states) * .1 + np.eye(n_states, k=1) * .01 + np.eye(n_states, k=-1) * .01
+    B_pre[0,0] = 0.87
+
+    #B = np.transpose(np.vstack([B_pre, [.101] * n_states]))  # np.vstack will add extra column in B_pre matrix
+                                                            # vertically
+    #B[0,-2] = .101     # first row and second last column is filled with 0.101
+    #B[-1,0] = .101     # Last row and first columm is filled with 0.101
+
+
+    # normalise B (make sure probs sum up to 1)
+    #row_sums = B.sum(axis=1)
+    #B = B / row_sums[:, np.newaxis]
+
+    # Pi is the vector of initial state probabilities. Assuming uniform here
+    # (We may make a stronger assumption here at some point)
+    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
+
+    # Create CtHMM by given parameters.
+    mode_model = HMModel(n_states, False, None, Q, B_pre, Pi)
+    # save model
+    mode_model.to_file("mode_model")
+    # load model from file
+#    mode_model = HMModel(N_nodes, True, "mode_model.npz")
+
+    # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
+    t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=60, sample_step=2)
+
+    # predict for a specific time from an initial observation
+    (state, KL, posteriors) = mode_model.predict(
+                                                 # start with some observations assumed to have made up to a point
+                                                 obs=np.array([0,1,2,3,4]),
+                                                 # the time horizon to predict to
+                                                 predict_time=60,
+                                                 # we want to see stuff here
+                                                 verbose=True
+                                                 )
+
+    # forecast max seconds
+    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=60., forecast_steps=60, verbose=True)
