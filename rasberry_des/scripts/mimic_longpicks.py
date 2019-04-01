@@ -24,27 +24,6 @@ random.seed(RANDOM_SEED)
 numpy.random.seed(RANDOM_SEED)
 
 
-#==============================================================================
-# with_robots: false
-#
-# n_pickers: 3
-# picker_picking_rate:
-#   func: gauss
-#   value: [0.2, 0.02]
-# picker_transportation_rate:
-#   func: gauss
-#   value: [1.0, 0.04]
-# picker_max_n_trays:
-#   func: copy
-#   value: [1]
-# picker_unloading_time:
-#   func: gauss
-#   value: [10.0, 0.2]
-# tray_capacity: 3000
-#==============================================================================
-
-
-
 if __name__ == "__main__":
     if len(sys.argv) <= 1:
         raise Exception("Not enough arguments. Pass 'path to configuration file' as an argument.")
@@ -74,8 +53,8 @@ if __name__ == "__main__":
     topo_graph.set_node_yields(config_params["yield_per_node"])
 
     # pickers
-    picker_ids = ["picker_%02d" %(i) for i in range(config_params["n_pickers"])]
-
+    picker_ids = config_params["picker_ids"]
+    n_pickers = len(picker_ids)
     picker_picking_rate = rasberry_des.config_utils.param_list_to_dict("picker_picking_rate", config_params["picker_picking_rate"], picker_ids)
     picker_transportation_rate = rasberry_des.config_utils.param_list_to_dict("picker_transportation_rate", config_params["picker_transportation_rate"], picker_ids)
     picker_max_n_trays = rasberry_des.config_utils.param_list_to_dict("picker_max_n_trays", config_params["picker_max_n_trays"], picker_ids)
@@ -87,11 +66,11 @@ if __name__ == "__main__":
 
     env = simpy.RealtimeEnvironment(factor=SIM_RT_FACTOR, strict=False)
 
-    local_storages = [simpy.Resource(env, capacity=config_params["n_pickers"]) for i in range(len(config_params["local_storage_nodes"]))]
+    local_storages = [simpy.Resource(env, capacity=n_pickers) for i in range(len(config_params["local_storage_nodes"]))]
     topo_graph.set_local_storages(local_storages, config_params["local_storage_nodes"])
 
     if config_params["use_cold_storage"]:
-        cold_storage = simpy.Resource(env, capacity=config_params["n_pickers"])
+        cold_storage = simpy.Resource(env, capacity=n_pickers)
         topo_graph.set_cold_storage(cold_storage, config_params["cold_storage_node"])
 
 

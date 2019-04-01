@@ -19,7 +19,7 @@ def check_mimic_des_params(config_data):
                   "second_head_lane", "pri_head_nodes", "sec_head_nodes", "row_nodes", "yield_per_node",
                   "local_storage_nodes", "use_cold_storage", "cold_storage_node",
                   "with_robots", "n_repeat_picks",
-                  "n_pickers", "picker_picking_rate", "picker_transportation_rate",
+                  "picker_ids", "picker_picking_rate", "picker_transportation_rate",
                   "picker_max_n_trays", "picker_unloading_time", "tray_capacity"]
     missing_params = []
     for param in req_params:
@@ -140,25 +140,26 @@ def get_mimic_des_params(config_file):
     config_params["n_repeat_picks"] = config_data["n_repeat_picks"]
 
     # picker info
-    config_params["n_pickers"] = config_data["n_pickers"]
+    config_params["picker_ids"] = config_data["picker_ids"]
+    n_pickers = len(config_params["picker_ids"])
     config_params["picker_picking_rate"] = rasberry_des.config_utils.des_param_list_check("picker_picking_rate",
                                                                                           config_data["picker_picking_rate"]["value"],
-                                                                                          config_params["n_pickers"],
+                                                                                          n_pickers,
                                                                                           config_data["picker_picking_rate"]["func"])
 
     config_params["picker_transportation_rate"] = rasberry_des.config_utils.des_param_list_check("picker_transportation_rate",
                                                                                                  config_data["picker_transportation_rate"]["value"],
-                                                                                                 config_params["n_pickers"],
+                                                                                                 n_pickers,
                                                                                                  config_data["picker_transportation_rate"]["func"])
 
     config_params["picker_max_n_trays"] = rasberry_des.config_utils.des_param_list_check("picker_max_n_trays",
                                                                                          config_data["picker_max_n_trays"]["value"],
-                                                                                         config_params["n_pickers"],
+                                                                                         n_pickers,
                                                                                          config_data["picker_max_n_trays"]["func"])
 
     config_params["picker_unloading_time"] = rasberry_des.config_utils.des_param_list_check("picker_unloading_time",
                                                                                             config_data["picker_unloading_time"]["value"],
-                                                                                            config_params["n_pickers"],
+                                                                                            n_pickers,
                                                                                             config_data["picker_unloading_time"]["func"])
 
     config_params["tray_capacity"] = config_data["tray_capacity"]

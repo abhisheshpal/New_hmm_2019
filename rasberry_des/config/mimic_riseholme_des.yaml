@@ -115,7 +115,7 @@ n_repeat_picks: 1
 #                           mu and sigma), s
 # tray_capacity: 3000 # capacity of each tray, g
 ##-----------------------------------------------------------------------------
-n_pickers: 3
+picker_ids: [picker101, picker102, picker103]
 picker_picking_rate:
   func: gauss
   value: [0.2, 0.02]
