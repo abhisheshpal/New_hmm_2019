@@ -458,7 +458,7 @@ class Farm(object):
                             i += 1
 
     def assign(self, picker_id, robot_id):
-        """assign a robot to a picker waiting will full trays"""
+        """assign a robot to a picker waiting with full trays"""
         self.idle_robots.remove(robot_id)
         self.assigned_robots.append(robot_id)
         picker_node = self.pickers[picker_id].curr_node

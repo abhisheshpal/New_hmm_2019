@@ -198,6 +198,7 @@ class TopologicalForkGraph(object):
         start_node -- name of the starting node
         goal_node -- name of the goal node
         """
+        rospy.loginfo("routing from %s to %s", start_node, goal_node)
         route_distance = []
         route = self.route_search.search_route(start_node, goal_node)
         route_nodes = route.source
@@ -209,6 +210,8 @@ class TopologicalForkGraph(object):
 
         for i in range(len(route_nodes) - 1):
             route_distance.append(self.get_distance_between_nodes(route_nodes[i], route_nodes[i + 1]))
+
+        rospy.loginfo(route_nodes)
 
         return (route_nodes, route_edges, route_distance)
 

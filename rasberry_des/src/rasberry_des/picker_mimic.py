@@ -26,7 +26,7 @@ class PickerMimic(rasberry_des.picker.Picker):
                  env, topo_graph, robots, verbose)
         self.closest_node_pub = rospy.Publisher("%s/closest_node" %(self.picker_id), std_msgs.msg.String, latch=True, queue_size=10)
         self.current_node_pub = rospy.Publisher("%s/current_node" %(self.picker_id), std_msgs.msg.String, latch=True, queue_size=10)
-        self.pose_pub = rospy.Publisher("%s/pose" %(self.picker_id), geometry_msgs.msg.PoseStamped, latch=True, queue_size=10)
+        self.pose_pub = rospy.Publisher("%s/posestamped" %(self.picker_id), geometry_msgs.msg.PoseStamped, latch=True, queue_size=10)
         self.pose = geometry_msgs.msg.PoseStamped()
         self.pose.header.frame_id = "map"
 
