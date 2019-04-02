@@ -262,21 +262,22 @@ if __name__ == "__main__":
 
 # It seems that there is no transition between the nodes as in idle state 0, the picker will only spend
 
-    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+    n_states = 200  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW = 100 nodes)
                     # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
                     # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
     # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
     # defining a very simple state map -- Here state map = topo_node pattern.
 
-    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
-    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
-    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+    state_map = np.eye(n_states, k=1)*0.5  # forward movement from row 1-->2 in a cyclic pattern (Counter Clock-Wise)
+    state_map[99:101,99:101] = 0  # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[100,0] = 1   # connection between first node of first row and second node of second node in forward move [ (total_rows/2): 0]
+    state_map[0,100] = 1   # connection between first node of first row and second node of second node in reverse move [ 0: (total_rows/2)]
 
-    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
-    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
 
-    # Join the two ROWS in a cyclic pattern
-    state_map = np.concatenate((state_map1, state_map2))
+    state_map += np.eye(n_states, k=-1)*0.5  # reverse movement from row 2-->1 in a cyclic pattern (Clock-Wise)
+    state_map[99:101,99:101] = 0   # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[99,-1] = 1  # connection between last node of first row and last node of second node in forward move.[(total_rows/2)-1: -1]
+    state_map[-1,99] = 1  #connection between first node of first row and second node of second node in reverse move.[-1: (total_rows/2)-1]
     print (state_map)
 
     # summing all column of adjency matrix
@@ -336,22 +337,22 @@ if __name__ == "__main__":
 #(as state1 consists of several node transition in a unidirectional way):
 
 
-    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+    n_states = 200  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
                     # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
                     # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
     # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
     # defining a very simple state map -- Here state map = topo_node pattern.
 
-    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
-    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
-    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+    state_map = np.eye(n_states, k=1)*0.5  # forward movement from row 1-->2 in a cyclic pattern (Counter Clock-Wise)
+    state_map[99:101,99:101] = 0  # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[100,0] = 1   # connection between first node of first row and second node of second node in forward move [ (total_rows/2): 0]
+    state_map[0,100] = 1   # connection between first node of first row and second node of second node in reverse move [ 0: (total_rows/2)]
 
-    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
 
-    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
-
-    # Join the two ROWS in a cyclic pattern
-    state_map = np.concatenate((state_map1, state_map2))
+    state_map += np.eye(n_states, k=-1)*0.5  # reverse movement from row 2-->1 in a cyclic pattern (Clock-Wise)
+    state_map[99:101,99:101] = 0   # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[99,-1] = 1  # connection between last node of first row and last node of second node in forward move.[(total_rows/2)-1: -1]
+    state_map[-1,99] = 1  #connection between first node of first row and second node of second node in reverse move.[-1: (total_rows/2)-1]
     print (state_map)
 
     # summing all column of adjency matrix
@@ -408,22 +409,22 @@ if __name__ == "__main__":
 # My experiment for prediction of emmission states within STATE 2
 #(as state2 consists of several node transition in a unidirectional way in forward direction):
 
-    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+    n_states = 200  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
                     # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
                     # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
     # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
     # defining a very simple state map -- Here state map = topo_node pattern.
 
-    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
-    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
-    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+    state_map = np.eye(n_states, k=1)*0.5  # forward movement from row 1-->2 in a cyclic pattern (Counter Clock-Wise)
+    state_map[99:101,99:101] = 0  # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[100,0] = 1   # connection between first node of first row and second node of second node in forward move [ (total_rows/2): 0]
+    state_map[0,100] = 1   # connection between first node of first row and second node of second node in reverse move [ 0: (total_rows/2)]
 
-    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
 
-    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
-
-    # Join the two ROWS in a cyclic pattern
-    state_map = np.concatenate((state_map1, state_map2))
+    state_map += np.eye(n_states, k=-1)*0.5  # reverse movement from row 2-->1 in a cyclic pattern (Clock-Wise)
+    state_map[99:101,99:101] = 0   # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[99,-1] = 1  # connection between last node of first row and last node of second node in forward move.[(total_rows/2)-1: -1]
+    state_map[-1,99] = 1  #connection between first node of first row and second node of second node in reverse move.[-1: (total_rows/2)-1]
     print (state_map)
 
     # summing all column of adjency matrix
@@ -482,22 +483,22 @@ if __name__ == "__main__":
 # NOTE : In State 3, picker will always move in backward direction w.r.t pri-hn-00 or pri-hn-01 ---
         #Also, we haven't considered picking event (state2) in backward direction hence here also we will ingnore this case.
 
-    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+    n_states = 200  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
                     # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
                     # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
     # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
     # defining a very simple state map -- Here state map = topo_node pattern.
 
-    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
-    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
-    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+    state_map = np.eye(n_states, k=1)*0.5  # forward movement from row 1-->2 in a cyclic pattern (Counter Clock-Wise)
+    state_map[99:101,99:101] = 0  # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[100,0] = 1   # connection between first node of first row and second node of second node in forward move [ (total_rows/2): 0]
+    state_map[0,100] = 1   # connection between first node of first row and second node of second node in reverse move [ 0: (total_rows/2)]
 
-    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
 
-    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
-
-    # Join the two ROWS in a cyclic pattern
-    state_map = np.concatenate((state_map1, state_map2))
+    state_map += np.eye(n_states, k=-1)*0.5  # reverse movement from row 2-->1 in a cyclic pattern (Clock-Wise)
+    state_map[99:101,99:101] = 0   # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[99,-1] = 1  # connection between last node of first row and last node of second node in forward move.[(total_rows/2)-1: -1]
+    state_map[-1,99] = 1  #connection between first node of first row and second node of second node in reverse move.[-1: (total_rows/2)-1]
     print (state_map)
 
     # summing all column of adjency matrix
@@ -553,22 +554,22 @@ if __name__ == "__main__":
 # for MODE 4 , the NODES where picker stayed or transit were which were observed was pri-hn-00 , hence we will try to give max. Observed
 # likelihood(B)
 
-    n_states = 100  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
+    n_states = 200  #number of nodes considered (2 ROW with 96 row_nodes each and 2, 2 head_nodes and sec_nodes, hence each ROW =100 nodes)
                     # Each row is paralle yet in a cyclic pattern as (HOW TOPO_MAP LOOKS like :  ---><pri-hn-00 ---><--- 1---><---2..
                     # --><--96 ---><---sec-hn-00---><---sec-hn-01....  ---><--- rn-01-01---><---rn-01-00 ---><---pri-hn-01---><pri-hn-00.
     # Hence the idea is to create two identity matrices and concatenate it also keep the cyclic pattern by joining first and last node
     # defining a very simple state map -- Here state map = topo_node pattern.
 
-    state_map1 = np.eye(n_states, k=1)          # create first identity matrix with N_nodes rows for Forward transition to node as 1.
-    state_map1[-1,0] = 1                        # replace last row, first column element with 1 , this will join pri-hn-00(first node) and pri-hn-01(last node)
-    state_map1 += np.eye(n_states, k=-1)*0.5    # create first identity matrix with N_nodes rows for Backward transition to node as 0.5 likelihood.
+    state_map = np.eye(n_states, k=1)*0.5  # forward movement from row 1-->2 in a cyclic pattern (Counter Clock-Wise)
+    state_map[99:101,99:101] = 0  # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[100,0] = 1   # connection between first node of first row and second node of second node in forward move [ (total_rows/2): 0]
+    state_map[0,100] = 1   # connection between first node of first row and second node of second node in reverse move [ 0: (total_rows/2)]
 
-    state_map2 = np.eye(n_states, k=1)*0.5      # create second identity matrix with N_nodes rows for Forward transition to node as as 0.5 likelihood.
 
-    state_map += np.eye(n_states, k=-1)         # create second identity matrix with N_nodes rows for Forward transition to node as 1.
-
-    # Join the two ROWS in a cyclic pattern
-    state_map = np.concatenate((state_map1, state_map2))
+    state_map += np.eye(n_states, k=-1)*0.5  # reverse movement from row 2-->1 in a cyclic pattern (Clock-Wise)
+    state_map[99:101,99:101] = 0   # [ (total_rows/2)-1: (total_rows/2)+1 ] ; note: row count starts with 0
+    state_map[99,-1] = 1  # connection between last node of first row and last node of second node in forward move.[(total_rows/2)-1: -1]
+    state_map[-1,99] = 1  #connection between first node of first row and second node of second node in reverse move.[-1: (total_rows/2)-1]
     print (state_map)
 
     # summing all column of adjency matrix
