@@ -1,0 +1,176 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" name="sensor_frames">
+
+  <xacro:arg name="robot_name" default=""/>
+  <xacro:arg name="tf_prefix" default=""/>
+
+  <link name="$(arg tf_prefix)/base_sensors"/>
+  <link name="$(arg tf_prefix)/septentrio"/>
+  <link name="$(arg tf_prefix)/xsens"/>
+  <link name="$(arg tf_prefix)/velodyne"/>
+
+  <!-- Hokuyo Laser -->
+  <link name="$(arg tf_prefix)/hokuyo_front">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://thorvald_model/meshes/hokuyo/hokuyo.dae"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+ <!-- Hokuyo Laser -->
+  <link name="$(arg tf_prefix)/hokuyo_back">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="0.1 0.1 0.1"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <mesh filename="package://thorvald_model/meshes/hokuyo/hokuyo.dae"/>
+      </geometry>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+
+  <joint name="base_base_sens" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/base_sensors"/>
+    <origin xyz="-0.370 -0.1075 1.440" rpy="0 0 0"/>
+  </joint>
+
+  <joint name="base_sens_septentrio" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/septentrio"/>
+    <origin xyz="-0.5325 -0.314 0.814" rpy="0 0 0"/>
+  </joint>
+
+
+  <joint name="base_sens_xsens" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/xsens"/>
+    <origin xyz="0.18 -0.266 0.717" rpy="0 0 0"/>
+  </joint>
+
+   <joint name="base_sens_hokuyo_front" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/hokuyo_front"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0.719 -0.433 0.640" rpy="0.0 0.0 -0.79"/>
+  </joint>
+
+   <joint name="base_sens_hokuyo_back" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/hokuyo_back"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="-0.719 0.433 0.640" rpy="0.0 0.0 2.36"/>
+  </joint>
+
+ <joint name="base_sens_velodyne" type="fixed">
+    <parent link="$(arg tf_prefix)/base_sensors"/>
+    <child link="$(arg tf_prefix)/velodyne"/>
+    <axis xyz="0 1 0" />
+    <origin xyz="0.38 -0.122 0.04" rpy="0 0 0"/>
+  </joint>
+
+  <!--hokuyo-->
+  <gazebo reference="$(arg tf_prefix)/hokuyo_front">
+    <sensor name="$(arg robot_name)_head_hokuyo_front_sensor" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <always_on>1</always_on>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-2.18</min_angle>
+            <max_angle>2.36</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="$(arg robot_name)_hokuyo_front_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan_front</topicName>
+        <frameName>hokuyo_front</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <!--hokuyo-->
+  <gazebo reference="$(arg tf_prefix)/hokuyo_back">
+    <sensor name="$(arg robot_name)_head_hokuyo_back_sensor" type="ray">
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>40</update_rate>
+      <always_on>1</always_on>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>720</samples>
+            <resolution>1</resolution>
+            <min_angle>-2.18</min_angle>
+            <max_angle>2.36</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.10</min>
+          <max>30.0</max>
+          <resolution>0.01</resolution>
+        </range>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise parameters based on published spec for Hokuyo laser
+               achieving "+-30mm" accuracy at range < 10m.  A mean of 0.0m and
+               stddev of 0.01m will put 99.7% of samples within 0.03m of the true
+               reading. -->
+          <mean>0.0</mean>
+          <stddev>0.01</stddev>
+        </noise>
+      </ray>
+      <plugin name="$(arg robot_name)_hokuyo_back_node" filename="libgazebo_ros_laser.so">
+        <topicName>scan_back</topicName>
+        <frameName>hokuyo_back</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+</robot>
+
