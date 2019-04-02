@@ -9,6 +9,7 @@ project(rasberry_navigation)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   amcl
+  ira_laser_tools
   map_server
   monitored_navigation
   nav_msgs
@@ -177,6 +178,7 @@ include_directories(
    scripts/delete_topo_nodes.py
    scripts/get_sim_topo_node_positions.py
    scripts/get_topo_node_positions.py
+   scripts/uni_to_bidirectional_edges.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

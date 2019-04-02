@@ -14,7 +14,7 @@ def evaluate(individual):
 
     # Make dictionary of parameters to pass to the scenario server.
     params = make_param_dict(config_params, individual)
-    
+
     metric_array = np.empty((NUM_RUNS, 6))
     for i in range(NUM_RUNS):
 
@@ -41,12 +41,12 @@ def evaluate(individual):
     path_error = np.median(metric_array[:, 3])
     position_error = np.median(metric_array[:, 4])
     orientation_error = np.median(metric_array[:, 5])
-    
+
     metrics = (t, rotation_cost, trajectory_length, path_error, position_error, orientation_error)
 
     if MULTI_OBJECTIVE:
         metrics = (np.sum(np.array(weights_multi) * np.array(metrics)),)
-    
+
     return metrics
 
 
@@ -134,13 +134,13 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Create DEAP toolbox and register parameters for optimisation.
-    weights = (WEIGHT_TIME, WEIGHT_ROTATION, WEIGHT_LENGTH, WEIGHT_PATH_ERROR, 
+    weights = (WEIGHT_TIME, WEIGHT_ROTATION, WEIGHT_LENGTH, WEIGHT_PATH_ERROR,
                WEIGHT_POSITION_ERROR, WEIGHT_ORIENTATION_ERROR)
-               
+
     if MULTI_OBJECTIVE:
         weights_multi = weights
         weights = (1.0,)
-    
+
     creator.create("FitnessMulti", base.Fitness, weights=weights)
     creator.create("Individual", list, fitness=creator.FitnessMulti)
     toolbox = base.Toolbox()
@@ -252,7 +252,7 @@ if __name__ == "__main__":
 #####################################################################################
     # Save data.
     rospack = rospkg.RosPack()
-    save_path = rospack.get_path("rasberry_optimise") 
+    save_path = rospack.get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
 
@@ -264,7 +264,7 @@ if __name__ == "__main__":
     save_data_to_json(save_dir + "/pop.json", pop)
     save_data_to_json(save_dir + "/data.json", data)
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
-    
+
     save_data_to_yaml(save_dir + "/config_scenario.yaml", config_scenario)
     save_data_to_yaml(save_dir + "/config_params.yaml", config_params)
     save_data_to_yaml(save_dir + "/config_ga.yaml", config_ga)

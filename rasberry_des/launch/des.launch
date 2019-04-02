@@ -1,8 +1,28 @@
+<?xml version="1.0" ?>
+
 <launch>
-	<!-- declare arg to be passed in -->
-	<arg name="config_file" default="$(find rasberry_des)/config/des_config.yaml"/>
-	<group ns="/">
-		<node pkg="rasberry_des" type="des.py" name="des" args="$(arg config_file)" />
-	</group>
+  <!-- declare arg to be passed in -->
+  <arg name="config_file" default="$(find rasberry_des)/config/des_config.yaml"/>
+  <arg name="db_path" default="$(env HOME)/mongodb"/>
+  <arg name="map" default="$(find rasberry_des)/maps/empty_world.yaml" />
+  <arg name="tmap" default="fork_map" />
+
+  <!-- mongodb_store -->
+  <include file="$(find mongodb_store)/launch/mongodb_store.launch">
+    <arg name="db_path" value="$(arg db_path)" />
+  </include>
+
+  <!-- map broadcaster for map and map-to-odom transform -->
+  <include file="$(find rasberry_des)/launch/map_broadcaster.launch">
+    <arg name="map" value="$(arg map)"/>
+  </include>
+
+  <!-- topological navigation -->
+  <!--include file="$(find topological_navigation)/launch/topological_navigation.launch">
+    <arg name="map" value="$(arg tmap)"/>
+  </include-->
+  <node pkg="topological_navigation" type="map_manager.py" name="topological_map_manager" args="$(arg tmap)" respawn="true"/>
+
+  <node pkg="rasberry_des" type="des.py" name="des" args="$(arg config_file)" />
 
 </launch>

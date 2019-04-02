@@ -32,9 +32,13 @@ class scenario_server(object):
         
         # Get config for test scenario.
         self.start_node = config_scenario["start_node"]
-        self.goal_node = config_scenario["goal_node"]
+        self.goal_nodes = config_scenario["goal_nodes"]
         self.robot_name = config_scenario["robot_name"]
-        self.max_wait_time = rospy.Duration(config_scenario["max_wait_time"])
+        
+        max_wait_times_temp = config_scenario["max_wait_times"]  
+        self.max_wait_times = []
+        for max_wait_time in max_wait_times_temp:
+            self.max_wait_times.append(rospy.Duration(max_wait_time))
         
         if "centres" in config_scenario.keys():
             rospack = rospkg.RosPack()
@@ -45,9 +49,9 @@ class scenario_server(object):
             
         
         try:
-            assert self.start_node != self.goal_node
+            assert self.start_node != self.goal_nodes[0]
         except AssertionError:
-            rospy.logerr("Start node should not be the same as the goal node.")
+            rospy.logerr("Start node should not be the same as the first goal node.")
             rospy.signal_shutdown("Start node should not be the same as the goal node.")
             exit()
             
@@ -62,13 +66,15 @@ class scenario_server(object):
         rospy.loginfo("Topological map received.")
         
         
-        # Check that start/goal nodes and route between them exist.
-        self.lookup_node(self.start_node)
-        self.lookup_node(self.goal_node)
-        rospy.loginfo("Looking up route between {} and {} ..."
-                      .format(self.start_node, self.goal_node))
-        self.router = route_search.TopologicalRouteSearch(self.topo_map)
-        self.lookup_route(self.start_node, self.goal_node)
+#        # Check that start/goal nodes and route between them exist.
+#        self.lookup_node(self.start_node)
+#        self.lookup_node(self.goal_nodes)
+#        rospy.loginfo("Looking up route between {} and {} ..."
+#                      .format(self.start_node, self.goal_node))
+#        self.router = route_search.TopologicalRouteSearch(self.topo_map)
+#        self.lookup_route(self.start_node, self.goal_node)
+        
+        
         
         
         # For teleporting the robot model in gazebo.
@@ -102,7 +108,6 @@ class scenario_server(object):
             rospy.signal_shutdown("Action server not available.")
             exit()
         rospy.loginfo("Connected to action server.")
-        self.topo_goal = GotoNodeGoal(target=self.goal_node)
         
         
         # For resetting the pose estimate of the robot model.
@@ -229,9 +234,21 @@ class scenario_server(object):
             contact_sub = rospy.Subscriber("/collision_data_throttled", ContactState , self.contact_callback)              
             
             time_1 = rospy.Time.now()
-            self.topo_nav_client.send_goal_and_wait(self.topo_goal, self.max_wait_time)
+            num_successes = 0
+            for i, goal_node in enumerate(self.goal_nodes):
+                topo_goal = GotoNodeGoal(target=goal_node)    
+                max_wait_time = self.max_wait_times[i]
+
+                self.topo_nav_client.send_goal_and_wait(topo_goal, max_wait_time)
+                result = self.topo_nav_client.get_result()
+                
+                if result.success:
+                    num_successes+=1  
+                else:
+                    break
+                
             time_2 = rospy.Time.now()
-            result = self.topo_nav_client.get_result()
+            
             
             rp_sub.unregister() 
             rp_sub_filtered.unregister() 
@@ -246,8 +263,8 @@ class scenario_server(object):
             
             self.reset_robot()
             
-            print result
-            if result.success:
+            if num_successes == len(self.goal_nodes):
+                rospy.loginfo("SUCCESS")
                 
                 # Get metrics
                 t = (time_2-time_1).to_sec()
@@ -269,13 +286,15 @@ class scenario_server(object):
                 print "Mean orientation error = {} degrees".format(orientation_error) 
                 
             else:
-                t = self.max_wait_time.to_sec()
+                rospy.loginfo("FAIL")    
+                print "Failed to reach current goal in time"
+                
+                t = 10e5
                 rotation_cost = 10e5
                 trajectory_length = 10e5
                 path_error = 10e5
                 position_error = 10e5
                 orientation_error = 10e5
-                print "Failed to complete scenario in maximum alloted time of {} seconds".format(t)
                 
         except rospy.ROSException:
             pass

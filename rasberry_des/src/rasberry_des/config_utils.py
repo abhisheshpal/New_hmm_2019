@@ -346,6 +346,11 @@ def get_des_config_parameters(config_file, n_pickers=None, n_robots=None):
 
     return config_params
 
+def isclose(a, b, rel_tol=1e-06, abs_tol=0.0):
+    """to check two floats a and b are close (nearly equal)
+    """
+    return abs(a-b) <= max(rel_tol * max(abs(a), abs(b)), abs_tol)
+
 if __name__ == "__main__":
     import rospkg
     rospack = rospkg.RosPack()

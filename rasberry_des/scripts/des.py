@@ -18,6 +18,7 @@ import os
 import simpy
 import numpy
 import sys
+import time
 import rospy
 import rasberry_des.farm
 import rasberry_des.picker
@@ -27,8 +28,8 @@ import rasberry_des.robot
 import rasberry_des.topo
 
 RANDOM_SEED = 1111
-SHOW_VIS = True
-SAVE_STATS = False
+SHOW_VIS = False
+SAVE_STATS = True
 SIM_RT_FACTOR = 5.0
 VERBOSE = False
 
@@ -67,11 +68,15 @@ if __name__ == "__main__":
     topo_graph.set_node_yields(_yield_per_node)
 
     n_trials = 1
-    min_n_pickers = 1
-    max_n_pickers = n_topo_nav_rows + 1
-    min_n_robots = 0
-    max_n_robots = max_n_pickers
+    min_n_pickers = 3#1
+    max_n_pickers = 4#n_topo_nav_rows + 1
+    min_n_robots = 3#0
+    max_n_robots = 4#max_n_pickers
 #    n_local_storages = n_topo_nav_rows
+#    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
+    policies = ["uniform_utilisation"]
+
+    raw_input("Press ENTER to start the DES")
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -79,7 +84,7 @@ if __name__ == "__main__":
         for n_robots in range(min_n_robots, max_n_robots):
             if rospy.is_shutdown():
                 break
-            for scheduling_policy in ["lexicographical", "shortest_distance", "uniform_utilisation"]:
+            for scheduling_policy in policies:
                 if rospy.is_shutdown():
                     break
                 for trial in range(n_trials):
@@ -117,8 +122,7 @@ if __name__ == "__main__":
                     if des_env == "simpy":
                         env = simpy.Environment()
                     elif des_env == "ros":
-                        # RealtimeEnvironment can be enabled by uncommenting the line below.
-                        # The farm size and n_pickers given would take 420s to run
+                        # RealtimeEnvironment
                         # To vary the speed of RT sim, change 'factor'
                         env = simpy.RealtimeEnvironment(initial_time=0., factor=SIM_RT_FACTOR, strict=False)
                     else:
@@ -186,7 +190,23 @@ if __name__ == "__main__":
                     print n_pickers, n_robots, scheduling_policy, trial, finish_time_ros - start_time_ros
 
                     if SAVE_STATS:
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, rospy.get_time()*1000000), "w")
+                        time_now = time.time()*1000000
+                        # predictions log
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
+                        print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
+                        for picker_id in picker_ids:
+                            print >> f_handle, picker_id
+                            predictions = farm.predictions[picker_id]
+                            for tray in range(1, farm.tray_counts[picker_id] + 1):
+#                                f_handle.write(predictions[tray])
+                                print >> f_handle, "\t", tray, ":"
+                                for item in predictions[tray]:
+                                    print >> f_handle, "\t\t", item
+                        f_handle.close()
+
+                        # des logs
+                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         # no ros related calls here to ensure printing even when the pickers_only node is killed
                         # farm details
                         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
@@ -198,7 +218,8 @@ if __name__ == "__main__":
                         print >> f_handle, "n_robots: %d" %(n_robots)
 
                         print >> f_handle, "n_polytunnels: %d" %(topo_graph.n_polytunnels)
-                        print >> f_handle, "n_farm_rows: %d" %(topo_graph.n_farm_rows)
+                        for i in range(topo_graph.n_polytunnels):
+                            print >> f_handle, "n_farm_rows[tunnel-%d]: %d" %(i, topo_graph.n_farm_rows[i])
                         print >> f_handle, "n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
 
                         tot_yield = 0.
@@ -209,7 +230,7 @@ if __name__ == "__main__":
                             row_start_y = topo_graph.get_node(row_start_node).pose.position.y
                             row_end_y = topo_graph.get_node(row_end_node).pose.position.y
                             row_length = row_end_y - row_start_y
-                            node_dist = topo_graph.get_distance_between_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
+                            node_dist = topo_graph.get_distance_between_adjacent_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
                             print >> f_handle, "  row_length: %0.3f m" %(row_length)
                             print >> f_handle, "  node_dist: %0.3f m" %(node_dist)
                             row_yield = 0.
