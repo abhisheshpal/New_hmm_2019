@@ -1,0 +1,62 @@
+<?xml version="1.0" ?>
+
+<launch>
+
+  <arg name="ekf_imu_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
+  <arg name="ekf_odom_config" default="$(find rasberry_navigation)/config/norway_odom_ekf.yaml"/>
+  <arg name="use_imu" default="true"/>
+  <arg name="publish_tf" default="true" />
+
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
+
+  <arg name="initial_cov_xx" default="0.0"/>
+  <arg name="initial_cov_yy" default="0.0"/>
+  <arg name="initial_cov_aa" default="i0.0"/>
+
+  <arg name="use_omni" default="false" />
+
+
+  <!-- topic_tools/relay to merge two scans to scan topic for amcl and move_base -->
+  <!-- ira laser tools seems better option for amcl localisation -->
+  <!--node pkg="topic_tools" type="relay" name="scan_front_scan" args="scan_front scan" />
+  <node pkg="topic_tools" type="relay" name="scan_back_scan" args="scan_back scan" /-->
+
+  <node pkg="ira_laser_tools" name="laserscan_multi_merger" type="laserscan_multi_merger" output="screen">
+    <param name="destination_frame" value="base_link"/>
+    <param name="cloud_destination_topic" value="/merged_cloud"/>
+    <param name="scan_destination_topic" value="/scan"/>
+    <param name="laserscan_topics" value ="/scan_front /scan_back" /> <!-- LIST OF THE LASER SCAN TOPICS TO SUBSCRIBE -->
+
+    <param name="angle_min" value="-3.14"/>
+    <param name="angle_max" value="3.14"/>
+    <param name="angle_increment" value="0.0058"/>
+    <param name="scan_time" value="0.0333333"/>
+    <param name="range_min" value="0.30"/>
+    <param name="range_max" value="50.0"/>
+
+  </node>
+
+
+  <!-- imu-ekf localization for odom-to-base_link -->
+  <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
+    <rosparam command="load" file="$(arg ekf_imu_config)" if="$(arg use_imu)"/>
+    <rosparam command="load" file="$(arg ekf_odom_config)" unless="$(arg use_imu)"/>
+    <param name="publish_tf" value="$(arg publish_tf)"/>
+  </node> 
+
+  <!-- amcl -->
+  <include file="$(find rasberry_navigation)/launch/amcl.launch">
+    <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+    <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+    <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+
+    <arg name="initial_cov_xx" value="$(arg initial_cov_xx)"/>
+    <arg name="initial_cov_yy" value="$(arg initial_cov_yy)"/>
+    <arg name="initial_cov_aa" value="$(arg initial_cov_aa)"/>
+
+    <arg name="use_omni" value="$(arg use_omni)" />
+  </include>
+
+</launch>
