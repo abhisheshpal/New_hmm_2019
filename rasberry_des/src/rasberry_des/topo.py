@@ -6,8 +6,9 @@
 # @info:
 # ----------------------------------
 
-
 import numpy
+import random
+import copy
 import rospy
 import topological_navigation.tmap_utils
 import topological_navigation.route_search
@@ -55,6 +56,7 @@ class TopologicalForkGraph(object):
 
         self.head_nodes = {}        # {row_id:[pri_head_node, sec_head_node]}
         self.row_nodes = {}         # {row_id:[row_nodes]}
+        self._row_nodes = []        # list of all row nodes, for internal use
         # row_info {row_id:[pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
         self.row_info = {}
         # yield_at_node {node_id:yield_at_node}
@@ -69,6 +71,8 @@ class TopologicalForkGraph(object):
 
         self.verbose = verbose
 
+        self.topo_map = None
+        self.node_index = {} # index of node in topo_map
         for i in range(10):
             try:
                 self.topo_map = rospy.wait_for_message(ns + "topological_map", strands_navigation_msgs.msg.TopologicalMap, timeout=10)
@@ -85,10 +89,19 @@ class TopologicalForkGraph(object):
         if len(self.topo_map.nodes) == 0:
             raise Exception("No nodes in topo_map. Try relaunching topological_navigation nodes.")
 
+        self.update_node_index()
+
+        self.agent_nodes = {} # agent_id:agent.curr_node - should be updated by the agent
+
         self.set_row_info()
         # local storages should be set by calling set_local_storages externally
         self.set_node_yields(_node_yields)
         self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
+
+    def update_node_index(self, ):
+        """once topo_map is received, get the indices of nodes for easy access to node object"""
+        for i in range(len(self.topo_map.nodes)):
+            self.node_index[self.topo_map.nodes[i].name] = i
 
     def set_node_yields(self, _node_yields):
         """set_node_yields: Set the yields at each node from the node yields
@@ -108,16 +121,19 @@ class TopologicalForkGraph(object):
                 node_id = self.row_nodes[row_id][j]
                 # yield from each row node to next row node
                 if j != n_row_nodes - 1:
-#                    self.yield_at_node[node_id] = numpy.random.logistic(node_yield_in_row[row_id])
-                    self.yield_at_node[node_id] = node_yield_in_row[row_id]
+#                    self.yield_at_node[node_id] = node_yield_in_row[row_id]
+                    # adding Gaussian white noise to yield with std of 2% of node_yield
+                    self.yield_at_node[node_id] = node_yield_in_row[row_id] + random.gauss(0, 0.02 * node_yield_in_row[row_id])
                 else:
                     # between the last two nodes, the distance could be smaller than node_dist
-                    row_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][0],
-                                                                    self.row_nodes[row_id][1])
-                    last_node_dist = self.get_distance_between_nodes(self.row_nodes[row_id][-2],
-                                                                     self.row_nodes[row_id][-1])
-#                    self.yield_at_node[node_id] = numpy.random.logistic((node_yield_in_row[row_id] * last_node_dist) / row_node_dist)
-                    self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
+                    row_node_dist = self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][0],
+                                                                             self.row_nodes[row_id][1])
+                    last_node_dist = self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][-2],
+                                                                              self.row_nodes[row_id][-1])
+#                    self.yield_at_node[node_id] = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
+                    last_node_yield = (node_yield_in_row[row_id] * last_node_dist) / row_node_dist
+                    # adding Gaussian white noise to yield with std of 2% of node_yield
+                    self.yield_at_node[node_id] = last_node_yield + random.gauss(0, 0.02 * last_node_yield)
 
     def set_local_storages(self, local_storages):
         """set local_storage_nodes and local_storages
@@ -181,8 +197,10 @@ class TopologicalForkGraph(object):
             for i in range(self.n_topo_nav_rows):
                 if "rn-%02d" %(i) in node.name:
                     self.row_nodes["row-%02d" %(i)].append(node.name)
+                    self._row_nodes.append(node.name)
 
         for row_id in self.row_ids:
+            # assuming the node names can be directly sorted
             self.row_nodes[row_id].sort()
             # local_storage_nodes should be modified by calling set_local_storages
             self.row_info[row_id] = [self.head_nodes[row_id][0],
@@ -199,17 +217,23 @@ class TopologicalForkGraph(object):
         start_node -- name of the starting node
         goal_node -- name of the goal node
         """
+        route_nodes = []
+        route_edges = []
         route_distance = []
+        if start_node == goal_node:
+            return ([start_node], route_edges, route_distance)
+
         route = self.route_search.search_route(start_node, goal_node)
-        route_nodes = route.source
-        route_edges = route.edge_id
+        if route is not None:
+            route_nodes = route.source
+            route_edges = route.edge_id
 
-        edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
-        route_edges.append(edge_to_goal[0])
-        route_nodes.append(goal_node)
+            edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
+            route_nodes.append(goal_node)
+            route_edges.append(edge_to_goal[0])
 
-        for i in range(len(route_nodes) - 1):
-            route_distance.append(self.get_distance_between_nodes(route_nodes[i], route_nodes[i + 1]))
+            for i in range(len(route_nodes) - 1):
+                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
 
         return (route_nodes, route_edges, route_distance)
 
@@ -220,10 +244,10 @@ class TopologicalForkGraph(object):
         Keyword arguments:
 
         node -- name of the node in topological map"""
-        return topological_navigation.tmap_utils.get_node(self.topo_map, node)
+        return self.topo_map.nodes[self.node_index[node]]
 
-    def get_distance_between_nodes(self, from_node, to_node):
-        """get_distance_between_nodes: Given names of two nodes, return the distance of the edge
+    def get_distance_between_adjacent_nodes(self, from_node, to_node):
+        """get_distance_between_adjacent_nodes: Given names of two nodes, return the distance of the edge
         between their node objects. A wrapper for the get_distance_to_node function in tmap_utils.
         Works only for adjacent nodes.
 
@@ -249,6 +273,80 @@ class TopologicalForkGraph(object):
         for edge in edges:
             edge_ids.append(edge.edge_id)
         return edge_ids
+
+    def get_topo_map_no_agent_rownodes(self, ):
+        """get the current topological map without the edges connecting to row nodes with agents.
+        this map should be used for route_search for all route searches here."""
+        dyn_map = copy.deepcopy(self.topo_map)         # copy of map to be modified
+        agent_nodes = copy.deepcopy(self.agent_nodes)   # copy to avoid data inconsistency
+
+        # get all nodes with an agent (picker/robot)
+        row_nodes_with_agents = []
+        for agent in agent_nodes:
+            node = self.agent_nodes[agent]
+            if (node in self._row_nodes) and (node not in row_nodes_with_agents):
+                row_nodes_with_agents.append(node)
+
+        for node in row_nodes_with_agents:
+            # find neighbouring nodes and edges from the agent node
+            nbr_nodes = []
+            for edge in dyn_map.nodes[self.node_index[node]].edges:
+                nbr_nodes.append(edge.node)
+            # remove all edges
+            dyn_map.nodes[self.node_index[node]].edges = []
+
+            # for each neighbour, find and remove the edge back to the agent node
+            for nbr_node in nbr_nodes:
+                edge_indices = []
+                for edge in dyn_map.nodes[self.node_index[nbr_node]].edges:
+                    if edge.node == node:
+                        edge_indices.append(dyn_map.nodes[self.node_index[nbr_node]].edges.index(edge))
+                edge_indices.sort(reverse=True)
+                for edge_index in edge_indices:
+                    dyn_map.nodes[self.node_index[nbr_node]].edges.pop(edge_index)
+
+        return dyn_map
+
+    def get_path_details_no_agent_rownodes(self, start_node, goal_node):
+        """get route_nodes, route_edges and route_distance from start_node to goal_node without
+        touching any row nodes with agents. the goal_node should not be a row node occupied by
+        an agent.
+
+        Keyword arguments:
+        start_node -- name of the starting node
+        goal_node -- name of the goal node
+        """
+        route_distance = []
+        route_nodes = []
+        route_edges = []
+
+        # route_search using modified topological map
+        dyn_map = self.get_topo_map_no_agent_rownodes()
+        router = topological_navigation.route_search.TopologicalRouteSearch(dyn_map)
+
+        # find a path to the goal_node
+        route = router.search_route(start_node, goal_node)
+        if route is not None:
+            route_nodes = route.source
+            route_edges = route.edge_id
+
+            # find and append path from the last node to the goal_node using original topo_map
+            edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
+            route_nodes.append(goal_node)
+            route_edges.append(edge_to_goal[0])
+
+            # sum the path distance
+            for i in range(len(route_nodes) - 1):
+                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
+
+        return (route_nodes, route_edges, route_distance)
+
+    def get_row_id_of_row_node(self, node):
+        """given a row_node, return the row_id"""
+        for row_id in self.row_ids:
+            if node in self.row_nodes[row_id]:
+                return row_id
+        return None
 
     def loginfo(self, msg):
         """log info based on a flag"""

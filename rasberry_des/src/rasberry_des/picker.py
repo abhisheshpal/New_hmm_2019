@@ -10,6 +10,8 @@ import math
 import random
 import rospy
 
+import rasberry_des.config_utils
+
 
 class Picker(object):
     """Picker class definition"""
@@ -58,6 +60,7 @@ class Picker(object):
 
         # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
         # 4: waiting for unload at storage, 5: waiting for loading on robot
+        # 6: transporting to local storage from cold storage
         self.mode = 0
 
         self.picking_finished = False
@@ -90,8 +93,8 @@ class Picker(object):
         self.time_spent_loading = 0.
         self.time_spent_working = lambda: self.time_spent_picking + self.time_spent_transportation + self.time_spent_unloading
 
-        self.process_timeout = 0.001
-        self.loop_timeout = 1.
+        self.process_timeout = 0.10
+        self.loop_timeout = 0.10
 
         self.assigned_robot_id = None
         self.continue_picking = True
@@ -99,6 +102,8 @@ class Picker(object):
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
         self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
+        # update agent_nodes in topo_graph
+        self.graph.agent_nodes[self.picker_id] = self.curr_node
 
         self.use_local_storage = self.graph.use_local_storage # if False, store at cold storage
 
@@ -152,7 +157,7 @@ class Picker(object):
 
         # update picking_progress and n_tray
         self.picking_progress += self.graph.yield_at_node[self.curr_node]
-        if self.picking_progress >= self.tray_capacity:
+        if self.picking_progress > self.tray_capacity or rasberry_des.config_utils.isclose(self.picking_progress, self.tray_capacity):
             self.n_trays += 1
             self.picking_progress -= self.tray_capacity
 
@@ -406,7 +411,7 @@ class Picker(object):
                         else: # with robots
                             # this unloading will happen if s/he finished picking the last allocated row
                             # and tray is not full
-                            self.loginfo("%s unloading all trays at %s" %(self.picker_id, self.local_storage_node))
+                            self.loginfo("%s unloading all trays at %s" %(self.picker_id, storage_node))
                             wait_time = self.unloading_time * (self.n_trays if self.picking_progress == 0 else self.n_trays + 1)
                             yield self.env.timeout(wait_time)
                             self.time_spent_unloading += self.env.now - unloading_start_time
@@ -494,6 +499,9 @@ class Picker(object):
             yield self.env.timeout(travel_time)
 
             self.curr_node = route_nodes[i + 1]
+
+            # update agent_nodes in the topo_graph
+            self.graph.agent_nodes[self.picker_id] = self.curr_node
 
         self.loginfo("%s reached %s" %(self.picker_id, goal_node))
         yield self.env.timeout(self.process_timeout)
