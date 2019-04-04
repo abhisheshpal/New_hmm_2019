@@ -63,30 +63,30 @@
   </joint>
 
   <joint name="base_sens_septentrio" type="fixed">
-    <parent link="$(arg tf_prefix)/base_sensors"/>
+    <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/septentrio"/>
-    <origin xyz="-0.01 0 0.3" rpy="0 0 0"/>
+    <origin xyz="-0.5325 -0.314 0.814" rpy="0 0 0"/>
   </joint>
 
 
   <joint name="base_sens_xsens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/xsens"/>
-    <origin xyz="-0.005 0.2605 0.682" rpy="0 0 0"/>
+    <origin xyz="0.18 -0.266 0.717" rpy="0 0 0"/>
   </joint>
 
    <joint name="base_sens_hokuyo_front" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo_front"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.700 0.485 0.705" rpy="0.0 0.0 0.79"/>
+    <origin xyz="0.719 -0.433 0.640" rpy="0.0 0.0 -0.79"/>
   </joint>
 
    <joint name="base_sens_hokuyo_back" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/hokuyo_back"/>
     <axis xyz="0 1 0" />
-    <origin xyz="-0.700 -0.485 0.705" rpy="0.0 0.0 -2.36"/>
+    <origin xyz="-0.719 0.433 0.640" rpy="0.0 0.0 2.36"/>
   </joint>
 
  <joint name="base_sens_velodyne" type="fixed">
@@ -108,8 +108,8 @@
           <horizontal>
             <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-2.36</min_angle>
-            <max_angle>2.36</max_angle>
+            <min_angle>-2.18</min_angle>
+            <max_angle>2.18</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -146,8 +146,8 @@
           <horizontal>
             <samples>720</samples>
             <resolution>1</resolution>
-            <min_angle>-2.36</min_angle>
-            <max_angle>2.36</max_angle>
+            <min_angle>-2.18</min_angle>
+            <max_angle>2.18</max_angle>
           </horizontal>
         </scan>
         <range>

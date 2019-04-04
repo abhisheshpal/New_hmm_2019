@@ -47,7 +47,6 @@ if __name__ == "__main__":
     if config_params["second_head_lane"]:
         topo_graph.set_row_info(config_params["pri_head_nodes"], config_params["row_nodes"], config_params["sec_head_nodes"])
     else:
-        rospy.loginfo(config_params["pri_head_nodes"])
         topo_graph.set_row_info(config_params["pri_head_nodes"], config_params["row_nodes"])
     # set node_yields
     topo_graph.set_node_yields(config_params["yield_per_node"])
@@ -83,13 +82,16 @@ if __name__ == "__main__":
                                                              picker_transportation_rate[picker_id],
                                                              picker_unloading_time[picker_id],
                                                              env, topo_graph,
-                                                             robots, VERBOSE))
+                                                             robots,
+                                                             config_params["with_robots"], VERBOSE))
 
     scheduling_policy = "lexicographical" # ["lexicographical", "shortest_distance", "uniform_utilisation"]
 
     farm = rasberry_des.farm_mimic.FarmMimic(config_params["map_name"],
                                              env, config_params["n_topo_nav_rows"], topo_graph, robots,
-                                             pickers, scheduling_policy, VERBOSE)
+                                             pickers, scheduling_policy,
+                                             config_params["with_robots"],
+                                             config_params["n_iter"], VERBOSE)
 
     # get config data
     # create n picker_mimic objects
