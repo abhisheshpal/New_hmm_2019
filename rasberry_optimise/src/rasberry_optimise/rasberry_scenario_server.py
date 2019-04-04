@@ -73,9 +73,7 @@ class scenario_server(object):
 #                      .format(self.start_node, self.goal_node))
 #        self.router = route_search.TopologicalRouteSearch(self.topo_map)
 #        self.lookup_route(self.start_node, self.goal_node)
-        
-        
-        
+     
         
         # For teleporting the robot model in gazebo.
         try:
@@ -139,7 +137,15 @@ class scenario_server(object):
                 self.model_state.pose=node.pose
                 break
             
-        
+        if "start_orientation" in config_scenario.keys():
+            yaw = config_scenario["start_orientation"] 
+            quat = tf.transformations.quaternion_from_euler(0, 0, yaw)
+            self.model_state.pose.orientation.x = quat[0]
+            self.model_state.pose.orientation.y = quat[1]
+            self.model_state.pose.orientation.z = quat[2]
+            self.model_state.pose.orientation.w = quat[3]
+            
+            
         # Store the initial pose estimate = pose of the start node with a bit of noise.
         self.initial_pose = PoseWithCovarianceStamped()
         self.initial_pose.header.frame_id = "/map"
