@@ -71,6 +71,13 @@
       node: WayPoint27
       recovery_behaviours_config: ''
       top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint10_WayPoint9
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint9
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint10
@@ -136,7 +143,7 @@
         z: -0.0235010199249
       position:
         x: 41.083
-        y: 46.11966666666667
+        y: 46.1196666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -164,20 +171,6 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint101_WayPoint84
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint84
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint101_WayPoint83
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint83
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint101_WayPoint100
       inflation_radius: 0.0
       map_2d: riseholme
@@ -189,6 +182,13 @@
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint110
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint101_WayPoint84
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint84
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -203,7 +203,7 @@
         z: -0.706738710403
       position:
         x: 44.518
-        y: 45.873666666666665
+        y: 45.8736666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -256,7 +256,7 @@
         z: -0.039609555155
       position:
         x: 20.639
-        y: 48.873666666666665
+        y: 48.8736666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -284,17 +284,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint103_WayPoint104
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint104
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint103_WayPoint102
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint102
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint103_WayPoint104
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint104
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -309,7 +309,7 @@
         z: -0.0377963446081
       position:
         x: 23.639
-        y: 48.647666666666666
+        y: 48.6476666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -337,17 +337,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint104_WayPoint105
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint105
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint104_WayPoint103
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint103
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint104_WayPoint105
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint105
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -362,7 +362,7 @@
         z: -0.0530380681157
       position:
         x: 26.604
-        y: 48.42166666666667
+        y: 48.4216666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -390,17 +390,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint105_WayPoint106
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint106
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint105_WayPoint104
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint104
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint105_WayPoint106
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint106
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -415,7 +415,7 @@
         z: -0.0411073826253
       position:
         x: 29.616
-        y: 48.21066666666667
+        y: 48.2106666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -443,17 +443,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint106_WayPoint107
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint107
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint106_WayPoint105
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint105
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint106_WayPoint107
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint107
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -468,7 +468,7 @@
         z: -0.038721229881
       position:
         x: 32.612
-        y: 48.01566666666667
+        y: 48.0156666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -496,17 +496,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint107_WayPoint108
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint108
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint107_WayPoint106
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint106
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint107_WayPoint108
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint108
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -521,7 +521,7 @@
         z: -0.0302362088114
       position:
         x: 35.604
-        y: 47.82266666666666
+        y: 47.8226666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -549,17 +549,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint108_WayPoint109
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint109
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint108_WayPoint107
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint107
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint108_WayPoint109
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint109
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -574,7 +574,7 @@
         z: -0.0374140329659
       position:
         x: 38.468
-        y: 47.63966666666666
+        y: 47.6396666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -602,17 +602,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint109_WayPoint110
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint110
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint109_WayPoint108
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint108
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint109_WayPoint110
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint110
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -627,7 +627,7 @@
         z: -0.0329386368394
       position:
         x: 41.164
-        y: 47.459666666666664
+        y: 47.4596666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -655,17 +655,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint11_WayPoint12
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint12
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint11_WayPoint10
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint11_WayPoint12
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint12
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -708,17 +708,10 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint110_WayPoint119
+      edge_id: WayPoint110_WayPoint101
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint119
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint110_WayPoint120
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint120
+      node: WayPoint101
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -729,10 +722,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint110_WayPoint101
+      edge_id: WayPoint110_WayPoint119
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint101
+      node: WayPoint119
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -747,7 +740,7 @@
         z: 0.705333948135
       position:
         x: 44.596
-        y: 47.217666666666666
+        y: 47.2176666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -775,17 +768,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint111_WayPoint132
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint132
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint111_WayPoint112
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint112
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint111_WayPoint132
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint132
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -800,7 +793,7 @@
         z: -0.999967336655
       position:
         x: 20.734
-        y: 50.20066666666666
+        y: 50.2006666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -853,7 +846,7 @@
         z: 0.999918460846
       position:
         x: 23.73
-        y: 49.98166666666667
+        y: 49.9816666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -906,7 +899,7 @@
         z: -0.999467968941
       position:
         x: 26.705
-        y: 49.76466666666666
+        y: 49.7646666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -959,7 +952,7 @@
         z: -0.99998575449
       position:
         x: 29.691
-        y: 49.55766666666667
+        y: 49.5576666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1012,7 +1005,7 @@
         z: 0.999983847141
       position:
         x: 32.688
-        y: 49.35366666666667
+        y: 49.3536666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1065,7 +1058,7 @@
         z: 1.0
       position:
         x: 35.701
-        y: 49.154666666666664
+        y: 49.1546666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1118,7 +1111,7 @@
         z: 0.999801874161
       position:
         x: 38.557
-        y: 48.96966666666667
+        y: 48.9696666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1171,7 +1164,7 @@
         z: -0.99990272522
       position:
         x: 41.254
-        y: 48.79066666666667
+        y: 48.7906666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1199,6 +1192,13 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint119_WayPoint110
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint110
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint119_WayPoint118
       inflation_radius: 0.0
       map_2d: riseholme
@@ -1206,10 +1206,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint119_WayPoint110
+      edge_id: WayPoint119_WayPoint120
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint110
+      node: WayPoint120
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1224,7 +1224,7 @@
         z: -0.999715387821
       position:
         x: 44.685
-        y: 48.54866666666667
+        y: 48.5486666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1252,17 +1252,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint12_WayPoint13
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint13
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint12_WayPoint11
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint11
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint12_WayPoint13
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint13
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1305,17 +1305,17 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint120_WayPoint119
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint119
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint120_WayPoint121
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint121
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint120_WayPoint110
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint110
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1330,7 +1330,7 @@
         z: -0.999997615814
       position:
         x: 44.774
-        y: 49.88366666666667
+        y: 49.8836666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1358,17 +1358,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint121_WayPoint122
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint122
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint121_WayPoint120
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint120
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint121_WayPoint122
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint122
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1383,7 +1383,7 @@
         z: 0.99904280901
       position:
         x: 41.343
-        y: 50.123666666666665
+        y: 50.1236666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1411,17 +1411,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint122_WayPoint123
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint123
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint122_WayPoint121
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint121
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint122_WayPoint123
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint123
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1436,7 +1436,7 @@
         z: 0.999200344086
       position:
         x: 38.65
-        y: 50.30166666666667
+        y: 50.3016666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1464,17 +1464,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint123_WayPoint124
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint124
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint123_WayPoint122
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint122
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint123_WayPoint124
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint124
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1489,7 +1489,7 @@
         z: 0.99936747551
       position:
         x: 35.797
-        y: 50.483666666666664
+        y: 50.4836666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1517,17 +1517,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint124_WayPoint125
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint125
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint124_WayPoint123
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint123
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint124_WayPoint125
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint125
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1542,7 +1542,7 @@
         z: -0.999798953533
       position:
         x: 32.776
-        y: 50.678666666666665
+        y: 50.6786666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1570,17 +1570,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint125_WayPoint126
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint126
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint125_WayPoint124
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint124
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint125_WayPoint126
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint126
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1595,7 +1595,7 @@
         z: -0.99978530407
       position:
         x: 29.783
-        y: 50.879666666666665
+        y: 50.8796666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1623,17 +1623,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint126_WayPoint127
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint127
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint126_WayPoint125
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint125
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint126_WayPoint127
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint127
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1648,7 +1648,7 @@
         z: -0.999920606613
       position:
         x: 26.798
-        y: 51.08566666666667
+        y: 51.0856666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1676,17 +1676,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint127_WayPoint128
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint128
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint127_WayPoint126
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint126
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint127_WayPoint128
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint128
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1701,7 +1701,7 @@
         z: -0.999578773975
       position:
         x: 23.82
-        y: 51.30166666666667
+        y: 51.3016666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1729,17 +1729,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint128_WayPoint131
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint131
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint128_WayPoint127
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint127
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint128_WayPoint131
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint131
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1754,7 +1754,7 @@
         z: 0.999039173126
       position:
         x: 20.829
-        y: 51.52066666666666
+        y: 51.5206666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1782,17 +1782,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint13_WayPoint14
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint14
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint13_WayPoint12
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint12
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint13_WayPoint14
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint14
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1862,27 +1862,6 @@
       node: WayPoint128
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint131_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint131_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint131_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint131
@@ -1895,7 +1874,7 @@
         z: 0.921345055103
       position:
         x: 17.899
-        y: 51.720666666666666
+        y: 51.7206666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -1922,27 +1901,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint132_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint132_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint132_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint132_WayPoint111
       inflation_radius: 0.0
@@ -1983,7 +1941,7 @@
         z: 0.999972581863
       position:
         x: 17.803
-        y: 50.40266666666667
+        y: 50.4026666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2038,27 +1996,6 @@
       node: WayPoint74
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint133_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint133_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint133_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint133
@@ -2071,7 +2008,7 @@
         z: -0.00458851503208
       position:
         x: 17.707
-        y: 49.07566666666666
+        y: 49.0756666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2099,52 +2036,31 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint134_WayPoint67
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint67
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint134_WayPoint73
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint134_WayPoint74
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint74
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint134_WayPoint93
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint93
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint134_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2159,7 +2075,7 @@
         z: 0.00550031615421
       position:
         x: 17.604
-        y: 47.76866666666667
+        y: 47.7686666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2208,27 +2124,6 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint138_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint138_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint138_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint138_WayPoint92
       inflation_radius: 0.0
       map_2d: riseholme
@@ -2247,7 +2142,7 @@
         z: 0.89684510231
       position:
         x: 17.515
-        y: 46.44766666666666
+        y: 46.4476666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2296,27 +2191,6 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint139_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint139_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint139_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint139_WayPoint80
       inflation_radius: 0.0
       map_2d: riseholme
@@ -2335,7 +2209,7 @@
         z: -0.0111324097961
       position:
         x: 17.419
-        y: 45.129666666666665
+        y: 45.1296666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2363,17 +2237,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint14_WayPoint15
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint15
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint14_WayPoint13
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint13
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint14_WayPoint15
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint15
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2416,17 +2290,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint15_WayPoint16
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint16
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint15_WayPoint14
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint14
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint15_WayPoint16
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint16
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2469,17 +2343,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint16_WayPoint17
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint17
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint16_WayPoint15
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint15
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint16_WayPoint17
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint17
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2522,17 +2396,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint17_WayPoint18
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint18
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint17_WayPoint16
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint16
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint17_WayPoint18
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint18
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2575,17 +2449,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint18_WayPoint64
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint64
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint18_WayPoint17
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint17
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint18_WayPoint64
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint64
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2681,17 +2555,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint2_WayPoint6
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint6
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint2_WayPoint1
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint1
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint2_WayPoint6
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint6
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2734,17 +2608,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint20_WayPoint21
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint21
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint20_WayPoint19
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint19
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint20_WayPoint21
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint21
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2787,17 +2661,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint21_WayPoint22
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint22
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint21_WayPoint20
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint20
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint21_WayPoint22
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint22
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2840,17 +2714,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint22_WayPoint23
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint23
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint22_WayPoint21
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint21
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint22_WayPoint23
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint23
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2893,17 +2767,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint23_WayPoint24
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint24
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint23_WayPoint22
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint22
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint23_WayPoint24
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint24
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2946,17 +2820,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint24_WayPoint25
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint25
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint24_WayPoint23
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint23
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint24_WayPoint25
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint25
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -2999,17 +2873,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint25_WayPoint26
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint26
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint25_WayPoint24
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint24
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint25_WayPoint26
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint26
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3052,17 +2926,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint26_WayPoint27
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint27
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint26_WayPoint25
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint25
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint26_WayPoint27
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint27
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3109,13 +2983,6 @@
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint10
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint27_WayPoint9
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint9
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -3225,17 +3092,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint29_WayPoint30
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint30
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint29_WayPoint28
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint28
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint29_WayPoint30
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint30
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3331,17 +3198,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint30_WayPoint31
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint31
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint30_WayPoint29
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint29
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint30_WayPoint31
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint31
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3384,17 +3251,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint31_WayPoint32
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint32
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint31_WayPoint30
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint30
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint31_WayPoint32
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint32
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3437,17 +3304,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint32_WayPoint33
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint33
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint32_WayPoint31
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint31
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint32_WayPoint33
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint33
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3490,17 +3357,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint33_WayPoint34
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint34
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint33_WayPoint32
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint32
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint33_WayPoint34
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint34
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3543,17 +3410,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint34_WayPoint35
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint35
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint34_WayPoint33
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint33
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint34_WayPoint35
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint35
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3596,17 +3463,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint35_WayPoint36
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint36
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint35_WayPoint34
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint34
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint35_WayPoint36
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint36
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3649,17 +3516,10 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint36_WayPoint45
+      edge_id: WayPoint36_WayPoint27
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint45
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint36_WayPoint46
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint46
+      node: WayPoint27
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -3670,10 +3530,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint36_WayPoint27
+      edge_id: WayPoint36_WayPoint45
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint27
+      node: WayPoint45
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3716,17 +3576,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint37_WayPoint58
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint58
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint37_WayPoint38
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint38
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint37_WayPoint58
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint58
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -3875,17 +3735,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint4_WayPoint5
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint5
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint4_WayPoint3
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint3
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint4_WayPoint5
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint5
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4193,6 +4053,13 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint45_WayPoint36
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint36
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint45_WayPoint44
       inflation_radius: 0.0
       map_2d: riseholme
@@ -4200,10 +4067,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint45_WayPoint36
+      edge_id: WayPoint45_WayPoint46
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint36
+      node: WayPoint46
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4246,17 +4113,17 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint46_WayPoint45
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint46_WayPoint47
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint47
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint46_WayPoint36
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint36
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4299,17 +4166,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint47_WayPoint48
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint48
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint47_WayPoint46
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint47_WayPoint48
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint48
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4352,17 +4219,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint48_WayPoint49
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint49
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint48_WayPoint47
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint48_WayPoint49
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint49
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4405,17 +4272,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint49_WayPoint50
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint50
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint49_WayPoint48
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint49_WayPoint50
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint50
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4511,17 +4378,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint50_WayPoint51
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint51
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint50_WayPoint49
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint50_WayPoint51
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint51
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4564,17 +4431,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint51_WayPoint52
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint52
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint51_WayPoint50
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint50
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint51_WayPoint52
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint52
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4617,17 +4484,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint52_WayPoint53
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint53
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint52_WayPoint51
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint51
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint52_WayPoint53
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint53
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4670,17 +4537,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint53_WayPoint54
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint54
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint53_WayPoint52
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint52
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint53_WayPoint54
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint54
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4723,17 +4590,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint54_WayPoint57
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint57
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint54_WayPoint53
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint53
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint54_WayPoint57
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint57
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -4775,62 +4642,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint56_WayPoint59
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint59
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint60
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint60
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint65
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint65
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint64
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint64
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint58
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint58
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint56_WayPoint57
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint57
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint56_WayPoint57
       inflation_radius: 0.0
@@ -4927,27 +4738,6 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint57_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint57_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint57_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint57_WayPoint54
       inflation_radius: 0.0
       map_2d: riseholme
@@ -5015,27 +4805,6 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint58_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint58_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint58_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint58_WayPoint37
       inflation_radius: 0.0
       map_2d: riseholme
@@ -5054,13 +4823,6 @@
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint58_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -5114,27 +4876,6 @@
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint28
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint59_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint59_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint59_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -5198,17 +4939,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint6_WayPoint65
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint65
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint6_WayPoint2
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint2
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint6_WayPoint65
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint65
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -5255,27 +4996,6 @@
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint19
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint60_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint60_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint60_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
@@ -5338,55 +5058,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint63_WayPoint59
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint59
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint60
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint60
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint65
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint65
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint64
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint64
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint58
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint58
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint63_WayPoint57
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint57
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint63_WayPoint56
       inflation_radius: 0.0
@@ -5476,27 +5147,6 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint64_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint64_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint64_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint64_WayPoint18
       inflation_radius: 0.0
       map_2d: riseholme
@@ -5571,27 +5221,6 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint65_WayPoint63
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint63
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint65_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint65_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint65_WayPoint6
       inflation_radius: 0.0
       map_2d: riseholme
@@ -5651,69 +5280,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint66_WayPoint59
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint59
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint60
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint60
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint56
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint56
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint65
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint65
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint64
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint64
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint58
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint58
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint58_000
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint58
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint66_WayPoint57
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint57
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint66_WayPoint56
       inflation_radius: 0.0
@@ -5809,62 +5375,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint67_WayPoint68
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint68
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint131
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint131
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint132
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint132
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint133
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint133
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint134
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint134
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint138
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint138
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint67_WayPoint139
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint139
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint67_WayPoint131
       inflation_radius: 0.0
@@ -5974,20 +5484,6 @@
       node: WayPoint69
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint68_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint68_WayPoint69
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint69
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint68
@@ -6027,34 +5523,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint69_WayPoint68
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint68
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint69_WayPoint70
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint70
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint69_WayPoint71
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint71
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint69_WayPoint72
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint72
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint69_WayPoint68
       inflation_radius: 0.0
@@ -6182,13 +5650,6 @@
       node: WayPoint69
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint70_WayPoint69
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint69
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint70
@@ -6228,13 +5689,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint71_WayPoint69
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint69
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint71_WayPoint69
       inflation_radius: 0.0
@@ -6288,13 +5742,6 @@
       node: WayPoint69
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint72_WayPoint69
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint69
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme
     name: WayPoint72
@@ -6334,62 +5781,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint73_WayPoint74
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint74
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint67
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint67
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint131
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint131
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint132
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint132
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint133
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint133
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint134
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint134
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint138
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint138
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint73_WayPoint139
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint139
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint73_WayPoint131
       inflation_radius: 0.0
@@ -6485,62 +5876,6 @@
     pointset: riseholme_bidirectional
   node:
     edges:
-    - action: move_base
-      edge_id: WayPoint74_WayPoint66
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint66
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint73
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint73
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint131
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint131
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint132
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint132
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint133
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint133
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint134
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint134
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint138
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint138
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint74_WayPoint139
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint139
-      recovery_behaviours_config: ''
-      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint74_WayPoint131
       inflation_radius: 0.0
@@ -6662,7 +5997,7 @@
         z: 0.999717235565
       position:
         x: 26.331
-        y: 44.47866666666667
+        y: 44.4786666667
         z: 1.65918641401e-05
     verts:
     - x: 0.689999997616
@@ -6690,17 +6025,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint76_WayPoint80
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint80
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint76_WayPoint75
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint75
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint76_WayPoint80
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint80
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -6715,7 +6050,7 @@
         z: 0.999959349632
       position:
         x: 23.37
-        y: 44.699666666666666
+        y: 44.6996666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -6768,7 +6103,7 @@
         z: -0.999176681042
       position:
         x: 35.32
-        y: 43.840666666666664
+        y: 43.8406666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -6796,17 +6131,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint78_WayPoint79
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint79
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint78_WayPoint77
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint77
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint78_WayPoint79
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint79
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -6821,7 +6156,7 @@
         z: -0.999999165535
       position:
         x: 32.333
-        y: 44.05466666666667
+        y: 44.0546666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -6874,7 +6209,7 @@
         z: 0.999835848808
       position:
         x: 29.322
-        y: 44.269666666666666
+        y: 44.2696666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -6980,7 +6315,7 @@
         z: -0.999797523022
       position:
         x: 20.354
-        y: 44.92066666666667
+        y: 44.9206666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7033,7 +6368,7 @@
         z: 0.998374283314
       position:
         x: 38.184
-        y: 43.64266666666666
+        y: 43.6426666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7086,7 +6421,7 @@
         z: -0.999972462654
       position:
         x: 40.896
-        y: 43.458666666666666
+        y: 43.4586666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7121,10 +6456,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint83_WayPoint101
+      edge_id: WayPoint83_WayPoint84
       inflation_radius: 0.0
       map_2d: riseholme
-      node: WayPoint101
+      node: WayPoint84
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7139,7 +6474,7 @@
         z: 0.999723672867
       position:
         x: 44.331
-        y: 43.209666666666664
+        y: 43.2096666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7167,6 +6502,13 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint84_WayPoint83
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint84_WayPoint85
       inflation_radius: 0.0
       map_2d: riseholme
@@ -7192,7 +6534,7 @@
         z: 0.999999701977
       position:
         x: 44.42
-        y: 44.544666666666664
+        y: 44.5446666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7220,17 +6562,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint85_WayPoint86
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint86
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint85_WayPoint84
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint84
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint85_WayPoint86
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint86
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7245,7 +6587,7 @@
         z: -0.999998271465
       position:
         x: 40.986
-        y: 44.791666666666664
+        y: 44.7916666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7273,17 +6615,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint86_WayPoint87
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint87
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint86_WayPoint85
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint85
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint86_WayPoint87
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint87
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7298,7 +6640,7 @@
         z: 0.999990582466
       position:
         x: 38.277
-        y: 44.974666666666664
+        y: 44.9746666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7326,17 +6668,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint87_WayPoint88
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint88
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint87_WayPoint86
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint86
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint87_WayPoint88
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint88
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7351,7 +6693,7 @@
         z: -1.0
       position:
         x: 35.415
-        y: 45.16866666666667
+        y: 45.1686666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7379,17 +6721,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint88_WayPoint89
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint89
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint88_WayPoint87
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint87
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint88_WayPoint89
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint89
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7404,7 +6746,7 @@
         z: 0.999868810177
       position:
         x: 32.422
-        y: 45.379666666666665
+        y: 45.3796666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7432,17 +6774,17 @@
   node:
     edges:
     - action: move_base
-      edge_id: WayPoint89_WayPoint90
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint90
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
       edge_id: WayPoint89_WayPoint88
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint88
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint89_WayPoint90
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint90
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7457,7 +6799,7 @@
         z: -0.99994802475
       position:
         x: 29.414
-        y: 45.59166666666667
+        y: 45.5916666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7485,17 +6827,17 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint9_WayPoint10
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint10
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint9_WayPoint8
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint8
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint9_WayPoint27
-      inflation_radius: 0.0
-      map_2d: riseholme
-      node: WayPoint27
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -7563,7 +6905,7 @@
         z: 0.999788403511
       position:
         x: 26.425
-        y: 45.800666666666665
+        y: 45.8006666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7616,7 +6958,7 @@
         z: 0.99999922514
       position:
         x: 23.46
-        y: 46.019666666666666
+        y: 46.0196666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7669,7 +7011,7 @@
         z: 0.999770462513
       position:
         x: 20.449
-        y: 46.24066666666667
+        y: 46.2406666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7722,7 +7064,7 @@
         z: 0.039321064949
       position:
         x: 20.539
-        y: 47.562666666666665
+        y: 47.5626666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7775,7 +7117,7 @@
         z: 0.0173252765089
       position:
         x: 23.549
-        y: 47.337666666666664
+        y: 47.3376666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7828,7 +7170,7 @@
         z: -0.0239006560296
       position:
         x: 26.514
-        y: 47.11066666666667
+        y: 47.1106666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7881,7 +7223,7 @@
         z: 0.0626218691468
       position:
         x: 29.517
-        y: 46.898666666666664
+        y: 46.8986666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7934,7 +7276,7 @@
         z: 0.0356193855405
       position:
         x: 32.516
-        y: 46.69466666666666
+        y: 46.6946666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -7987,7 +7329,7 @@
         z: 0.0587996467948
       position:
         x: 35.508
-        y: 46.489666666666665
+        y: 46.4896666667
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -8040,7 +7382,7 @@
         z: 0.0359082855284
       position:
         x: 38.377
-        y: 46.30166666666667
+        y: 46.3016666667
         z: 0.0
     verts:
     - x: 0.689999997616
