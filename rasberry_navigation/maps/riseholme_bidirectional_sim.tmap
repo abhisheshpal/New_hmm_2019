@@ -71,6 +71,13 @@
       node: WayPoint27
       recovery_behaviours_config: ''
       top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint10_WayPoint9
+      inflation_radius: 0.0
+      map_2d: riseholme_sim
+      node: WayPoint9
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme_sim
     name: WayPoint10
@@ -1305,10 +1312,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint120_WayPoint110
+      edge_id: WayPoint120_WayPoint119
       inflation_radius: 0.0
       map_2d: riseholme_sim
-      node: WayPoint110
+      node: WayPoint119
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -1928,10 +1935,10 @@
     pointset: riseholme_bidirectional_sim
     pose:
       orientation:
-        w: 0.435908526182
-        x: -6.32912460219e-08
-        y: 5.78446579524e-09
-        z: 0.899991095066
+        w: 0.00742003321648
+        x: -6.56231122775e-08
+        y: 7.62667617948e-09
+        z: 0.999972581863
       position:
         x: 5.53
         y: 5.94
@@ -4106,17 +4113,17 @@
   node:
     edges:
     - action: move_base
+      edge_id: WayPoint46_WayPoint45
+      inflation_radius: 0.0
+      map_2d: riseholme_sim
+      node: WayPoint45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
       edge_id: WayPoint46_WayPoint47
       inflation_radius: 0.0
       map_2d: riseholme_sim
       node: WayPoint47
-      recovery_behaviours_config: ''
-      top_vel: 0.55
-    - action: move_base
-      edge_id: WayPoint46_WayPoint36
-      inflation_radius: 0.0
-      map_2d: riseholme_sim
-      node: WayPoint36
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -6449,10 +6456,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint83_WayPoint101
+      edge_id: WayPoint83_WayPoint84
       inflation_radius: 0.0
       map_2d: riseholme_sim
-      node: WayPoint101
+      node: WayPoint84
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
@@ -6494,6 +6501,13 @@
     pointset: riseholme_bidirectional_sim
   node:
     edges:
+    - action: move_base
+      edge_id: WayPoint84_WayPoint83
+      inflation_radius: 0.0
+      map_2d: riseholme_sim
+      node: WayPoint83
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     - action: move_base
       edge_id: WayPoint84_WayPoint85
       inflation_radius: 0.0
@@ -6820,10 +6834,10 @@
       recovery_behaviours_config: ''
       top_vel: 0.55
     - action: move_base
-      edge_id: WayPoint9_WayPoint27
+      edge_id: WayPoint9_WayPoint10
       inflation_radius: 0.0
       map_2d: riseholme_sim
-      node: WayPoint27
+      node: WayPoint10
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
