@@ -5,6 +5,14 @@
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
 /move_base/DWAPlannerROS: 
+  max_vel_y:
+    type: "float"
+    min: 0.0
+    max: 0.0
+  min_vel_y:
+    type: "float"
+    min: 0.0
+    max: 0.0
   prune_plan:
     type: "bool"
   path_distance_bias: 
@@ -53,8 +61,8 @@
     max: 100
   vy_samples:
     type: "int"
-    min: 3
-    max: 100
+    min: 1
+    max: 1
   vth_samples:
     type: "int"
     min: 3

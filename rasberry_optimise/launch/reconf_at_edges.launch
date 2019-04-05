@@ -1,0 +1,10 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="omni" default="false" />
+
+  <!-- Reconfigure -->
+  <node pkg="rasberry_optimise" type="reconf_at_edges.py" name="reconf_at_edges" output="screen" 
+        args="$(arg omni)" />
+
+</launch>
