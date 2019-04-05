@@ -92,11 +92,12 @@ if __name__ == "__main__":
         print sys.argv
         print "\n"
         omni = sys.argv[1]
-
+        
     rospack = rospkg.RosPack()
     base_dir = rospack.get_path("rasberry_optimise") + "/resources"  
     
-    if omni:
+    if omni == "true":
+        print "omni"
         group_irn = load_data_from_json(base_dir + "/group_irn_omni.json")
         group_utn = load_data_from_json(base_dir + "/group_utn_omni.json")                    
         params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.json")[0]
@@ -104,7 +105,8 @@ if __name__ == "__main__":
         params_irn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.yaml")
         params_utn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_utn_omni/dwa_utn_omni.yaml")
                
-    else:
+    elif omni == "false":
+        print "not omni"
         group_irn = load_data_from_json(base_dir + "/group_irn.json")
         group_utn = load_data_from_json(base_dir + "/group_utn.json") 
         params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn/dwa_irn.json")[0]
