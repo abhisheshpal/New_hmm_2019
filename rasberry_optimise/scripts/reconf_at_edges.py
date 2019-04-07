@@ -5,8 +5,7 @@ from copy import copy
 from std_msgs.msg import String
 
 
-class some_obj(object):
-    
+class reconfAtEdges(object):
     
     def __init__(self, group_irn, group_utn, param_dict_irn, param_dict_utn):
         self.group_irn = group_irn
@@ -23,6 +22,7 @@ class some_obj(object):
         
         
     def make_reconf_clients(self, param_dict):
+        
         rospy.loginfo("Creating reconfigure clients ...")
         rcnfsrvs = param_dict.keys()
         rcnfclients = {}
@@ -41,10 +41,8 @@ class some_obj(object):
         
     def current_edge_callback(self, msg):
         
-        try:
-            assert re.match(self.regex, msg.data) is not None
-            m_regex = re.match(self.regex, msg.data)
-            current_edge = m_regex.groups()[0]
+        if msg.data != "none":
+            current_edge = re.match(self.regex, msg.data).groups()[0]
             
             if current_edge not in self.current_group:
                 
@@ -64,20 +62,19 @@ class some_obj(object):
                         self.do_reconf(self.rcnfclients_utn[rcnfsrv], self.param_dict_utn[rcnfsrv])
                     self.current_group = copy(self.group_utn)   
             
-        except AssertionError:
-            pass
-        
-
-                
-                
+            
     def do_reconf(self, rcnfclient, params):
         """Reconfigure parameters.
         """
-        rcnfclient.update_configuration(params)
-        for param in params.keys():
-            print "Setting {} = {}".format(param, params[param]) 
+        try:
+            for param in params.keys():
+                print "Setting {} = {}".format(param, params[param]) 
+            rcnfclient.update_configuration(params)
+        except rospy.ROSException as e:
+            rospy.logerr(e)
+            rospy.signal_shutdown(e)
+            exit()
             
-
 
 
 
@@ -97,7 +94,9 @@ if __name__ == "__main__":
     base_dir = rospack.get_path("rasberry_optimise") + "/resources"  
     
     if omni == "true":
-        print "omni"
+        rospy.loginfo("ASSUMING HOLONOMIC STEERING")
+        print "\n"
+        
         group_irn = load_data_from_json(base_dir + "/group_irn_omni.json")
         group_utn = load_data_from_json(base_dir + "/group_utn_omni.json")                    
         params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.json")[0]
@@ -106,7 +105,9 @@ if __name__ == "__main__":
         params_utn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_utn_omni/dwa_utn_omni.yaml")
                
     elif omni == "false":
-        print "not omni"
+        rospy.loginfo("ASSUMING DIFFERENTIAL DRIVE STEERING")
+        print "\n"
+        
         group_irn = load_data_from_json(base_dir + "/group_irn.json")
         group_utn = load_data_from_json(base_dir + "/group_utn.json") 
         params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn/dwa_irn.json")[0]
@@ -114,10 +115,14 @@ if __name__ == "__main__":
         params_irn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_irn/dwa_irn.yaml")
         params_utn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_utn/dwa_utn.yaml")
         
+    else:
+        rospy.logerr("Please set omni = \"true\" or omni = \"false\"")
+        exit()
+        
     param_dict_irn = make_param_dict(params_irn_config, params_irn)
     param_dict_utn = make_param_dict(params_utn_config, params_utn)
     
-    some_obj(group_irn, group_utn, param_dict_irn, param_dict_utn)
+    reconfAtEdges(group_irn, group_utn, param_dict_irn, param_dict_utn)
         
     rospy.spin()
 #####################################################################################
