@@ -86,8 +86,8 @@ windows:
 - name: robots
   panes:
   - roslaunch rasberry_bringup gazebo_bringup.launch with_gui:=$USE_GUI world_name:=$GAZEBO_WORLD
-  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_1 robot_model:=$ROBOT_MODEL_1 ROBOT_MODEL_extras:=$ROBOT_MODEL_EXTRAS_1 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_1 start_pose_y:=$ROBOT_POS_Y_1 start_pose_Y:=$ROBOT_POS_A_1
-  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_2 robot_model:=$ROBOT_MODEL_2 ROBOT_MODEL_extras:=$ROBOT_MODEL_EXTRAS_2 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_2 start_pose_y:=$ROBOT_POS_Y_2 start_pose_Y:=$ROBOT_POS_A_2
+  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_1 robot_model:=$ROBOT_MODEL_1 model_extras:=$ROBOT_MODEL_EXTRAS_1 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_1 start_pose_y:=$ROBOT_POS_Y_1 start_pose_Y:=$ROBOT_POS_A_1
+  - roslaunch rasberry_bringup robot_bringup_multisim.launch robot_name:=$ROBOT_NAME_2 robot_model:=$ROBOT_MODEL_2 model_extras:=$ROBOT_MODEL_EXTRAS_2 with_teleoperation:=false start_pose_x:=$ROBOT_POS_X_2 start_pose_y:=$ROBOT_POS_Y_2 start_pose_Y:=$ROBOT_POS_A_2
 - name: localisation
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
