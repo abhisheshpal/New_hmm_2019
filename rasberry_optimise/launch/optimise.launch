@@ -1,0 +1,12 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="config_scenario" default="$(find rasberry_optimise)/config/scenario.yaml" />
+  <arg name="config_parameters" default="$(find rasberry_optimise)/config/parameters_dwa.yaml" />  
+  <arg name="config_ga" default="$(find rasberry_optimise)/config/ga.yaml" /> 
+
+  <!-- Optimisation procedure -->
+  <node pkg="rasberry_optimise" type="optimise.py" name="optimiser" output="screen" 
+        args="$(arg config_scenario) $(arg config_parameters) $(arg config_ga)" />
+
+</launch>

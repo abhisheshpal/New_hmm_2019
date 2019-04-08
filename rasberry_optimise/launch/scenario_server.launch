@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="config_scenario" default="$(find rasberry_optimise)/config/scenario.yaml" />
+
+  <node pkg="rasberry_optimise" type="rasberry_scenario_server.py" name="scenario_server" output="screen" args="$(arg config_scenario)" />
+
+</launch>

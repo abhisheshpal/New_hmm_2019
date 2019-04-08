@@ -146,6 +146,14 @@ class AddtoWorld(object):
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))
             
             
+    def add_fixed_arches(self, fixed_arches_d, pose, j=0):
+        cpy= fixed_arches_d['sdf']['model']
+        cpy['@name'] = u'fixed_arches_' + str(j)
+        posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(pose[0], pose[1]))
+        cpy['pose'] = posstr
+        self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))    
+            
+            
     def add_struts(self, strut_d, strut_poses, strut_roll, strut_count=0):
         n = len(strut_poses)
         for i in range(n):
@@ -163,7 +171,7 @@ class AddtoWorld(object):
             canopy10m_id = canopy10m_count+i
             cpy= canopy10m_d['sdf']['model']
             cpy['@name'] = u'canopy10m_' + str(canopy10m_id)
-            posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(canopy10m_poses[i][0], canopy10m_poses[i][1]))
+            posstr= str("%.3f %.3f -0.00 1.5707 0.0 1.5707"%(canopy10m_poses[i][0], canopy10m_poses[i][1]))
             cpy['pose']=posstr
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))  
             
@@ -174,7 +182,7 @@ class AddtoWorld(object):
             canopy4m_id = canopy4m_count+i
             cpy= canopy4m_d['sdf']['model']
             cpy['@name'] = u'canopy4m_' + str(canopy4m_id)
-            posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(canopy4m_poses[i][0], canopy4m_poses[i][1]))
+            posstr= str("%.3f %.3f -0.00 1.5707 0.0 1.5707"%(canopy4m_poses[i][0], canopy4m_poses[i][1]))
             cpy['pose']=posstr
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))  
             
@@ -185,7 +193,7 @@ class AddtoWorld(object):
             canopyhalfm_id = canopyhalfm_count+i
             cpy= canopyhalfm_d['sdf']['model']
             cpy['@name'] = u'canopyhalfm_' + str(canopyhalfm_id)
-            posstr= str("%.3f %.3f 0.0 1.5707 0.0 1.5707"%(canopyhalfm_poses[i][0], canopyhalfm_poses[i][1]))
+            posstr= str("%.3f %.3f -0.00 1.5707 0.0 1.5707"%(canopyhalfm_poses[i][0], canopyhalfm_poses[i][1]))
             cpy['pose']=posstr
             self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))     
             
@@ -193,7 +201,7 @@ class AddtoWorld(object):
     def add_frontage(self, frontage_d, pose, j=0):
         cpy= frontage_d['sdf']['model']
         cpy['@name'] = u'frontage_' + str(j)
-        posstr= str("%.3f %.3f 0.0 0.0 0.0 0.0"%(pose[0], pose[1]))
+        posstr= str("%.3f %.3f 0.0 0.0 0.0 %.3f"%(pose[0], pose[1], pose[2]))
         cpy['pose'] = posstr
         self.world_d['sdf']['world']['model'].append(copy.deepcopy(cpy))              
             

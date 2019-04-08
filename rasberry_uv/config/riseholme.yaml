@@ -1,0 +1,19 @@
+treatment_rows: [row_a_2, row_a_3, row_a_4, row_a_5, row_b_2, row_b_3, row_b_4, row_b_5]
+row_start_nodes: 
+  row_a_2: WayPoint64
+  row_a_3: WayPoint27
+  row_a_4: WayPoint59
+  row_a_5: WayPoint45
+  row_b_2: WayPoint138
+  row_b_3: WayPoint101
+  row_b_4: WayPoint133
+  row_b_5: WayPoint119
+row_finish_nodes: 
+  row_a_2: WayPoint10
+  row_a_3: WayPoint60
+  row_a_4: WayPoint36
+  row_a_5: WayPoint58
+  row_b_2: WayPoint84
+  row_b_3: WayPoint134
+  row_b_4: WayPoint110
+  row_b_5: WayPoint132

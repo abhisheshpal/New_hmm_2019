@@ -18,7 +18,8 @@
   <arg name="start_pose_Y" default="0" if="$(arg simple_sim)"/>
 
   <arg name="world_name" if="$(arg simple_sim)"/>
-  <arg name="with_actors" default="false"/>
+  <arg name="with_actors" default="false" />
+  <arg name="with_gui" default="true" if="$(arg simple_sim)" />
 
 
   <!-- model bringup -->
@@ -33,6 +34,7 @@
   <include file="$(find thorvald_base)/launch/base_bringup.launch">
     <arg name="robot_model" value="$(arg robot_model)" />
     <arg name="simple_sim" value="$(arg simple_sim)" />
+    <arg name="enable_odom_tf" value="false" if="$(arg simple_sim)"/>
   </include>
 
   <!-- teleop bringup -->
@@ -46,6 +48,7 @@
   <!-- Launch the Gazebo world.  -->
   <include file="$(find rasberry_gazebo)/launch/world.launch" if="$(arg simple_sim)">
    <arg name="world_name" value="$(arg world_name)"/>
+   <arg name="gui" value="$(arg with_gui)"/>
   </include>
 
   <!-- spawn robot in gazebo -->

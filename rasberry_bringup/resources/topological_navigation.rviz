@@ -3,7 +3,10 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded: ~
+      Expanded:
+        - /Planner1
+        - /Planner1/Path1
+        - /Planner1/Path2
       Splitter Ratio: 0.5
     Tree Height: 775
   - Class: rviz/Selection
@@ -51,202 +54,206 @@ Visualization Manager:
       Collision Enabled: false
       Enabled: true
       Links:
+        /base_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /base_sensors:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /bat0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /bat1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner0_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner0_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner1_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner1_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner2_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner2_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner3_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /corner3_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /hokuyo:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /leg0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /leg1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /leg2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /leg3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe0_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe0_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe1_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe1_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe2_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe2_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe3_1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /pipe3_2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /septentrio:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /top0:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /top1:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /top2:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /top3:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /velodyne:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+        /wheel0_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel1_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel2_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /wheel3_link:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        /xsens:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
         All Links Enabled: true
         Expand Joint Details: false
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        base_sensors:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        bat0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        bat1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner0_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner0_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner2_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner2_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner3_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        corner3_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        hokuyo:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        leg3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe0_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe0_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe1_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe1_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe2_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe2_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe3_1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        pipe3_2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        septentrio:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-        top0:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top1:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top2:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        top3:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel0_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel1_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel2_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        wheel3_link:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
-          Value: true
-        xsens:
-          Alpha: 1
-          Show Axes: false
-          Show Trail: false
       Name: RobotModel
       Robot Description: robot_description
       TF Prefix: ""
@@ -388,7 +395,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/TebLocalPlannerROS/local_plan
+          Topic: /move_base/DWAPlannerROS/local_plan
           Unreliable: false
           Value: true
         - Alpha: 1
@@ -411,7 +418,7 @@ Visualization Manager:
           Radius: 0.0299999993
           Shaft Diameter: 0.100000001
           Shaft Length: 0.100000001
-          Topic: /move_base/TebLocalPlannerROS/global_plan
+          Topic: /move_base/DWAPlannerROS/global_plan
           Unreliable: false
           Value: true
       Enabled: true
@@ -441,25 +448,25 @@ Visualization Manager:
   Views:
     Current:
       Class: rviz/Orbit
-      Distance: 11.9020596
+      Distance: 12.2309895
       Enable Stereo Rendering:
         Stereo Eye Separation: 0.0599999987
         Stereo Focal Distance: 1
         Swap Stereo Eyes: false
         Value: false
       Focal Point:
-        X: 0.338108867
-        Y: -3.06563926
-        Z: -1.45593917
+        X: 27.3907776
+        Y: -6.11515188
+        Z: -1.30117345
       Focal Shape Fixed Size: true
       Focal Shape Size: 0.0500000007
       Invert Z Axis: false
       Name: Current View
       Near Clip Distance: 0.00999999978
-      Pitch: 1.3397969
+      Pitch: 1.56979632
       Target Frame: <Fixed Frame>
       Value: Orbit (rviz)
-      Yaw: 5.60817957
+      Yaw: 3.33817768
     Saved: ~
 Window Geometry:
   Displays:

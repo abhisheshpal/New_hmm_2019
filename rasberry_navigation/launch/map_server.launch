@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml"/>
+    <!-- a no_go_map_server is always running, default with the map itself as no_go_map -->
+    <arg name="use_no_go_map" default="true"/>
+    <!-- unless specified, map itself will be used as no_go_map -->
+    <arg name="no_go_map" default="$(arg map)"/>
+
+    <!-- lanch map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(arg map)"/>
+
+    <!-- launch no-go map server, if use_no_go_map is true -->
+    <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg no_go_map)" if="$(arg use_no_go_map)">
+        <remap from="/map" to="/no_go_map"/>
+    </node>
+
+    <!-- launch map as no-go-map server, if use_no_go_map is false -->
+    <!-- current move_base configuration expects a no_go_map -->
+    <node name="no_go_map_server" pkg="map_server" type="map_server" args="$(arg map)" unless="$(arg use_no_go_map)">
+        <remap from="/map" to="/no_go_map"/>
+    </node>    
+</launch>

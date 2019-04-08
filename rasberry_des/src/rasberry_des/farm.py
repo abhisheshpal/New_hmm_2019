@@ -7,6 +7,7 @@
 
 import operator
 import rospy
+import rasberry_des.tray_full_predictor
 
 
 class Farm(object):
@@ -61,8 +62,8 @@ class Farm(object):
         self.picker_allocations = {picker_id:[] for picker_id in self.picker_ids}        # {picker_id:[row_ids]}
         self.curr_picker_allocations = {picker_id:None for picker_id in self.picker_ids}   # {picker_id:row_id} row=None if free
 
-        self.process_timeout = 0.001
-        self.loop_timeout = 1.
+        self.process_timeout = 0.10
+        self.loop_timeout = 0.10
 
         self.finished_picking = lambda: True if self.n_finished_rows == self.n_topo_nav_rows else False
         self.finished_allocating = lambda: False if self.unallocated_rows else True
@@ -80,6 +81,39 @@ class Farm(object):
 
         self.scheduler_policy = policy
 
+        # picker predictor
+        mean_idle_time = 0. # assumed to be zero
+        mean_tray_pick_dist = 0. # assumed to be average row length
+        mean_pick_rate = 0.
+        mean_trans_rate = 0.
+        mean_unload_time = 0.
+        mean_load_time = 0.
+        for picker_id in self.picker_ids:
+            mean_pick_rate += self.pickers[picker_id].picking_rate
+            mean_trans_rate += self.pickers[picker_id].transportation_rate
+            mean_unload_time += self.pickers[picker_id].unloading_time
+            mean_load_time += self.pickers[picker_id].unloading_time # loading and unloading time are assumed to be the same
+        mean_pick_rate /= self.n_pickers
+        mean_trans_rate /= self.n_pickers
+        mean_unload_time /= self.n_pickers
+        mean_load_time /= self.n_pickers
+        for row_id in self.graph.row_ids:
+            _, _, dists = self.graph.get_path_details(self.graph.row_info[row_id][1], self.graph.row_info[row_id][2])
+            mean_tray_pick_dist += sum(dists)
+        mean_tray_pick_dist /= self.graph.n_topo_nav_rows
+
+        self.predictor = rasberry_des.tray_full_predictor.TrayFullPredictor(self.picker_ids, self.env,
+                                                                            self.graph, self.n_robots,
+                                                                            mean_idle_time, mean_tray_pick_dist,
+                                                                            mean_pick_rate, mean_trans_rate,
+                                                                            mean_unload_time, mean_load_time,
+                                                                            self.verbose)
+
+        # to check predictions
+        self.predictions = {picker_id:{} for picker_id in self.picker_ids} #{picker_00:{tray_00:[predict_1, predict_2, ..., actual]}}
+        self.tray_counts = {picker_id:0 for picker_id in self.picker_ids}
+        self.tray_full = {picker_id:True for picker_id in self.picker_ids}
+
         self.action = self.env.process(self.scheduler_monitor())
 
     def scheduler_monitor(self, ):
@@ -91,12 +125,16 @@ class Farm(object):
             1. do a periodic checking of completion status of rows
             2. allocate free pickers to one of the unallocated rows
         """
+        predicted_from = {picker_id:None for picker_id in self.picker_ids}
         inform_allocation_finished = False
         inform_picking_finished = False
+        predictions = {}
+
         while True:
             if rospy.is_shutdown():
                 break
 
+            # picking finished in all rows
             if self.finished_picking() and not inform_picking_finished:
                 inform_picking_finished = True
                 self.loginfo("all rows are picked")
@@ -108,6 +146,7 @@ class Farm(object):
                 self.env.exit("all rows are picked")
                 break
 
+            # allocation of all rows is finished
             if self.finished_allocating() and not inform_allocation_finished:
                 self.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
@@ -115,11 +154,21 @@ class Farm(object):
                     self.robots[robot_id].inform_allocation_finished()
                 for picker_id in self.picker_ids:
                     self.pickers[picker_id].inform_allocation_finished()
+                # but some picking may be going on. so don't break
 
+            time_now = self.env.now
+
+#==============================================================================
+#             # update modes of pickers already assigned to a row
+#==============================================================================
             to_remove_pickers = []
-            # update modes of pickers already assigned to a row
+
             for picker_id in self.allocated_pickers:
                 picker = self.pickers[picker_id]
+                # picker modes
+                # 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,
+                # 4: waiting for unload at storage, 5: waiting for loading on robot
+                # 6: transporting to local storage from cold storage
                 if picker.mode == 0:
                     # finished the assigned row and are idle now
                     # if previously assigned any row, update its status
@@ -150,15 +199,31 @@ class Farm(object):
                         # remove it from self.assigned_picker_robot[picker_id]
                         self.assigned_picker_robot[picker_id] = None
 
+                    # to track predictions
+                    if self.tray_full[picker_id]:
+                        self.tray_full[picker_id] = False
+                        self.tray_counts[picker_id] += 1
+                        self.predictions[picker_id][self.tray_counts[picker_id]] = []
+
                 elif picker.mode == 3 or picker.mode == 4 or picker.mode == 6:
-                    # picker transporting to storage or unloading at storage
-                    # or transporting to local storage from cold storage
+                    # picker transporting to storage (3) or unloading at storage (4)
+                    # or transporting to local storage from cold storage (6)
                     # if the current row is finished, the picker's mode will be changed
                     # to idle (0) soon, which will be taken care of in next loop
                     if self.assigned_picker_robot[picker_id] is not None:
                         # if there is a robot assigned to the picker, loading has been completed
                         # remove it from self.assigned_picker_robot[picker_id]
                         self.assigned_picker_robot[picker_id] = None
+
+                    # for prediction checking
+                    if picker.mode == 3 and not self.tray_full[picker_id]:
+                        if picker.curr_row == None:
+                            prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.prev_row, picker.curr_node, picker.picking_dir, time_now)
+                        else:
+                            prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.curr_row, picker.curr_node, picker.picking_dir, time_now)
+
+                        self.predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
+                        self.tray_full[picker_id] = True
 
                 elif picker.mode == 5:
                     # waiting for a robot to arrive
@@ -188,15 +253,84 @@ class Farm(object):
                             # this is a new request for a robot, which should be assigned to this picker
                             self.waiting_for_robot_pickers.append(picker_id)
 
+                    # for prediction checking
+                    if not self.tray_full[picker_id]:
+                        if picker.curr_row == None:
+                            prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.prev_row, picker.curr_node, picker.picking_dir, time_now)
+                        else:
+                            prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.curr_row, picker.curr_node, picker.picking_dir, time_now)
+
+                        self.predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
+                        self.tray_full[picker_id] = True
+
             for picker_id in to_remove_pickers:
                 self.allocated_pickers.remove(picker_id)
                 if self.pickers[picker_id].mode == 0:
                     self.idle_pickers.append(picker_id)
 
-            # update modes of all assigned robots
+#==============================================================================
+#             # update picker mode in picker predictors
+#==============================================================================
+            # TODO: Check whether any mode changes could be missed?
+            for picker_id in self.picker_ids:
+                goal_node = None
+                picker = self.pickers[picker_id]
+                # update mode and pose in predictor
+                if picker.mode == 1:
+                    goal_node = picker.goal_node
+                elif picker.mode == 3:
+                    # if local storage, it will be set according to picker.curr_row
+                    goal_node = picker.local_storage_node if self.graph.use_local_storage else picker.cold_storage_node
+                elif picker.mode == 6:
+                    goal_node = picker.local_storage_node
+
+                self.predictor.update_mode_and_pose(picker_id, picker.mode, picker.curr_node,
+                                                    picker.picking_dir, goal_node)
+#                # make predictions - only once from a node and only when in picking mode
+#                if ((picker.mode == 2) and
+#                    ((predicted_from[picker_id] is None) or (predicted_from[picker_id] != picker.curr_node))):
+#                    # predict individual picker's tray_full events -> no global view and next row may be wrong
+#                    pred_row, pred_node, pred_dir, pred_time = self.predictor.predictors[picker_id].predict_current_tray_full()
+#                    new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
+#                    self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
+#                    predicted_from[picker_id] = picker.curr_node
+
+            # predict tray_full events with a global view
+            # has any picker, not in previous predictions, started a new tray?
+            new_tray_started = False
+            for picker_id in self.picker_ids:
+                if picker_id not in predictions and self.predictor.predictors[picker_id].has_started_a_tray():
+                    new_tray_started = True
+                    break
+            # has any picker in previous predictions changed his node?
+            node_changed = False
+            for picker_id in predictions:
+                if predicted_from[picker_id] != self.pickers[picker_id].curr_node:
+                    node_changed = True
+                    break
+            # predict only if (to reduce redundant predictions)
+            #   any picker, not in previous predictions, started a new tray, or
+            #   any picker in previous predictions changed the node
+            if new_tray_started or node_changed:
+                # predictions are made only for the pickers who are started picking and did not fill the current tray
+                predictions = self.predictor.predict_tray_full()
+
+                for picker_id in predictions:
+                    pred_row, pred_node, pred_dir, pred_time = predictions[picker_id][1:5]
+                    picker = self.pickers[picker_id]
+                    new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
+                    self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
+                    predicted_from[picker_id] = picker.curr_node
+
+#==============================================================================
+#             # update modes of all assigned robots
+#==============================================================================
             to_remove_robots = []
             for robot_id in self.assigned_robots:
                 robot = self.robots[robot_id]
+                # robot modes
+                # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
+                # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
                 if robot.mode == 0:
                     # robot completed the unloading at storage, idle now
                     # remove current assignments and add to idle_robots
@@ -292,75 +426,29 @@ class Farm(object):
         if n_idle_pickers > 0:
             allocated_rows = []
 
-            # "lexicographical", "shortest_distance", "uniform_utilisation"
-            if self.scheduler_policy == "lexicographical":
-                # allocate in the order of name
-                self.idle_pickers.sort()
-                i = 0
-                for row_id in self.unallocated_rows:
-                    picker_id = self.idle_pickers[0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
-
-            elif self.scheduler_policy == "shortest_distance":
-                # allocate in the order of distance to the row_id
-
-                # max possible allocations is n_idle_pickers
-                i = 0
-                for row_id in self.unallocated_rows:
-                    # get picker nodes of remaining idle_pickers
-                    picker_nodes = {}
-                    for picker_id in self.idle_pickers:
-                        picker_nodes[picker_id] = self.pickers[picker_id].curr_node
-
-                    # get shortest distance picker from the row
-                    start_node = self.graph.row_info[row_id][1]
-                    picker_distances = self.get_disatances_from_nodes_dict(picker_nodes, start_node)
-                    sorted_pickers = sorted(picker_distances.items(), key=operator.itemgetter(1))
-
-                    # allocate to the first picker in the sorted
-                    picker_id = sorted_pickers[0][0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    # remove the picker_node from future allocations
-                    del picker_nodes[picker_id]
-                    # do a max of n_idle_pickers allocations
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
-
-            elif self.scheduler_policy == "uniform_utilisation":
-                # improve utilisation by allocating row to least used picker
-
-                # max possible allocations is n_idle_pickers
-                i = 0
-                for row_id in self.unallocated_rows:
-                    # get picker utilisation (time_spent_working) of remaining idle_pickers
-                    picker_utilisation = {}
-                    for picker_id in self.idle_pickers:
-                        picker_utilisation[picker_id] = self.pickers[picker_id].time_spent_working()
-                    sorted_pickers = sorted(picker_utilisation.items(), key=operator.itemgetter(1))
-
-                    # allocate to the first picker in the sorted
-                    picker_id = sorted_pickers[0][0]
-                    self.allocate(row_id, picker_id)
-                    allocated_rows.append(row_id)
-                    # do a max of n_idle_pickers allocations
-                    if i == n_idle_pickers - 1:
-                        break
-                    else:
-                        i += 1
+            # row allocation is assumed to be "lexicographical"
+            self.idle_pickers.sort()
+            i = 0
+            for row_id in self.unallocated_rows:
+                picker_id = self.idle_pickers[0]
+                self.allocate(row_id, picker_id)
+                allocated_rows.append(row_id)
+                if i == n_idle_pickers - 1:
+                    break
+                else:
+                    i += 1
 
             for row_id in allocated_rows:
                 self.unallocated_rows.remove(row_id)
 
     def get_disatances_from_nodes_dict(self, nodes_dict, goal_node):
-        """get distance to a goal_node from nodes given in a dict"""
+        """get distance to a goal_node from nodes given in a dict
+
+        Keyword arguments:
+
+        nodes_dict - dict with nodes as values (use as start nodes)
+        goal_node - node to be reached
+        """
         node_distances = {}
         for key in nodes_dict:
             _, _, route_distance = self.graph.get_path_details(nodes_dict[key], goal_node)
@@ -368,7 +456,13 @@ class Farm(object):
         return node_distances
 
     def allocate(self, row_id, picker_id):
-        """allocate a picker to a row"""
+        """allocate a picker to a row
+
+        Keyword arguments:
+
+        row_id - row to be allocated to the picker
+        picker_id - id of the picker to be allocated to the row
+        """
         # allocate row_id to the picker
         self.allocations[row_id] = picker_id
         self.picker_allocations[picker_id].append(row_id)
@@ -380,6 +474,9 @@ class Farm(object):
         self.pickers[picker_id].allocate_row_to_picker(row_id)
 
         self.allocation_time[row_id] = self.env.now
+
+        # update unallocated rows in predictor
+        self.predictor.update_unallocated(row_id)
 
         self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
                                                         row_id,
@@ -458,7 +555,13 @@ class Farm(object):
                             i += 1
 
     def assign(self, picker_id, robot_id):
-        """assign a robot to a picker waiting will full trays"""
+        """assign a robot to a picker waiting will full trays
+
+        Keyword arguments:
+
+        picker_id - picker to which a robot will be assigned
+        robot_id - robot to be assigned to the picker
+        """
         self.idle_robots.remove(robot_id)
         self.assigned_robots.append(robot_id)
         picker_node = self.pickers[picker_id].curr_node
@@ -473,6 +576,11 @@ class Farm(object):
                                                      picker_local_storage_node)
 
     def loginfo(self, msg):
-        """log info based on a flag"""
+        """log info based on a flag
+
+        Keyword arguments:
+
+        msg - message to be logged
+        """
         if self.verbose:
             rospy.loginfo(msg)

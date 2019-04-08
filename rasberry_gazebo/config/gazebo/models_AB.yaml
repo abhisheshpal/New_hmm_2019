@@ -16,10 +16,11 @@
 # note: if you change the world name you will also have to change it in the launch file ../launch/world.launch (or make another launch file).
 
 
-- world_name: 'riseholme_new.world'     
+- world_name: 'riseholme.world'     
 
 - polytunnel:
   - include: 1     # polytunnel 1
+    fixed_arches: 1
     pole_nx: 9
     pole_ny: 5
     pole_dx: 2.94
@@ -31,7 +32,9 @@
     arch_xoffset: 6.72
     strut_positions: ['R']
 
+
   - include: 1     # polytunnel 2
+    fixed_arches: 1
     pole_nx: 9
     pole_ny: 5
     pole_dx: 2.94
@@ -43,21 +46,31 @@
     arch_xoffset: 6.72
     strut_positions: ['L']
 
+
 - frontage:
   - include: 1
     xpose: 0     
     ypose: 0
+    yaw: 0
+
+  - include: 1
+    xpose: 37.95    
+    ypose: -0.0075
+    yaw: 3.1414
+
 
 - riseholme_enclosure:
   - include: 1
     pose: [-2.83, -19.68, 0.0557]
 
+
 - food_handling_unit:
   - include: 1
     pose: [-7.47, 1.67, 3.1414]
 
+
 - lab:
-  - include: 0
+  - include: 1
     pose: [-9.438, -45.426, 0.0]
 
 

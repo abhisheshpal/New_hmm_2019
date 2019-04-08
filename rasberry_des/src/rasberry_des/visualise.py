@@ -46,7 +46,7 @@ class VisualiseAgents(object):
 
         self.ax = self.fig.add_subplot(111, frameon=True)
 
-        self.font = {'family': 'serif', 'color':  'red', 'weight': 'bold', 'size': 12,}
+        self.font = {'family': 'serif', 'color':  'red', 'weight': 'bold', 'size': 9,}
 
         self.static_lines = []
         self.picker_position_lines = []
@@ -225,8 +225,8 @@ class VisualiseAgents(object):
                                                            markersize=24,
                                                            markeredgecolor="b",
                                                            linestyle="none")[0])
-            self.picker_status_texts.append(self.ax.text(x - 0.75, y + 0.5,
-                                                         "P_%s" %(picker_id[-2:]),
+            self.picker_status_texts.append(self.ax.text(x - 2.9, y + 0.5,
+                                                         "P_%s:%d" %(picker_id[-2:], picker.mode),
                                                          fontdict=self.font))
         # robots
         for i in range(self.n_robots):
@@ -244,8 +244,8 @@ class VisualiseAgents(object):
                                                           markersize=24,
                                                           markeredgecolor="#8b12b3",
                                                           linestyle="none")[0])
-            self.robot_status_texts.append(self.ax.text(x - 0.75, y - 0.8,
-                                                        "R_%s" %(robot_id[-2:]),
+            self.robot_status_texts.append(self.ax.text(x + 0.6, y + 0.5,
+                                                        "R_%s:%d" %(robot_id[-2:], robot.mode),
                                                         fontdict=self.font))
         self.fig.canvas.draw()
         if self.save_fig:
@@ -266,7 +266,8 @@ class VisualiseAgents(object):
                 x = y = 0.
 
             self.picker_position_lines[i].set_data(x, y)
-            self.picker_status_texts[i].set_position((x - 0.75, y + 0.5))
+            self.picker_status_texts[i].set_text("P_%s:%d" %(picker.picker_id[-2:], picker.mode))
+            self.picker_status_texts[i].set_position((x - 2.9, y + 0.5))
 
         for i in range(self.n_robots):
             robot = self.robots[i]
@@ -277,7 +278,8 @@ class VisualiseAgents(object):
             else:
                 x = y = 0.
             self.robot_position_lines[i].set_data(x, y)
-            self.robot_status_texts[i].set_position((x - 0.75, y - 0.8))
+            self.robot_status_texts[i].set_text("R_%s:%d" %(robot.robot_id[-2:], robot.mode))
+            self.robot_status_texts[i].set_position((x + 1.0, y + 0.5))
 
         self.fig.canvas.draw()
 

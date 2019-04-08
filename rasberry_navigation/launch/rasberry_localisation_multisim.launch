@@ -1,0 +1,34 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <arg name="robot_name" default=""/>
+  <arg name="tf_prefix" default="$(arg robot_name)" />
+
+  <arg name="ekf_imu_config" default="$(find rasberry_navigation)/config/norway_imu_ekf.yaml"/>
+  <arg name="ekf_odom_config" default="$(find rasberry_navigation)/config/norway_odom_ekf.yaml"/>
+  <arg name="use_imu" default="true"/>
+  <arg name="publish_tf" default="true" />
+
+  <arg name="initial_pose_x" default="0.0"/>
+  <arg name="initial_pose_y" default="0.0"/>
+  <arg name="initial_pose_a" default="0.0"/>
+
+  <group ns="$(arg robot_name)">
+    <remap from="map" to="/map" />
+    <!-- imu-ekf localization for odom-to-base_link -->
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
+      <rosparam command="load" file="$(arg ekf_imu_config)" if="$(arg use_imu)"/>
+      <rosparam command="load" file="$(arg ekf_odom_config)" unless="$(arg use_imu)"/>
+      <param name="publish_tf" value="$(arg publish_tf)"/>
+    </node> 
+
+    <!-- launch AMCL -->
+    <include file="$(find rasberry_navigation)/launch/amcl.launch" />
+    <rosparam param="amcl/odom_frame_id" subst_value="True">$(arg tf_prefix)/odom</rosparam>
+    <rosparam param="amcl/base_frame_id" subst_value="True">$(arg tf_prefix)/base_link</rosparam>
+    <rosparam param="amcl/initial_pose_x" subst_value="True">$(arg initial_pose_x)</rosparam>
+    <rosparam param="amcl/initial_pose_y" subst_value="True">$(arg initial_pose_y)</rosparam>
+    <rosparam param="amcl/initial_pose_a" subst_value="True">$(arg initial_pose_a)</rosparam>
+
+  </group>
+</launch>

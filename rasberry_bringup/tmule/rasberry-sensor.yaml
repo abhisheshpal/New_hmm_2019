@@ -36,17 +36,12 @@ init_cmd: |
   export_default ROS_HOSTNAME "$ROS_IP"
   # path where to expect MONGODB
   export_default MONGO_PATH "$HOME/mongodb"
-  # use IMU?
-  export_default USE_IMU true
   # the topomap to be used
-  export_default TMAP norway_poles
+  export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
-  export_default MAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/norway_poles.yaml"
-  # figure out the robot number from the hostname, assuming it is like `thorvald-XXX`
-  export_default ROBOT_NO `hostname | cut -f2 -d"-"`
-  # set the robot type
-  export_default ROBOT_TYPE "thorvald_ii_4wd4ws_slim"
+  export_default MAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
+  export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
+  # ROS env variables
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
@@ -67,3 +62,4 @@ windows:
   panes:
   - sleep 3; DISPLAY=:0 rviz -d $(rospack find rasberry_people_perception)/rviz/rasberry_tracker.rviz
   - ls
+

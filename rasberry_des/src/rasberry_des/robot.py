@@ -8,6 +8,8 @@
 import random
 import rospy
 
+import rasberry_des.config_utils
+
 
 class Robot(object):
     """Robot class definition"""
@@ -28,6 +30,7 @@ class Robot(object):
 
         # 0 - idle, 1 - transporting_to_picker, 2 - waiting for loading,
         # 3 - waiting for unloading, 4 - transporting to storage, 5- charging
+        # 6 - return to local_storage from cold_storage
         self.mode = 0
 
         # parameters to check utilisation
@@ -47,9 +50,11 @@ class Robot(object):
         # TODO: local storage node of the first row is assumed to be the starting loc
         # After reaching another local storage, the robot can wait there
         self.curr_node = self.graph.local_storage_nodes[self.graph.row_ids[0]]
+        # update agent_nodes in topo_graph
+        self.graph.agent_nodes[self.robot_id] = self.curr_node
 
-        self.process_timeout = 0.001
-        self.loop_timeout = 1.
+        self.process_timeout = 0.10
+        self.loop_timeout = 0.10
 
         self.battery_charge = 100.0
 
@@ -91,7 +96,7 @@ class Robot(object):
                     self.loginfo("%s is assigned to %s" %(self.robot_id, self.assigned_picker_id))
 
                 # TODO: idle state battery charge changes
-                if self.battery_charge <= 40:
+                if self.battery_charge < 40.0 or rasberry_des.config_utils.isclose(self.battery_charge, 40.0):
                     self.loginfo("battery low on %s, going to charging mode" %(self.robot_id))
                     self.time_spent_idle += self.env.now - idle_start_time
                     # change mode to charging
@@ -227,6 +232,9 @@ class Robot(object):
             yield self.env.timeout(travel_time)
 
             self.curr_node = route_nodes[i + 1]
+
+            # update agent_nodes in the topo_graph
+            self.graph.agent_nodes[self.robot_id] = self.curr_node
 
         self.loginfo("%s reached %s" %(self.robot_id, goal_node))
         yield self.env.timeout(self.process_timeout)
