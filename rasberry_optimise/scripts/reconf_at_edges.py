@@ -82,13 +82,15 @@ if __name__ == "__main__":
     
     rospy.init_node("reconf_at_edges", anonymous=True, disable_signals=True)
     
-    if len(sys.argv) < 2:
+    if len(sys.argv) < 4:
         rospy.loginfo("usage is reconf_at_edges.py omni")
         exit()
     else:
         print sys.argv
         print "\n"
         omni = sys.argv[1]
+        parameter_index_irn = int(sys.argv[2])
+        parameter_index_utn = int(sys.argv[3])
         
     rospack = rospkg.RosPack()
     base_dir = rospack.get_path("rasberry_optimise") + "/resources"  
@@ -99,8 +101,8 @@ if __name__ == "__main__":
         
         group_irn = load_data_from_json(base_dir + "/group_irn_omni.json")
         group_utn = load_data_from_json(base_dir + "/group_utn_omni.json")                    
-        params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.json")[0]
-        params_utn = load_data_from_json(base_dir + "/optim_params/dwa_utn_omni/dwa_utn_omni.json")[0]
+        params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.json")[parameter_index_irn]
+        params_utn = load_data_from_json(base_dir + "/optim_params/dwa_utn_omni/dwa_utn_omni.json")[parameter_index_utn]
         params_irn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_irn_omni/dwa_irn_omni.yaml")
         params_utn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_utn_omni/dwa_utn_omni.yaml")
                
@@ -110,8 +112,8 @@ if __name__ == "__main__":
         
         group_irn = load_data_from_json(base_dir + "/group_irn.json")
         group_utn = load_data_from_json(base_dir + "/group_utn.json") 
-        params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn/dwa_irn.json")[0]
-        params_utn = load_data_from_json(base_dir + "/optim_params/dwa_utn/dwa_utn.json")[0]
+        params_irn = load_data_from_json(base_dir + "/optim_params/dwa_irn/dwa_irn.json")[parameter_index_irn]
+        params_utn = load_data_from_json(base_dir + "/optim_params/dwa_utn/dwa_utn.json")[parameter_index_utn]
         params_irn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_irn/dwa_irn.yaml")
         params_utn_config = load_data_from_yaml(base_dir + "/optim_params/dwa_utn/dwa_utn.yaml")
         
