@@ -20,7 +20,7 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   rviz
   thorvald_base
-  thorvald_model
+  thorvald_description
   thorvald_twist_mux
   thorvald_teleop
   urg_node

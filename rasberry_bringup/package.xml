@@ -26,7 +26,8 @@
   <!-- Authors do not have to be maintainers, but could be -->
   <!-- Example: -->
   <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
-  <!-- <author email="jane.doe@example.com">Jane Doe</author> -->
+  <author email="marc@hanheide.net">Marc Hanheide</author>
+  <author email="pdasgautham@gmail.com">gpdas</author>
 
 
   <!-- The *depend tags are used to specify dependencies -->
@@ -63,7 +64,7 @@
   <build_depend>rospy</build_depend>
   <build_depend>rviz</build_depend>
   <build_depend>thorvald_base</build_depend>
-  <build_depend>thorvald_model</build_depend>
+  <build_depend>thorvald_description</build_depend>
   <build_depend>thorvald_twist_mux</build_depend>
   <build_depend>thorvald_teleop</build_depend>
   <build_depend>urg_node</build_depend>
@@ -81,7 +82,7 @@
   <build_export_depend>rospy</build_export_depend>
   <build_export_depend>rviz</build_export_depend>
   <build_export_depend>thorvald_base</build_export_depend>
-  <build_export_depend>thorvald_model</build_export_depend>
+  <build_export_depend>thorvald_description</build_export_depend>
   <build_export_depend>thorvald_twist_mux</build_export_depend>
   <build_export_depend>thorvald_teleop</build_export_depend>
   <build_export_depend>urg_node</build_export_depend>
@@ -99,7 +100,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>rviz</exec_depend>
   <exec_depend>thorvald_base</exec_depend>
-  <exec_depend>thorvald_model</exec_depend>
+  <exec_depend>thorvald_description</exec_depend>
   <exec_depend>thorvald_twist_mux</exec_depend>
   <exec_depend>thorvald_teleop</exec_depend>
   <exec_depend>urg_node</exec_depend>
