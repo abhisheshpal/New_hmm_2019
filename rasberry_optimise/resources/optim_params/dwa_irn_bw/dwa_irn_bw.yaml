@@ -1,0 +1,14 @@
+/move_base/DWAPlannerROS:
+  forward_point_distance: {max: 0.5, min: 0.05, type: float}
+  goal_distance_bias: {max: 64, min: 5, type: int}
+  max_scaling_factor: {max: 1.0, min: 0.0, type: float}
+  occdist_scale: {max: 1.0, min: 0.001, type: float}
+  oscillation_reset_dist: {max: 0.1, min: 0.01, type: float}
+  path_distance_bias: {max: 64, min: 5, type: int}
+  prune_plan: {type: bool}
+  scaling_speed: {max: 0.35, min: 0.01, type: float}
+  sim_granularity: {max: 0.3, min: 0.025, type: float}
+  sim_time: {max: 3.4, min: 0.3, type: float}
+  stop_time_buffer: {max: 1.0, min: 0.1, type: float}
+  vth_samples: {max: 100, min: 3, type: int}
+  vx_samples: {max: 100, min: 3, type: int}
