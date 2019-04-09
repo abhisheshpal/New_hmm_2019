@@ -62,3 +62,4 @@ windows:
   panes:
   - sleep 3; DISPLAY=:0 rviz -d $(rospack find rasberry_people_perception)/rviz/rasberry_tracker.rviz
   - ls
+
