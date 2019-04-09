@@ -29,6 +29,7 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   message_filters
   rosbag
+  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -71,12 +72,11 @@ catkin_python_setup()
 #   Message2.msg
 # )
 
-## Generate services in the 'srv' folder
-# add_service_files(
-#   FILES
-#   Service1.srv
-#   Service2.srv
-# )
+# Generate services in the 'srv' folder
+ add_service_files(
+   FILES
+   ReconfAtEdges.srv
+ )
 
 ## Generate actions in the 'action' folder
 # add_action_files(
@@ -85,11 +85,11 @@ catkin_python_setup()
 #   Action2.action
 # )
 
-## Generate added messages and services with any dependencies listed here
-# generate_messages(
-#   DEPENDENCIES
-#   std_msgs
-# )
+# Generate added messages and services with any dependencies listed here
+ generate_messages(
+   DEPENDENCIES
+   std_msgs
+ )
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
