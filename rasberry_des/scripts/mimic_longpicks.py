@@ -17,7 +17,7 @@ import rasberry_des.topo_mimic
 import rasberry_des.farm_mimic
 
 RANDOM_SEED = 1111
-SIM_RT_FACTOR = 0.5
+SIM_RT_FACTOR = 1.0
 VERBOSE = True
 
 random.seed(RANDOM_SEED)
@@ -91,7 +91,7 @@ if __name__ == "__main__":
                                              env, config_params["n_topo_nav_rows"], topo_graph, robots,
                                              pickers, scheduling_policy,
                                              config_params["with_robots"],
-                                             config_params["n_iter"], VERBOSE)
+                                             config_params["n_iteration"], VERBOSE)
 
     # get config data
     # create n picker_mimic objects

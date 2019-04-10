@@ -86,10 +86,10 @@ cold_storage_node: WayPoint69
 # ----------------------
 # with_robots: true/false, whether service robots are available or not.
 #                          if available, they are controlled from coordinator
-# n_iter: integer, number of times whole picking has to be repeated
+# n_iteration: integer, number of times whole picking has to be repeated
 ##-----------------------------------------------------------------------------
 with_robots: true
-n_iter: 1
+n_iteration: 3
 
 ##-----------------------------------------------------------------------------
 # picker related parameters

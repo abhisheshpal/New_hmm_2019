@@ -18,7 +18,7 @@ def check_mimic_des_params(config_data):
     req_params = ["map_name", "n_polytunnels", "n_farm_rows",
                   "second_head_lane", "pri_head_nodes", "sec_head_nodes", "row_nodes", "yield_per_node",
                   "local_storage_nodes", "use_cold_storage", "cold_storage_node",
-                  "with_robots", "n_iter",
+                  "with_robots", "n_iteration",
                   "picker_ids", "picker_picking_rate", "picker_transportation_rate",
                   "picker_max_n_trays", "picker_unloading_time", "tray_capacity"]
     missing_params = []
@@ -137,7 +137,7 @@ def get_mimic_des_params(config_file):
 
     # des info
     config_params["with_robots"] = config_data["with_robots"]
-    config_params["n_iter"] = config_data["n_iter"]
+    config_params["n_iteration"] = config_data["n_iteration"]
 
     # picker info
     config_params["picker_ids"] = config_data["picker_ids"]

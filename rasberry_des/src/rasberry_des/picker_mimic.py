@@ -52,6 +52,8 @@ class PickerMimic(rasberry_des.picker.Picker):
 
         self.set_picker_state(self.state)
 
+        self.curr_iteration = None
+
     def car_event_cb(self, msg):
         """callback function for /car_client/get_states
         """
