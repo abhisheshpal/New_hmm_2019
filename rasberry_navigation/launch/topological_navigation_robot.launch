@@ -9,7 +9,7 @@
 	<arg name="user" default="" />
         <arg name="launch_manager" default="true"/>
 	<arg name="move_base_reconf_service" default="DWAPlannerROS" />
-	<arg name="reconfigure_edges" default="True" />
+	<arg name="reconfigure_edges" default="true" />
 	<arg name="edge_groups_def" default="riseholme_diff_edges_groups"/>
 	<arg name="steering_type" default="diff"/>
 	<arg name="scenario" default="riseholme"/>
