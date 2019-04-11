@@ -40,7 +40,7 @@
     <!-- twist mux bringup -->
     <include file="$(find thorvald_twist_mux)/launch/twist_mux.launch" />
     <!-- spawn robot in gazebo -->
-    <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param /$(arg robot_name)/robot_description -model $(arg robot_name) -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)" if="$(arg simple_sim)"/>
+    <node pkg="gazebo_ros" type="spawn_model" name="spawner" args="-urdf -param robot_description -model $(arg robot_name) -x $(arg start_pose_x) -y $(arg start_pose_y) -z $(arg start_pose_z) -R $(arg  start_pose_R)  -P $(arg start_pose_P)  -Y $(arg start_pose_Y)" if="$(arg simple_sim)"/>
   </group>
 
 </launch>

@@ -21,16 +21,18 @@ class TopologicalForkGraph(object):
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
         one head lane and different rows.
     """
-    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, second_head_lane, _node_yields, verbose):
+    def __init__(self, n_polytunnels, n_farm_rows, n_topo_nav_rows, second_head_lane, verbose):
         """TopologicalForkGraph: A class to store and retreive information of topological map,
         stored in the mongodb, necessary for the discrete event simulations.Assumes a fork map with
-        one head lane and different rows.
+        one/two head lane and different rows.
 
         Keyword arguments:
 
-        n_topo_nav_row -- number of toplogical navigation rows, int
-        row_ids -- identifications of the navigation rows, list of size n_topo_nav_rows
-        _node_yields -- yields per node distance for each row, list of size n_topo_nav_rows or 1
+        n_polytunnels -- number of polytunnels, int
+        n_farm_rows -- list of number of farm beds for each polytunnel, list of ints
+        n_topo_nav_rows -- number of navigation rows, int
+        second_head_lane -- uses a secondary head lane, bool
+        verbose -- to control rosinfo, bool
         """
         ns = rospy.get_namespace()
         self.row_ids = ["row-%02d" %(i) for i in range(n_topo_nav_rows)]
@@ -41,7 +43,7 @@ class TopologicalForkGraph(object):
 
         # half_rows: rows requiring picking in one direction
         self.half_rows = set()
-        if self.n_polytunnels == 0 or self.n_polytunnels == 1:
+        if self.n_polytunnels == 1:
             self.half_rows.add(self.row_ids[0])
             self.half_rows.add(self.row_ids[-1])
         else:
@@ -93,9 +95,6 @@ class TopologicalForkGraph(object):
 
         self.agent_nodes = {} # agent_id:agent.curr_node - should be updated by the agent
 
-        self.set_row_info()
-        # local storages should be set by calling set_local_storages externally
-        self.set_node_yields(_node_yields)
         self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
 
     def update_node_index(self, ):
@@ -103,16 +102,16 @@ class TopologicalForkGraph(object):
         for i in range(len(self.topo_map.nodes)):
             self.node_index[self.topo_map.nodes[i].name] = i
 
-    def set_node_yields(self, _node_yields):
+    def set_node_yields(self, node_yields):
         """set_node_yields: Set the yields at each node from the node yields
         given for each row / all rows
 
         Keyword arguments:
 
-        _node_yields -- yields per node distance for each row,
+        node_yields -- yields per node distance for each row,
                             list of size n_topo_nav_rows or 1
         """
-        node_yield_in_row = rasberry_des.config_utils.param_list_to_dict("node_yields", _node_yields, self.row_ids)
+        node_yield_in_row = rasberry_des.config_utils.param_list_to_dict("node_yields", node_yields, self.row_ids)
 
         for row_id in self.row_ids:
             n_row_nodes = len(self.row_nodes[row_id])
