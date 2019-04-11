@@ -1,0 +1,13 @@
+ROS_MASTER=`host -t A lindsey | sed 's/.* has address \(.*\)/\1/'`
+#echo "ROS_MASTER:     $ROS_MASTER"
+
+export ROS_IP=`ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/'`
+export ROS_HOSTNAME=$ROS_IP
+export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
+export LINDSEY_WS=/home/lcas/workspaces/lindsey
+
+
+#echo "ROS_IP:         $ROS_IP"
+#echo "ROS_HOSTNAME:   $ROS_HOSTNAME"
+#echo "ROS_MASTER_URI: $ROS_MASTER_URI"
+

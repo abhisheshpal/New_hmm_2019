@@ -1,0 +1,144 @@
+$def with (page)
+
+<!DOCTYPE html>
+<html>
+    
+    <head>
+        <title>$page.title</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <script type="text/javascript" src="/static/jquery.min.js"></script>
+        <script type="text/javascript" src="/static/bootstrap.min.js"></script>
+
+        <!--<script src="https://embed.small.chat/TCTBP6280GE99Q9YSD.js" async></script>-->
+
+        <link rel="stylesheet" href="/static/aaf.css">
+
+
+        <script type="text/javascript">
+        	hostname = location.host;
+            if (location.protocol == "https:") {
+                rosws_protocol = 'wss'
+            } else {
+                rosws_protocol = 'ws'
+            }
+            console.log(location);
+            rosws_suffix = "$:html_config['rosws_suffix']"
+            //rosws_protocol = "$:html_config['rosws_protocol']"
+            rosws_url = rosws_protocol+'://'+hostname+rosws_suffix
+            mjpeg_suffix = "$:html_config['mjpeg_suffix']"
+        </script>
+
+
+        $if page.jsfiles:
+            $for f in page.jsfiles.split():
+                <script src="$f" type="text/javascript"></script>
+
+
+        <!--
+        <script src="webtools/js/display.js"></script>
+        <script src="webtools/js/jquery-ui.js"></script>
+        <script src="webtools/roslibjs/include/EventEmitter2/eventemitter2.js"></script>
+        <script src="webtools/roslibjs/build/roslib.js"></script>
+        <script src="webtools/ros2djs/include/EaselJS/easeljs.js"></script>
+        <script src="webtools/ros2djs/build/ros2d.js"></script>
+        <script src="webtools/ros3djs/include/threejs/three.js"></script>
+        <script src="webtools/ros3djs/include/ColladaAnimationCompress/ColladaLoader2.js"></script>
+        <script src="webtools/ros3djs/build/ros3d.min.js"></script>
+        <script src="webtools/nav2djs/build/nav2d.js"></script>
+ 
+        -->
+    </head>
+    <body>
+        $if page.show_nav:
+            <div class="navbar navbar-default navbar-static-top">
+                <div class="container">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-ex-collapse">
+                            <span class="sr-only">Toggle navigation</span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                        <a class="navbar-brand" href="#">$page.title
+                            <span style="color: #aa0000;" id="connection_broken" class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                            <span style="color: #00aa00;" id="connection_ok" class="hide glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                        </a>
+                    </div>
+
+                    $def li(href, link_title):
+                        $ active=""
+                        $if page.title == link_title:
+                            $ active='class="active"'
+                        <li $:active><a href="$href">$link_title</a></li>
+
+                    <div class="collapse navbar-collapse" id="navbar-ex-collapse">
+                        <ul class="nav navbar-nav navbar-right">
+                            $:li("/","Main")
+                            <!--<img height="30" src="/static/uol.png">-->
+
+                        </ul>
+                        
+                    </div>
+
+                </div>
+            </div>
+        <!--<div class="section">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="alert alert-dismissable alert-success">
+                            <strong>Well done!</strong>You successfully read this important alert message.</div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+
+        <div id="notification" class="alert alert-warning" style="display: none; color: black;"></div>
+        $:page
+
+        <footer class="section section-primary">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>RASberry</h1>
+                        <p>Robot Agronomy</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <p class="text-info text-right">
+                            <br>
+                            <br>
+                        </p>
+                        <div class="row">
+                            <div class="col-md-12 hidden-xs text-right">
+                                <!--<img width="100px" src="static/strands2.png"/>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </body>
+
+    <div class="modal fade" id="notification_dlg">
+      <div class="modal-dialog modal-lgdd" style="top: 50%;">
+        <div class="modal-content" >
+          <div class="modal-header">
+            <!--<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>-->
+            <h2 class="modal-title"><div id="modal-body-title">Notification</div></h2>
+          </div>
+          <div class="modal-body">
+            <div id="modal-body-text"></div>
+          </div>
+
+    <!--       <div class="modal-footer">
+            <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+            <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+          </div>
+     -->    </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+
+
+
+
+</html>

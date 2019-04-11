@@ -1,0 +1,26 @@
+<launch>
+	<arg name="rosws_suffix" default="/rosws/" />
+	<arg name="mjpeg_suffix" default="/video/" />
+	<node pkg="toc" type="server.py" name="aaf_control_ui_server" output="screen" respawn="true">
+		<param name="rosws_suffix" value="$(arg rosws_suffix)" />
+		<param name="mjpeg_suffix" value="$(arg mjpeg_suffix)" />
+		<param name="video_path" value="$(find toc)/media" />
+	</node>
+
+	<node pkg="toc" type="nginx.sh" name="nginx" output="screen" respawn="true" />
+	<!--<node pkg="toc" type="screen_stream.sh" name="screen_stream" output="screen" respawn="false" />-->
+
+    <node name="persist_notification" pkg="persistent_topics" type="single_channel_persistent_topics_node" output="screen">
+	    <rosparam param="topics">['/notification', '/modal_dialog']</rosparam>
+	    <param name="file_name" value="notifications.ptb" />
+	</node>
+
+	<group ns="control_pc">
+		<include file="$(find rosbridge_server)/launch/rosbridge_websocket.launch" />
+		<node pkg="web_video_server" type="web_video_server" name="web_video_server">
+			<param name="port" value="8181" />
+		</node>
+		<node pkg="tf2_web_republisher" type="tf2_web_republisher" name="tf2_web_republisher" />
+	</group>
+
+</launch>

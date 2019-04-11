@@ -1,0 +1,363 @@
+$def with (robot, config)
+$var title: Dashboard for $robot
+$var show_nav: True
+$var jsfiles: /webtools/roslibjs/include/EventEmitter2/eventemitter2.js /webtools/ros2djs/include/EaselJS/easeljs.js /webtools/roslibjs/build/roslib.js /webtools/ros2djs/build/ros2d.js /webtools/nav2djs/build/nav2d.js /webtools/mjpegcanvasjs/build/mjpegcanvas.min.js /static/dashboard.js
+
+
+
+
+<script>
+config = JSON.parse('$:config')['config'];
+document.onready = function() {
+    console.log(config);
+    init(config['ip'], config['ns'], config['topics']);
+    $$('#camera').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/webthrottle/image")
+}
+</script>
+
+<div class="section">
+    <div class="container">
+        <h1>$:robot</h1>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Map</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id="nav"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Camera</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <!--<div id="mjpeg"></div>-->      
+                                <img id="camera" width="100%" src="" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Robot motors flags</h3>
+                    </div>
+                    <div class="tab panel-title">
+                        <button id="btn_mtr_1" class="tablinks active" onclick="showMotor(event, 'Motor')">Motor 1</button>
+                        <button id="btn_mtr_2" class="tablinks" onclick="showMotor(event, 'Motor')">Motor 2</button>
+                        <button id="btn_mtr_3" class="tablinks" onclick="showMotor(event, 'Motor')">Motor 3</button>
+                        <button id="btn_mtr_4" class="tablinks" onclick="showMotor(event, 'Motor')">Motor 4</button>
+                    </div>
+
+                    <div id="Motor" class="panel-body tabcontent active" style="display: block;">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Flag</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-5">prop. sensor fault</td>
+                                    <td class="col-md-3">
+                                        <p id="motor_sensor_fault">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">steer. sensor fault</td>
+                                    <td class="col-md-3">
+                                        <p id="steer_sensor_fault">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">alignment fault</td>
+                                    <td class="col-md-3">
+                                        <p id="alignment_fault">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">power stage off</td>
+                                    <td class="col-md-3">
+                                        <p id="power_stage_off">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">stall</td>
+                                    <td class="col-md-3">
+                                        <p id="stall">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">count limit reached, gave up</td>
+                                    <td class="col-md-3">
+                                        <p id="count_limit_reached">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">illegal command</td>
+                                    <td class="col-md-3">
+                                        <p id="illegal_command">-</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-5">controller NOT OK!</td>
+                                    <td class="col-md-3">
+                                        <p id="controller_not_ok">-</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-7">
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Robot motors status</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>CAN_ID</th>
+                                        <th>Connection</th>
+                                        <th>Status</th>
+                                        <th>Velocity (m/s)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td class="col-md-3">
+                                            <p id="motor_id_rr">1</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_1_connection">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_1_status">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_1_speed">x.xxxx</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">
+                                            <p id="motor_id_fr">2</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_2_connection">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_2_status">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_2_speed">x.xxxx</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">
+                                            <p id="motor_id_fl">3</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_3_connection">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_3_status">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_3_speed">x.xxxx</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-3">
+                                            <p id="motor_id_rl">4</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_4_connection">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_4_status">-</p>
+                                        </td>
+                                        <td class="col-md-3">
+                                            <p id="motor_4_speed">x.xxxx</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="row">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Current Tasks</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped">
+                                <thead>
+                                    <tr>
+                                        <th>#</th>
+                                        <th>Task</th>
+                                        <th>Place</th>
+                                        <th>Expected Start</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="tasklist">
+                                    <!--                                <tr data-toggle="modal" data-target="#deletetask" data-whatever="3">
+                                            <td>3</td>
+                                            <td>wait</td>
+                                            <td>Rezeption</td>
+                                            <td>12:34</td>
+        -->
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Robot sensors status</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="col-md-6">Imu:</td>
+                                    <td class="col-md-5">
+                                        <p id="imu_status">Offline</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">Laser (front):</td>
+                                    <td class="col-md-5">
+                                        <p id="laser_front_status">Offline</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">Laser (rear):</td>
+                                    <td class="col-md-5">
+                                        <p id="laser_rear_status">Offline</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">GPS:</td>
+                                    <td class="col-md-5">
+                                        <p id="gps_status">Offline</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td class="col-md-6">Ouster:</td>
+                                    <td class="col-md-5">
+                                        <p id="ouster_status">Offline</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Robot Status</h3>
+                        </div>
+                        <div class="panel-body">
+                            <table class="table table-condensed table-striped">
+                                <tbody>
+                                    <tr>
+                                        <td class="col-md-5">Current Task:</td>
+                                        <td class="col-md-4">
+                                            <p id="tasktext">-</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">Last Said:</td>
+                                        <td class="col-md-4">
+                                            <p id="saytext">-</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">Battery Level:</td>
+                                        <td class="col-md-4">
+                                            <p id="batterytext">xx%</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">Current Place:</td>
+                                        <td class="col-md-4">
+                                            <p id="currentnodetext">XXX</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="col-md-5">Last Error:</td>
+                                        <td class="col-md-4">
+                                            <p id="rosouttext"></p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="emergency_dlg">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Notfall-Progamm aktivieren?</h4>
+      </div>
+      <div class="modal-body">
+        <p>Soll das Notfall-Programm aktiviert werden? Der Roboter wird zur naechsten Sicherheitszone fahren und sich dort abschalten. Sollte er dort im Weg sein, kann er einfach weg geschoben werden. Bitte informieren Sie nach der Aktivierung das Roboter-Admin Team, damit zu einem späteren Zeitpunkt der Betrieb wieder aufgenommen werden kann.</p>
+      </div>
+      <div class="modal-footer">
+        <button onclick="emergency_stop();" type="button" class="btn btn-danger btn-default" data-dismiss="modal">Notfall auslösen</button>
+        <button type="button" class="btn" data-dismiss="modal">Zurück zum Normalbetrieb</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

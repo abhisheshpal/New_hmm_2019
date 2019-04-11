@@ -1,0 +1,20 @@
+server_addr: ngrok.lcas.group:4443
+trust_host_root_certs: true
+auth_token: 6hsy4H+U8G6+I1iNMzMXYHVNZ9TGs+H87dta91d0BxY=
+
+tunnels:
+  lindsey-control-ui:
+    subdomain: lindsey-control-ui
+    auth: lindsey:delahey
+    proto:
+      https: 8020
+  lindsey-control-shell:
+    subdomain: lindsey-control-shell
+    proto:
+      https: 4200
+  lindsey-control-vnc:
+    subdomain: lindsey-control-vnc
+    auth: lindsey:delahey
+    proto:
+      https: 6080
+
