@@ -108,53 +108,71 @@
       var mode = []
 
       for(var _c = 0; _c < 4; _c++){
-        var flags_c = 0;
-        jQuery.each(message["controller_data"][_c]["controller_state"]["status_flags"], function(){
-          if (this.toString() != "false" && flags_c < 7){
-            status[_c] = "Error";
-          }
-          else if (this.toString() == "false" && flags_c == 7)
-          {
-            status[_c] = "Error";
-          }
-          flags_c++;
-        })
+        try {
+          var flags_c = 0;
+          jQuery.each(message["controller_data"][_c]["controller_state"]["status_flags"], function(){
+            if (this.toString() != "false" && flags_c < 7){
+              status[_c] = "Error";
+            }
+            else if (this.toString() == "false" && flags_c == 7)
+            {
+              status[_c] = "Error";
+            }
+            flags_c++;
+          })
 
-        mode.push(
-          message["controller_data"][_c]["controller_state"]["controller_mode"] == -99 ? "Offline" : (
-          message["controller_data"][_c]["controller_state"]["controller_mode"] == -98 ? "Timeout" : "Connected")
-          );
-        
+          mode.push(
+            message["controller_data"][_c]["controller_state"]["controller_mode"] == -99 ? "Offline" : (
+            message["controller_data"][_c]["controller_state"]["controller_mode"] == -98 ? "Timeout" : "Connected")
+            );
+        } catch (err) {
+          console.log(err);
+        }      
 
       }
       
       //robot motors errors
-      $('#motor_sensor_fault') .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][0].toString() == "false" ? "Ok" : "Error");
-      $('#steer_sensor_fault') .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][1].toString() == "false" ? "Ok" : "Error");
-      $('#alignment_fault')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][2].toString() == "false" ? "Ok" : "Error");
-      $('#power_stage_off')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][3].toString() == "false" ? "Ok" : "Error");
-      $('#stall')              .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][4].toString() == "false" ? "Ok" : "Error");
-      $('#count_limit_reached').html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][5].toString() == "false" ? "Ok" : "Error");
-      $('#illegal_command')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][6].toString() == "false" ? "Ok" : "Error");
-      $('#controller_not_ok')  .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][7].toString() != "false" ? "Ok" : "Error");
-      
+      try {
+        $('#motor_sensor_fault') .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][0].toString() == "false" ? "Ok" : "Error");
+        $('#steer_sensor_fault') .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][1].toString() == "false" ? "Ok" : "Error");
+        $('#alignment_fault')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][2].toString() == "false" ? "Ok" : "Error");
+        $('#power_stage_off')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][3].toString() == "false" ? "Ok" : "Error");
+        $('#stall')              .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][4].toString() == "false" ? "Ok" : "Error");
+        $('#count_limit_reached').html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][5].toString() == "false" ? "Ok" : "Error");
+        $('#illegal_command')    .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][6].toString() == "false" ? "Ok" : "Error");
+        $('#controller_not_ok')  .html(message["controller_data"][selected_motor-1]["controller_state"]["status_flags"][7].toString() != "false" ? "Ok" : "Error");
+      } catch(err) {
+        console.log(err);
+      }    
       //robot motors velocity
-      $('#motor_1_speed').html(message["controller_data"][0]["motor_state"][0]["speed"].toFixed(4));
-      $('#motor_2_speed').html(message["controller_data"][1]["motor_state"][0]["speed"].toFixed(4));
-      $('#motor_3_speed').html(message["controller_data"][2]["motor_state"][0]["speed"].toFixed(4));
-      $('#motor_4_speed').html(message["controller_data"][3]["motor_state"][0]["speed"].toFixed(4));
+      try {
+        $('#motor_1_speed').html(message["controller_data"][0]["motor_state"][0]["speed"].toFixed(4));
+        $('#motor_2_speed').html(message["controller_data"][1]["motor_state"][0]["speed"].toFixed(4));
+        $('#motor_3_speed').html(message["controller_data"][2]["motor_state"][0]["speed"].toFixed(4));
+        $('#motor_4_speed').html(message["controller_data"][3]["motor_state"][0]["speed"].toFixed(4));
+      } catch(err) {
+        console.log(err);
+      }    
 
       //robot motors connection status (timeout/offline/OK)
-      $('#motor_1_connection').html(mode[0]);
-      $('#motor_2_connection').html(mode[0]);
-      $('#motor_3_connection').html(mode[0]);
-      $('#motor_4_connection').html(mode[0]);
+      try {
+        $('#motor_1_connection').html(mode[0]);
+        $('#motor_2_connection').html(mode[1]);
+        $('#motor_3_connection').html(mode[2]);
+        $('#motor_4_connection').html(mode[3]);
+      } catch(err) {
+        console.log(err);
+      }    
 
       //robot motors status
-      $('#motor_1_status').html(status[0]);
-      $('#motor_2_status').html(status[1]);
-      $('#motor_3_status').html(status[2]);
-      $('#motor_4_status').html(status[3]);
+      try {
+        $('#motor_1_status').html(status[0]);
+        $('#motor_2_status').html(status[1]);
+        $('#motor_3_status').html(status[2]);
+        $('#motor_4_status').html(status[3]);
+      } catch(err) {
+        console.log(err);
+      }    
     });
 
   }
@@ -271,7 +289,6 @@
     
     rosoutListener.subscribe(function(message) {
 
-        var rosout = message.lifePercent;
         if (message.level > 4) {
           document.getElementById("rosouttext").innerHTML = "[" + message.header.stamp.secs + "] " + message.msg;
         }
@@ -448,7 +465,7 @@
       //init_battery();
       //init_tasks();
       init_node();
-      //init_rosout();
+      init_rosout();
       init_map();
 
       //init_front_scanner(ns, topics["scan_front"]);
