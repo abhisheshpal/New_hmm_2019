@@ -13,6 +13,8 @@
 	<arg name="edge_groups_def" default="riseholme_diff_edges_groups"/>
 	<arg name="steering_type" default="diff"/>
 	<arg name="scenario" default="riseholme"/>
+	<arg name="use_omni" default="false"/>
+
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
@@ -27,7 +29,6 @@
 
 
     	<include file="$(find rasberry_optimise)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
-
 	    <arg name="omni" value="$(arg use_omni)" />
 	</include>
 
