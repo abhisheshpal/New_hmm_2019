@@ -7,7 +7,7 @@ $var jsfiles: /webtools/roslibjs/include/EventEmitter2/eventemitter2.js /webtool
 
 
 <script>
-config = JSON.parse('$:config')['config'];
+config = JSON.parse('$:config');
 document.onready = function() {
     console.log(config);
     init(config['ip'], config['ns'], config['topics']);
