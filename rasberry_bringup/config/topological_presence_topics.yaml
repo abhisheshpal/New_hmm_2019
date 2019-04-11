@@ -1,0 +1,5 @@
+topological_map_manager:
+  multi_robot_mode: true
+  presence_topics:
+    - robot01/current_node
+    - picker01/current_node
