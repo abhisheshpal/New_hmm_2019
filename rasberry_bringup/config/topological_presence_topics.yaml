@@ -1,5 +1,11 @@
 topological_map_manager:
   multi_robot_mode: true
   presence_topics:
-    - robot01/current_node
+    - thorvald_014/current_node
+    - thorvald_008/current_node
     - picker01/current_node
+    - picker05/current_node
+    - picker07/current_node
+    - picker101/current_node
+    - picker102/current_node
+    - picker103/current_node
