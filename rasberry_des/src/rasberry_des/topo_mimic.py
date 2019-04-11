@@ -66,7 +66,7 @@ class TopologicalForkGraphMimic(rasberry_des.topo.TopologicalForkGraph):
             for node_name in row_nodes[i]:
                 node_found = False
                 for node in self.topo_map.nodes:
-                    if node_name in node.name:
+                    if node_name == node.name:
                         self.row_nodes["row-%02d" %(i)].append(node.name)
                         node_found = True
                         break
