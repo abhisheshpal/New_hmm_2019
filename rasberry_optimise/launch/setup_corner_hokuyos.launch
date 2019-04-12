@@ -25,6 +25,7 @@
 
   <arg name="use_omni" default="false" />
  
+ 
   <!-- Mongo database -->
   <include file="$(find mongodb_store)/launch/mongodb_store.launch">
     <arg name="db_path" value="$(arg db_path)" />
@@ -65,12 +66,6 @@
   <include file="$(find rasberry_move_base)/launch/move_base_dwa_corner_hokuyos.launch" unless="$(arg use_teb_planner)">
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
     <arg name="use_omni" default="$(arg use_omni)" />
-  </include>
-
-  <!-- Topological navigation bringup -->
-  <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
-    <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
-    <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
   </include>
 
   <!-- Run rviz -->

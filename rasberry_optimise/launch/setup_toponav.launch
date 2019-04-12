@@ -1,0 +1,16 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="use_teb_planner" default="false"/>
+  <arg name="use_omni" default="true" />
+  <arg name="steering_type" default="omni" />
+
+  <!-- Topological navigation bringup -->
+  <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
+    <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
+    <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
+    <arg name="use_omni" value="$(arg use_omni)"/>
+    <arg name="steering_type" value="$(arg steering_type)"/>
+  </include>
+
+</launch>
