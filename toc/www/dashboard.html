@@ -11,7 +11,8 @@ config = JSON.parse('$:config');
 document.onready = function() {
     console.log(config);
     init(config['ip'], config['ns'], config['topics']);
-    $$('#camera').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/webthrottle/image")
+    $$('#camera').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/rsense_camera/color/image_raw")
+    $$('#datacapture').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/rasberry_data_capture/summary")
 }
 </script>
 
@@ -29,9 +30,7 @@ document.onready = function() {
                     </div>
                 </div>
             </div>
-            <div class="col-md-6">
-
-                <div class="row">
+            <div class="col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Camera</h3>
@@ -43,7 +42,19 @@ document.onready = function() {
                             </div>
                         </div>
                     </div>
-                </div>
+            </div>
+            <div class="col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h3 class="panel-title">Data</h3>
+                        </div>
+                        <div class="panel-body">
+                            <div class="embed-responsive embed-responsive-4by3">
+                                <!--<div id="mjpeg"></div>-->      
+                                <img id="datacapture" width="100%" src="" />
+                            </div>
+                        </div>
+                    </div>
             </div>
         </div>
     </div>
