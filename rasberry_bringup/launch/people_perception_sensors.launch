@@ -24,8 +24,11 @@
     <param name="max_range" value="130.0"/>
 </node>
 
-<!-- TODO: Kinect 2 Driver -->
+<!-- Kinect 2 Driver -->
+<node pkg="kinect2_bridge" type="kinect2_bridge" name="kinect2_bridge" args="_depth_method:=cuda _publish_tf:=true" output="screen"/>
 
+<!-- Thermal Camera -->
+<include file="$(find optris_drivers)/launch/optris_drivers.launch"/>
 
 
 </launch>
