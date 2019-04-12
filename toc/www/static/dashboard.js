@@ -326,10 +326,11 @@
     });
     gridClient.on('change', function() {
       console.log("updated map");
+      console.log(JSON.stringify(gridClient.currentGrid))
       // scale the viewer to fit the map
       viewer.scaleToDimensions(gridClient.currentGrid.width, 
         gridClient.currentGrid.height);
-      viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y);
+      //viewer.shift(gridClient.currentGrid.x, gridClient.currentGrid.y);
     });
 
     // get a handle to the stage

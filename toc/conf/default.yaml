@@ -14,19 +14,6 @@ robots:
       ouster: "/ouster/cloud"
   thorvald-008:
     description: "UOL robot 008"
-    ip: "10.8.0.24"
-    ns: "" 
-    motors: 4 
-    topics: 
-      scan_front: "/scan_front"
-      scan_back: "/scan_back"
-      motor_control: "/motor_controller_data"
-      imu: "/imu/data"
-      gps: "/gps/fix"
-      battery: "/battery_data"
-      ouster: "/ouster/cloud"
-  thorvald-006:
-    description: "UOL robot 006"
     ip: "10.8.0.31"
     ns: "" 
     motors: 4 
