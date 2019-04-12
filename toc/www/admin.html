@@ -1,0 +1,99 @@
+$var title: Administration
+$var show_nav: True
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js webtools/roslibjs/build/roslib.js static/admin.js
+
+
+
+
+<script>
+function get_message_store_url(collection, past_min) {
+// 2016-04-27T14:40:08Z
+//    var query = '{"_meta.inserted_at": {$$gte: ISODate("' + fromIso + '")}}';
+    var query = '{"_meta.inserted_at": {$$gte: new Date(ISODate().getTime() - 1000 * 60 * ' + past_min + ')}}';
+    var url = "https://lcas.lincoln.ac.uk/aaf-mongo/db/message_store/";
+    url += collection;
+    url += "?query=" + encodeURIComponent(query);
+    url += "&projection=";
+    //$$('#task_events').attr('href',url);
+    //console.log("URL = " + url);
+    return url;
+}
+
+document.onready = function() {
+ init();
+ $$('#task_events').attr('href', get_message_store_url('task_events', '60'));
+ $$('#nav_events').attr('href', get_message_store_url('monitored_nav_events', '60'));
+ $$('#scheduling_problem').attr('href', get_message_store_url('scheduling_problems', '60'));
+}
+
+
+</script>
+
+<div class="section">
+    <div class="container">
+
+<!--         <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Message browser shortcuts</h3>
+                    </div>
+                    <div class="panel-body">
+                        <a target="_blank" id="task_events" href="#" class="btn btn-info" role="button">Last 60 min of task events</a>
+                        <a target="_blank" id="nav_events" href="#" class="btn btn-info" role="button">Last 60 min of nav events</a>
+                        <a target="_blank" id="scheduling_problem" href="#" class="btn btn-info" role="button">Last 60 min of scheduling_problem</a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+ -->
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Logs</h3>
+                    </div>
+                    <div class="panel-body log-table">
+                        <table class="table  table-striped log-table">
+                            <tbody id="rosout" class="log-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Scheduler Events</h3>
+                    </div>
+                    <div class="panel-body log-table">
+                        <table class="table  table-striped">
+                            <thead>
+                                <tr>
+                                    <th>event time</th>
+                                    <th>event</th>
+                                    <th>description</th>
+                                    <th>Task ID</th>
+                                    <th>action</th>
+                                    <th>waypoint</th>
+                                    <th>start_after</th>
+                                    <th>exec_time</th>
+                                    <th>end_before</th>
+                                    <th>priority</th>
+                                </tr>
+                            </thead>
+                            <tbody id="taskevent" class="log-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
