@@ -84,7 +84,14 @@ windows:
 - name: coordination_robot
   panes:
   - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
+- name: toc_provider
+  panes:
+  - roslaunch toc robot.launch
 - name: dataset_recording
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
+  - ls
+- name: autonomous_data_collection
+  panes:
+  - roslaunch rasberry_data_capture auto_any_camera.launch
   - ls
