@@ -1,0 +1,72 @@
+$def with (config)
+$var title: Main
+$var show_nav: true
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js static/roslib.min.js  static/index.js
+
+<script>
+    document.onready = function() {
+        //init();
+
+        $for r in config['robots']:
+            init_robot("${r}", "$config['robots'][r]['ip']");
+
+    }
+</script>
+
+<div class="section">
+<!--     <div class="jumbotron jumbotron-fluid">
+        <div class="container-fluid">
+            <h1 class="display-4">TOC</h1>
+        </div>
+    </div> -->
+
+    <div class="container-fluid">
+        <div class="row">
+            <div id="estop" class="alert alert-warning" style="color: black; display: none;">
+                WARNING
+            </div>
+            <div class="col-md-12">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Robots</h3>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-condensed table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Robot</th>
+                                    <th>Description</th>
+                                    <th>Ping</th>
+                                    <th>VPN IP (shell)</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                $for r in config['robots']:
+                                    <tr>
+                                        <td id="dashboard_${r}"><a href="/robot/$r/dashboard">$r</a></td>
+                                        <td id="description_${r}">$config['robots'][r]['description']</a></td>
+                                        <td id="ping_${r}">
+                                            <span style="color: #aa0000;" id="connection_broken${r}" class="hide glyphicon glyphicon-remove-circle" aria-hidden="true"></span>
+                                            <span style="color: #00aa00;" id="connection_ok${r}" class="hide glyphicon glyphicon-ok-circle" aria-hidden="true"></span>
+                                        </td>
+                                        <td id="ip_${r}"><a href="/robot/$config['robots'][r]['ip']/shell/">$config['robots'][r]['ip']</a></td>
+                                    </tr>
+                            </tbody>
+                        </table>
+
+
+                        </ul>
+                    </div>
+                </div>
+            </div>
+<!--             <div class="col-md-4">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                    </div>
+                    <div class="panel-body">
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>

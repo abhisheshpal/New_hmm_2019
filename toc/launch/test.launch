@@ -1,0 +1,4 @@
+<launch>
+	<include file="$(find toc)/launch/server.launch" />
+	<include file="$(find toc)/launch/robot.launch" />
+</launch>

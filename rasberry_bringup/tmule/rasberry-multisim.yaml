@@ -59,16 +59,16 @@ init_cmd: |
   export ROBOT_NAME_1=thorvald_001
   export ROBOT_MODEL_1=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_1}.yaml
   export ROBOT_MODEL_EXTRAS_1=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_1}_sensors.xacro
-  export ROBOT_POS_X_1=1.0
-  export ROBOT_POS_Y_1=-1.5
+  export ROBOT_POS_X_1=-1.0
+  export ROBOT_POS_Y_1=1.3
   export ROBOT_POS_A_1=0.0
   # robot_2
   export ROBOT_NO_2="008"
   export ROBOT_NAME_2=thorvald_002
   export ROBOT_MODEL_2=$(rospack find rasberry_bringup)/config/robot_${ROBOT_NO_2}.yaml
   export ROBOT_MODEL_EXTRAS_2=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO_2}_sensors.xacro 
-  export ROBOT_POS_X_2=1.0
-  export ROBOT_POS_Y_2=1.5
+  export ROBOT_POS_X_2=-1.0
+  export ROBOT_POS_Y_2=4.0
   export ROBOT_POS_A_2=0.0
   # mongo
   export ROBOTS_MONGO_PATH=$MONGO_PATH/robots

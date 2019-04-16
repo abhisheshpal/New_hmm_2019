@@ -29,10 +29,10 @@ obstacle_layer:
   
   track_unknown_space: true
   
-  observation_sources: fl_laser_scan_sensor br_laser_scan_sensor
+  observation_sources: front_laser_scan_sensor back_laser_scan_sensor
 #  observation_sources: fl_laser_scan_sensor
-  fl_laser_scan_sensor: {sensor_frame: hokuyo_front, data_type: LaserScan, topic: /scan_front, marking: true, clearing: true}
-  br_laser_scan_sensor: {sensor_frame: hokuyo_back, data_type: LaserScan, topic: /scan_back, marking: true, clearing: true}
+  front_laser_scan_sensor: {sensor_frame: hokuyo_front, data_type: LaserScan, topic: /scan_front, marking: true, clearing: true}
+  back_laser_scan_sensor: {sensor_frame: hokuyo_back, data_type: LaserScan, topic: /scan_back, marking: true, clearing: true}
 
 global_obstacle_layer:
   max_obstacle_height: 2.0
@@ -44,9 +44,9 @@ global_obstacle_layer:
 
   track_unknown_space: true
 
-  observation_sources: fl_laser_scan_sensor br_laser_scan_sensor
+  observation_sources: front_laser_scan_sensor back_laser_scan_sensor
 #  observation_sources: fl_laser_scan_sensor
-  fl_laser_scan_sensor: {sensor_frame: hokuyo_front, data_type: LaserScan, topic: /scan_front, marking: false, clearing: false}
-  br_laser_scan_sensor: {sensor_frame: hokuyo_back, data_type: LaserScan, topic: /scan_back, marking: false, clearing: false}
+  front_laser_scan_sensor: {sensor_frame: hokuyo_front, data_type: LaserScan, topic: /scan_front, marking: false, clearing: false}
+  back_laser_scan_sensor: {sensor_frame: hokuyo_back, data_type: LaserScan, topic: /scan_back, marking: false, clearing: false}
 #marking and clearing set to true for norway_poles_demo purposes
 
