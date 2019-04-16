@@ -2,8 +2,10 @@
 <launch>
 
   <arg name="use_teb_planner" default="false"/>
-  <arg name="use_omni" default="true" />
-  <arg name="steering_type" default="omni" />
+  <arg name="use_omni" default="false" />
+  <arg name="steering_type" default="diff" />
+  <arg name="reconfigure_edges" default="true" />
+
 
   <!-- Topological navigation bringup -->
   <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
@@ -11,6 +13,8 @@
     <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
     <arg name="use_omni" value="$(arg use_omni)"/>
     <arg name="steering_type" value="$(arg steering_type)"/>
+    <arg name="reconfigure_edges" value="$(arg reconfigure_edges)"/>
   </include>
 
 </launch>
+

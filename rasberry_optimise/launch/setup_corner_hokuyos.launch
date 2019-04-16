@@ -23,8 +23,11 @@
   <arg name="use_carrot_planner" default="false"/>
   <arg name="use_teb_planner" default="false"/>
 
+  <arg name="launch_toponav" default="false" />
   <arg name="use_omni" default="false" />
- 
+  <arg name="steering_type" default="diff"/>
+  <arg name="reconfigure_edges" default="true" />
+
  
   <!-- Mongo database -->
   <include file="$(find mongodb_store)/launch/mongodb_store.launch">
@@ -60,12 +63,21 @@
   <!-- Move base bringup -->
   <include file="$(find rasberry_move_base)/launch/move_base_teb_corner_hokuyos.launch" if="$(arg use_teb_planner)">
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
-    <arg name="use_omni" default="$(arg use_omni)" />
+    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
   <include file="$(find rasberry_move_base)/launch/move_base_dwa_corner_hokuyos.launch" unless="$(arg use_teb_planner)">
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
-    <arg name="use_omni" default="$(arg use_omni)" />
+    <arg name="use_omni" value="$(arg use_omni)" />
+  </include>
+
+  <!-- Topological navigation bringup -->
+  <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch"  if="$(arg launch_toponav)">
+    <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
+    <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
+    <arg name="use_omni" value="$(arg use_omni)" />
+    <arg name="steering_type" default="$(arg steering_type)"/>
+    <arg name="reconfigure_edges" default="$(arg reconfigure_edges)"/>
   </include>
 
   <!-- Run rviz -->
