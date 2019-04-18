@@ -1,6 +1,6 @@
 # REGISTER YOUR PARAMETERS FOR OPTMISATION HERE.
 # You must specify the reconfigure services and group your parameters accordingly (as below).
-# type: parameter type - can be float, integer (int) or boolean (bool).
+# type: parameter type - can be double, integer (int) or boolean (bool).
 # min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
@@ -14,11 +14,11 @@
     min: 1000
     max: 10000
   update_min_d: 
-    type: "float"
+    type: "double"
     min: 0.05
     max: 0.5
   update_min_a: 
-    type: "float"
+    type: "double"
     min: 0.26
     max: 0.78
   laser_max_beams: 
@@ -26,15 +26,15 @@
     min: 10
     max: 50
   laser_sigma_hit: 
-    type: "float"
+    type: "double"
     min: 0.05
     max: 0.5
   laser_lambda_short:
-    type: "float"
+    type: "double"
     min: 0.02
     max: 0.2
   laser_likelihood_max_dist:
-    type: "float"
+    type: "double"
     min: 0.5
     max: 2.5
 

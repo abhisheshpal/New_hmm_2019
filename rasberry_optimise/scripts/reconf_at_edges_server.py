@@ -112,7 +112,7 @@ if __name__ == "__main__":
         print "\n"
         omni = sys.argv[1]
 
-    rospy.init_node('reconf_at_edges_server')
+    rospy.init_node('reconf_at_edges_server', anonymous=True)
     reconf_at_edges_server(omni)
     rospy.spin()
 #####################################################################################

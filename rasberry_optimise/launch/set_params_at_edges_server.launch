@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="omni" default="true"/>
+  
+  <node pkg="rasberry_optimise" type="set_params_at_edges_server.py" name="set_params_at_edges_server" output="screen">
+    <rosparam file="$(find rasberry_optimise)/resources/optim_params/optim_params_omni.yaml" command="load" if="$(arg omni)"/>        
+    <rosparam file="$(find rasberry_optimise)/resources/optim_params/optim_params_diff.yaml" command="load" unless="$(arg omni)"/>
+  </node>
+
+</launch> 

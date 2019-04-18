@@ -16,7 +16,7 @@ def reconf_at_edges_client(edge_id):
 
 if __name__ == "__main__":
     edge_id = "WayPoint29_WayPoint30" # in-row
-    edge_id = "WayPoint26_WayPoint27" # u-turn
+    edge_id = "WayPoint10_WayPoint9" # u-turn
 
     reconf_at_edges_client(edge_id)
 ###############################################################################

@@ -159,7 +159,7 @@ if __name__ == "__main__":
             attr = rcnfsrv + "/" + param_name
             print attr
 
-            if config_params.values()[i][param_name]['type'] == "float":
+            if config_params.values()[i][param_name]['type'] == "double":
                 attr_min = config_params.values()[i][param_name]['min']
                 attr_max = config_params.values()[i][param_name]['max']
                 toolbox.register(attr, random.uniform, attr_min, attr_max)

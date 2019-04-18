@@ -71,8 +71,8 @@ irn:
   - WayPoint139_WayPoint80
   - WayPoint14_WayPoint13
   - WayPoint14_WayPoint15
-  - WayPoint140_WayPoint73
-  - WayPoint141_WayPoint74
+  - WayPoint140_WayPoint74
+  - WayPoint141_WayPoint73
   - WayPoint15_WayPoint14
   - WayPoint15_WayPoint16
   - WayPoint16_WayPoint15
@@ -172,9 +172,9 @@ irn:
   - WayPoint66_WayPoint74
   - WayPoint7_WayPoint3
   - WayPoint7_WayPoint8
-  - WayPoint73_WayPoint140
+  - WayPoint73_WayPoint141
   - WayPoint74_WayPoint66
-  - WayPoint74_WayPoint141
+  - WayPoint74_WayPoint140
   - WayPoint75_WayPoint76
   - WayPoint75_WayPoint79
   - WayPoint76_WayPoint75
@@ -228,37 +228,69 @@ irn:
   - WayPoint99_WayPoint98
   parameters:
   - &id001
-    /move_base/DWAPlannerROS/vth_samples: 67.0
+    name: /move_base/DWAPlannerROS/vth_samples
+    type: int
+    value: 67.0
   - &id002
-    /move_base/DWAPlannerROS/goal_distance_bias: 37.0
+    name: /move_base/DWAPlannerROS/goal_distance_bias
+    type: double
+    value: 37.0
   - &id003
-    /move_base/DWAPlannerROS/path_distance_bias: 28.7861070422
+    name: /move_base/DWAPlannerROS/path_distance_bias
+    type: double
+    value: 28.7861070422
   - &id004
-    /move_base/DWAPlannerROS/min_vel_y: 0.0
+    name: /move_base/DWAPlannerROS/min_vel_y
+    type: double
+    value: 0.0
   - &id005
-    /move_base/DWAPlannerROS/forward_point_distance: 0.48297542552
+    name: /move_base/DWAPlannerROS/forward_point_distance
+    type: double
+    value: 0.48297542552
   - &id006
-    /move_base/DWAPlannerROS/max_vel_y: 0.0
+    name: /move_base/DWAPlannerROS/max_vel_y
+    type: double
+    value: 0.0
   - &id007
-    /move_base/DWAPlannerROS/prune_plan: 'true'
+    name: /move_base/DWAPlannerROS/prune_plan
+    type: bool
+    value: true
   - &id008
-    /move_base/DWAPlannerROS/occdist_scale: 0.17095456476
+    name: /move_base/DWAPlannerROS/occdist_scale
+    type: double
+    value: 0.17095456476
   - &id009
-    /move_base/DWAPlannerROS/vx_samples: 35.0
+    name: /move_base/DWAPlannerROS/vx_samples
+    type: int
+    value: 35.0
   - &id010
-    /move_base/DWAPlannerROS/sim_time: 2.56592652857
+    name: /move_base/DWAPlannerROS/sim_time
+    type: double
+    value: 2.56592652857
   - &id011
-    /move_base/DWAPlannerROS/max_scaling_factor: 0.572649261744
+    name: /move_base/DWAPlannerROS/max_scaling_factor
+    type: double
+    value: 0.572649261744
   - &id012
-    /move_base/DWAPlannerROS/scaling_speed: 0.0139109910856
+    name: /move_base/DWAPlannerROS/scaling_speed
+    type: double
+    value: 0.0139109910856
   - &id013
-    /move_base/DWAPlannerROS/vy_samples: 1
+    name: /move_base/DWAPlannerROS/vy_samples
+    type: int
+    value: 1
   - &id014
-    /move_base/DWAPlannerROS/sim_granularity: 0.0440361042626
+    name: /move_base/DWAPlannerROS/sim_granularity
+    type: double
+    value: 0.0440361042626
   - &id015
-    /move_base/DWAPlannerROS/stop_time_buffer: 0.182291625765
+    name: /move_base/DWAPlannerROS/stop_time_buffer
+    type: double
+    value: 0.182291625765
   - &id016
-    /move_base/DWAPlannerROS/oscillation_reset_dist: 0.0157790647928
+    name: /move_base/DWAPlannerROS/oscillation_reset_dist
+    type: double
+    value: 0.0157790647928
 orn:
   edges:
   - WayPoint66_WayPoint57
@@ -387,19 +419,51 @@ utn:
   - WayPoint84_WayPoint83
   - WayPoint83_WayPoint84
   parameters:
-  - /move_base/DWAPlannerROS/vth_samples: 8.0
-  - /move_base/DWAPlannerROS/goal_distance_bias: 29.0
-  - /move_base/DWAPlannerROS/path_distance_bias: 41.0
-  - /move_base/DWAPlannerROS/min_vel_y: -0.35
-  - /move_base/DWAPlannerROS/forward_point_distance: 0.05
-  - /move_base/DWAPlannerROS/max_vel_y: 0.35
-  - /move_base/DWAPlannerROS/prune_plan: 'false'
-  - /move_base/DWAPlannerROS/occdist_scale: 0.354307473006
-  - /move_base/DWAPlannerROS/vx_samples: 1.0
-  - /move_base/DWAPlannerROS/sim_time: 3.33906319807
-  - /move_base/DWAPlannerROS/max_scaling_factor: 0.283085202888
-  - /move_base/DWAPlannerROS/scaling_speed: 0.302724798452
-  - /move_base/DWAPlannerROS/vy_samples: 49.0
-  - /move_base/DWAPlannerROS/sim_granularity: 0.216821592816
-  - /move_base/DWAPlannerROS/stop_time_buffer: 0.789168747746
-  - /move_base/DWAPlannerROS/oscillation_reset_dist: 0.033945588782
+  - name: /move_base/DWAPlannerROS/vth_samples
+    type: int
+    value: 8.0
+  - name: /move_base/DWAPlannerROS/goal_distance_bias
+    type: double
+    value: 29.0
+  - name: /move_base/DWAPlannerROS/path_distance_bias
+    type: double
+    value: 41.0
+  - name: /move_base/DWAPlannerROS/min_vel_y
+    type: double
+    value: -0.35
+  - name: /move_base/DWAPlannerROS/forward_point_distance
+    type: double
+    value: 0.05
+  - name: /move_base/DWAPlannerROS/max_vel_y
+    type: double
+    value: 0.35
+  - name: /move_base/DWAPlannerROS/prune_plan
+    type: bool
+    value: false
+  - name: /move_base/DWAPlannerROS/occdist_scale
+    type: double
+    value: 0.354307473006
+  - name: /move_base/DWAPlannerROS/vx_samples
+    type: int
+    value: 1.0
+  - name: /move_base/DWAPlannerROS/sim_time
+    type: double
+    value: 3.33906319807
+  - name: /move_base/DWAPlannerROS/max_scaling_factor
+    type: double
+    value: 0.283085202888
+  - name: /move_base/DWAPlannerROS/scaling_speed
+    type: double
+    value: 0.302724798452
+  - name: /move_base/DWAPlannerROS/vy_samples
+    type: int
+    value: 49.0
+  - name: /move_base/DWAPlannerROS/sim_granularity
+    type: double
+    value: 0.216821592816
+  - name: /move_base/DWAPlannerROS/stop_time_buffer
+    type: double
+    value: 0.789168747746
+  - name: /move_base/DWAPlannerROS/oscillation_reset_dist
+    type: double
+    value: 0.033945588782
