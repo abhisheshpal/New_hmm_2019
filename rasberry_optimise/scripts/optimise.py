@@ -26,7 +26,6 @@ def evaluate(individual):
 
         eval_calls.append(1)
         times.append(time_2-time_1)
-        data.append([individual, metrics])
 
         evals_remaining = tot_eval_calls - np.sum(eval_calls)
         time_to_complete = (evals_remaining * np.mean(times)) / 3600.0
@@ -102,6 +101,7 @@ if __name__ == "__main__":
     LAMBDA_ = config_ga["lambda"]
     CXPB = config_ga["cxpb"]
     MUTPB = config_ga["mutpb"]
+    
     WEIGHT_TIME = config_ga["weight_time"]
     WEIGHT_ROTATION = config_ga["weight_rotation"]
     WEIGHT_LENGTH = config_ga["weight_length"]
@@ -109,6 +109,8 @@ if __name__ == "__main__":
     WEIGHT_POSITION_ERROR = config_ga["weight_position_error"]
     WEIGHT_ORIENTATION_ERROR = config_ga["weight_orientation_error"]
     MULTI_OBJECTIVE = config_ga["multi_objective"]
+    
+    HOF_SIZE = config_ga["hof_size"]
     NUM_RUNS = config_ga["num_runs"]
 
     print "\nSetting hyper-parameters of the genetic algorithm ..."
@@ -121,6 +123,7 @@ if __name__ == "__main__":
     print "Setting lambda = {}".format(LAMBDA_)
     print "Setting cxpb = {}".format(CXPB)
     print "Setting mutpb = {}".format(MUTPB)
+    
     print "Setting weight_time = {}".format(WEIGHT_TIME)
     print "Setting weight_rotation = {}".format(WEIGHT_ROTATION)
     print "Setting weight_length = {}".format(WEIGHT_LENGTH)
@@ -128,6 +131,8 @@ if __name__ == "__main__":
     print "Setting weight_position_error = {}".format(WEIGHT_POSITION_ERROR)
     print "Setting weight_orientation_error = {}".format(WEIGHT_ORIENTATION_ERROR)
     print "Setting multi_objective = {}".format(MULTI_OBJECTIVE)
+    
+    print "Setting hof_size = {}".format(HOF_SIZE)
     print "Setting num_runs = {}".format(NUM_RUNS)
 #####################################################################################
 
@@ -218,7 +223,7 @@ if __name__ == "__main__":
 
 #####################################################################################
     # For recording the best params (hall of fame) and logging statistics.
-    hof = tools.HallOfFame(100)
+    hof = tools.HallOfFame(HOF_SIZE)
     stats = tools.Statistics(lambda ind: ind.fitness.values)
     stats.register("avg", np.mean, axis=0)
     stats.register("std", np.std, axis=0)
@@ -239,7 +244,6 @@ if __name__ == "__main__":
 
     eval_calls = []
     times = []
-    data = []
     tot_eval_calls = NUM_RUNS * (int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE) # average
     initial_pop = toolbox.population(POPSIZE)
 
@@ -251,6 +255,8 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Save data.
+    hof_dictionaries = [make_param_dict(config_params, ind) for ind in hof]
+
     rospack = rospkg.RosPack()
     save_path = rospack.get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
@@ -262,9 +268,9 @@ if __name__ == "__main__":
 
     save_data_to_json(save_dir + "/hof.json", [ind for ind in hof])
     save_data_to_json(save_dir + "/pop.json", pop)
-    save_data_to_json(save_dir + "/data.json", data)
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
 
+    save_data_to_yaml(save_dir + "/hof_dictionaries.yaml", hof_dictionaries)
     save_data_to_yaml(save_dir + "/config_scenario.yaml", config_scenario)
     save_data_to_yaml(save_dir + "/config_params.yaml", config_params)
     save_data_to_yaml(save_dir + "/config_ga.yaml", config_ga)
