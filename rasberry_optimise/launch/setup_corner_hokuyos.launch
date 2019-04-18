@@ -25,7 +25,7 @@
 
   <arg name="use_omni" default="false" />
   <arg name="steering_type" default="diff"/>
-  <arg name="reconfigure_edges" default="false" /> <!-- set to false when optimising -->
+  <arg name="reconfigure_edges" default="true" /> <!-- set to false when optimising -->
 
  
   <!-- Mongo database -->
