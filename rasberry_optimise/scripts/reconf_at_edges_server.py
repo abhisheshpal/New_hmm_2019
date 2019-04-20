@@ -14,30 +14,34 @@ class reconf_at_edges_server(object):
 
     def handle_reconf_at_edges(self, req):
         
-        success = False
-        for key in self.config.keys():
+        self.success = False
+        for group in self.config.keys():
             
-            if req.edge_id in self.config[key]["edges"]:
+            if req.edge_id in self.config[group]["edges"]:
                 print "\n"
-                rospy.loginfo("Setting parameters for edge group {} ...".format(key))
+                rospy.loginfo("Setting parameters for edge group {} ...".format(group))
                 
-                try: 
-                    for param in self.config[key]["parameters"]:
-                        
-                        rcnfclient = dynamic_reconfigure.client.Client(param["ns"], timeout=5.0)
-                        rcnfclient.update_configuration({param["name"]: param["value"]})                        
-                        
-                        print "Setting {} = {}".format(param["ns"] + "/" + param["name"], param["value"])
+                self.set_parameters(group)
                     
-                    success = True
-                        
-                except rospy.ROSException as e:
-                    rospy.logerr(e)
-
+        return ReconfAtEdgesResponse(self.success)
+                    
+                    
+    def set_parameters(self, group):
+        
+        try: 
+            for param in self.config[group]["parameters"]:
                 
-        return ReconfAtEdgesResponse(success)
-                    
-                 
+                rcnfclient = dynamic_reconfigure.client.Client(param["ns"], timeout=5.0)
+                rcnfclient.update_configuration({param["name"]: param["value"]})                        
+                
+                print "Setting {} = {}".format(param["ns"] + "/" + param["name"], param["value"])
+            
+            self.success = True
+                
+        except rospy.ROSException as e:
+            rospy.logerr(e)
+        
+        
                  
                  
 if __name__ == "__main__":

@@ -1,11 +1,11 @@
 <?xml version="1.0" ?>
 <launch>
 
-  <arg name="dir" default="dwa_irn" />
+  <arg name="params" default="dwa_irn" />
   <arg name="index" default="0" />
 
   <!-- Reconfigure -->
   <node pkg="rasberry_optimise" type="reconfigure.py" name="reconfigure" output="screen" 
-        args="$(arg dir) $(arg index)" />
+        args="$(arg params) $(arg index)" />
 
 </launch>
