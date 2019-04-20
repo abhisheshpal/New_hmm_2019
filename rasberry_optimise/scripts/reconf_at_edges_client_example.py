@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
-
 import rospy
-from rasberry_optimise.srv import ReconfAtEdges
+from strands_navigation_msgs.srv import ReconfAtEdges
+
 
 def reconf_at_edges_client(edge_id):
     rospy.wait_for_service('reconf_at_edges')
