@@ -18,8 +18,7 @@ class reconf_at_edges_server(object):
         for group in self.config.keys():
             
             if req.edge_id in self.config[group]["edges"]:
-                print "\n"
-                rospy.loginfo("Setting parameters for edge group {} ...".format(group))
+                rospy.loginfo("\nSetting parameters for edge group {} ...".format(group))
                 
                 self.set_parameters(group)
                     
@@ -30,11 +29,10 @@ class reconf_at_edges_server(object):
         
         try: 
             for param in self.config[group]["parameters"]:
+                print "Setting {} = {}".format("/".join((param["ns"], param["name"])), param["value"])
                 
                 rcnfclient = dynamic_reconfigure.client.Client(param["ns"], timeout=5.0)
                 rcnfclient.update_configuration({param["name"]: param["value"]})                        
-                
-                print "Setting {} = {}".format(param["ns"] + "/" + param["name"], param["value"])
             
             self.success = True
                 
