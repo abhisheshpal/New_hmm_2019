@@ -12,27 +12,22 @@ import yaml, copy
 from utils import load_data_from_yaml
 
 
-write_map = False
+write_map = True
 
 base_dir = "/home/adam/workspaces/rasberry_ws/src/RASberry/rasberry_navigation/maps"
-infile = "riseholme.tmap"
-outfile = "riseholme_new.tmap"
+infile = "riseholme-uv_bidirectional.tmap"
+outfile = "riseholme-uv_bidirectional.tmap"
 
-e = [[67,131],[67,132],[67,133],[67,134],[67,138],[67,139]]
-e.extend([[73,131],[73,132],[73,133],[73,134],[73,138],[73,139]])
-e.extend([[74,131],[74,132],[74,133],[74,134],[74,138],[74,139]])
-e.extend([[131,67],[131,73],[131,74]])
-e.extend([[132,67],[132,73],[132,74]])
-e.extend([[133,67],[133,73],[133,74]])
-e.extend([[134,67],[134,73],[134,74]])
-e.extend([[138,67],[138,73],[138,74]])
-e.extend([[139,67],[139,73],[139,74]])
+edges = [[131,120],[120,131],[132,119],[119,132],[133,110],[110,133]]
+edges.extend([[134,101],[101,134],[138,84],[84,138],[139,83],[83,139]])
+edges.extend([[57,46],[46,57],[58,45],[45,58],[59,36],[36,59]])
+edges.extend([[60,27],[27,60],[64,10],[10,64],[65,9],[9,65]])
 
 
 f_in = base_dir + "/" + infile        
 topo_map = load_data_from_yaml(f_in)
 cpy = copy.deepcopy(topo_map)
-for edge in e:    
+for edge in edges:    
     origin = "WayPoint{}".format(edge[0])
     
     for i, node in enumerate(cpy):
