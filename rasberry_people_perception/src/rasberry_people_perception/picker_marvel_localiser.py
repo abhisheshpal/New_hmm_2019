@@ -61,9 +61,9 @@ class PickerMarvelLocaliser(object):
             self.posestamped_msgs[msg.address] = geometry_msgs.msg.PoseStamped()
             self.posestamped_msgs[msg.address].header.frame_id = "/map"
             # set up topo map related pubs
-            self.current_node_pubs[msg.address] = rospy.Publisher("/picker%02d/current_node" %(msg.address), std_msgs.msg.String, queue_size=5)
+            self.current_node_pubs[msg.address] = rospy.Publisher("/picker%02d/current_node" %(msg.address), std_msgs.msg.String, latch=True, queue_size=5)
             self.current_node_msgs[msg.address] = std_msgs.msg.String()
-            self.closest_node_pubs[msg.address] = rospy.Publisher("/picker%02d/closest_node" %(msg.address), std_msgs.msg.String, queue_size=5)
+            self.closest_node_pubs[msg.address] = rospy.Publisher("/picker%02d/closest_node" %(msg.address), std_msgs.msg.String, latch=True, queue_size=5)
             self.closest_node_msgs[msg.address] = std_msgs.msg.String()
             self.picker_marvel_ids.append(msg.address)
             self.n_pickers += 1
@@ -75,10 +75,12 @@ class PickerMarvelLocaliser(object):
             self.posestamped_msgs[msg.address].pose.position.x = msg.x_m
             self.posestamped_msgs[msg.address].pose.position.y = msg.y_m
             self.posestamped_pubs[msg.address].publish(self.posestamped_msgs[msg.address])
+
             current_node, closest_node = self.topo_localiser.localise_pose(self.posestamped_msgs[msg.address])
-            if current_node != "none":
+            if current_node != self.current_node_msgs[msg.address].data:
                 self.current_node_msgs[msg.address].data = current_node
                 self.current_node_pubs[msg.address].publish(self.current_node_msgs[msg.address])
-            if closest_node != "none":
+            if closest_node != self.closest_node_msgs[msg.address].data:
                 self.closest_node_msgs[msg.address].data = closest_node
                 self.closest_node_pubs[msg.address].publish(self.closest_node_msgs[msg.address])
+
