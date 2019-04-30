@@ -21,7 +21,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://thorvald_model/meshes/hokuyo/hokuyo.dae"/>
+        <mesh filename="package://thorvald_description/meshes/hokuyo/hokuyo.dae"/>
       </geometry>
     </visual>
 
@@ -44,7 +44,7 @@
     <visual>
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
-        <mesh filename="package://thorvald_model/meshes/hokuyo/hokuyo.dae"/>
+        <mesh filename="package://thorvald_description/meshes/hokuyo/hokuyo.dae"/>
       </geometry>
     </visual>
 
@@ -59,7 +59,7 @@
   <joint name="base_base_sens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/base_sensors"/>
-    <origin xyz="-0.370 -0.1075 1.440" rpy="0 0 0"/>
+    <origin xyz="0 0 1.52" rpy="0 0 0"/>
   </joint>
 
   <joint name="base_sens_septentrio" type="fixed">
@@ -93,7 +93,7 @@
     <parent link="$(arg tf_prefix)/base_sensors"/>
     <child link="$(arg tf_prefix)/velodyne"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0.38 -0.122 0.04" rpy="0 0 0"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
   <!--hokuyo-->
@@ -109,7 +109,7 @@
             <samples>720</samples>
             <resolution>1</resolution>
             <min_angle>-2.18</min_angle>
-            <max_angle>2.36</max_angle>
+            <max_angle>2.18</max_angle>
           </horizontal>
         </scan>
         <range>
@@ -147,7 +147,7 @@
             <samples>720</samples>
             <resolution>1</resolution>
             <min_angle>-2.18</min_angle>
-            <max_angle>2.36</max_angle>
+            <max_angle>2.18</max_angle>
           </horizontal>
         </scan>
         <range>

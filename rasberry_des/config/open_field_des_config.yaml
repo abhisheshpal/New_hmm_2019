@@ -1,7 +1,7 @@
 ##-----------------------------------------------------------------------------
 # map related parameters
 # ----------------------
-# n_polytunnels: integer>=0, 0 - open farm, n (>0) - n polytunnels
+# n_polytunnels: integer>0, 1 - open farm, n (>0) - n polytunnels
 # n_farm_rows:
 #   func: none/copy, function to populate values for all rows
 #   value: array of integers, number of rows in the farm (n_polytunnels == 0)
@@ -48,7 +48,7 @@
 # dist_to_cold_storage: float, distance to the cold storage from first node of
 #                              primary head lane, m (optional)
 ##-----------------------------------------------------------------------------
-n_polytunnels: 0
+n_polytunnels: 1
 n_farm_rows:
   func: copy
   value: [28]

@@ -92,8 +92,7 @@ class PickerStateMonitor(object):
                         except:
                             pass
                         else:
-                            info_msg = "picker-%s is cancelling task-%d" %(picker_id, task_id)
-                            rospy.loginfo(info_msg)
+                            rospy.loginfo("picker-%s is cancelling task-%d", picker_id, task_id)
                             cancelled = self.cancel_task_client(task_id)
                             if cancelled:
                                 # setting previous state as INIT
@@ -119,8 +118,7 @@ class PickerStateMonitor(object):
                             # picker is not localised. do not add a task
                             # reset picker state
                             # prev_state is set to INIT as this is not a cancellation by picker
-                            rosinfo_msg = "ignoring call as picker %s is not localised" %(picker_id)
-                            rospy.loginfo(rosinfo_msg)
+                            rospy.loginfo("ignoring call as picker %s is not localised", picker_id)
                             self.picker_prev_states[picker_id] = "INIT"
                             self.set_picker_state(picker_id, "INIT")
 
@@ -135,9 +133,11 @@ class PickerStateMonitor(object):
                             self.picker_task[picker_id] = True
 
                     else:
-                        # this shouldn't happen as a task already exists
-                        msg = "Picker %s has a callarobot task being processed" %(picker_id)
-                        raise Exception(msg)
+                        # this may happen as multiple status messages with the same state for one picker
+                        # may be received if any other picker changed his state
+                        pass
+#                        msg = "Picker %s has a callarobot task being processed" %(picker_id)
+#                        raise Exception(msg)
 
                 elif picker_id in self.picker_ids and self.picker_states[picker_id] == "ARRIVED":
                     # this state is set from robot's feedback that it arrived at picker_node to coordinator
@@ -150,8 +150,7 @@ class PickerStateMonitor(object):
                     try:
                         assert task_id is not None
                     except:
-                        info_msg = "updating tray_loaded status, but picker - %s doesn't have any tasks!!!" %(picker_id)
-                        rospy.loginfo(info_msg)
+                        rospy.loginfo("updating tray_loaded status, but picker - %s doesn't have any tasks!!!", picker_id)
                         pass
                     else:
                         robot_id = self.task_robot[task_id]
@@ -201,8 +200,7 @@ class PickerStateMonitor(object):
                             # picker is not localised. do not add a task
                             # reset picker state
                             # prev_state is set to INIT as this is not a cancellation by picker
-                            rosinfo_msg = "ignoring call as picker %s is not localised" %(picker_id)
-                            rospy.loginfo(rosinfo_msg)
+                            rospy.loginfo("ignoring call as picker %s is not localised", picker_id)
                             self.picker_prev_states[picker_id] = "INIT"
                             self.set_picker_state(picker_id, "INIT")
 
@@ -285,6 +283,12 @@ class PickerStateMonitor(object):
             self.task_state[msg.task_id] = "DELIVERED"
             self.task_robot.pop(msg.task_id)
 
+        elif msg.state == "CALLED" and self.task_state[msg.task_id] != "CALLED":
+            # robot failed to reach picker, task could be reassigned
+            self.task_state[msg.task_id] = None
+            self.task_robot[msg.task_id] = None
+            picker_id = self.task_picker[msg.task_id]
+            self.set_picker_state(picker_id, "CALLED")
 
     def get_pickers_task(self, picker_id):
         """get the picker's task.

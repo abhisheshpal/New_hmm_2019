@@ -564,7 +564,7 @@ class Farm(object):
                             i += 1
 
     def assign(self, picker_id, robot_id):
-        """assign a robot to a picker waiting will full trays
+        """assign a robot to a picker waiting with full trays
 
         Keyword arguments:
 
