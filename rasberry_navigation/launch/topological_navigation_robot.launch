@@ -10,7 +10,6 @@
         <arg name="launch_manager" default="true"/>
 	<arg name="move_base_reconf_service" default="DWAPlannerROS" />
 	<arg name="reconfigure_edges" default="true" />
-	<arg name="edge_groups_def" default="riseholme_diff_edges_groups"/>
 	<arg name="steering_type" default="diff"/>
 	<arg name="scenario" default="riseholme"/>
 	<arg name="use_omni" default="false"/>
@@ -28,7 +27,7 @@
 	</node>
 
 
-    	<include file="$(find rasberry_optimise)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
+    	<include file="$(find rasberry_navigation)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
 	    <arg name="use_omni" value="$(arg use_omni)" />
 	</include>
 

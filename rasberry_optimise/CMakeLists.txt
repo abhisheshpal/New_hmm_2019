@@ -29,7 +29,6 @@ find_package(catkin REQUIRED COMPONENTS
   nav_msgs
   message_filters
   rosbag
-#  message_generation
 )
 
 ## System dependencies are found with CMake's conventions
@@ -75,7 +74,6 @@ catkin_python_setup()
 # Generate services in the 'srv' folder
 # add_service_files(
 #   FILES
-#   ReconfAtEdges.srv
 # )
 
 ## Generate actions in the 'action' folder
@@ -179,6 +177,7 @@ include_directories(
 ## in contrast to setup.py, you can choose the destination
  install(PROGRAMS
    scripts/optimise.py
+   scripts/get_metrics.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

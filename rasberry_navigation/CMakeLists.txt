@@ -178,7 +178,12 @@ include_directories(
    scripts/delete_topo_nodes.py
    scripts/get_sim_topo_node_positions.py
    scripts/get_topo_node_positions.py
+   scripts/reconf_at_edges_client_example.py
+   scripts/reconf_at_edges_server.py
+   scripts/reconfigure.py
+   scripts/set_yaw_tol.py
    scripts/uni_to_bidirectional_edges.py
+   scripts/utils.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
@@ -203,7 +208,7 @@ include_directories(
 #   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
 # )
 
-foreach (dir launch config maps )
+foreach (dir launch config maps resources)
     install(DIRECTORY ${dir}/
     DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
 endforeach(dir)

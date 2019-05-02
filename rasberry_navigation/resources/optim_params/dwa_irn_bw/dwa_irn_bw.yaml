@@ -1,4 +1,4 @@
-/move_base/DWAPlannerROS:
+move_base/DWAPlannerROS:
   forward_point_distance: {max: 0.5, min: 0.05, type: float}
   goal_distance_bias: {max: 64, min: 5, type: int}
   max_scaling_factor: {max: 1.0, min: 0.0, type: float}
