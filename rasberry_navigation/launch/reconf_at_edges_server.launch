@@ -2,10 +2,9 @@
 <launch>
   <arg name="use_omni" default="false"/>
   
-  <node pkg="rasberry_navigation" type="reconf_at_edges_server.py" name="reconf_at_edges_server" output="screen">
-    <rosparam file="$(find rasberry_navigation)/resources/optim_params/optim_params_omni.yaml" command="load" if="$(arg use_omni)"/>        
-    <rosparam file="$(find rasberry_navigation)/resources/optim_params/optim_params_diff.yaml" command="load" unless="$(arg use_omni)"/>
-    <remap from="/move_base/DWAPlannerROS/set_parameters" to="move_base/DWAPlannerROS/set_parameters" />
+  <node pkg="rasberry_navigation" type="reconf_at_edges_server.py" name="reconf_at_edges_server" output="screen" respawn="true">
+    <rosparam file="$(find rasberry_navigation)/config/optim_params_omni.yaml" command="load" if="$(arg use_omni)"/>        
+    <rosparam file="$(find rasberry_navigation)/config/optim_params_diff.yaml" command="load" unless="$(arg use_omni)"/>
   </node>
 
 </launch> 

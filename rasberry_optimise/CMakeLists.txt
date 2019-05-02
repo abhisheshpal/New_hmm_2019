@@ -178,6 +178,7 @@ include_directories(
  install(PROGRAMS
    scripts/optimise.py
    scripts/get_metrics.py
+   scripts/reconfigure.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

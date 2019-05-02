@@ -180,7 +180,6 @@ include_directories(
    scripts/get_topo_node_positions.py
    scripts/reconf_at_edges_client_example.py
    scripts/reconf_at_edges_server.py
-   scripts/reconfigure.py
    scripts/set_yaw_tol.py
    scripts/uni_to_bidirectional_edges.py
    scripts/utils.py
