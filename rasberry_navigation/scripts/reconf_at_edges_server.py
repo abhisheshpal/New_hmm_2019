@@ -7,7 +7,7 @@ class reconf_at_edges_server(object):
     
 
     def __init__(self):    
-        self.edge_groups = rospy.get_param("edge_nav_config_groups")
+        self.edge_groups = rospy.get_param("edge_nav_config_groups", {})
         self.config = rospy.get_param("reconf_at_edges_server")
         rospy.Service('reconf_at_edges', ReconfAtEdges, self.handle_reconf_at_edges)
 
