@@ -18,7 +18,7 @@
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
 
-	<rosparam command="load" file="$(find rasberry_navigation)/config/$(arg scenario)_$(arg steering_type)_edges_groups.yaml" if="$(arg reconfigure_edges)"/>
+        <rosparam command="load" file="$(find rasberry_navigation)/config/$(arg scenario)_$(arg steering_type)_edge_reconfig_groups.yaml" if="$(arg reconfigure_edges)"/>
 
 
 	<node pkg="monitored_navigation" type="monitored_nav.py" name="monitored_nav" output="screen" args="$(arg mon_nav_config_file)">
@@ -27,7 +27,7 @@
 	</node>
 
 
-    	<include file="$(find rasberry_navigation)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
+    	<include file="$(find topological_navigation)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
 	    <arg name="use_omni" value="$(arg use_omni)" />
 	</include>
 
