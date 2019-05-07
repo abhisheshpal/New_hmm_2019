@@ -28,7 +28,7 @@
 
 
     	<include file="$(find topological_navigation)/launch/reconf_at_edges_server.launch" if="$(arg reconfigure_edges)">
-	    <arg name="use_omni" value="$(arg use_omni)" />
+	    <arg name="omni" value="$(arg use_omni)" />
 	</include>
 
 	<node pkg="topological_navigation" name="topological_localisation" type="localisation.py" output="screen" respawn="true"/>
