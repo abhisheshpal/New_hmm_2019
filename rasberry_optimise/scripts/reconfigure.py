@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-import rospy, sys, dynamic_reconfigure.client
+import rospy, sys, dynamic_reconfigure.client, rospkg
 from rasberry_optimise.utils import *
 
 
@@ -22,18 +22,20 @@ if __name__ == "__main__":
     
     rospy.init_node("reconfigure", anonymous=True)
     
-    if len(sys.argv) < 4:
-        rospy.loginfo("usage is reconfigure.py path_to_parameters_json parameter_index path_to_parameters_yaml")
+    if len(sys.argv) < 3:
+        rospy.loginfo("usage is reconfigure.py parameter_dir parameter_index")
         exit()
     else:
         print sys.argv
         print "\n"
-        path_to_parameters = sys.argv[1]
+        parameter_dir = sys.argv[1]
         parameter_index = sys.argv[2]
-        path_to_config_params = sys.argv[3]
         
-        parameter_sets = load_data_from_json(path_to_parameters)
-        config_params = load_data_from_yaml(path_to_config_params)        
+        rospack = rospkg.RosPack()
+        base_dir = rospack.get_path("rasberry_optimise") + "/resources/optim_params"
+        
+        parameter_sets = load_data_from_json(base_dir + "/" + parameter_dir + "/" + parameter_dir + ".json")
+        config_params = load_data_from_yaml(base_dir + "/" + parameter_dir + "/" + parameter_dir + ".yaml")        
         
         parameters = parameter_sets[int(parameter_index)]
         param_dict = make_param_dict(config_params, parameters)

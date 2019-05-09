@@ -10,7 +10,10 @@ import copy, yaml, numpy as np
 
 
 write_map = True
-polytunnel_wayPoints = True
+polytunnel_wayPoints = False
+set_xy_goal_tolerance = True
+set_yaw_goal_tolerance = False
+xy_goal_tolerance = 0.05
 yaw_goal_tolerance = 6.28
 
 
@@ -42,7 +45,12 @@ for i, way_point in enumerate(wayPoints):
     
     for j, node in enumerate(cpy):
         if node["node"]["name"] == way_point_str:
-            cpy[j]["node"]["yaw_goal_tolerance"] = yaw_goal_tolerance
+            
+            if set_xy_goal_tolerance:
+                cpy[j]["node"]["xy_goal_tolerance"] = xy_goal_tolerance            
+            
+            if set_yaw_goal_tolerance:
+                cpy[j]["node"]["yaw_goal_tolerance"] = yaw_goal_tolerance
             
             
 if write_map:
