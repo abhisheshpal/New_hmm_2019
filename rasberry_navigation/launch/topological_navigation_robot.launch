@@ -13,10 +13,12 @@
 	<arg name="steering_type" default="diff"/>
 	<arg name="scenario" default="riseholme"/>
 	<arg name="use_omni" default="false"/>
+        <arg name="multi_robot" default="false"/>
 
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 
+        <rosparam command="load" file="$(find rasberry_bringup)/config/topological_presence_topics.yaml" if="$(arg multi_robot)"/>
 
         <rosparam command="load" file="$(find rasberry_navigation)/config/$(arg scenario)_$(arg steering_type)_edge_reconfig_groups.yaml" if="$(arg reconfigure_edges)"/>
 
