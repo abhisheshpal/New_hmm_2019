@@ -3667,14 +3667,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint37_WayPoint38
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint38
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint37_WayPoint58
       inflation_radius: 0.0
       map_2d: riseholme
@@ -3720,14 +3720,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint38_WayPoint37
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint37
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint38_WayPoint39
       inflation_radius: 0.0
       map_2d: riseholme
@@ -3773,14 +3773,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint39_WayPoint38
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint38
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint39_WayPoint40
       inflation_radius: 0.0
       map_2d: riseholme
@@ -3879,14 +3879,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint40_WayPoint39
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint39
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint40_WayPoint41
       inflation_radius: 0.0
       map_2d: riseholme
@@ -3932,14 +3932,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint41_WayPoint40
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint40
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint41_WayPoint42
       inflation_radius: 0.0
       map_2d: riseholme
@@ -3985,14 +3985,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint42_WayPoint41
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint41
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint42_WayPoint43
       inflation_radius: 0.0
       map_2d: riseholme
@@ -4038,14 +4038,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint43_WayPoint42
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint42
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint43_WayPoint44
       inflation_radius: 0.0
       map_2d: riseholme
@@ -4091,14 +4091,14 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint44_WayPoint43
       inflation_radius: 0.0
       map_2d: riseholme
       node: WayPoint43
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint44_WayPoint45
       inflation_radius: 0.0
       map_2d: riseholme
@@ -4151,7 +4151,7 @@
       node: WayPoint36
       recovery_behaviours_config: ''
       top_vel: 0.55
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint45_WayPoint44
       inflation_radius: 0.0
       map_2d: riseholme
@@ -4896,7 +4896,7 @@
     pointset: riseholme_poly_act
   node:
     edges:
-    - action: move_base
+    - action: row_traversal
       edge_id: WayPoint58_WayPoint37
       inflation_radius: 0.0
       map_2d: riseholme
