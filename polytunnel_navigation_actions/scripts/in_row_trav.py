@@ -13,6 +13,8 @@ import polytunnel_navigation_actions.msg
 import std_msgs.msg
 
 
+from std_srvs.srv import SetBool
+
 from dynamic_reconfigure.server import Server
 from polytunnel_navigation_actions.cfg import RowTraversalConfig
 
@@ -41,8 +43,8 @@ class inRowTravServer(object):
         self.granularity= 0.5                   # Distance between minigoals along path (carrot points)  
         self.forward_speed= 0.8                 
         
-        self.config={}
         
+        self.config={}
         self.cancelled = False
         self._action_name = name
         self._got_top_map=False
@@ -50,28 +52,29 @@ class inRowTravServer(object):
         self.backwards_mode=False
         self.safety_marker=None
 
+
         while not self.lnodes:
             rospy.loginfo("Waiting for topological map")
             rospy.Subscriber('/topological_map', TopologicalMap, self.topological_map_cb)
             if not self.lnodes:
                 rospy.sleep(1.0)
+
         
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
+
+        self._tf_listerner = tf.TransformListener()
+        self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
+        
         self.ppub = rospy.Publisher('/row_traversal/row_line', Path, queue_size=1)
         self.cmd_pub = rospy.Publisher('/nav_vel', Twist, queue_size=1)
         self.ref_pub = rospy.Publisher('/row_traversal/goal_reference', PoseStamped, queue_size=1)
         self.safety_zone_vis_pub = rospy.Publisher('/row_traversal/safety_zone', Marker, queue_size=1)
-
-
         self.dyn_reconf_srv = Server(RowTraversalConfig, self.dyn_reconf_callback)
 
-        #tf_buffer = tf2_ros.Buffer(rospy.Duration(1200.0)) #tf buffer length
-        #tf_listener = tf2_ros.TransformListener(self.tf_buffer)
 
-        self._tf_listerner = tf.TransformListener()
         rospy.loginfo("Creating safety zone.")
-        self.define_safety_zone(0.20)
+        self.define_safety_zone(0.2)
 
 
         rospy.loginfo("Creating action server.")
@@ -109,52 +112,37 @@ class inRowTravServer(object):
         return config
 
 
-    def define_safety_zone(self, clearance):
-        base_points=[]
-                
-        cp0=PointStamped()
-        cp0.header.frame_id='top0'
-        cp0.point.x=0.0+clearance
-        cp0.point.y=0.0+clearance
-        cp0.point.z=-0.3
-        cp1=PointStamped()
-        cp1.header.frame_id='top1'
-        cp1.point.x=0.0+clearance
-        cp1.point.y=0.0-clearance
-        cp1.point.z=-0.3
-        cp2=PointStamped()
-        cp2.header.frame_id='top2'
-        cp2.point.x=0.0+clearance
-        cp2.point.y=0.0+clearance
-        cp2.point.z=-0.3
-        cp3=PointStamped()
-        cp3.header.frame_id='top3'
-        cp3.point.x=0.0+clearance
-        cp3.point.y=0.0-clearance
-        cp3.point.z=-0.3
 
-        self._tf_listerner.waitForTransform('base_link','top0',rospy.Time.now(), rospy.Duration(1.0))
-        a=self._tf_listerner.transformPoint('base_link', cp0)
-        base_points.append(a)
-        b=self._tf_listerner.transformPoint('base_link',cp1)
-        base_points.append(b)
-        c=self._tf_listerner.transformPoint('base_link',cp2)
-        base_points.append(c)
-        d=self._tf_listerner.transformPoint('base_link',cp3)
-        base_points.append(d)
-                       
+    def define_safety_zone(self, clearance, corner_frames=['top0','top1','top2','top3']):
+        """ Defines the Safety zone around the robot 
+        
+        Arguments:
+        clearance     -- The outwards distance trom the corner_frames at which the vertices of the safety zone are defined
+        corner_frames -- The name of the frames that define the extremes of the robot
+        """
+
+        self.limits=[]
+        base_points=[]
+        
+        for i in corner_frames:
+            self._tf_listerner.waitForTransform('base_link',i,rospy.Time.now(), rospy.Duration(1.0))
+            (trans,rot) = self._tf_listerner.lookupTransform('base_link',i,rospy.Time.now())
+            i_x, i_y, i_z = trans
+            cpi=PointStamped()
+            cpi.header.frame_id='base_link'
+            cpi.point.x= i_x+clearance if i_x > 0 else  i_x-clearance
+            cpi.point.y= i_y+clearance if i_y > 0 else  i_y-clearance
+            cpi.point.z=-0.3
+            base_points.append(cpi)
+        
+        
+
         base_pose = Pose()
-        base_pose.position.x=0.0
-        base_pose.position.y=0.0
-        base_pose.position.z=0.0
-        base_pose.orientation.x=0.0
-        base_pose.orientation.y=0.0
-        base_pose.orientation.z=0.0
         base_pose.orientation.w=1.0
 
         amarker = Marker()
         amarker.header.frame_id = "base_link"
-        amarker.header.stamp = rospy.Time.now()
+        #amarker.header.stamp = rospy.Time.now()
         amarker.type = 4
         amarker.pose = Pose()
         amarker.scale.x = 0.05
@@ -217,6 +205,7 @@ class inRowTravServer(object):
         
         return ang2[2]-ang1[2]
 
+
     def _get_path(self, posea, poseb):
         the_path = Path()
         the_path.header.frame_id='map'
@@ -244,6 +233,7 @@ class inRowTravServer(object):
         return the_path
         
 
+
     def align_orientation(self, path_to_goal):
         dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
         print ang_diff, math.degrees(ang_diff)
@@ -265,8 +255,7 @@ class inRowTravServer(object):
         print "Done: ", ang_diff
         
 
-    def go_forwards(self, path_to_goal, start_goal):
-        
+    def go_forwards(self, path_to_goal, start_goal):        
         if self.backwards_mode:
             speed = -self.forward_speed
         else:
@@ -304,7 +293,7 @@ class inRowTravServer(object):
         #print (x3, y3, nx, pathind)
         
         return pathind
-        #print (progress)
+
 
         
 
@@ -348,17 +337,29 @@ class inRowTravServer(object):
         
         return transform.pose.position.x, transform.pose.position.y, ang_diff
 
+    def activate_row_detector(self, onoff):
+        rospy.wait_for_service('/row_detector/activate_detection')
+        try:
+            activate_service = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
+            resp1 = activate_service(onoff)
+            print resp1.message
+            return resp1.success
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e       
+
 
     def executeCallback(self, goal):
         self.backwards_mode=False
         self.cancelled = False
+        
+        self.activate_row_detector(True)
         initial_pose=self.get_node_position(self.closest_node)        
         final_pose=goal.target_pose.pose
         path_to_goal=self._get_path(initial_pose, final_pose)
         self.ppub.publish(path_to_goal)
         self.follow_path(path_to_goal)
 
-
+        self.activate_row_detector(False)
         if not self.cancelled:
             self._as.set_succeeded()
         else:

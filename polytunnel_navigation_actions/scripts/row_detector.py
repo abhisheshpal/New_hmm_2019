@@ -2,6 +2,7 @@
 import rospy, sys, yaml, rospkg
 import numpy as np
 
+import std_srvs
 from std_srvs.srv import SetBool
 from sklearn.externals import joblib
 from sensor_msgs.msg import LaserScan
@@ -41,9 +42,16 @@ class row_detector(object):
         
         
         self.path_error = Pose2D()
-        
+    
+    
+    
+    
     def activate_callback(self, req):
-        self.is_active=req.data        
+        self.is_active=req.data
+        ans = std_srvs.srv.SetBoolResponse()
+        ans.success = True
+        ans.message = 'Detection activated' if req.data else 'Detection de-activated'
+        return ans
         
 
     def scan_callback(self, scan):
