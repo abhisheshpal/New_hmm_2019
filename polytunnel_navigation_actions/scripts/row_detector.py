@@ -1,6 +1,8 @@
 #!/usr/bin/env python
 import rospy, sys, yaml, rospkg
 import numpy as np
+
+from std_srvs.srv import SetBool
 from sklearn.externals import joblib
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Pose2D
@@ -23,6 +25,7 @@ class row_detector(object):
         self.NUM_ATTEMPTED_FITS = config["num_attempted_fits"]
         self.LINE_GRANULARITY = config["line_granularity"]
         self.clf = clf
+        self.is_active= False
         
         rospy.Subscriber("/scan", LaserScan, self.scan_callback)
         
@@ -32,37 +35,43 @@ class row_detector(object):
         residual_threshold=self.RESIDUAL_THRESHOLD, min_samples=self.MIN_SAMPLES_RANSAC)
         
         self.path_err_pub = \
-        rospy.Publisher("/path_error", Pose2D, queue_size=10)
+        rospy.Publisher("/row_detector/path_error", Pose2D, queue_size=10)
+
+        rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
+        
         
         self.path_error = Pose2D()
         
+    def activate_callback(self, req):
+        self.is_active=req.data        
+        
 
     def scan_callback(self, scan):
-        
-        self.poles_identified = False
-        
-        angles = np.arange(scan.angle_min, scan.angle_max, scan.angle_increment)
-        ranges = np.array(scan.ranges)
-        
-        self.xs = ranges * np.cos(angles)
-        self.ys = ranges * np.sin(angles)
-        
-        self.filter_by_elipse()
-        self.filter_by_svm()
-        
-        if self.poles_identified:
-            if self.ONE_LINE:
-                error_y, error_theta = self.fit_one_line()
+        if self.is_active:
+            self.poles_identified = False
+            
+            angles = np.arange(scan.angle_min, scan.angle_max, scan.angle_increment)
+            ranges = np.array(scan.ranges)
+            
+            self.xs = ranges * np.cos(angles)
+            self.ys = ranges * np.sin(angles)
+            
+            self.filter_by_elipse()
+            self.filter_by_svm()
+            
+            if self.poles_identified:
+                if self.ONE_LINE:
+                    error_y, error_theta = self.fit_one_line()
+                else:
+                    error_y, error_theta = self.fit_two_lines()
             else:
-                error_y, error_theta = self.fit_two_lines()
-        else:
-            error_y = np.NaN; error_theta = np.NaN
-        
-        self.path_error.x = np.NaN
-        self.path_error.y = error_y
-        self.path_error.theta = error_theta
-        
-        self.path_err_pub.publish(self.path_error)
+                error_y = np.NaN; error_theta = np.NaN
+            
+            self.path_error.x = np.NaN
+            self.path_error.y = error_y
+            self.path_error.theta = error_theta
+            
+            self.path_err_pub.publish(self.path_error)
             
         
     def filter_by_elipse(self):
