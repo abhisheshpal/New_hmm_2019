@@ -1,8 +1,9 @@
 #!/usr/bin/env python
+from __future__ import division
 import rospy, sys, yaml, rospkg
 import numpy as np
-
 import std_srvs
+
 from std_srvs.srv import SetBool
 from sklearn.externals import joblib
 from sensor_msgs.msg import LaserScan
@@ -40,21 +41,21 @@ class row_detector(object):
 
         rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
         
-        
         self.path_error = Pose2D()
     
     
-    
-    
     def activate_callback(self, req):
+
         self.is_active=req.data
         ans = std_srvs.srv.SetBoolResponse()
         ans.success = True
         ans.message = 'Detection activated' if req.data else 'Detection de-activated'
+
         return ans
         
 
     def scan_callback(self, scan):
+
         if self.is_active:
             self.poles_identified = False
             
@@ -141,6 +142,7 @@ class row_detector(object):
         
         indices_region_1 = np.where(self.ys >= 0)[0]
         indices_region_2 = np.where(self.ys < 0)[0]
+
         xs_region_1 = self.xs[indices_region_1]
         ys_region_1 = self.ys[indices_region_1]
         xs_region_2 = self.xs[indices_region_2]
