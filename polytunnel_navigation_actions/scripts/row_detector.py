@@ -40,12 +40,19 @@ class row_detector(object):
         self.path_err_pub = \
         rospy.Publisher("/row_detector/path_error", Pose2D, queue_size=10)
         
+        self.poles_pub = \
+        rospy.Publisher("/row_detector/poles", ObstacleArray, queue_size=10)
+        
         self.obstacles_pub = \
         rospy.Publisher("/row_detector/obstacles", ObstacleArray, queue_size=10)
 
         rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
         
         self.path_error = Pose2D()
+
+        self.pole = Obstacle()
+        self.poles = ObstacleArray()
+        
         self.obstacle = Obstacle()
         self.obstacles = ObstacleArray()
     
@@ -86,9 +93,11 @@ class row_detector(object):
             self.path_error.y = error_y
             self.path_error.theta = error_theta
             
-            self.obstacles.obstacles = self.obstacles_list
+            self.poles.obstacles = self.pole_list
+            self.obstacles.obstacles = self.obstacle_list
             
             self.path_err_pub.publish(self.path_error)
+            self.poles_pub.publish(self.poles)
             self.obstacles_pub.publish(self.obstacles)
             
         
@@ -105,8 +114,9 @@ class row_detector(object):
         self.db.fit(X)
         labels = self.db.labels_        
         
-        poles = []
-        self.obstacles_list = []
+        pole_clusters = []
+        self.pole_list = []
+        self.obstacle_list = []
         for label in set(labels):
             if label == -1:
                 continue
@@ -117,36 +127,45 @@ class row_detector(object):
             cluster_xs = cluster[:, 0]
             cluster_ys = cluster[:, 1]
             
-            mux = np.mean(cluster_xs)
-            muy = np.mean(cluster_ys)
+            self.mux = np.mean(cluster_xs)
+            self.muy = np.mean(cluster_ys)
             
-            dxs = cluster_xs - mux
-            dys = cluster_ys - muy
-            eds = np.sqrt(dxs**2 + dys**2)
+            dxs = cluster_xs - self.mux
+            dys = cluster_ys - self.muy
+            self.eds = np.sqrt(dxs**2 + dys**2)
             
-            features, bins = np.histogram(eds, bins=90, range=(0, 1.45))
+            features, bins = np.histogram(self.eds, bins=90, range=(0, 1.45))
             is_pole = self.clf.predict(features.reshape(1, -1))
             
             if is_pole:
-                poles.append(cluster)
+                pole_clusters.append(cluster)
+                self.pole = self.fill_obstacle_msg(self.pole)
+                self.pole_list.append(self.pole)
             else:
-                self.obstacle.header.stamp = rospy.Time.now()
-                self.obstacle.header.frame_id = "/base_link"
-                self.obstacle.pose.x = mux
-                self.obstacle.pose.y = muy
-                self.obstacle.pose.theta = np.NaN
-                self.obstacle.radius = np.max(eds)
-                self.obstacles_list.append(self.obstacle)
+                self.obstacle = self.fill_obstacle_msg(self.obstacle)
+                self.obstacle_list.append(self.obstacle)
         
         try:
-            poles = np.concatenate(poles, axis=0)
-            self.xs = poles[:, 0]
-            self.ys = poles[:, 1]
+            pole_clusters = np.concatenate(pole_clusters, axis=0)
+            self.xs = pole_clusters[:, 0]
+            self.ys = pole_clusters[:, 1]
             self.poles_identified = True
             
         except:
             pass
         
+        
+    def fill_obstacle_msg(self, msg):
+        
+        msg.header.stamp = rospy.Time.now()
+        msg.header.frame_id = "/base_link"
+        msg.pose.x = self.mux
+        msg.pose.y = self.muy
+        msg.pose.theta = np.NaN
+        msg.radius = np.max(self.eds)
+        
+        return msg
+                
         
     def fit_one_line(self):
         
