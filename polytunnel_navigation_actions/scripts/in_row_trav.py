@@ -19,6 +19,7 @@ from dynamic_reconfigure.server import Server
 from polytunnel_navigation_actions.cfg import RowTraversalConfig
 
 from nav_msgs.msg import Path
+from geometry_msgs.msg import Pose2D
 from geometry_msgs.msg import PointStamped
 from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
@@ -40,10 +41,15 @@ class inRowTravServer(object):
         self.initial_heading_tolerance= 0.005   # Initial heading tolerance [rads]
         self.kp_ang= 0.2                        # Proportional gain for heading correction
         self.kp_y= 0.1                          # Proportional gain for sideways corrections
-        self.granularity= 0.5                   # Distance between minigoals along path (carrot points)  
+        self.granularity= 0.5                   # Distance between minigoals along path (carrot points)
+        self.y_row_detection_bias = 0.7         # Weight given to the reference given by row detection
+        self.y_path_following_bias = 0.3        # Weight given to the original path following
+        self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
+        self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
         self.forward_speed= 0.8                 
         
-        
+        self.y_ref=None
+        self.ang_ref=None
         self.config={}
         self.cancelled = False
         self._action_name = name
@@ -62,6 +68,7 @@ class inRowTravServer(object):
         
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
+        rospy.Subscriber('/row_detector/path_error',Pose2D, self.row_correction_cb)
 
         self._tf_listerner = tf.TransformListener()
         self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
@@ -159,7 +166,17 @@ class inRowTravServer(object):
         self.safety_marker=amarker
 
 
-        
+    def row_correction_cb(self, msg):
+        if np.isnan((msg.y)):
+            self.y_ref=None
+        else:
+            self.y_ref=msg.y
+
+        if np.isnan((msg.theta)):
+            self.ang_ref=None
+        else:
+            self.ang_ref=msg.theta
+
 
 
     def topological_map_cb(self, msg):
@@ -261,13 +278,12 @@ class inRowTravServer(object):
         else:
             speed = self.forward_speed
         for i in range(start_goal, len(path_to_goal.poses)):
-            dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[i])         
+            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])         
             while np.abs(dist)>0.1 and not self.cancelled:
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
-                self._get_vector_to_pose(path_to_goal.poses[i])
-
-                dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[i])
+                #self._get_vector_to_pose(path_to_goal.poses[i])
+                dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
             if not self.cancelled:
                 print("Next Goal")
             else:
@@ -277,6 +293,9 @@ class inRowTravServer(object):
 
         
     def find_next_point_in_line(self, path_to_goal):
+        '''
+        Closest point to line method
+        '''
         x1 = path_to_goal.poses[0].pose.position.x
         y1 = path_to_goal.poses[0].pose.position.y
         dx = path_to_goal.poses[-1].pose.position.x - path_to_goal.poses[0].pose.position.x
@@ -316,6 +335,26 @@ class inRowTravServer(object):
         cmd_vel.angular.z= angvel
         self.cmd_pub.publish(cmd_vel)
 
+
+    def _get_references(self,pose):
+        dist, y_path_err, ang_path_diff = self._get_vector_to_pose(pose)
+        
+        if self.y_ref:
+            if self.backwards_mode:
+                self.y_ref = -1.0*self.y_ref
+            y_err = np.average([self.y_ref, y_path_err], weights=[self.y_row_detection_bias, self.y_path_following_bias])
+        else:
+            y_err = y_path_err
+
+
+        if self.ang_ref:
+            ang_diff = np.average([self.ang_ref, ang_path_diff], weights=[self.ang_row_detection_bias, self.ang_path_following_bias])
+        else:
+            ang_diff = ang_path_diff
+
+
+        print dist, y_err, ang_diff
+        return dist, y_err, ang_diff
 
 
     def _get_vector_to_pose(self, pose):
