@@ -26,6 +26,7 @@
   <exec_depend>nav_msgs</exec_depend>
   <exec_depend>dynamic_reconfigure</exec_depend>
   <exec_depend>topological_navigation</exec_depend>
+  <exec_depend>message_runtime</exec_depend>
 
   <export>
 

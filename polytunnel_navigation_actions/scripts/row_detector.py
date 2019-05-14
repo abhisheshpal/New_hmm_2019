@@ -8,6 +8,7 @@ from std_srvs.srv import SetBool
 from sklearn.externals import joblib
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Pose2D
+from polytunnel_navigation_actions.msg import Obstacle, ObstacleArray
 from sklearn.cluster import DBSCAN
 from sklearn import linear_model
 
@@ -38,10 +39,15 @@ class row_detector(object):
         
         self.path_err_pub = \
         rospy.Publisher("/row_detector/path_error", Pose2D, queue_size=10)
+        
+        self.obstacles_pub = \
+        rospy.Publisher("/row_detector/obstacles", ObstacleArray, queue_size=10)
 
         rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
         
         self.path_error = Pose2D()
+        self.obstacle = Obstacle()
+        self.obstacles = ObstacleArray()
     
     
     def activate_callback(self, req):
@@ -80,7 +86,10 @@ class row_detector(object):
             self.path_error.y = error_y
             self.path_error.theta = error_theta
             
+            self.obstacles.obstacles = self.obstacles_list
+            
             self.path_err_pub.publish(self.path_error)
+            self.obstacles_pub.publish(self.obstacles)
             
         
     def filter_by_elipse(self):
@@ -97,6 +106,7 @@ class row_detector(object):
         labels = self.db.labels_        
         
         poles = []
+        self.obstacles_list = []
         for label in set(labels):
             if label == -1:
                 continue
@@ -107,8 +117,11 @@ class row_detector(object):
             cluster_xs = cluster[:, 0]
             cluster_ys = cluster[:, 1]
             
-            dxs = cluster_xs - np.mean(cluster_xs)
-            dys = cluster_ys - np.mean(cluster_ys)
+            mux = np.mean(cluster_xs)
+            muy = np.mean(cluster_ys)
+            
+            dxs = cluster_xs - mux
+            dys = cluster_ys - muy
             eds = np.sqrt(dxs**2 + dys**2)
             
             features, bins = np.histogram(eds, bins=90, range=(0, 1.45))
@@ -116,6 +129,14 @@ class row_detector(object):
             
             if is_pole:
                 poles.append(cluster)
+            else:
+                self.obstacle.header.stamp = rospy.Time.now()
+                self.obstacle.header.frame_id = "/base_link"
+                self.obstacle.pose.x = mux
+                self.obstacle.pose.y = muy
+                self.obstacle.pose.theta = np.NaN
+                self.obstacle.radius = np.max(eds)
+                self.obstacles_list.append(self.obstacle)
         
         try:
             poles = np.concatenate(poles, axis=0)
