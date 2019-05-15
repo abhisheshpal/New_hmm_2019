@@ -353,7 +353,7 @@ class inRowTravServer(object):
             ang_diff = ang_path_diff
 
 
-        print dist, y_err, ang_diff
+        #print dist, y_err, ang_diff
         return dist, y_err, ang_diff
 
 
