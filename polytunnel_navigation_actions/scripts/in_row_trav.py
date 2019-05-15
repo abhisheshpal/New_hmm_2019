@@ -340,8 +340,8 @@ class inRowTravServer(object):
         dist, y_path_err, ang_path_diff = self._get_vector_to_pose(pose)
         
         if self.y_ref:
-            if self.backwards_mode:
-                self.y_ref = -1.0*self.y_ref
+#            if self.backwards_mode:
+#                self.y_ref = -1.0*self.y_ref
             y_err = np.average([self.y_ref, y_path_err], weights=[self.y_row_detection_bias, self.y_path_following_bias])
         else:
             y_err = y_path_err
