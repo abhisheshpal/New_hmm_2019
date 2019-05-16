@@ -46,6 +46,7 @@ class inRowTravServer(object):
         self.y_path_following_bias = 0.3        # Weight given to the original path following
         self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
         self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
+        self.minimum_turning_speed = 0.01       # Minimum turning speed
         self.forward_speed= 0.8                 
         
         self.y_ref=None
@@ -314,8 +315,6 @@ class inRowTravServer(object):
         return pathind
 
 
-        
-
     def follow_path(self, path_to_goal):
         
         print "Align Orientation first"
@@ -332,7 +331,13 @@ class inRowTravServer(object):
         cmd_vel = Twist()
         cmd_vel.linear.x = xvel
         cmd_vel.linear.y = yvel
-        cmd_vel.angular.z= angvel
+        if np.abs(angvel) >= self.minimum_turning_speed:
+            cmd_vel.angular.z = angvel
+        else:
+            if self.minimum_turning_speed > 0:
+                cmd_vel.angular.z = self.minimum_turning_speed 
+            else:
+                cmd_vel.angular.z = -1.0 * self.minimum_turning_speed 
         self.cmd_pub.publish(cmd_vel)
 
 

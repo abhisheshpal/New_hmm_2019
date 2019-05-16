@@ -81,8 +81,7 @@ windows:
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: row_traversal
   panes:
-  - rosrun polytunnel_navigation_actions in_row_trav.py 
-  - roslaunch polytunnel_navigation_actions row_detector.launch
+  - roslaunch polytunnel_navigation_actions row_traversal.launch
 - name: rviz
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/row_traversal_action.rviz
