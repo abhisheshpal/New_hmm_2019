@@ -131,18 +131,17 @@ class row_detector(object):
             dys = cluster_ys - self.muy
             self.eds = np.sqrt(dxs**2 + dys**2)
             
+            obstacle = Obstacle()
+            obstacle = self.fill_obstacle_msg(obstacle)
+            
             features, bins = np.histogram(self.eds, bins=90, range=(0, 1.45))
             is_pole = self.clf.predict(features.reshape(1, -1))
             
             if is_pole:
                 pole_clusters.append(cluster)
-                self.pole = Obstacle()
-                self.pole = self.fill_obstacle_msg(self.pole)
-                self.pole_array.append(self.pole)
+                self.pole_array.append(obstacle)
             else:
-                self.obstacle = Obstacle()
-                self.obstacle = self.fill_obstacle_msg(self.obstacle)
-                self.obstacle_array.append(self.obstacle)
+                self.obstacle_array.append(obstacle)
         
         try:
             pole_clusters = np.concatenate(pole_clusters, axis=0)
