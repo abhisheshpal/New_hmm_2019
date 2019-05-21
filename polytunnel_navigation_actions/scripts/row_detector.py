@@ -81,20 +81,20 @@ class row_detector(object):
             else:
                 error_y = np.NaN; error_theta = np.NaN
             
-            self.path_error = Pose2D()
-            self.path_error.x = np.NaN
-            self.path_error.y = error_y
-            self.path_error.theta = error_theta
+            path_error = Pose2D()
+            path_error.x = np.NaN
+            path_error.y = error_y
+            path_error.theta = error_theta
             
-            self.poles = ObstacleArray()
-            self.poles.obstacles = self.pole_array
+            poles = ObstacleArray()
+            poles.obstacles = self.pole_array
             
-            self.obstacles = ObstacleArray()
-            self.obstacles.obstacles = self.obstacle_array
+            obstacles = ObstacleArray()
+            obstacles.obstacles = self.obstacle_array
             
-            self.path_err_pub.publish(self.path_error)
-            self.poles_pub.publish(self.poles)
-            self.obstacles_pub.publish(self.obstacles)
+            self.path_err_pub.publish(path_error)
+            self.poles_pub.publish(poles)
+            self.obstacles_pub.publish(obstacles)
             
         
     def filter_by_elipse(self):
