@@ -10,5 +10,5 @@ git clone --recursive https://github.com/LCAS/RASberry.git
 cd ..
 rosdep install --from-paths src --ignore-src -r -y
 catkin_make
-source devel/setup.bash
-echo "***Setup finished***"
+SUCCESS=$?
+if [ $SUCCESS == 0 ]; then echo -e "\n***Setup finished***\n"; source devel/setup.bash; else echo -e "\nSetup failed!!!\n"; fi
