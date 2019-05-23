@@ -263,6 +263,7 @@ class inRowTravServer(object):
             self.backwards_mode=False
             print("forwards heading")
 
+
         while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
             self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff)
             rospy.sleep(0.05)
@@ -328,16 +329,21 @@ class inRowTravServer(object):
 
 
     def _send_velocity_commands(self, xvel, yvel, angvel):
+        print angvel
         cmd_vel = Twist()
         cmd_vel.linear.x = xvel
         cmd_vel.linear.y = yvel
-        if np.abs(angvel) >= self.minimum_turning_speed:
+        if np.abs(angvel) >= self.minimum_turning_speed and np.abs(angvel)>0 :
             cmd_vel.angular.z = angvel
         else:
-            if self.minimum_turning_speed > 0:
+            if angvel > 0.001:
                 cmd_vel.angular.z = self.minimum_turning_speed 
+            elif angvel < 0.001:
+                cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
             else:
-                cmd_vel.angular.z = -1.0 * self.minimum_turning_speed 
+                cmd_vel.angular.z = angvel
+
+        print cmd_vel.angular.z
         self.cmd_pub.publish(cmd_vel)
 
 
