@@ -1,0 +1,4 @@
+default_params:
+  restore_defaults: True
+safe_params:
+  max_trans_vel: 0.1
