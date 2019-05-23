@@ -1,0 +1,14 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="detector_config" default="$(find polytunnel_navigation_actions)/config/row_detector.yaml" />
+  <arg name="traversal_config" default="$(find polytunnel_navigation_actions)/config/row_traversal_cfg.yaml" />
+
+  <include file="$(find polytunnel_navigation_actions)/launch/row_detector.launch">
+    <arg name="config" value="$(arg detector_config)" />
+  </include>
+
+  <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal">
+    <rosparam file="$(arg traversal_config)" command="load"/>
+  </node>
+
+</launch>
