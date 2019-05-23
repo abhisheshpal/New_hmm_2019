@@ -47,14 +47,6 @@ class row_detector(object):
         rospy.Publisher("/row_detector/obstacles", ObstacleArray, queue_size=10)
 
         rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
-        
-        self.path_error = Pose2D()
-
-        self.pole = Obstacle()
-        self.poles = ObstacleArray()
-        
-        self.obstacle = Obstacle()
-        self.obstacles = ObstacleArray()
     
     
     def activate_callback(self, req):
@@ -89,16 +81,20 @@ class row_detector(object):
             else:
                 error_y = np.NaN; error_theta = np.NaN
             
-            self.path_error.x = np.NaN
-            self.path_error.y = error_y
-            self.path_error.theta = error_theta
+            path_error = Pose2D()
+            path_error.x = np.NaN
+            path_error.y = error_y
+            path_error.theta = error_theta
             
-            self.poles.obstacles = self.pole_list
-            self.obstacles.obstacles = self.obstacle_list
+            poles = ObstacleArray()
+            poles.obstacles = self.pole_array
             
-            self.path_err_pub.publish(self.path_error)
-            self.poles_pub.publish(self.poles)
-            self.obstacles_pub.publish(self.obstacles)
+            obstacles = ObstacleArray()
+            obstacles.obstacles = self.obstacle_array
+            
+            self.path_err_pub.publish(path_error)
+            self.poles_pub.publish(poles)
+            self.obstacles_pub.publish(obstacles)
             
         
     def filter_by_elipse(self):
@@ -112,11 +108,12 @@ class row_detector(object):
         
         X = np.vstack((self.xs, self.ys)).T
         self.db.fit(X)
-        labels = self.db.labels_        
+        labels = self.db.labels_
         
         pole_clusters = []
-        self.pole_list = []
-        self.obstacle_list = []
+        self.pole_array = []
+        self.obstacle_array = []
+
         for label in set(labels):
             if label == -1:
                 continue
@@ -134,16 +131,17 @@ class row_detector(object):
             dys = cluster_ys - self.muy
             self.eds = np.sqrt(dxs**2 + dys**2)
             
+            obstacle = Obstacle()
+            obstacle = self.fill_obstacle_msg(obstacle)
+            
             features, bins = np.histogram(self.eds, bins=90, range=(0, 1.45))
             is_pole = self.clf.predict(features.reshape(1, -1))
             
             if is_pole:
                 pole_clusters.append(cluster)
-                self.pole = self.fill_obstacle_msg(self.pole)
-                self.pole_list.append(self.pole)
+                self.pole_array.append(obstacle)
             else:
-                self.obstacle = self.fill_obstacle_msg(self.obstacle)
-                self.obstacle_list.append(self.obstacle)
+                self.obstacle_array.append(obstacle)
         
         try:
             pole_clusters = np.concatenate(pole_clusters, axis=0)
