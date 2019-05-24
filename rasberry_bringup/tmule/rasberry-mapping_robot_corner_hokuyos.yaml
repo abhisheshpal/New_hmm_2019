@@ -74,6 +74,6 @@ windows:
   - sleep 3; rosrun gmapping slam_gmapping 
 - name: rviz
   panes:
-  - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/row_traversal_action.rviz
+  - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/mapping.rviz
   - ls 
 
