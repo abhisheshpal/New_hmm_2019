@@ -4,7 +4,7 @@
 # min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
-/amcl: 
+amcl: 
   min_particles:
     type: "int"
     min: 20

@@ -1,0 +1,9 @@
+#!/usr/bin/python
+import rospy
+from rasberry_han.proximity_monitor import ProximityMonitor
+
+if __name__ == '__main__':
+    proximity_monitor = ProximityMonitor()
+
+    while not rospy.is_shutdown():
+        proximity_monitor.check_rate()

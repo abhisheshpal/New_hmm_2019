@@ -1,15 +1,80 @@
-/move_base/DWAPlannerROS:
-  forward_point_distance: {max: 1.5, min: 0.05, type: float}
-  goal_distance_bias: {max: 64, min: 5, type: int}
-  max_scaling_factor: {max: 1.0, min: 0.0, type: float}
-  occdist_scale: {max: 1.0, min: 0.001, type: float}
-  oscillation_reset_dist: {max: 0.1, min: 0.01, type: float}
-  path_distance_bias: {max: 64, min: 5, type: int}
-  prune_plan: {type: bool}
-  scaling_speed: {max: 0.35, min: 0.01, type: float}
-  sim_granularity: {max: 0.3, min: 0.025, type: float}
-  sim_time: {max: 3.4, min: 0.3, type: float}
-  stop_time_buffer: {max: 1.0, min: 0.1, type: float}
-  vth_samples: {max: 10, min: 1, type: int}
-  vx_samples: {max: 10, min: 1, type: int}
-  vy_samples: {max: 100, min: 3, type: int}
+# REGISTER YOUR PARAMETERS FOR OPTMISATION HERE.
+# You must specify the reconfigure services and group your parameters accordingly (as below).
+# type: parameter type - can be double, integer (int) or boolean (bool).
+# min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
+# max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
+
+move_base/DWAPlannerROS: 
+  max_vel_y:
+    type: "double"
+    min: 0.0
+    max: 0.0
+  min_vel_y:
+    type: "double"
+    min: 0.0
+    max: 0.0
+  prune_plan:
+    type: "bool"
+  path_distance_bias: 
+    type: "int"
+    min: 5
+    max: 64
+  goal_distance_bias: 
+    type: "int"
+    min: 5
+    max: 64
+  occdist_scale: 
+    type: "double"
+    min: 0.001
+    max: 1.0
+  sim_time: 
+    type: "double"
+    min: 0.3
+    max: 3.4
+  sim_granularity: 
+    type: "double"
+    min: 0.025
+    max: 0.3
+  stop_time_buffer:
+    type: "double"
+    min: 0.1
+    max: 1.0
+  oscillation_reset_dist:
+    type: "double"
+    min: 0.01
+    max: 0.1
+  forward_point_distance:
+    type: "double"
+    min: 0.05
+    max: 1.5
+  scaling_speed:
+    type: "double"
+    min: 0.01
+    max: 0.35
+  max_scaling_factor:
+    type: "double"
+    min: 0.0
+    max: 1.0
+  vx_samples:
+    type: "int"
+    min: 3
+    max: 100
+  vy_samples:
+    type: "int"
+    min: 1
+    max: 1
+  vth_samples:
+    type: "int"
+    min: 3
+    max: 100
+
+#move_base/local_costmap/local_inflation_layer:
+#  inflation_radius: 
+#    type: "double"
+#    min: 0.05
+#    max: 10.0
+#  cost_scaling_factor: 
+#    type: "double"
+#    min: 0.05
+#    max: 10.0
+

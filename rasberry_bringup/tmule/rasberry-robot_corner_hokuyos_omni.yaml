@@ -13,7 +13,7 @@ init_cmd: |
   # source ROS
   source "/opt/ros/kinetic/setup.bash"
   # search for VPN tun device:
-  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" " || echo lo`
+  default_iface=`route -n | grep "^10.8.0.0" | tr -s " " |  cut -f8 -d" " || echo lo`
   default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@' || echo 127.0.0.1`
   
   # load robot-specific config file
