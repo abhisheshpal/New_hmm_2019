@@ -338,10 +338,11 @@ class inRowTravServer(object):
         else:
             if angvel > 0.001:
                 cmd_vel.angular.z = self.minimum_turning_speed 
-            elif angvel < 0.001:
+            elif angvel < -0.001:
                 cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
             else:
-                cmd_vel.angular.z = angvel
+                cmd_vel.angular.z = 0.0
+
 
         print cmd_vel.angular.z
         self.cmd_pub.publish(cmd_vel)
