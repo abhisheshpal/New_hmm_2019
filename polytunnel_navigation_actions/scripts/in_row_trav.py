@@ -265,7 +265,7 @@ class inRowTravServer(object):
 
 
         while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
-            self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff)
+            self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff, consider_minimum_rot_vel=True)
             rospy.sleep(0.05)
             dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
 
@@ -328,23 +328,26 @@ class inRowTravServer(object):
         self.go_forwards(path_to_goal, start_goal)
 
 
-    def _send_velocity_commands(self, xvel, yvel, angvel):
-        print angvel
+    def _send_velocity_commands(self, xvel, yvel, angvel, consider_minimum_rot_vel=False):
+        #print angvel
         cmd_vel = Twist()
         cmd_vel.linear.x = xvel
         cmd_vel.linear.y = yvel
-        if np.abs(angvel) >= self.minimum_turning_speed and np.abs(angvel)>0 :
-            cmd_vel.angular.z = angvel
-        else:
-            if angvel > 0.001:
-                cmd_vel.angular.z = self.minimum_turning_speed 
-            elif angvel < -0.001:
-                cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
+        if consider_minimum_rot_vel:
+            if angvel == 0.0:
+                cmd_vel.angular.z = 0.0            
+            elif np.abs(angvel) >= self.minimum_turning_speed:
+                cmd_vel.angular.z = angvel
             else:
-                cmd_vel.angular.z = 0.0
+                if angvel > 0.0:
+                    cmd_vel.angular.z = self.minimum_turning_speed 
+                elif angvel < 0.0:
+                    cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
 
+        else:
+            cmd_vel.angular.z = angvel
 
-        print cmd_vel.angular.z
+#        print 'ANg: ', cmd_vel.angular.z
         self.cmd_pub.publish(cmd_vel)
 
 
