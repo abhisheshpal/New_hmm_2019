@@ -209,86 +209,70 @@ edge_nav_reconfig_groups:
     - WayPoint49_WayPoint43
     - WayPoint43_WayPoint49
     parameters:
-    - &id001
-      name: vth_samples
+    - name: vth_samples
       ns: move_base/DWAPlannerROS
       type: int
-      value: 8.0
-    - &id002
-      name: goal_distance_bias
+      value: 67.0
+    - name: goal_distance_bias
       ns: move_base/DWAPlannerROS
       type: int
-      value: 29.0
-    - &id003
-      name: path_distance_bias
+      value: 37.0
+    - name: path_distance_bias
       ns: move_base/DWAPlannerROS
       type: int
-      value: 41.0
-    - &id004
-      name: min_vel_y
+      value: 28.7861070422
+    - name: min_vel_y
       ns: move_base/DWAPlannerROS
       type: double
-      value: -0.35
-    - &id005
-      name: forward_point_distance
+      value: 0.0
+    - name: forward_point_distance
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.05
-    - &id006
-      name: max_vel_y
+      value: 0.48297542552
+    - name: max_vel_y
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.35
-    - &id007
-      name: prune_plan
+      value: 0.0
+    - name: prune_plan
       ns: move_base/DWAPlannerROS
       type: bool
-      value: false
-    - &id008
-      name: occdist_scale
+      value: true
+    - name: occdist_scale
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.354307473006
-    - &id009
-      name: vx_samples
+      value: 0.17095456476
+    - name: vx_samples
       ns: move_base/DWAPlannerROS
       type: int
-      value: 1.0
-    - &id010
-      name: sim_time
+      value: 35.0
+    - name: sim_time
       ns: move_base/DWAPlannerROS
       type: double
-      value: 3.33906319807
-    - &id011
-      name: max_scaling_factor
+      value: 2.56592652857
+    - name: max_scaling_factor
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.283085202888
-    - &id012
-      name: scaling_speed
+      value: 0.572649261744
+    - name: scaling_speed
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.302724798452
-    - &id013
-      name: vy_samples
+      value: 0.0139109910856
+    - name: vy_samples
       ns: move_base/DWAPlannerROS
       type: int
-      value: 49.0
-    - &id014
-      name: sim_granularity
+      value: 1
+    - name: sim_granularity
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.216821592816
-    - &id015
-      name: stop_time_buffer
+      value: 0.0440361042626
+    - name: stop_time_buffer
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.789168747746
-    - &id016
-      name: oscillation_reset_dist
+      value: 0.182291625765
+    - name: oscillation_reset_dist
       ns: move_base/DWAPlannerROS
       type: double
-      value: 0.033945588782
+      value: 0.0157790647928
   utn:
     edges:
     - WayPoint40_WayPoint41
@@ -304,19 +288,67 @@ edge_nav_reconfig_groups:
     - WayPoint46_WayPoint47
     - WayPoint47_WayPoint46
     parameters:
-    - *id001
-    - *id002
-    - *id003
-    - *id004
-    - *id005
-    - *id006
-    - *id007
-    - *id008
-    - *id009
-    - *id010
-    - *id011
-    - *id012
-    - *id013
-    - *id014
-    - *id015
-    - *id016
+    - name: vth_samples
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 8.0
+    - name: goal_distance_bias
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 29.0
+    - name: path_distance_bias
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 41.0
+    - name: min_vel_y
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: -0.35
+    - name: forward_point_distance
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.05
+    - name: max_vel_y
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.35
+    - name: prune_plan
+      ns: move_base/DWAPlannerROS
+      type: bool
+      value: false
+    - name: occdist_scale
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.354307473006
+    - name: vx_samples
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 1.0
+    - name: sim_time
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 3.33906319807
+    - name: max_scaling_factor
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.283085202888
+    - name: scaling_speed
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.302724798452
+    - name: vy_samples
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 49.0
+    - name: sim_granularity
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.216821592816
+    - name: stop_time_buffer
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.789168747746
+    - name: oscillation_reset_dist
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.033945588782
