@@ -1,0 +1,304 @@
+edge_nav_reconfig_groups:
+  irn:
+    edges:
+    - WayPoint0_WayPoint1
+    - WayPoint0_WayPoint40
+    - WayPoint1_WayPoint0
+    - WayPoint1_WayPoint2
+    - WayPoint10_WayPoint11
+    - WayPoint10_WayPoint41
+    - WayPoint11_WayPoint10
+    - WayPoint11_WayPoint12
+    - WayPoint12_WayPoint11
+    - WayPoint12_WayPoint13
+    - WayPoint13_WayPoint12
+    - WayPoint13_WayPoint14
+    - WayPoint14_WayPoint13
+    - WayPoint14_WayPoint15
+    - WayPoint15_WayPoint14
+    - WayPoint15_WayPoint16
+    - WayPoint16_WayPoint15
+    - WayPoint16_WayPoint17
+    - WayPoint17_WayPoint16
+    - WayPoint17_WayPoint18
+    - WayPoint18_WayPoint17
+    - WayPoint18_WayPoint19
+    - WayPoint19_WayPoint18
+    - WayPoint19_WayPoint45
+    - WayPoint2_WayPoint1
+    - WayPoint2_WayPoint3
+    - WayPoint20_WayPoint21
+    - WayPoint20_WayPoint42
+    - WayPoint21_WayPoint20
+    - WayPoint21_WayPoint22
+    - WayPoint22_WayPoint21
+    - WayPoint22_WayPoint23
+    - WayPoint23_WayPoint22
+    - WayPoint23_WayPoint24
+    - WayPoint24_WayPoint23
+    - WayPoint24_WayPoint25
+    - WayPoint25_WayPoint24
+    - WayPoint25_WayPoint26
+    - WayPoint26_WayPoint25
+    - WayPoint26_WayPoint27
+    - WayPoint27_WayPoint26
+    - WayPoint27_WayPoint28
+    - WayPoint28_WayPoint27
+    - WayPoint28_WayPoint29
+    - WayPoint29_WayPoint28
+    - WayPoint29_WayPoint46
+    - WayPoint3_WayPoint2
+    - WayPoint3_WayPoint4
+    - WayPoint30_WayPoint31
+    - WayPoint30_WayPoint43
+    - WayPoint31_WayPoint30
+    - WayPoint31_WayPoint32
+    - WayPoint32_WayPoint31
+    - WayPoint32_WayPoint33
+    - WayPoint33_WayPoint32
+    - WayPoint33_WayPoint34
+    - WayPoint34_WayPoint33
+    - WayPoint34_WayPoint35
+    - WayPoint35_WayPoint34
+    - WayPoint35_WayPoint36
+    - WayPoint36_WayPoint35
+    - WayPoint36_WayPoint37
+    - WayPoint37_WayPoint36
+    - WayPoint37_WayPoint38
+    - WayPoint38_WayPoint37
+    - WayPoint38_WayPoint39
+    - WayPoint39_WayPoint38
+    - WayPoint39_WayPoint47
+    - WayPoint4_WayPoint3
+    - WayPoint4_WayPoint5
+    - WayPoint40_WayPoint0
+    - WayPoint41_WayPoint10
+    - WayPoint42_WayPoint20
+    - WayPoint43_WayPoint30
+    - WayPoint44_WayPoint9
+    - WayPoint45_WayPoint19
+    - WayPoint46_WayPoint29
+    - WayPoint47_WayPoint39
+    - WayPoint5_WayPoint4
+    - WayPoint5_WayPoint6
+    - WayPoint6_WayPoint5
+    - WayPoint6_WayPoint7
+    - WayPoint7_WayPoint6
+    - WayPoint7_WayPoint8
+    - WayPoint8_WayPoint7
+    - WayPoint8_WayPoint9
+    - WayPoint9_WayPoint8
+    - WayPoint9_WayPoint44
+    parameters:
+    - name: forward_speed
+      ns: row_traversal
+      type: double
+      value: 0.65
+    - name: minimum_turning_speed
+      ns: row_traversal
+      type: double
+      value: 0.01
+    - name: kp_ang_ro
+      ns: row_traversal
+      type: double
+      value: 0.6
+    - name: initial_heading_tolerance
+      ns: row_traversal
+      type: double
+      value: 0.025
+    - name: kp_ang
+      ns: row_traversal
+      type: double
+      value: 0.3
+    - name: kp_y
+      ns: row_traversal
+      type: double
+      value: 0.5
+    - name: granularity
+      ns: row_traversal
+      type: double
+      value: 0.5
+    - name: y_row_detection_bias
+      ns: row_traversal
+      type: double
+      value: 0.7
+    - name: y_path_following_bias
+      ns: row_traversal
+      type: double
+      value: 0.3
+    - name: ang_row_detection_bias
+      ns: row_traversal
+      type: double
+      value: 0.56
+    - name: ang_path_following_bias
+      ns: row_traversal
+      type: double
+      value: 0.44
+    - name: minimum_turning_speed
+      ns: row_traversal
+      type: double
+      value: 0.1
+    - name: kp_ang_ro
+      ns: row_traversal
+      type: double
+      value: 0.6
+    - name: initial_heading_tolerance
+      ns: row_traversal
+      type: double
+      value: 0.005
+    - name: kp_ang
+      ns: row_traversal
+      type: double
+      value: 0.2
+    - name: kp_y
+      ns: row_traversal
+      type: double
+      value: 0.1
+    - name: granularity
+      ns: row_traversal
+      type: double
+      value: 0.5
+    - name: y_row_detection_bias
+      ns: row_traversal
+      type: double
+      value: 0.7
+    - name: y_path_following_bias
+      ns: row_traversal
+      type: double
+      value: 0.3
+    - name: ang_row_detection_bias
+      ns: row_traversal
+      type: double
+      value: 0.2
+    - name: ang_path_following_bias
+      ns: row_traversal
+      type: double
+      value: 0.8
+  orn:
+    edges:
+    - WayPoint40_WayPoint48
+    - WayPoint48_WayPoint40
+    - WayPoint41_WayPoint48
+    - WayPoint48_WayPoint41
+    - WayPoint42_WayPoint48
+    - WayPoint48_WayPoint42
+    - WayPoint43_WayPoint48
+    - WayPoint48_WayPoint43
+    - WayPoint40_WayPoint49
+    - WayPoint49_WayPoint40
+    - WayPoint41_WayPoint49
+    - WayPoint49_WayPoint41
+    - WayPoint42_WayPoint49
+    - WayPoint49_WayPoint42
+    - WayPoint43_WayPoint49
+    - WayPoint49_WayPoint43
+    - WayPoint48_WayPoint40
+    - WayPoint40_WayPoint48
+    - WayPoint48_WayPoint41
+    - WayPoint41_WayPoint48
+    - WayPoint48_WayPoint42
+    - WayPoint42_WayPoint48
+    - WayPoint48_WayPoint43
+    - WayPoint43_WayPoint48
+    - WayPoint49_WayPoint40
+    - WayPoint40_WayPoint49
+    - WayPoint49_WayPoint41
+    - WayPoint41_WayPoint49
+    - WayPoint49_WayPoint42
+    - WayPoint42_WayPoint49
+    - WayPoint49_WayPoint43
+    - WayPoint43_WayPoint49
+    parameters:
+    - &id001
+      name: forward_point_distance
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.1402690117118645
+    - &id002
+      name: vth_samples
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 73.0
+    - &id003
+      name: prune_plan
+      ns: move_base/DWAPlannerROS
+      type: bool
+      value: false
+    - &id004
+      name: goal_distance_bias
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 55.0
+    - &id005
+      name: occdist_scale
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.5922531975286119
+    - &id006
+      name: vx_samples
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 50.0
+    - &id007
+      name: path_distance_bias
+      ns: move_base/DWAPlannerROS
+      type: int
+      value: 7.0
+    - &id008
+      name: sim_time
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 2.801314735789211
+    - &id009
+      name: max_scaling_factor
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.8779488542935023
+    - &id010
+      name: scaling_speed
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.31177421746048395
+    - &id011
+      name: sim_granularity
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.02537100021859829
+    - &id012
+      name: stop_time_buffer
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 1.0
+    - &id013
+      name: oscillation_reset_dist
+      ns: move_base/DWAPlannerROS
+      type: double
+      value: 0.054441156382406555
+  utn:
+    edges:
+    - WayPoint40_WayPoint41
+    - WayPoint41_WayPoint40
+    - WayPoint41_WayPoint42
+    - WayPoint42_WayPoint41
+    - WayPoint42_WayPoint43
+    - WayPoint43_WayPoint42
+    - WayPoint44_WayPoint45
+    - WayPoint45_WayPoint44
+    - WayPoint45_WayPoint46
+    - WayPoint46_WayPoint45
+    - WayPoint46_WayPoint47
+    - WayPoint47_WayPoint46
+    parameters:
+    - *id001
+    - *id002
+    - *id003
+    - *id004
+    - *id005
+    - *id006
+    - *id007
+    - *id008
+    - *id009
+    - *id010
+    - *id011
+    - *id012
+    - *id013
