@@ -107,7 +107,12 @@ class row_detector(object):
     def filter_by_svm(self):
         
         X = np.vstack((self.xs, self.ys)).T
-        self.db.fit(X)
+        
+        try:
+            self.db.fit(X)
+        except:
+            return
+            
         labels = self.db.labels_
         
         pole_clusters = []
