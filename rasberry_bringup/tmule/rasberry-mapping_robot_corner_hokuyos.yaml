@@ -71,6 +71,7 @@ windows:
 - name: mapping
   panes:
   - sleep 1; mkdir -p "$DATA_DIR"; cd "$DATA_DIR"; rosbag record -a
+  - sleep 2; roslaunch rasberry_navigation corner_hokuyos_laser_merger.launch
   - sleep 3; rosrun gmapping slam_gmapping 
 - name: rviz
   panes:
