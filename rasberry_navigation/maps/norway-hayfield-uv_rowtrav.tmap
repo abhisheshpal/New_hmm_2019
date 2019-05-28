@@ -1,0 +1,662 @@
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint40
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.373000
+    timestamp: 1558787562373980998
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint40_WayPoint41
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint40_WayPoint48
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint40_WayPoint49
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint40_WayPoint44
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint40
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -71.3507003784
+        y: -39.5365066528
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint41
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.377000
+    timestamp: 1558787562377038955
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint41_WayPoint40
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint41_WayPoint42
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint41_WayPoint48
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint41_WayPoint49
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint41_WayPoint45
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint41
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -72.7237701416
+        y: -39.7767028809
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint42
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.379000
+    timestamp: 1558787562379934072
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint42_WayPoint41
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint42_WayPoint43
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint42_WayPoint48
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint42_WayPoint49
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint42_WayPoint46
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint42
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -74.1263427734
+        y: -40.0021476746
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint43
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.383000
+    timestamp: 1558787562383043050
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint43_WayPoint42
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint43_WayPoint48
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint48
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint43_WayPoint49
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint49
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint43_WayPoint47
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint43
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -75.5292358398
+        y: -40.2076835632
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint44
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.386000
+    timestamp: 1558787562386007070
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint44_WayPoint45
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint44_WayPoint40
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint44
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -65.0511627197
+        y: -73.9951782227
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint45
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.388000
+    timestamp: 1558787562388962984
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint45_WayPoint44
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint44
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint45_WayPoint46
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint45_WayPoint41
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint45
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -66.4491195679
+        y: -74.1982574463
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint46
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.391000
+    timestamp: 1558787562391999006
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint46_WayPoint45
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint45
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint46_WayPoint47
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint47
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint46_WayPoint42
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint46
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -67.8893737793
+        y: -74.4439544678
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint47
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 2019-05-25 12:32:42.394000
+    timestamp: 1558787562394859075
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint47_WayPoint46
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint46
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: row_traversal
+      edge_id: WayPoint47_WayPoint43
+      inflation_radius: 0.0
+      map_2d: riseholme
+      node: WayPoint43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint47
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -69.2615509033
+        y: -74.6300354004
+        z: 0.0
+    verts:
+    - x: 0.413385212421
+      y: -0.622560560703
+    - x: 0.53575950861
+      y: -0.188230589032
+    - x: 0.42623513937
+      y: 0.375223398209
+    - x: 0.150068789721
+      y: 0.732084929943
+    - x: -0.413385212421
+      y: 0.622560560703
+    - x: -0.53575950861
+      y: 0.188230589032
+    - x: -0.42623513937
+      y: -0.375223398209
+    - x: -0.150068789721
+      y: -0.732084929943
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint48
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 1970-01-01 00:08:15.645000
+    timestamp: 495645000000
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint48_WayPoint40
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint48_WayPoint41
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint48_WayPoint42
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint48_WayPoint43
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint48
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -72.4859619141
+        y: -37.1177062988
+        z: 0.0
+    verts:
+    - x: 0.41338520847264304
+      y: -0.6225605724746046
+    - x: 0.7320849360027732
+      y: -0.15006879576278834
+    - x: 0.6225605724746046
+      y: 0.41338520847264304
+    - x: 0.15006879576278834
+      y: 0.7320849360027732
+    - x: -0.41338520847264304
+      y: 0.6225605724746046
+    - x: -0.7320849360027732
+      y: 0.15006879576278834
+    - x: -0.6225605724746046
+      y: -0.41338520847264304
+    - x: -0.15006879576278834
+      y: -0.7320849360027732
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
+- meta:
+    map: norway-hayfield-uv_rowtrav
+    node: WayPoint49
+    pointset: norway-hayfield-uv_rowtrav
+    published_at: 1970-01-01 00:10:28.930000
+    timestamp: 628930000000
+  node:
+    edges:
+    - action: move_base
+      edge_id: WayPoint49_WayPoint40
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint40
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint49_WayPoint41
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint41
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint49_WayPoint42
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint42
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint49_WayPoint43
+      inflation_radius: 0.0
+      map_2d: norway-hayfield-uv_rowtrav
+      node: WayPoint43
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    localise_by_topic: ''
+    map: norway-hayfield-uv_rowtrav
+    name: WayPoint49
+    pointset: norway-hayfield-uv_rowtrav
+    pose:
+      orientation:
+        w: 0.771624583388
+        x: 0.0
+        y: 0.0
+        z: -0.636078220278
+      position:
+        x: -75.350769043
+        y: -37.6653594971
+        z: 0.0
+    verts:
+    - x: 0.41338520847264304
+      y: -0.6225605724746046
+    - x: 0.7320849360027732
+      y: -0.15006879576278834
+    - x: 0.6225605724746046
+      y: 0.41338520847264304
+    - x: 0.15006879576278834
+      y: 0.7320849360027732
+    - x: -0.41338520847264304
+      y: 0.6225605724746046
+    - x: -0.7320849360027732
+      y: 0.15006879576278834
+    - x: -0.6225605724746046
+      y: -0.41338520847264304
+    - x: -0.15006879576278834
+      y: -0.7320849360027732
+    xy_goal_tolerance: 0.3
+    yaw_goal_tolerance: 0.1
