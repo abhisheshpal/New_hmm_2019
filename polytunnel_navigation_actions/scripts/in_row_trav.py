@@ -47,6 +47,7 @@ class inRowTravServer(object):
         self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
         self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
         self.minimum_turning_speed = 0.01       # Minimum turning speed
+        
         self.forward_speed= 0.8                 
         
         self.y_ref=None
@@ -60,7 +61,7 @@ class inRowTravServer(object):
         self.safety_marker=None
 
 
-        while not self.lnodes:
+        while not self.lnodes and not self.cancelled:
             rospy.loginfo("Waiting for topological map")
             rospy.Subscriber('/topological_map', TopologicalMap, self.topological_map_cb)
             if not self.lnodes:
@@ -82,7 +83,7 @@ class inRowTravServer(object):
 
 
         rospy.loginfo("Creating safety zone.")
-        self.define_safety_zone(0.2)
+        self.define_safety_zone(0.22)
 
 
         rospy.loginfo("Creating action server.")
@@ -403,6 +404,7 @@ class inRowTravServer(object):
 
 
     def executeCallback(self, goal):
+        rospy.loginfo("New goal received")
         self.backwards_mode=False
         self.cancelled = False
         
@@ -420,6 +422,7 @@ class inRowTravServer(object):
             self._as.set_preempted(self._result)
 
     def preemptCallback(self):
+        rospy.loginfo("Row Traversal Cancelled")
         self.cancelled = True
         self._send_velocity_commands(0.0, 0.0, 0.0)
         self.backwards_mode=False
