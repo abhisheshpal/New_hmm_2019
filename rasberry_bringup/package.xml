@@ -105,6 +105,7 @@
   <exec_depend>thorvald_teleop</exec_depend>
   <exec_depend>urg_node</exec_depend>
   <exec_depend>xsens_driver</exec_depend>
+  <exec_depend>gmapping</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
