@@ -335,7 +335,7 @@ class inRowTravServer(object):
         cmd_vel.linear.x = xvel
         cmd_vel.linear.y = yvel
         if consider_minimum_rot_vel:
-            if angvel == 0.0:
+            if np.isclose(angvel, 0.0):
                 cmd_vel.angular.z = 0.0            
             elif np.abs(angvel) >= self.minimum_turning_speed:
                 cmd_vel.angular.z = angvel
