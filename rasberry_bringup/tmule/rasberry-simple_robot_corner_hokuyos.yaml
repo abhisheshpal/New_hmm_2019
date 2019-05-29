@@ -38,6 +38,10 @@ init_cmd: |
   export_default MONGO_PATH "$HOME/mongodb"
   # use IMU?
   export_default USE_IMU true
+  # use RTK_GNSS?
+  export_default USE_RTK false
+  export_default RTK_IP 192.168.0.102
+  export_default RTK_PORT 21098
   # the topomap to be used
   export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
@@ -71,6 +75,7 @@ windows:
   panes:
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
   - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
+  - if $USE_RTK; roslaunch rasberry_navigation rtk_parser.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT"; fi
 - name: topo_map
   panes:
   - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP

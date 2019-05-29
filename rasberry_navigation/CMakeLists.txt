@@ -181,6 +181,7 @@ include_directories(
    scripts/set_yaw_tol.py
    scripts/uni_to_bidirectional_edges.py
    scripts/utils.py
+   scripts/nmea_parser.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 
