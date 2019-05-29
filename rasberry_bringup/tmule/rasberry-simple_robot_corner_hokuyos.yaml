@@ -40,8 +40,8 @@ init_cmd: |
   export_default USE_IMU true
   # use RTK_GNSS?
   export_default USE_RTK false
-  export_default RTK_IP 192.168.0.102
-  export_default RTK_PORT 21098
+  export_default RTK_IP "192.168.0.102"
+  export_default RTK_PORT "21098"
   # the topomap to be used
   export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
