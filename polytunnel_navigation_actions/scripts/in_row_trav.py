@@ -38,7 +38,8 @@ class inRowTravServer(object):
     def __init__(self, name):
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
-        self.initial_heading_tolerance= 0.005   # Initial heading tolerance [rads]
+        self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown)
+        self.initial_heading_tolerance = 0.005  # Initial heading tolerance [rads]
         self.kp_ang= 0.2                        # Proportional gain for heading correction
         self.kp_y= 0.1                          # Proportional gain for sideways corrections
         self.granularity= 0.5                   # Distance between minigoals along path (carrot points)
@@ -47,9 +48,11 @@ class inRowTravServer(object):
         self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
         self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
         self.minimum_turning_speed = 0.01       # Minimum turning speed
-        
         self.forward_speed= 0.8                 
         
+        
+        self.limits=[]
+        self.base_points=[]                     # Corners of Safety Areas
         self.y_ref=None
         self.ang_ref=None
         self.config={}
@@ -131,7 +134,7 @@ class inRowTravServer(object):
         """
 
         self.limits=[]
-        base_points=[]
+        self.base_points=[]
         
         for i in corner_frames:
             self._tf_listerner.waitForTransform('base_link',i,rospy.Time.now(), rospy.Duration(1.0))
@@ -142,9 +145,10 @@ class inRowTravServer(object):
             cpi.point.x= i_x+clearance if i_x > 0 else  i_x-clearance
             cpi.point.y= i_y+clearance if i_y > 0 else  i_y-clearance
             cpi.point.z=-0.3
-            base_points.append(cpi)
+            self.base_points.append(cpi)
         
         
+    def safety_zones_visualisation(self):
 
         base_pose = Pose()
         base_pose.orientation.w=1.0
@@ -161,9 +165,9 @@ class inRowTravServer(object):
         amarker.color.b = 0.1
         amarker.lifetime = rospy.Duration(0.0)
         amarker.frame_locked = True
-        for i in base_points:
+        for i in self.base_points:
             amarker.points.append(i.point)
-        amarker.points.append(base_points[0].point)
+        amarker.points.append(self.base_points[0].point)
                
         self.safety_marker=amarker
 

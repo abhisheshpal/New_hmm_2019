@@ -19,22 +19,23 @@ class row_detector_vis(object):
 
     def obstacles_callback(self, msg):
         obstacle_id = 0
-        pole_vis_array = []
+        obs_vis_array = []
         for obs in msg.obstacles:
-            map_pose = self._transform_to_pose_stamped(obs)
+            if obs.radius > 0.025:
+                map_pose = self._transform_to_pose_stamped(obs)
+                
+                pole_vis = Marker()
+                pole_vis = self.fill_marker_msg(map_pose, pole_vis, obstacle_id, radius=obs.radius, colour=[0.7, 0.2, 0.2])
+                obs_vis_array.append(pole_vis)
+                
+                obstacle_id+=1
             
-            pole_vis = Marker()
-            pole_vis = self.fill_marker_msg(map_pose, pole_vis, obstacle_id, radius=obs.radius, colour=[0.7, 0.2, 0.2])
-            pole_vis_array.append(pole_vis)
-            
-            obstacle_id+=1
-            
-        poles_vis = MarkerArray()
-        poles_vis = pole_vis_array
+#        poles_vis = MarkerArray()
+#        poles_vis = pole_vis_array
         
         #r = rospy.Rate(3)
         #while not rospy.is_shutdown():
-        self.poles_vis_pub.publish(poles_vis)  
+        self.obs_vis_pub.publish(obs_vis_array)  
         #r.sleep()    
         
 
@@ -76,7 +77,7 @@ class row_detector_vis(object):
         return map_pose
 
 
-    def fill_marker_msg(self, map_pose, msg, id_, radius=0.07, colour=[0.5, 0.5, 0.5]):
+    def fill_marker_msg(self, map_pose, msg, id_, radius=0.15, colour=[0.5, 0.95, 0.5]):
         
         msg.type = 3
         msg.header.frame_id = map_pose.header.frame_id
