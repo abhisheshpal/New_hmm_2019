@@ -2,11 +2,11 @@ forward_speed: 0.65               # Constant forward velocity
 constant_forward_speed: True      # Stop when obstacle in safety area (no slowdown)
 minimum_turning_speed: 0.01       # Minimum turning speed
 kp_ang_ro: 0.6                    # Proportional gain for initial orientation target
-initial_heading_tolerance: 0.025  # Initial heading tolerance in radians
-kp_ang: 0.3                       # Proportional gain for heading correction
-kp_y: 0.5                         # Proportional gain for sideways correction
+initial_heading_tolerance: 0.03   # Initial heading tolerance in radians
+kp_ang: 0.5                       # Proportional gain for heading correction
+kp_y: 0.75                        # Proportional gain for sideways correction
 granularity: 0.5                  # Distance between local goals along path (carrots)
-y_row_detection_bias: 0.7         # Weight given to the reference given by row detection
-y_path_following_bias: 0.3        # Weight given to the original path following
-ang_row_detection_bias: 0.56      # Weight given to the angular reference given by row detection
-ang_path_following_bias: 0.44     # Weight given to the angular refernce given by path following
+y_row_detection_bias: 0.85        # Weight given to the reference given by row detection
+y_path_following_bias: 0.15       # Weight given to the original path following
+ang_row_detection_bias: 0.86      # Weight given to the angular reference given by row detection
+ang_path_following_bias: 0.14     # Weight given to the angular refernce given by path following
