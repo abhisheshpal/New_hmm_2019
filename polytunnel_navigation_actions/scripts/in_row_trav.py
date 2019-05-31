@@ -272,7 +272,7 @@ class inRowTravServer(object):
             self.backwards_mode=False
             print("forwards heading")
 
-
+        dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
         if np.abs(ang_diff) >= self.initial_heading_tolerance:
             print "INITIAL ANg DIFF: ", np.abs(ang_diff)
             while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
