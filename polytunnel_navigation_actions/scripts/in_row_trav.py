@@ -272,8 +272,9 @@ class inRowTravServer(object):
             self.backwards_mode=False
             print("forwards heading")
 
-
+        dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
         if np.abs(ang_diff) >= self.initial_heading_tolerance:
+            print "INITIAL ANg DIFF: ", np.abs(ang_diff)
             while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
                 self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff, consider_minimum_rot_vel=True)
                 rospy.sleep(0.05)
@@ -440,8 +441,8 @@ class inRowTravServer(object):
 
         
     def do_stop(self, timer):
-        print "do_stop"
         if not self.active:
+            print "do_stop"
             self._send_velocity_commands(0.0, 0.0, 0.0)
         
         
