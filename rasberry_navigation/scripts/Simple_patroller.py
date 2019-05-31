@@ -15,14 +15,14 @@ class topol_nav_patrol(object):
         rospy.on_shutdown(self._on_node_shutdown)
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
         
-        #self.client.wait_for_server()
+        self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
         wplist = self.open_waypoint_list(filename)
         
         while not self.cancel:
             for i in wplist:
-                print i
+                self.navigate_to_waypoint(i)
                 rospy.sleep(0.5)
                 if self.cancel:
                     break
