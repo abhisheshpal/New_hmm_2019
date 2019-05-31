@@ -38,7 +38,8 @@ class inRowTravServer(object):
     def __init__(self, name):
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
-        self.initial_heading_tolerance= 0.005   # Initial heading tolerance [rads]
+        self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown) **WIP**
+        self.initial_heading_tolerance = 0.005  # Initial heading tolerance [rads]
         self.kp_ang= 0.2                        # Proportional gain for heading correction
         self.kp_y= 0.1                          # Proportional gain for sideways corrections
         self.granularity= 0.5                   # Distance between minigoals along path (carrot points)
@@ -47,9 +48,11 @@ class inRowTravServer(object):
         self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
         self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
         self.minimum_turning_speed = 0.01       # Minimum turning speed
-        
         self.forward_speed= 0.8                 
         
+        
+        self.limits=[]
+        self.base_points=[]                     # Corners of Safety Areas
         self.y_ref=None
         self.ang_ref=None
         self.config={}
@@ -59,7 +62,7 @@ class inRowTravServer(object):
         self.lnodes=None
         self.backwards_mode=False
         self.safety_marker=None
-
+        self.active=True
 
         while not self.lnodes and not self.cancelled:
             rospy.loginfo("Waiting for topological map")
@@ -131,7 +134,7 @@ class inRowTravServer(object):
         """
 
         self.limits=[]
-        base_points=[]
+        self.base_points=[]
         
         for i in corner_frames:
             self._tf_listerner.waitForTransform('base_link',i,rospy.Time.now(), rospy.Duration(1.0))
@@ -142,9 +145,13 @@ class inRowTravServer(object):
             cpi.point.x= i_x+clearance if i_x > 0 else  i_x-clearance
             cpi.point.y= i_y+clearance if i_y > 0 else  i_y-clearance
             cpi.point.z=-0.3
-            base_points.append(cpi)
+            self.base_points.append(cpi)
         
-        
+        print "visualise safety zone"
+        self.safety_zones_visualisation()
+    
+    
+    def safety_zones_visualisation(self):
 
         base_pose = Pose()
         base_pose.orientation.w=1.0
@@ -161,9 +168,10 @@ class inRowTravServer(object):
         amarker.color.b = 0.1
         amarker.lifetime = rospy.Duration(0.0)
         amarker.frame_locked = True
-        for i in base_points:
+        
+        for i in self.base_points:
             amarker.points.append(i.point)
-        amarker.points.append(base_points[0].point)
+        amarker.points.append(self.base_points[0].point)
                
         self.safety_marker=amarker
 
@@ -265,12 +273,14 @@ class inRowTravServer(object):
             print("forwards heading")
 
 
-        while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
-            self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff, consider_minimum_rot_vel=True)
-            rospy.sleep(0.05)
-            dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
+        if np.abs(ang_diff) >= self.initial_heading_tolerance:
+            while np.abs(ang_diff) >= self.initial_heading_tolerance and not self.cancelled:
+                self._send_velocity_commands(0.0, 0.0, self.kp_ang_ro*ang_diff, consider_minimum_rot_vel=True)
+                rospy.sleep(0.05)
+                dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
 
-        self._send_velocity_commands(0.0, 0.0, 0.0)
+            self._send_velocity_commands(0.0, 0.0, 0.0)
+            rospy.sleep(2.0) # We need to give time to the wheels to straighten
 
         print "Done: ", ang_diff
         
@@ -280,6 +290,7 @@ class inRowTravServer(object):
             speed = -self.forward_speed
         else:
             speed = self.forward_speed
+        print "Number of intermediate goals: ", len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])         
             while np.abs(dist)>0.1 and not self.cancelled:
@@ -287,12 +298,15 @@ class inRowTravServer(object):
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
+                
             if not self.cancelled:
                 print("Next Goal")
             else:
                 break
 
+        if not self.cancelled:
             self._send_velocity_commands(0.0, 0.0, 0.0)
+            self.active=False
 
         
     def find_next_point_in_line(self, path_to_goal):
@@ -407,6 +421,7 @@ class inRowTravServer(object):
         rospy.loginfo("New goal received")
         self.backwards_mode=False
         self.cancelled = False
+        self.active=True
         
         self.activate_row_detector(True)
         initial_pose=self.get_node_position(self.closest_node)        
@@ -421,10 +436,20 @@ class inRowTravServer(object):
         else:
             self._as.set_preempted(self._result)
 
+
+
+        
+    def do_stop(self, timer):
+        print "do_stop"
+        if not self.active:
+            self._send_velocity_commands(0.0, 0.0, 0.0)
+        
+        
     def preemptCallback(self):
         rospy.loginfo("Row Traversal Cancelled")
         self.cancelled = True
-        self._send_velocity_commands(0.0, 0.0, 0.0)
+        self.timer = rospy.Timer(rospy.Duration(0.1), self.do_stop, oneshot=True)
+        #self._send_velocity_commands(0.0, 0.0, 0.0)
         self.backwards_mode=False
         #self._result.success = False
 #        self._as.set_preempted(self._result)
