@@ -287,19 +287,22 @@ class inRowTravServer(object):
         
 
     def go_forwards(self, path_to_goal, start_goal):        
+        print "GOING FORWARDS NOW"
         if self.backwards_mode:
             speed = -self.forward_speed
         else:
             speed = self.forward_speed
+        print "start goal: ", start_goal
         print "Number of intermediate goals: ", len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
-            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])         
+            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
+            print "1-> ", dist, " ", self.cancelled
             while np.abs(dist)>0.1 and not self.cancelled:
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
-                
+                print "- ", dist, " ", self.cancelled
             if not self.cancelled:
                 print("Next Goal")
             else:
@@ -324,7 +327,7 @@ class inRowTravServer(object):
         x3 = dx*nx + path_to_goal.poses[0].pose.position.x
         y3 = dy*nx + path_to_goal.poses[-1].pose.position.y
         if nx >0 :
-            pathind= int(np.ceil(math.hypot(x3-x1, y3-y1)/self.granularity))
+            pathind= int(np.floor(math.hypot(x3-x1, y3-y1)/self.granularity))
         else:
             pathind=0
         #print (x3, y3, nx, pathind)
