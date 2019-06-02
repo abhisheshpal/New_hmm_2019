@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
     <!-- parameters -->
     <arg name="device" default="auto" doc="device file of the IMU"/>
@@ -15,5 +16,8 @@
         <param name="frame_id" value="$(arg frame_id)"/>
         <param name="frame_local" value="$(arg frame_local)"/>
         <param name="no_rotation_duration" value="$(arg no_rotation_duration)"/>
+
+        <remap from="/fix" to="/xsens/fix"/>
+        <remap from="/vel" to="/xsens/vel"/>
     </node>
 </launch>

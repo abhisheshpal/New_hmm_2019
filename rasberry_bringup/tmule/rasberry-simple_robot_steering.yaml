@@ -59,6 +59,9 @@ init_cmd: |
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
   export_default USE_GUI false
+  export_default USE_OMNI false
+  export_default STEERING_TYPE "diff"
+  export_default LOC_EDGE_RECONF "norway"
 windows:
 - name: init
   panes:
@@ -74,15 +77,15 @@ windows:
 - name: localisation
   panes:
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
+  - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" use_omni:="$USE_OMNI"
   - if $USE_RTK; then roslaunch rasberry_navigation rtk_parser.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT"; fi
 - name: topo_map
   panes:
   - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT
-  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
+  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI"
+  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS use_omni:="$USE_OMNI" steering_type:="$STEERING_TYPE" scenario:="$LOC_EDGE_RECONF"
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: row_traversal
   panes:
