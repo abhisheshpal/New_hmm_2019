@@ -26,6 +26,7 @@ from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from strands_navigation_msgs.msg import TopologicalMap
+from sensor_msgs.msg import LaserScan
 
 from visualization_msgs.msg import Marker
 #from visualization_msgs.msg import MarkerArray
@@ -36,6 +37,8 @@ class inRowTravServer(object):
     _result   = polytunnel_navigation_actions.msg.inrownavResult()
 
     def __init__(self, name):
+        self.colision=False
+
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
         self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown) **WIP**
@@ -48,11 +51,19 @@ class inRowTravServer(object):
         self.ang_row_detection_bias = 0.2       # Weight given to the angular reference given by row detection
         self.ang_path_following_bias = 0.8      # Weight given to the angular refernce given by path following
         self.minimum_turning_speed = 0.01       # Minimum turning speed
+        self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
+        self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
         self.forward_speed= 0.8                 
         
         
+        # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
+        self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'], 
+                                'functions':[self.define_safety_zone, self.define_safety_zone]}
+        
+        self.laser_emergency_regions=[]
+        self.redefine_laser_regions=False
         self.limits=[]
-        self.base_points=[]                     # Corners of Safety Areas
+        self.emergency_base_points=[]           # Corners of Emergency Areas
         self.y_ref=None
         self.ang_ref=None
         self.config={}
@@ -70,7 +81,7 @@ class inRowTravServer(object):
             if not self.lnodes:
                 rospy.sleep(1.0)
 
-        
+        rospy.Subscriber('/scan', LaserScan, self.laser_cb, queue_size=1)
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
         rospy.Subscriber('/row_detector/path_error',Pose2D, self.row_correction_cb)
@@ -86,7 +97,7 @@ class inRowTravServer(object):
 
 
         rospy.loginfo("Creating safety zone.")
-        self.define_safety_zone(0.22)
+        self.define_safety_zone()
 
 
         rospy.loginfo("Creating action server.")
@@ -111,6 +122,9 @@ class inRowTravServer(object):
             if hasattr(self, lk[0]):
                 setattr(self, lk[0], config[lk[0]])
                 print lk[0], getattr(self, lk[0])
+                if lk[0] in self._reconf_functions['variables']:
+                    self._reconf_functions['functions'][self._reconf_functions['variables'].index(lk[0])]()
+
             #self.set_config(lk[0], config[lk[0]])
             self.config = config
         else:
@@ -125,31 +139,98 @@ class inRowTravServer(object):
 
 
 
-    def define_safety_zone(self, clearance, corner_frames=['top0','top1','top2','top3']):
+    def define_safety_zone(self, corner_frames=['top0','top1','top2','top3']):
         """ Defines the Safety zone around the robot 
         
         Arguments:
         clearance     -- The outwards distance trom the corner_frames at which the vertices of the safety zone are defined
         corner_frames -- The name of the frames that define the extremes of the robot
         """
-
+        print "Defining Safety Zone"
         self.limits=[]
-        self.base_points=[]
+        self.emergency_base_points=[]
         
         for i in corner_frames:
+            d={}
             self._tf_listerner.waitForTransform('base_link',i,rospy.Time.now(), rospy.Duration(1.0))
             (trans,rot) = self._tf_listerner.lookupTransform('base_link',i,rospy.Time.now())
             i_x, i_y, i_z = trans
             cpi=PointStamped()
             cpi.header.frame_id='base_link'
-            cpi.point.x= i_x+clearance if i_x > 0 else  i_x-clearance
-            cpi.point.y= i_y+clearance if i_y > 0 else  i_y-clearance
+            cpi.point.x= i_x+self.emergency_clearance_x if i_x > 0 else  i_x-self.emergency_clearance_x
+            cpi.point.y= i_y+self.emergency_clearance_y if i_y > 0 else  i_y-self.emergency_clearance_y
             cpi.point.z=-0.3
-            self.base_points.append(cpi)
+            d['point']=cpi
+            d['angle']=math.atan2(cpi.point.y,cpi.point.x)
+            self.emergency_base_points.append(d)
         
+        # We sort in angle from move base
+        self.emergency_base_points = sorted( self.emergency_base_points, key=lambda k: k['angle']) 
+        self.redefine_laser_regions = True
         print "visualise safety zone"
         self.safety_zones_visualisation()
     
+    
+    def laser_cb(self, msg):
+        if self.redefine_laser_regions:
+            self.safety_zones_find_laser_regions(msg)
+        elif self.laser_emergency_regions:
+            min_range = min(x for x in msg.ranges if x > msg.range_min) # Necessary in case there are -1 in data
+            self.colision=False
+            if min_range<=self.max_emergency_dist:
+                #print "Min: ", min_range
+                for i in self.laser_emergency_regions:
+                    #print i['range'][0], i['range'][1]
+                    if i['range'][0] < i['range'][1]:              
+                        min_range = min(x for x in msg.ranges[i['range'][0]:i['range'][1]] if x > msg.range_min)
+                        if min_range < i['dist']:
+                            self.colision=True
+                            self._send_velocity_commands(0.0, 0.0, 0.0)
+#                            print "Collision!!!"
+                    else:
+                        min_range = min(x for x in msg.ranges[i['range'][0]:-1] if x > msg.range_min)
+                        min_range = min(min_range,(x for x in msg.ranges[0:i['range'][1]] if x > msg.range_min))
+                        if min_range < i['dist']:
+                            self.colision=True                            
+                            self._send_velocity_commands(0.0, 0.0, 0.0)
+#                            print "Collision!!!"
+
+
+    
+    def safety_zones_find_laser_regions(self, msg):
+        self.laser_emergency_regions=[]
+        
+
+#        laser_angles.append(msg.angle_min)
+        for i in range(len(self.emergency_base_points)-1):
+            d = {}
+            d['range'] = []
+            d['range'].append(int(np.floor((self.emergency_base_points[i]['angle']-msg.angle_min)/msg.angle_increment)))
+            d['range'].append(int(np.floor((self.emergency_base_points[i+1]['angle']-msg.angle_min)/msg.angle_increment)))
+            midx=(self.emergency_base_points[i]['point'].point.x + self.emergency_base_points[i+1]['point'].point.x)/2.0
+            midy=(self.emergency_base_points[i]['point'].point.y + self.emergency_base_points[i+1]['point'].point.y)/2.0
+            d['dist']= math.hypot(midx, midy)
+            self.laser_emergency_regions.append(d)
+
+        d = {}
+        d['range'] = []
+        d['range'].append(int(np.floor((self.emergency_base_points[-1]['angle']-msg.angle_min)/msg.angle_increment)))
+        d['range'].append(int(np.floor((self.emergency_base_points[0]['angle']-msg.angle_min)/msg.angle_increment)))
+        midx=(self.emergency_base_points[0]['point'].point.x + self.emergency_base_points[-1]['point'].point.x)/2.0
+        midy=(self.emergency_base_points[0]['point'].point.y + self.emergency_base_points[-1]['point'].point.y)/2.0
+        d['dist']= math.hypot(midx, midy)
+        self.laser_emergency_regions.append(d)
+        
+        for i in self.laser_emergency_regions:
+            print i
+            
+
+        self.max_emergency_dist= sorted( self.laser_emergency_regions, key=lambda k: k['dist'])[-1]['dist'] #max(x for x['dist'] in self.laser_emergency_regions)
+        print len(msg.ranges), self.max_emergency_dist
+        self.redefine_laser_regions=False
+
+#        laser_angles.append(msg.angle_max)
+            
     
     def safety_zones_visualisation(self):
 
@@ -169,9 +250,9 @@ class inRowTravServer(object):
         amarker.lifetime = rospy.Duration(0.0)
         amarker.frame_locked = True
         
-        for i in self.base_points:
-            amarker.points.append(i.point)
-        amarker.points.append(self.base_points[0].point)
+        for i in self.emergency_base_points:
+            amarker.points.append(i['point'].point)
+        amarker.points.append(self.emergency_base_points[0]['point'].point)
                
         self.safety_marker=amarker
 
@@ -324,7 +405,7 @@ class inRowTravServer(object):
         x3 = dx*nx + path_to_goal.poses[0].pose.position.x
         y3 = dy*nx + path_to_goal.poses[-1].pose.position.y
         if nx >0 :
-            pathind= int(np.ceil(math.hypot(x3-x1, y3-y1)/self.granularity))
+            pathind= int(np.floor(math.hypot(x3-x1, y3-y1)/self.granularity))
         else:
             pathind=0
         #print (x3, y3, nx, pathind)
@@ -345,27 +426,37 @@ class inRowTravServer(object):
 
 
     def _send_velocity_commands(self, xvel, yvel, angvel, consider_minimum_rot_vel=False):
-        #print angvel
-        cmd_vel = Twist()
-        cmd_vel.linear.x = xvel
-        cmd_vel.linear.y = yvel
-        if consider_minimum_rot_vel:
-            if np.isclose(angvel, 0.0):
-                cmd_vel.angular.z = 0.0            
-            elif np.abs(angvel) >= self.minimum_turning_speed:
-                cmd_vel.angular.z = angvel
+        #print self.colision
+        if not self.colision:
+            cmd_vel = Twist()
+            cmd_vel.linear.x = xvel
+            cmd_vel.linear.y = yvel
+            if consider_minimum_rot_vel:
+                if np.isclose(angvel, 0.0):
+                    cmd_vel.angular.z = 0.0            
+                elif np.abs(angvel) >= self.minimum_turning_speed:
+                    cmd_vel.angular.z = angvel
+                else:
+                    if angvel > 0.0:
+                        cmd_vel.angular.z = self.minimum_turning_speed 
+                    elif angvel < 0.0:
+                        cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
+    
             else:
-                if angvel > 0.0:
-                    cmd_vel.angular.z = self.minimum_turning_speed 
-                elif angvel < 0.0:
-                    cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
-
+                cmd_vel.angular.z = angvel
+    
+    #        print 'ANg: ', cmd_vel.angular.z
+            self.cmd_pub.publish(cmd_vel)
         else:
-            cmd_vel.angular.z = angvel
+            cmd_vel = Twist()
+            cmd_vel.linear.x = 0.0
+            cmd_vel.linear.y = 0.0
+            cmd_vel.angular.z = 0.0            
+            self.cmd_pub.publish(cmd_vel)
 
-#        print 'ANg: ', cmd_vel.angular.z
-        self.cmd_pub.publish(cmd_vel)
 
+
+            
 
     def _get_references(self,pose):
         dist, y_path_err, ang_path_diff = self._get_vector_to_pose(pose)
