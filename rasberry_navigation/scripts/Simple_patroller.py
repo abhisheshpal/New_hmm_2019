@@ -2,7 +2,10 @@
 
 import rospy
 import sys
+
+import std_srvs
 # Brings in the SimpleActionClient
+from std_srvs.srv import SetBool
 import actionlib
 import topological_navigation.msg
 import yaml
@@ -12,22 +15,42 @@ class topol_nav_patrol(object):
     
     def __init__(self, filename) :
         self.cancel=False
+        self.pause=False
         rospy.on_shutdown(self._on_node_shutdown)
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
         
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
+
+        rospy.Service('/patroller_pause', SetBool, self.pause_cb)
         wplist = self.open_waypoint_list(filename)
         
         while not self.cancel:
             for i in wplist:
                 self.navigate_to_waypoint(i)
                 rospy.sleep(0.5)
+                while self.pause:
+                    rospy.sleep(0.5)
                 if self.cancel:
                     break
+        
+    def pause_cb(self, req):
+        if not req.data:
+            self.pause=True
+            ans = std_srvs.srv.SetBoolResponse()
+            ans.success = True
+            ans.message = 'Patrolling paused'
+            self.client.cancel_all_goals()
+        else:
+            self.pause=False
+            ans = std_srvs.srv.SetBoolResponse()
+            ans.success = True
+            ans.message = 'Patrolling activated'
             
-            
+
+        return ans
+
     
     def open_waypoint_list(self, filename):
                 
