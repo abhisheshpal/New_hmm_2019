@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 <launch>
-    <arg name="config_package" default="rasberry_optimise"/>
+    <arg name="config_package" default="rasberry_han"/>
     <arg name="config_directory" default="/resources/"/>
     <arg name="config_filename" default="group_out_row.json"/>
     <arg name="timeout_limit" default="5"/>
