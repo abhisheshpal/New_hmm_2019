@@ -14,7 +14,8 @@ from rasberry_han.safe_actions import TopicPublisherPolicy, DynamicReconfigurePo
 class ProximityMonitor:
     def __init__(self):
         rospy.init_node("people_navigation_monitor")
-        self._ring_radius = 1.0
+        self._danger_ring_radius = 1.0
+        self._warning_ring_radius = 2.0
         self._restric_fov = True
         self._current_policy = None
         self._stop_policy = TopicPublisherPolicy()
@@ -50,7 +51,9 @@ class ProximityMonitor:
 
     def dynamic_reconfigure_cb(self, config, level):
         rospy.logwarn("HumanProximityMonitor being configured")
-        self._ring_radius = config.region_radius
+        self._timeout = config.timeout
+        self._danger_ring_radius = config.danger_region_radius
+        self._warning_ring_radius = config.warning_region_radius
         self._restricted_yaw_range = config.angle_fov
         return config
 
@@ -170,11 +173,20 @@ class ProximityMonitor:
         self._range_visualizer_publisher.publish(fov_msg)
 
     def get_ring(self, x, y):
-        return int(np.hypot(x,y)/self._ring_radius)
+        distance = np.hypot(x,y)
+
+	if distance <= self._danger_ring_radius:
+	    return 0
+
+	if distance <= self._warning_ring_radius:
+            return 1
+
+	return 2
+
 
     def reset(self):
         if self._current_policy is not None:
-            rospy.logwarn("no people detected")
+            rospy.logwarn("no people detection received.... ENABLING NAVIGATION")
             self._current_policy.stop()
             self._current_policy = None
             self._current_protection_ring = 2
