@@ -2,29 +2,33 @@
 
 import rospy
 import sys
-
+import math
 import std_srvs
 # Brings in the SimpleActionClient
 from std_srvs.srv import SetBool
 import actionlib
 import topological_navigation.msg
 import yaml
-
+from geometry_msgs.msg import Pose
 
 class topol_nav_patrol(object):
     
     def __init__(self, filename) :
         self.cancel=False
         self.pause=False
+        self.robot_pose = None
         rospy.on_shutdown(self._on_node_shutdown)
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
+        self.total_dist = 0.0        
         
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
-
+        rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
+        
         rospy.Service('/patroller_pause', SetBool, self.pause_cb)
         wplist = self.open_waypoint_list(filename)
+        start_time = rospy.Time.now()
         
         while not self.cancel:
             for i in wplist:
@@ -34,6 +38,13 @@ class topol_nav_patrol(object):
                     rospy.sleep(0.5)
                 if self.cancel:
                     break
+
+        end_time = rospy.Time.now()
+        
+        opr_time = end_time - start_time
+        
+        print self.total_dist, start_time, end_time, opr_time
+
         
     def pause_cb(self, req):
         if not req.data:
@@ -51,6 +62,13 @@ class topol_nav_patrol(object):
 
         return ans
 
+    
+    def robot_pose_cb(self, msg):
+        if self.robot_pose:
+            pd = math.hypot(self.robot_pose.position.x-msg.position.x, self.robot_pose.position.y-msg.position.y)
+            self.total_dist += pd
+            
+        self.robot_pose = msg    
     
     def open_waypoint_list(self, filename):
                 
