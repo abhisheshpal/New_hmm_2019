@@ -71,7 +71,7 @@ class ProximityMonitor:
     def current_edge_cb(self, msg):
         if msg.data == "none":
             return
-        if msg.data.split('--')[0] in self._not_restricted_edges:
+        if not msg.data.split('--')[0] in self._not_restricted_edges:
             rospy.logwarn("FULL FOV")
             self._restric_fov = False
         else:

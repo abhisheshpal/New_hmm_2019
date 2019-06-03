@@ -2,7 +2,7 @@
 <launch>
     <arg name="config_package" default="rasberry_han"/>
     <arg name="config_directory" default="/resources/"/>
-    <arg name="config_filename" default="group_out_row.json"/>
+    <arg name="config_filename" default="group_in_polytunnel.json"/>
     <arg name="timeout_limit" default="5"/>
 
     <!-- declare arg to be passed in -->
