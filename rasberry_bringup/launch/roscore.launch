@@ -1,0 +1,3 @@
+<launch>
+    <param name="enable_statistics" value="true" />
+</launch>
