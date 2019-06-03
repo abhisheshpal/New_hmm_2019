@@ -30,6 +30,7 @@ class topol_nav_patrol(object):
         wplist = self.open_waypoint_list(filename)
         start_time = rospy.Time.now()
         
+        navtasks=0
         while not self.cancel:
             for i in wplist:
                 self.navigate_to_waypoint(i)
@@ -38,11 +39,29 @@ class topol_nav_patrol(object):
                     rospy.sleep(0.5)
                 if self.cancel:
                     break
+                navtasks+=1
 
         end_time = rospy.Time.now()
         
         opr_time = end_time - start_time
         
+        d={}
+        d['navtaks']=navtasks
+        d['op_time']=opr_time
+        d['end_time']=end_time
+        d['start_time']=start_time
+        d['total_dist']=self.total_dist
+
+        yml = yaml.safe_dump(d, default_flow_style=False)
+            #print yml
+            #print s_output
+        filename= str(rospy.Time.now().secs)
+        fh = open(filename, "w")
+        s_output = str(yml)
+        print s_output
+        fh.write(s_output)
+        fh.close()
+
         print self.total_dist, start_time, end_time, opr_time
 
         
