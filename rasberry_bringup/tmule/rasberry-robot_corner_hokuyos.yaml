@@ -58,6 +58,8 @@ init_cmd: |
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
+  # put this in your local file only:
+  # export_default SLACK_WEBHOOK https://hooks.slack.com/services/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
   export_default USE_GUI false
   export_default USE_OMNI false
   export_default LOC_EDGE_RECONF "norway"
@@ -94,9 +96,6 @@ windows:
 - name: coordination_robot
   panes:
   - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
-- name: toc_provider
-  panes:
-  - roslaunch toc robot.launch
 - name: dataset_recording
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
@@ -105,3 +104,8 @@ windows:
   panes:
   - roslaunch rasberry_data_capture auto_any_camera.launch
   - ls
+- name: monitoring
+  panes:
+  - roslaunch sentor sentor.launch config_file:=$(rospack find rasberry_bringup)/config/sentor.yaml
+  - roslaunch toc robot.launch
+  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/sentor/event /to_slack"; else cat; fi
