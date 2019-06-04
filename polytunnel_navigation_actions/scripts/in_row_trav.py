@@ -56,6 +56,7 @@ class inRowTravServer(object):
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
         self.forward_speed= 0.8                 
+        self.quit_on_timeout=False
         self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
         
         # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
@@ -198,7 +199,7 @@ class inRowTravServer(object):
                             degang=degang-360.0
                         colstr = "Colision "+ str(degang) +" "+ str(i[0])
                         #print colstr
-                        if not self.giveup_timer_active:
+                        if self.quit_on_timeout and not self.giveup_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
                             self.giveup_timer_active=True
                         self.not_pub.publish(colstr)
