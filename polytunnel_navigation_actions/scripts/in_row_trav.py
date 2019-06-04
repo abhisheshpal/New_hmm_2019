@@ -41,6 +41,8 @@ class inRowTravServer(object):
     def __init__(self, name):
         self.colision=False
         self.giveup_timer_active=False
+        self.notification_timer_active=False
+        self.notified=False
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
         self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown) **WIP**
@@ -202,10 +204,22 @@ class inRowTravServer(object):
                         if self.quit_on_timeout and not self.giveup_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
                             self.giveup_timer_active=True
+                        
+                        if not self.notified and not self.notification_timer_active:
+                            self.timer = rospy.Timer(rospy.Duration(3.0), self.nottim, oneshot=True)
+                            self.notification_timer_active=True
                         self.not_pub.publish(colstr)
                         break
+            if not self.colision:
+                self.notified=False
 
 
+    def nottim(self, timer):
+        colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
+        self.not_pub.publish(colstr)
+        self.notification_timer_active=False
+        self.notified=True
+        
     
     def safety_zones_find_laser_regions(self, msg):
         self.laser_emergency_regions=[]
