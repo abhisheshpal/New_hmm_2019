@@ -388,7 +388,7 @@ class inRowTravServer(object):
             speed = -self.forward_speed
         else:
             speed = self.forward_speed
-        print "Number of intermediate goals: ", len(path_to_goal.poses)
+        print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])         
             while np.abs(dist)>0.1 and not self.cancelled:
