@@ -1,0 +1,29 @@
+# name: is the name of the topic to monitor
+# signal_when: optional, can be either 'not published' or 'published'. Respectively, it will send a warning when the topic is not published or when it is.
+# signal_lambdas: optional, it's a list of (pythonic) lambda expressions such that when they are satisfied a warning is sent
+# timeout: optional (default=0), amount of time (in seconds) for which the signal has to be satisfied before sending the warning.
+
+- name : '/tf'
+  signal_when : 'not published'
+  timeout : 2
+
+- name : '/odom'
+  signal_when : 'not published'
+  timeout : 2
+
+- name : '/battery_data'
+  signal_when : 'not published'
+  signal_lambdas :
+    - 'lambda msg : msg.battery_data[0].battery_capacity < 10'
+  timeout : 2
+
+- name : '/motor_controller_data'
+  signal_when : 'not published'
+  timeout : 2
+
+- name : '/imu/data'
+  signal_when : 'not published'
+  timeout : 2
+
+#- name : '/interface/buttonPressedWhileDisabled'
+#  signal_when : 'published'
