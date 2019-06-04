@@ -215,8 +215,9 @@ class inRowTravServer(object):
 
 
     def nottim(self, timer):
-        colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
-        self.not_pub.publish(colstr)
+        if self.colision:
+            colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
+            self.not_pub.publish(colstr)
         self.notification_timer_active=False
         self.notified=True
         
