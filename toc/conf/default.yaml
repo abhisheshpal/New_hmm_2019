@@ -12,6 +12,32 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
+  thorvald-010:
+    description: "Thorvald 010"
+    ip: "10.8.0.41"
+    ns: ""
+    motors: 4
+    topics:
+      scan_front: "/scan_front"
+      scan_back: "/scan_back"
+      motor_control: "/motor_controller_data"
+      imu: "/imu/data"
+      gps: "/gps/fix"
+      battery: "/battery_data"
+      ouster: ""
+  thorvald-015:
+    description: "Thorvald 015"
+    ip: "10.8.0.42"
+    ns: ""
+    motors: 4
+    topics:
+      scan_front: "/scan_front"
+      scan_back: "/scan_back"
+      motor_control: "/motor_controller_data"
+      imu: "/imu/data"
+      gps: "/gps/fix"
+      battery: "/battery_data"
+      ouster: "/ouster/cloud"
   thorvald-008:
     description: "UOL robot 008"
     ip: "10.8.0.31"

@@ -7,7 +7,7 @@
   signal_when : 'not published'
   timeout : 2
 
-- name : '/odom'
+- name : '/odometry/base_raw'
   signal_when : 'not published'
   timeout : 2
 

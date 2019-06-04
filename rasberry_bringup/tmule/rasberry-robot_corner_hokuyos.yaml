@@ -108,4 +108,4 @@ windows:
   panes:
   - roslaunch sentor sentor.launch config_file:=$(rospack find rasberry_bringup)/config/sentor.yaml
   - roslaunch toc robot.launch
-  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/sentor/event /to_slack"; else cat; fi
+  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/to_slack /row_traversal/notification" loggers:="/rosout:error /amcl:warn /sentor:warn /base_driver:warn"; else cat; fi

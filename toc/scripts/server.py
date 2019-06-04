@@ -120,7 +120,7 @@ class Webtools(object):
 
 if __name__ == "__main__":
     rospy.init_node("toc_server")
-    Config()
+    Config(rospy.get_param('~config', CONFIG_FILE))
     port = rospy.get_param('~port', 8127)
     html_config['rosws_suffix'] = rospy.get_param('~rosws_suffix', ":9246")
     html_config['mjpeg_suffix'] = rospy.get_param('~mjpeg_suffix', ":8080")

@@ -314,8 +314,8 @@
     // Create the main viewer.
     var viewer = new ROS2D.Viewer({
       divID : 'nav',
-      width : 400,
-      height : 400
+      width : window.innerWidth / 3,
+      height : window.innerHeight
     });
 
     // Subscribes to the robot's OccupancyGrid, which is ROS representation of
@@ -327,12 +327,13 @@
     gridClient.on('change', function() {
       console.log("updated map");
       console.log(gridClient.currentGrid.width + " " + 
-        gridClient.currentGrid.height)
+        gridClient.currentGrid.height);
+      console.log(gridClient.currentGrid);
       // scale the viewer to fit the map
       viewer.scaleToDimensions(gridClient.currentGrid.width, 
         gridClient.currentGrid.height);
-      viewer.shift(-25, -15);
-    });
+      //viewer.shift(-66, -66); //gridClient.currentGrid.x, gridClient.currentGrid.y);
+//    });
 
     // get a handle to the stage
     var stage;
@@ -364,7 +365,10 @@
       // update the robots position on the map
       robotMarker.x = pose.pose.pose.position.x;
       robotMarker.y = -pose.pose.pose.position.y;
-      
+      console.log(robotMarker.x +" "+ robotMarker.y);
+//      viewer.shift(robotMarker.x, robotMarker.y);
+      viewer.scene.x = (window.innerWidth / 6)-robotMarker.x * viewer.scene.scaleX;
+      viewer.scene.y = (window.innerHeight / 2)-robotMarker.y * viewer.scene.scaleY;
       if (!initScaleSet) {
         robotMarker.scaleX = 1.0 / stage.scaleX;
         robotMarker.scaleY = 1.0 / stage.scaleY;
@@ -374,6 +378,8 @@
       robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.pose.pose.orientation);
       robotMarker.visible = true;
     });
+    });
+
   }
 
   function init_costmap(hostname) {
