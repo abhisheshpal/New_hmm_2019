@@ -2,32 +2,92 @@
 
 import rospy
 import sys
+import math
+import std_srvs
 # Brings in the SimpleActionClient
+from std_srvs.srv import SetBool
 import actionlib
 import topological_navigation.msg
 import yaml
-
+from geometry_msgs.msg import Pose
 
 class topol_nav_patrol(object):
     
     def __init__(self, filename) :
         self.cancel=False
+        self.pause=False
+        self.robot_pose = None
         rospy.on_shutdown(self._on_node_shutdown)
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
+        self.total_dist = 0.0        
         
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
-        wplist = self.open_waypoint_list(filename)
+        rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         
+        rospy.Service('/patroller_pause', SetBool, self.pause_cb)
+        wplist = self.open_waypoint_list(filename)
+        start_time = rospy.Time.now()
+        
+        navtasks=0
         while not self.cancel:
             for i in wplist:
                 self.navigate_to_waypoint(i)
                 rospy.sleep(0.5)
+                while self.pause:
+                    rospy.sleep(0.5)
                 if self.cancel:
                     break
+                navtasks+=1
+
+        end_time = rospy.Time.now()
+        
+        opr_time = end_time - start_time
+        
+        d={}
+        d['navtaks']=navtasks
+        d['op_time']=opr_time
+        d['end_time']=end_time
+        d['start_time']=start_time
+        d['total_dist']=self.total_dist
+
+        yml = yaml.safe_dump(d, default_flow_style=False)
+            #print yml
+            #print s_output
+        filename= str(rospy.Time.now().secs)
+        fh = open(filename, "w")
+        s_output = str(yml)
+        print s_output
+        fh.write(s_output)
+        fh.close()
+
+        print self.total_dist, start_time, end_time, opr_time
+
+        
+    def pause_cb(self, req):
+        if not req.data:
+            self.pause=True
+            ans = std_srvs.srv.SetBoolResponse()
+            ans.success = True
+            ans.message = 'Patrolling paused'
+            self.client.cancel_all_goals()
+        else:
+            self.pause=False
+            ans = std_srvs.srv.SetBoolResponse()
+            ans.success = True
+            ans.message = 'Patrolling activated'
             
+
+        return ans
+
+    
+    def robot_pose_cb(self, msg):
+        if self.robot_pose:
+            pd = math.hypot(self.robot_pose.position.x-msg.position.x, self.robot_pose.position.y-msg.position.y)
+            self.total_dist += pd
             
+        self.robot_pose = msg    
     
     def open_waypoint_list(self, filename):
                 

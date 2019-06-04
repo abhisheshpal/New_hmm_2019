@@ -2,8 +2,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint0
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.150000
-    timestamp: 229150000000
+    published_at: 2019-06-03 14:56:46.528000+00:00
+    timestamp: 1559573806528121948
   node:
     edges:
     - action: row_traversal
@@ -57,8 +57,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint1
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.150000
-    timestamp: 229150000000
+    published_at: 2019-06-03 14:56:46.557000+00:00
+    timestamp: 1559573806557199954
   node:
     edges:
     - action: row_traversal
@@ -112,8 +112,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint10
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.175000
-    timestamp: 229175000000
+    published_at: 2019-06-03 14:56:46.564000+00:00
+    timestamp: 1559573806564502954
   node:
     edges:
     - action: row_traversal
@@ -167,8 +167,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint11
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.175000
-    timestamp: 229175000000
+    published_at: 2019-06-03 14:56:46.572000+00:00
+    timestamp: 1559573806572057962
   node:
     edges:
     - action: row_traversal
@@ -222,8 +222,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint12
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.180000
-    timestamp: 229180000000
+    published_at: 2019-06-03 14:56:46.579000+00:00
+    timestamp: 1559573806579061985
   node:
     edges:
     - action: row_traversal
@@ -277,8 +277,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint13
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.185000
-    timestamp: 229185000000
+    published_at: 2019-06-03 14:56:46.587000+00:00
+    timestamp: 1559573806587269067
   node:
     edges:
     - action: row_traversal
@@ -332,8 +332,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint14
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.195000
-    timestamp: 229195000000
+    published_at: 2019-06-03 14:56:46.594000+00:00
+    timestamp: 1559573806594532966
   node:
     edges:
     - action: row_traversal
@@ -387,8 +387,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint15
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.195000
-    timestamp: 229195000000
+    published_at: 2019-06-03 14:56:46.599000+00:00
+    timestamp: 1559573806599225044
   node:
     edges:
     - action: row_traversal
@@ -442,8 +442,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint16
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.195000
-    timestamp: 229195000000
+    published_at: 2019-06-03 14:56:46.603000+00:00
+    timestamp: 1559573806603271961
   node:
     edges:
     - action: row_traversal
@@ -497,8 +497,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint17
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.200000
-    timestamp: 229200000000
+    published_at: 2019-06-03 14:56:46.606000+00:00
+    timestamp: 1559573806606523990
   node:
     edges:
     - action: row_traversal
@@ -552,8 +552,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint18
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.205000
-    timestamp: 229205000000
+    published_at: 2019-06-03 14:56:46.609000+00:00
+    timestamp: 1559573806609309911
   node:
     edges:
     - action: row_traversal
@@ -607,8 +607,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint19
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.220000
-    timestamp: 229220000000
+    published_at: 2019-06-03 14:56:46.612000+00:00
+    timestamp: 1559573806612637996
   node:
     edges:
     - action: row_traversal
@@ -662,8 +662,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint2
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.225000
-    timestamp: 229225000000
+    published_at: 2019-06-03 14:56:46.615000+00:00
+    timestamp: 1559573806615113019
   node:
     edges:
     - action: row_traversal
@@ -717,8 +717,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint20
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.225000
-    timestamp: 229225000000
+    published_at: 2019-06-03 14:56:46.617000+00:00
+    timestamp: 1559573806617347002
   node:
     edges:
     - action: row_traversal
@@ -772,8 +772,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint21
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.230000
-    timestamp: 229230000000
+    published_at: 2019-06-03 14:56:46.619000+00:00
+    timestamp: 1559573806619431972
   node:
     edges:
     - action: row_traversal
@@ -827,8 +827,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint22
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.235000
-    timestamp: 229235000000
+    published_at: 2019-06-03 14:56:46.621000+00:00
+    timestamp: 1559573806621412038
   node:
     edges:
     - action: row_traversal
@@ -882,8 +882,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint23
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.245000
-    timestamp: 229245000000
+    published_at: 2019-06-03 14:56:46.623000+00:00
+    timestamp: 1559573806623142957
   node:
     edges:
     - action: row_traversal
@@ -937,8 +937,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint24
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.250000
-    timestamp: 229250000000
+    published_at: 2019-06-03 14:56:46.624000+00:00
+    timestamp: 1559573806624789953
   node:
     edges:
     - action: row_traversal
@@ -992,8 +992,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint25
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.255000
-    timestamp: 229255000000
+    published_at: 2019-06-03 14:56:46.626000+00:00
+    timestamp: 1559573806626521110
   node:
     edges:
     - action: row_traversal
@@ -1047,8 +1047,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint26
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.255000
-    timestamp: 229255000000
+    published_at: 2019-06-03 14:56:46.628000+00:00
+    timestamp: 1559573806628274917
   node:
     edges:
     - action: row_traversal
@@ -1102,8 +1102,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint27
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.270000
-    timestamp: 229270000000
+    published_at: 2019-06-03 14:56:46.629000+00:00
+    timestamp: 1559573806629856109
   node:
     edges:
     - action: row_traversal
@@ -1157,8 +1157,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint28
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.275000
-    timestamp: 229275000000
+    published_at: 2019-06-03 14:56:46.631000+00:00
+    timestamp: 1559573806631381988
   node:
     edges:
     - action: row_traversal
@@ -1212,8 +1212,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint29
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.275000
-    timestamp: 229275000000
+    published_at: 2019-06-03 14:56:46.633000+00:00
+    timestamp: 1559573806633006095
   node:
     edges:
     - action: row_traversal
@@ -1267,8 +1267,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint3
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.280000
-    timestamp: 229280000000
+    published_at: 2019-06-03 14:56:46.634000+00:00
+    timestamp: 1559573806634656906
   node:
     edges:
     - action: row_traversal
@@ -1322,8 +1322,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint30
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.285000
-    timestamp: 229285000000
+    published_at: 2019-06-03 14:56:46.636000+00:00
+    timestamp: 1559573806636333942
   node:
     edges:
     - action: row_traversal
@@ -1377,8 +1377,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint31
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.300000
-    timestamp: 229300000000
+    published_at: 2019-06-03 14:56:46.638000+00:00
+    timestamp: 1559573806638006925
   node:
     edges:
     - action: row_traversal
@@ -1432,8 +1432,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint32
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.305000
-    timestamp: 229305000000
+    published_at: 2019-06-03 14:56:46.639000+00:00
+    timestamp: 1559573806639846086
   node:
     edges:
     - action: row_traversal
@@ -1487,8 +1487,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint33
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.310000
-    timestamp: 229310000000
+    published_at: 2019-06-03 14:56:46.641000+00:00
+    timestamp: 1559573806641397953
   node:
     edges:
     - action: row_traversal
@@ -1542,8 +1542,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint34
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.320000
-    timestamp: 229320000000
+    published_at: 2019-06-03 14:56:46.642000+00:00
+    timestamp: 1559573806642987012
   node:
     edges:
     - action: row_traversal
@@ -1597,8 +1597,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint35
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.325000
-    timestamp: 229325000000
+    published_at: 2019-06-03 14:56:46.644000+00:00
+    timestamp: 1559573806644499063
   node:
     edges:
     - action: row_traversal
@@ -1652,8 +1652,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint36
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.330000
-    timestamp: 229330000000
+    published_at: 2019-06-03 14:56:46.646000+00:00
+    timestamp: 1559573806646122932
   node:
     edges:
     - action: row_traversal
@@ -1707,8 +1707,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint37
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.330000
-    timestamp: 229330000000
+    published_at: 2019-06-03 14:56:46.647000+00:00
+    timestamp: 1559573806647805929
   node:
     edges:
     - action: row_traversal
@@ -1762,8 +1762,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint38
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.340000
-    timestamp: 229340000000
+    published_at: 2019-06-03 14:56:46.649000+00:00
+    timestamp: 1559573806649506092
   node:
     edges:
     - action: row_traversal
@@ -1817,8 +1817,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint39
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.350000
-    timestamp: 229350000000
+    published_at: 2019-06-03 14:56:46.651000+00:00
+    timestamp: 1559573806651144027
   node:
     edges:
     - action: row_traversal
@@ -1872,8 +1872,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint4
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.350000
-    timestamp: 229350000000
+    published_at: 2019-06-03 14:56:46.652000+00:00
+    timestamp: 1559573806652909040
   node:
     edges:
     - action: row_traversal
@@ -1927,8 +1927,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint40
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.355000
-    timestamp: 229355000000
+    published_at: 2019-06-03 14:56:46.680000+00:00
+    timestamp: 1559573806680430889
   node:
     edges:
     - action: row_traversal
@@ -1951,13 +1951,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -71.3774642944
-        y: -40.6192970276
+        x: -71.1571121216
+        y: -41.9496879578
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -1982,8 +1982,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint41
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.360000
-    timestamp: 229360000000
+    published_at: 2019-06-03 14:56:46.686000+00:00
+    timestamp: 1559573806686974048
   node:
     edges:
     - action: row_traversal
@@ -2006,13 +2006,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -72.7447814941
-        y: -40.8485298157
+        x: -72.5482025146
+        y: -42.1394195557
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2037,8 +2037,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint42
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.475000
-    timestamp: 229475000000
+    published_at: 2019-06-03 14:56:46.693000+00:00
+    timestamp: 1559573806693686962
   node:
     edges:
     - action: row_traversal
@@ -2061,13 +2061,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -74.1484832764
-        y: -41.125125885
+        x: -73.937286377
+        y: -42.2941055298
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2092,8 +2092,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint43
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.475000
-    timestamp: 229475000000
+    published_at: 2019-06-03 14:56:46.699000+00:00
+    timestamp: 1559573806699681043
   node:
     edges:
     - action: row_traversal
@@ -2116,13 +2116,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -75.5211791992
-        y: -41.3586463928
+        x: -75.2361831665
+        y: -42.5754814148
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2147,8 +2147,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint44
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.480000
-    timestamp: 229480000000
+    published_at: 2019-06-03 14:56:46.706000+00:00
+    timestamp: 1559573806706125974
   node:
     edges:
     - action: row_traversal
@@ -2171,13 +2171,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -65.2047424316
-        y: -72.9757766724
+        x: -65.5551757812
+        y: -71.1670684814
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2202,8 +2202,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint45
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.485000
-    timestamp: 229485000000
+    published_at: 2019-06-03 14:56:46.713000+00:00
+    timestamp: 1559573806713082075
   node:
     edges:
     - action: row_traversal
@@ -2226,13 +2226,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -66.6263961792
-        y: -73.2106628418
+        x: -66.9318695068
+        y: -71.4577255249
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2257,8 +2257,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint46
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.495000
-    timestamp: 229495000000
+    published_at: 2019-06-03 14:56:46.719000+00:00
+    timestamp: 1559573806719523906
   node:
     edges:
     - action: row_traversal
@@ -2281,13 +2281,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -68.0613098145
-        y: -73.4336395264
+        x: -68.3552017212
+        y: -71.6815032959
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2312,8 +2312,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint47
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.500000
-    timestamp: 229500000000
+    published_at: 2019-06-03 14:56:46.726000+00:00
+    timestamp: 1559573806726006984
   node:
     edges:
     - action: row_traversal
@@ -2336,13 +2336,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -69.4361419678
-        y: -73.6610946655
+        x: -69.6633224487
+        y: -72.0832138062
         z: 0.0
     verts:
     - x: 0.39735725522
@@ -2367,8 +2367,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint48
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.505000
-    timestamp: 229505000000
+    published_at: 2019-06-03 14:56:46.732000+00:00
+    timestamp: 1559573806732536077
   node:
     edges:
     - action: move_base
@@ -2417,8 +2417,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -72.8295974731
-        y: -37.266708374
+        x: -72.7103881836
+        y: -38.5392875671
         z: 0.0
     verts:
     - x: 0.765116095543
@@ -2443,8 +2443,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint49
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.505000
-    timestamp: 229505000000
+    published_at: 2019-06-03 14:56:46.739000+00:00
+    timestamp: 1559573806739193916
   node:
     edges:
     - action: move_base
@@ -2493,8 +2493,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -75.587348938
-        y: -37.7425918579
+        x: -75.2603759766
+        y: -38.8972740173
         z: 0.0
     verts:
     - x: 0.765116095543
@@ -2519,8 +2519,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint5
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.515000
-    timestamp: 229515000000
+    published_at: 2019-06-03 14:56:46.746000+00:00
+    timestamp: 1559573806746187925
   node:
     edges:
     - action: row_traversal
@@ -2574,8 +2574,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint50
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.525000
-    timestamp: 229525000000
+    published_at: 2019-06-03 14:56:46.752000+00:00
+    timestamp: 1559573806752685070
   node:
     edges:
     - action: move_base
@@ -2624,8 +2624,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -65.3720321655
-        y: -76.631980896
+        x: -65.8759384155
+        y: -74.9438552856
         z: 0.0
     verts:
     - x: 0.765116095543
@@ -2650,8 +2650,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint51
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.525000
-    timestamp: 229525000000
+    published_at: 2019-06-03 14:56:46.759000+00:00
+    timestamp: 1559573806759180068
   node:
     edges:
     - action: move_base
@@ -2700,8 +2700,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -67.9942932129
-        y: -77.1153182983
+        x: -68.5123748779
+        y: -75.2202758789
         z: 0.0
     verts:
     - x: 0.765116095543
@@ -2726,8 +2726,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint52
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.530000
-    timestamp: 229530000000
+    published_at: 2019-06-03 14:56:46.765000+00:00
+    timestamp: 1559573806765446901
   node:
     edges:
     - action: row_traversal
@@ -2762,8 +2762,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -71.5830230713
-        y: -38.9365081787
+        x: -71.4800186157
+        y: -40.260848999
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2788,8 +2788,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint53
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.535000
-    timestamp: 229535000000
+    published_at: 2019-06-03 14:56:46.772000+00:00
+    timestamp: 1559573806772030115
   node:
     edges:
     - action: row_traversal
@@ -2819,13 +2819,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624583388
+        w: 0.771624565125
         x: 0.0
         y: 0.0
-        z: -0.636078220278
+        z: -0.636078238487
       position:
-        x: -73.1251678467
-        y: -39.1844406128
+        x: -72.9215621948
+        y: -40.5150108337
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2850,8 +2850,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint54
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.545000
-    timestamp: 229545000000
+    published_at: 2019-06-03 14:56:46.778000+00:00
+    timestamp: 1559573806778254032
   node:
     edges:
     - action: row_traversal
@@ -2886,8 +2886,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -74.6382827759
-        y: -39.4745445251
+        x: -74.3644485474
+        y: -40.6659622192
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2912,8 +2912,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint55
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.550000
-    timestamp: 229550000000
+    published_at: 2019-06-03 14:56:46.806000+00:00
+    timestamp: 1559573806806004047
   node:
     edges:
     - action: row_traversal
@@ -2948,8 +2948,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -76.1701812744
-        y: -39.743927002
+        x: -75.6842880249
+        y: -40.9158096313
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -2974,8 +2974,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint56
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.550000
-    timestamp: 229550000000
+    published_at: 2019-06-03 14:56:46.812000+00:00
+    timestamp: 1559573806812977075
   node:
     edges:
     - action: row_traversal
@@ -3010,8 +3010,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -64.7141876221
-        y: -74.6109848022
+        x: -65.1848831177
+        y: -73.1432876587
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -3036,8 +3036,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint57
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.555000
-    timestamp: 229555000000
+    published_at: 2019-06-03 14:56:46.820000+00:00
+    timestamp: 1559573806820317983
   node:
     edges:
     - action: row_traversal
@@ -3072,8 +3072,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -66.2682037354
-        y: -74.9401168823
+        x: -66.6503982544
+        y: -73.2517700195
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -3098,8 +3098,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint58
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.565000
-    timestamp: 229565000000
+    published_at: 2019-06-03 14:56:46.826000+00:00
+    timestamp: 1559573806826996088
   node:
     edges:
     - action: row_traversal
@@ -3134,8 +3134,8 @@
         y: 0.0
         z: -0.636078238487
       position:
-        x: -67.7996139526
-        y: -75.1757354736
+        x: -68.0162277222
+        y: -73.4043045044
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -3160,8 +3160,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint59
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.575000
-    timestamp: 229575000000
+    published_at: 2019-06-03 14:56:46.833000+00:00
+    timestamp: 1559573806833734989
   node:
     edges:
     - action: row_traversal
@@ -3191,13 +3191,13 @@
     pointset: norway-hayfield_rowtrav
     pose:
       orientation:
-        w: 0.771624565125
-        x: 0.0
-        y: 0.0
-        z: -0.636078238487
+        w: 0.794122457504
+        x: -9.26043131066e-10
+        y: 8.12885370127e-10
+        z: -0.607757806778
       position:
-        x: -69.3312454224
-        y: -75.4493713379
+        x: -69.3675918579
+        y: -73.5462036133
         z: 0.0
     verts:
     - x: 0.689999997616
@@ -3222,8 +3222,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint6
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.575000
-    timestamp: 229575000000
+    published_at: 2019-06-03 14:56:46.840000+00:00
+    timestamp: 1559573806840470075
   node:
     edges:
     - action: row_traversal
@@ -3277,8 +3277,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint7
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.580000
-    timestamp: 229580000000
+    published_at: 2019-06-03 14:56:46.847000+00:00
+    timestamp: 1559573806847393989
   node:
     edges:
     - action: row_traversal
@@ -3332,8 +3332,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint8
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.580000
-    timestamp: 229580000000
+    published_at: 2019-06-03 14:56:46.854000+00:00
+    timestamp: 1559573806854234933
   node:
     edges:
     - action: row_traversal
@@ -3387,8 +3387,8 @@
     map: norway-hayfield_rowtrav
     node: WayPoint9
     pointset: norway-hayfield_rowtrav
-    published_at: 1970-01-01 00:03:49.590000
-    timestamp: 229590000000
+    published_at: 2019-06-03 14:56:46.860000+00:00
+    timestamp: 1559573806860627889
   node:
     edges:
     - action: row_traversal
