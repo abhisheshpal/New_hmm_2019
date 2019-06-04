@@ -5,8 +5,11 @@
 	<arg name="machine" default="localhost" />
 	<arg name="user" default="" />
         <arg name="launch_manager" default="true"/>
+        <arg name="multi_robot" default="true"/>
 
 	<machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
+
+	<rosparam command="load" file="$(find rasberry_navigation)/config/topological_presence_topics.yaml" if="$(arg multi_robot)"/>
 
  	<!--node pkg="topological_navigation" type="map_publisher.py" name="topological_map_publisher" args="$(arg map)"/-->
 	<node pkg="topological_navigation" type="map_manager.py" name="topological_map_manager" args="$(arg map)" respawn="true" if="$(arg launch_manager)"/>
