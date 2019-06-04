@@ -17,6 +17,7 @@ weight_position_error: -0.0            # Weighting assigned to the position erro
 weight_orientation_error: -0.0         # Weighting assigned to the orientation error metric (GA will try to minimise).
 multi_objective: true
 
+hof_size: 100  # up to the best hof_size parameter sets will be returned by the GA.
 num_runs: 1    # run scenario num_runs times for a given param set to get median (more robust) metrics to be passed to the GA. 
 
 save_path: "/home/adam/Documents/SagaRobotics/RASberry/optim/sim_data" # optional location to save data (defaults to rasberry_optimise package directory)

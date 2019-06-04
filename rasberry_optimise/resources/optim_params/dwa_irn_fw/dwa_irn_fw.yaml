@@ -4,7 +4,7 @@
 # min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
-/move_base/DWAPlannerROS: 
+move_base/DWAPlannerROS: 
   prune_plan:
     type: "bool"
   path_distance_bias: 

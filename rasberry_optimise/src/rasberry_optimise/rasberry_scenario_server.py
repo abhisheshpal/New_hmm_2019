@@ -66,13 +66,14 @@ class scenario_server(object):
         rospy.loginfo("Topological map received.")
         
         
-#        # Check that start/goal nodes and route between them exist.
-#        self.lookup_node(self.start_node)
-#        self.lookup_node(self.goal_nodes)
-#        rospy.loginfo("Looking up route between {} and {} ..."
-#                      .format(self.start_node, self.goal_node))
-#        self.router = route_search.TopologicalRouteSearch(self.topo_map)
-#        self.lookup_route(self.start_node, self.goal_node)
+        # Check that start/goal nodes and route between them exist.
+        nodes = [self.start_node] + self.goal_nodes
+        for node in nodes:
+            self.lookup_node(node)
+        self.router = route_search.TopologicalRouteSearch(self.topo_map)
+        for i in range(len(nodes)-1):
+            rospy.loginfo("Looking up route between {} and {} ...".format(nodes[i], nodes[i+1]))
+            self.lookup_route(nodes[i], nodes[i+1])
      
         
         # For teleporting the robot model in gazebo.

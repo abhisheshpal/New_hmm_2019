@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<launch>
+  <arg name="rtk_ip" default="192.168.1.50"/>
+  <arg name="rtk_port" default="21098"/>
+
+  <node name="rtk_topic_publisher" pkg="rasberry_navigation" type="nmea_parser.py" respawn="true" args="ip:$(arg rtk_ip) port:$(arg rtk_port)"/>
+
+</launch>
+
