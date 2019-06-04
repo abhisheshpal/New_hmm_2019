@@ -199,7 +199,7 @@ class inRowTravServer(object):
                         degang = np.rad2deg(angle)
                         if degang>=360.0:
                             degang=degang-360.0
-                        colstr = "HELP!: Colision "+ str(degang) +" "+ str(i[0])+" "+ str(rospy.Time.now().secs)
+                        #colstr = "HELP!: Colision "+ str(degang) +" "+ str(i[0])+" "+ str(rospy.Time.now().secs)
                         #print colstr
                         if self.quit_on_timeout and not self.giveup_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
@@ -208,7 +208,7 @@ class inRowTravServer(object):
                         if not self.notified and not self.notification_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(3.0), self.nottim, oneshot=True)
                             self.notification_timer_active=True
-                        self.not_pub.publish(colstr)
+                        #self.not_pub.publish(colstr)
                         break
             if not self.colision:
                 self.notified=False
