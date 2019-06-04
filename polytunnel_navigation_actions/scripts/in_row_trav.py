@@ -40,7 +40,7 @@ class inRowTravServer(object):
 
     def __init__(self, name):
         self.colision=False
-
+        self.giveup_timer_active=False
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
         self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown) **WIP**
@@ -56,7 +56,7 @@ class inRowTravServer(object):
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
         self.forward_speed= 0.8                 
-        
+        self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
         
         # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
         self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'], 
@@ -181,66 +181,33 @@ class inRowTravServer(object):
         elif self.laser_emergency_regions and self.active :
             min_range = min(x for x in msg.ranges if x > msg.range_min) # Necessary in case there are -1 in data
             self.colision=False
-
+            #print "min range: ", min_range, " -> ", self.max_emergency_dist#, " of ", len(minslist)
             if min_range<=self.max_emergency_dist:
                 minslist = [(x, msg.ranges.index(x)) for x in msg.ranges if x <= self.max_emergency_dist]
-                print "min range: ", min_range, " -> ", self.max_emergency_dist, " of ", len(minlist)
+                #print "min range: ", min_range, " -> ", self.max_emergency_dist, " of ", len(minslist)
                 for i in minslist:
                     angle = (i[1]*msg.angle_increment)-msg.angle_min
-                    p1=((i[0]*np.cos(angle)),(i[0]*np.sin(angle)))
+                    p1=[(i[0]*np.cos(angle)),(i[0]*np.sin(angle))]
                     path = mplPath.Path(self.emergency_poly)
-                    inside2 = path.contains_points(p1)
+                    inside2 = path.contains_points([p1])
                     if inside2:
                         self.colision=True
                         self._send_velocity_commands(0.0, 0.0, 0.0)
-                        colstr = "Colision "+ str(angle) +" "+ str(i[0])
-                        print colstr
+                        degang = np.rad2deg(angle)
+                        if degang>=360.0:
+                            degang=degang-360.0
+                        colstr = "Colision "+ str(degang) +" "+ str(i[0])
+                        #print colstr
+                        if not self.giveup_timer_active:
+                            self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
+                            self.giveup_timer_active=True
                         self.not_pub.publish(colstr)
                         break
-#                for i in self.laser_emergency_regions:
-#                    if i['range'][0] < i['range'][1]:              
-#
-#                        # TODO: currently obstacles can be very close on the corners the following lines are WIP to correct this and need testing
-#                        # We extract all the values that are less than the longest range inside the emergency area and their index
-#                        minslist = [(x, msg.ranges.index(x)) for x in msg.ranges[i['range'][0]:i['range'][1]] if x <= i['dist']]
-#                        if minslist:
-#                            midrange = (i['range'][0] + i['range'][1])/2
-#                            for j in minslist:
-#                                #print j, i['range'][0], i['range'][1]
-#                                anglediff = ((j[1] - midrange)*msg.angle_increment)#-msg.angle_min
-#                                if j[0] <= i['dist']*math.cos(anglediff):
-#                                   self.colision=True
-#                                   self._send_velocity_commands(0.0, 0.0, 0.0)
-#                                   colstr = "Collision Detected at a distance of " + str(j[0]) + " out of "+str(i['dist']*math.cos(anglediff)) \
-#                                   + " at angle of " +str(np.rad2deg(j[1]*msg.angle_increment))+ " real distance " + str(msg.ranges[j[1]])
-#                                   print colstr
-#                                   break
-#                    else:
-#                        # TODO: currently obstacles can be very close on the corners the following lines are WIP to correct this and need testing
-#                        # We extract all the values that are less than the longest range inside the emergency area and their index
-#                        minslist = [(x, msg.ranges.index(x)) for x in msg.ranges[i['range'][0]:-1] if x <= i['dist']]
-#                        minslist = minslist+[(x, msg.ranges.index(x)) for x in msg.ranges[0:i['range'][1]] if x <= i['dist']]
-#                        if minslist:
-#                            midrange = 0
-#                            for j in minslist:
-#                                anglediff = ((j[1] - midrange)*msg.angle_increment)#-msg.angle_min
-#                                if j[0] <= i['dist']*math.cos(anglediff):
-#                                   self.colision=True
-#                                   self._send_velocity_commands(0.0, 0.0, 0.0)
-#                                   colstr = "Collision Detected at a distance of " + str(j[0]) + " out of "+str(i['dist']*math.cos(anglediff)) \
-#                                   +" at angle of " +str(np.rad2deg(j[1]*msg.angle_increment))+ " real distance " + str(msg.ranges[j[1]])
-#                                   self.not_pub.publish(colstr)
-#                                   print colstr
-#                                   break
-
 
 
     
     def safety_zones_find_laser_regions(self, msg):
         self.laser_emergency_regions=[]
-        
-
-#        laser_angles.append(msg.angle_min)
         for i in range(len(self.emergency_base_points)-1):
             d = {}
             d['range'] = []
@@ -249,6 +216,7 @@ class inRowTravServer(object):
             midx=(self.emergency_base_points[i]['point'].point.x + self.emergency_base_points[i+1]['point'].point.x)/2.0
             midy=(self.emergency_base_points[i]['point'].point.y + self.emergency_base_points[i+1]['point'].point.y)/2.0
             d['dist']= math.hypot(self.emergency_base_points[i]['point'].point.x, self.emergency_base_points[i+1]['point'].point.y)
+            d['mean_dist']=math.hypot(midx, midy)
             self.laser_emergency_regions.append(d)
 
         d = {}
@@ -257,7 +225,8 @@ class inRowTravServer(object):
         d['range'].append(int(np.floor((self.emergency_base_points[0]['angle']-msg.angle_min)/msg.angle_increment)))
         midx=(self.emergency_base_points[0]['point'].point.x + self.emergency_base_points[-1]['point'].point.x)/2.0
         midy=(self.emergency_base_points[0]['point'].point.y + self.emergency_base_points[-1]['point'].point.y)/2.0
-        d['dist']= math.hypot(midx, midy)
+        d['dist']= d['dist']= math.hypot(self.emergency_base_points[0]['point'].point.x, self.emergency_base_points[-1]['point'].point.y)
+        d['mean_dist']=math.hypot(midx, midy)
         self.laser_emergency_regions.append(d)
 
         self.emergency_poly=[]        
@@ -269,6 +238,12 @@ class inRowTravServer(object):
             self.emergency_poly.append(r)
             
         self.emergency_poly=np.asarray(self.emergency_poly)
+        self.redefine_laser_regions=False
+        
+        self.max_emergency_dist= 0.0
+        for i in self.laser_emergency_regions:
+            print i['dist']
+            self.max_emergency_dist=np.max([self.max_emergency_dist, i['dist']])
 #        laser_angles.append(msg.angle_max)
             
     
@@ -282,7 +257,7 @@ class inRowTravServer(object):
         #amarker.header.stamp = rospy.Time.now()
         amarker.type = 4
         amarker.pose = Pose()
-        amarker.pose.position.z = 1.1
+        amarker.pose.position.z = 0.51
         amarker.scale.x = 0.05
         amarker.color.a = 0.5
         amarker.color.r = 0.9
@@ -570,7 +545,14 @@ class inRowTravServer(object):
             self._as.set_preempted(self._result)
 
 
-
+    def giveup(self, timer):
+        if self.colision:
+            rospy.loginfo("Row Traversal Cancelled")
+            self.not_pub.publish("Row Traversal timedout after colision")
+            self.cancelled = True
+            self.backwards_mode=False
+        self.giveup_timer_active=False
+        
         
     def do_stop(self, timer):
         if not self.active:
