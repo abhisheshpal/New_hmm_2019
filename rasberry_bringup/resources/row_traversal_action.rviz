@@ -4,10 +4,11 @@ Panels:
     Name: Displays
     Property Tree Widget:
       Expanded:
+        - /LaserScan1
         - /maps1
         - /Axes1
-        - /Marker1
-        - /Marker1/Status1
+        - /Row1
+        - /Row1/MarkerArray1
       Splitter Ratio: 0.5
     Tree Height: 775
   - Class: rviz/Selection
@@ -277,8 +278,8 @@ Visualization Manager:
       Axis: Z
       Channel Name: intensity
       Class: rviz/LaserScan
-      Color: 255; 255; 255
-      Color Transformer: Intensity
+      Color: 255; 85; 0
+      Color Transformer: FlatColor
       Decay Time: 0
       Enabled: true
       Invert Rainbow: false
@@ -438,14 +439,26 @@ Visualization Manager:
       Radius: 0.100000001
       Reference Frame: base_link
       Value: true
-    - Class: rviz/Marker
+    - Class: rviz/Group
+      Displays:
+        - Class: rviz/MarkerArray
+          Enabled: true
+          Marker Topic: /row_detector/poles_vis
+          Name: MarkerArray
+          Namespaces:
+            "": true
+          Queue Size: 1
+          Value: true
+        - Class: rviz/Marker
+          Enabled: true
+          Marker Topic: /row_traversal/safety_zone
+          Name: Marker
+          Namespaces:
+            "": true
+          Queue Size: 10
+          Value: true
       Enabled: true
-      Marker Topic: /row_traversal/safety_zone
-      Name: Marker
-      Namespaces:
-        "": true
-      Queue Size: 10
-      Value: true
+      Name: Row
   Enabled: true
   Global Options:
     Background Color: 48; 48; 48
@@ -483,8 +496,8 @@ Visualization Manager:
       Scale: 76.8996658
       Target Frame: <Fixed Frame>
       Value: TopDownOrtho (rviz)
-      X: 6.93615007
-      Y: -3.26964664
+      X: 13.022007
+      Y: -2.15130639
     Saved: ~
 Window Geometry:
   Displays:
