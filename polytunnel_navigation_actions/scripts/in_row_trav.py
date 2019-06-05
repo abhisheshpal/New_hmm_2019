@@ -239,7 +239,7 @@ class inRowTravServer(object):
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
-            if np.abs(obs_ang) <= (np.pi/4.0): 
+            if np.abs(obs_ang) <= (np.pi/16.0): 
                 if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
                     #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
                     self.object_detected = True
