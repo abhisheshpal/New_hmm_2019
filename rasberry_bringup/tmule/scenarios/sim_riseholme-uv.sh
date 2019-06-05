@@ -6,3 +6,4 @@ export USE_GUI=false
 export USE_IMU=false
 export EKF_PUBLISH_TF=false
 export USE_CARROT=true
+export USE_OMNI=false

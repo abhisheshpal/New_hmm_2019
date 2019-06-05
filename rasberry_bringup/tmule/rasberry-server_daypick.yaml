@@ -45,7 +45,7 @@ init_cmd: |
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
-  export MIMIC_DES_CONFIG=$(rospack find rasberry_des)/config/mimic_riseholme_des.yaml
+  export_default MIMIC_DES_CONFIG $(rospack find rasberry_des)/config/mimic_riseholme_des.yaml
 windows:
 - name: init
   panes:
