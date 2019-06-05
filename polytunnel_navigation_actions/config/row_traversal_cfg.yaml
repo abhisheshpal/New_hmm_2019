@@ -1,6 +1,6 @@
 forward_speed: 0.75               # Constant forward velocity
 constant_forward_speed: False     # Stop when obstacle in safety area (no slowdown)
-min_obj_size: 0.1                 # Minimum object radius for slow down
+min_obj_size: 0.07                # Minimum object radius for slow down
 min_dist_to_obj: 1.5              # Distance to object at which the robot should stop
 approach_dist_to_obj: 4.0         # Distance to object at which the robot starts to slow down
 minimum_turning_speed: 0.01       # Minimum turning speed
