@@ -241,11 +241,11 @@ class inRowTravServer(object):
         if min_obs_dist <= self.approach_dist_to_obj:
             if np.abs(obs_ang) <= (np.pi/4.0): 
                 if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 elif (obs_ang > np.pi/2.0 or obs_ang < -np.pi/2.0) and self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -446,12 +446,13 @@ class inRowTravServer(object):
     def get_forward_speed(self):
         if not self.constant_forward_speed:
             if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
-                print "limiting"
+                #print "not limiting"
                 if self.backwards_mode:
                     speed = -self.forward_speed
                 else:
                     speed = self.forward_speed
             else:
+                #print "limiting"
                 slowdown_delta=self.approach_dist_to_obj-self.min_dist_to_obj
                 current_percent = (self.curr_distance_to_object-self.min_dist_to_obj)/slowdown_delta
                 if current_percent >0:
@@ -463,12 +464,12 @@ class inRowTravServer(object):
     #            else:
     #                speed = self.forward_speed
         else:
-            print "not limiting"
+            #print "not limiting"
             if self.backwards_mode:
                 speed = -self.forward_speed
             else:
                 speed = self.forward_speed
-        print speed
+        #print speed
         return speed
 
     def go_forwards(self, path_to_goal, start_goal):        
@@ -480,14 +481,14 @@ class inRowTravServer(object):
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
-            print "1-> ", dist, " ", self.cancelled
+            #print "1-> ", dist, " ", self.cancelled
             while np.abs(dist)>0.1 and not self.cancelled:
                 speed=self.get_forward_speed()
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
-                print "- ", dist, " ", self.cancelled
+                #print "- ", dist, " ", self.cancelled
             if not self.cancelled:
                 print("Next Goal")
             else:
