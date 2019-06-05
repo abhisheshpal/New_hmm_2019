@@ -235,10 +235,12 @@ class inRowTravServer(object):
                     obs_dist = cobs_dist
                     min_obs_dist = obs_dist
                     obs_ang = math.atan2(obs_pose.pose.position.y, obs_pose.pose.position.x)
-                    obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
+                    #obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
                     if obs_ang > np.pi:
-                        obs_ang = np.pi - obs_ang
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
+                        obs_ang_2 = obs_ang - 2*np.pi
+                    else:
+                        obs_ang_2 = obs_ang
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, obs_ang_2, " degrees ", obs_dist," meters away",  self.backwards_mode
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
