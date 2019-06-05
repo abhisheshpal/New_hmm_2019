@@ -15,7 +15,7 @@
   <node name="nmea_topic_driver_fix" pkg="rasberry_navigation" type="nmea_topic_driver.py" output="screen">
     <remap from="nmea_sentence" to="nmea/main_GGA" /> <!-- sentence topic to parse -->
     <param name="frame_id" value="septentrio"/> <!-- frame id of gps to fill in messages  -->
-    <remap from="fix" to="gps/fix_septentrio" /> <!-- fix output topic -->
+    <remap from="fix" to="gps/fix" /> <!-- fix output topic -->
     <remap from="yaw" to="yaw/na" /> <!-- yaw output topic -->
   </node>
 
