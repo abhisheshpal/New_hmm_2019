@@ -23,9 +23,9 @@ init_cmd: |
   #export_default SCENARIO_NAME "sim_riseholme"
   export_default SCENARIO_NAME "default"
   # load robot-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
+  if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
+  if [ -r "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
   export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
@@ -55,6 +55,7 @@ init_cmd: |
   export_default USE_CARROT false
   export_default USE_IMU false
   export_default USE_OMNI false
+  export_default LOC_EDGE_RECONF "norway"
   # robot_1
   export ROBOT_NO_1="008"
   export ROBOT_NAME_1=thorvald_001
@@ -100,9 +101,9 @@ windows:
 - name: navigation
   panes:
   - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1 use_omni:=$USE_OMNI
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1 scenario:=$LOC_EDGE_RECONF
   - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 use_omni:=$USE_OMNI
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2 scenario:=$LOC_EDGE_RECONF
 - name: rosduct
   panes:
   - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination coordination.launch

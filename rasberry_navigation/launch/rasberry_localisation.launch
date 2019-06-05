@@ -15,6 +15,8 @@
   <arg name="initial_cov_yy" default="0.0"/>
   <arg name="initial_cov_aa" default="0.0"/>
 
+  <arg name="use_omni" default="false" />
+
   <!-- imu-ekf localization for odom-to-base_link -->
   <node pkg="robot_localization" type="ekf_localization_node" name="ekf_localization_local" clear_params="true" output="screen">
     <rosparam command="load" file="$(arg ekf_imu_config)" if="$(arg use_imu)"/>
@@ -31,6 +33,8 @@
     <arg name="initial_cov_xx" value="$(arg initial_cov_xx)"/>
     <arg name="initial_cov_yy" value="$(arg initial_cov_yy)"/>
     <arg name="initial_cov_aa" value="$(arg initial_cov_aa)"/>
+
+    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
 </launch>

@@ -23,9 +23,9 @@ init_cmd: |
   export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
   export_default SCENARIO_NAME "default"
   # load robot-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
+  if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
+  if [ -r "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
   export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
@@ -38,6 +38,10 @@ init_cmd: |
   export_default MONGO_PATH "$HOME/mongodb"
   # use IMU?
   export_default USE_IMU true
+  # use RTK_GNSS?
+  export_default USE_RTK false
+  export_default RTK_IP "192.168.0.102"
+  export_default RTK_PORT "21098"
   # the topomap to be used
   export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
@@ -54,29 +58,37 @@ init_cmd: |
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
-  export_default USE_GUI true
+  # put this in your local file only:
+  # export_default SLACK_WEBHOOK https://hooks.slack.com/services/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
+  export_default USE_GUI false
+  export_default USE_OMNI false
+  export_default LOC_EDGE_RECONF "norway"
 windows:
 - name: init
   panes:
-  - roscore
+  - roslaunch rasberry_bringup roscore.launch
   - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
-  - sleep 3; if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/$ROBOT_NAME.yaml"; fi
+  - sleep 3; if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.yaml"; fi
 - name: robot
   panes:
   - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors_corner_hokuyos.xacro simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD use_gui:=$USE_GUI
-  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_front" ip_address:="192.168.0.11" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_front" topic_name:="scan_front"
-  - roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_back" ip_address:="192.168.0.10" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_back" topic_name:="scan_back"
-  - roslaunch rasberry_bringup xsens_driver.launch
+  - if ! $USE_SIM; then roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_front" ip_address:="192.168.0.11" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_front" topic_name:="scan_front"; fi
+  - if ! $USE_SIM; then roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_back" ip_address:="192.168.0.10" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_back" topic_name:="scan_back"; fi
+  - if ! $USE_SIM; then roslaunch rasberry_bringup xsens_driver.launch; fi
 - name: localisation
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
+  - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" use_omni:="$USE_OMNI"
+  - if $USE_RTK; then roslaunch rasberry_navigation rtk_parser.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT"; fi
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT
-  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
+  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI"
+  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS use_omni:="$USE_OMNI" scenario:="$LOC_EDGE_RECONF"
   - rosrun topological_navigation visualise_map.py "$TMAP"
+- name: row_traversal
+  panes:
+  - roslaunch polytunnel_navigation_actions row_traversal.launch
 - name: people_perception
   panes:
   - ls 
@@ -84,9 +96,6 @@ windows:
 - name: coordination_robot
   panes:
   - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
-- name: toc_provider
-  panes:
-  - roslaunch toc robot.launch
 - name: dataset_recording
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
@@ -95,3 +104,8 @@ windows:
   panes:
   - roslaunch rasberry_data_capture auto_any_camera.launch
   - ls
+- name: monitoring
+  panes:
+  - roslaunch sentor sentor.launch config_file:=$(rospack find rasberry_bringup)/config/sentor.yaml
+  - roslaunch toc robot.launch
+  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/to_slack /row_traversal/notification" loggers:="/rosout:error /amcl:warn /sentor:warn /base_driver:warn"; else cat; fi
