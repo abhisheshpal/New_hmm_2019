@@ -29,6 +29,7 @@ from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 from strands_navigation_msgs.msg import TopologicalMap
 from sensor_msgs.msg import LaserScan
+from polytunnel_navigation_actions.msg import ObstacleArray
 
 from visualization_msgs.msg import Marker
 #from visualization_msgs.msg import MarkerArray
@@ -41,9 +42,14 @@ class inRowTravServer(object):
     def __init__(self, name):
         self.colision=False
         self.giveup_timer_active=False
+        self.notification_timer_active=False
+        self.notified=False
 
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
-        self.constant_forward_speed = True      # Stop when obstacle in safety area (no slowdown) **WIP**
+        self.constant_forward_speed = False     # Stop when obstacle in safety area only (no slowdown) **WIP**
+        self.min_obj_size = 0.1                 # Minimum object radius for slow down
+        self.min_dist_to_obj = 0.5              # Distance to object at which the robot should stop
+        self.approach_dist_to_obj = 3.0         # Distance to object at which the robot starts to slow down
         self.initial_heading_tolerance = 0.005  # Initial heading tolerance [rads]
         self.kp_ang= 0.2                        # Proportional gain for heading correction
         self.kp_y= 0.1                          # Proportional gain for sideways corrections
@@ -56,11 +62,16 @@ class inRowTravServer(object):
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
         self.forward_speed= 0.8                 
+        self.quit_on_timeout=False
         self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
         
         # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
         self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'], 
                                 'functions':[self.define_safety_zone, self.define_safety_zone]}
+        
+        self.object_detected = False
+        self.curr_distance_to_object=-1.0        
+        
         
         self.laser_emergency_regions=[]
         self.redefine_laser_regions=False
@@ -87,6 +98,7 @@ class inRowTravServer(object):
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
         rospy.Subscriber('/row_detector/path_error',Pose2D, self.row_correction_cb)
+        rospy.Subscriber("/row_detector/obstacles", ObstacleArray, self.obstacles_callback,  queue_size=1)
 
         self._tf_listerner = tf.TransformListener()
         self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
@@ -196,13 +208,52 @@ class inRowTravServer(object):
                         degang = np.rad2deg(angle)
                         if degang>=360.0:
                             degang=degang-360.0
-                        colstr = "Colision "+ str(degang) +" "+ str(i[0])
+                        #colstr = "HELP!: Colision "+ str(degang) +" "+ str(i[0])+" "+ str(rospy.Time.now().secs)
                         #print colstr
-                        if not self.giveup_timer_active:
+                        if self.quit_on_timeout and not self.giveup_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
                             self.giveup_timer_active=True
-                        self.not_pub.publish(colstr)
+                        
+                        if not self.notified and not self.notification_timer_active:
+                            self.timer = rospy.Timer(rospy.Duration(3.0), self.nottim, oneshot=True)
+                            self.notification_timer_active=True
+                        #self.not_pub.publish(colstr)
                         break
+            if not self.colision:
+                self.notified=False
+    
+
+
+    
+    def obstacles_callback(self, msg):
+        min_obs_dist=1000
+        for obs in msg.obstacles:
+            if obs.radius > self.min_obj_size:
+                obs_pose = self._transform_to_pose_stamped(obs)
+                cobs_dist = np.hypot(obs_pose.pose.position.x, obs_pose.pose.position.y)
+                if cobs_dist < min_obs_dist:
+                    obs_dist = cobs_dist
+                    min_obs_dist = obs_dist
+                    obs_ang = math.atan2(obs_pose.pose.position.y, obs_pose.pose.position.x)
+                    obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
+
+
+        if min_obs_dist <= self.approach_dist_to_obj:
+            if np.abs(obs_ang) <= (np.pi/4.0): 
+                if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
+                    self.object_detected = True
+                    self.curr_distance_to_object=obs_dist
+                elif (obs_ang > np.pi/2.0 or obs_ang < -np.pi/2.0) and self.backwards_mode:
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
+                    self.object_detected = True
+                    self.curr_distance_to_object=obs_dist
+                else:
+                    self.object_detected = False
+                    self.curr_distance_to_object=-1.0
+        else:
+            self.object_detected = False
+            self.curr_distance_to_object=-1.0
 
 
     
@@ -319,6 +370,16 @@ class inRowTravServer(object):
         return math.hypot(poseb.position.x-posea.position.x, poseb.position.y-posea.position.y), the_quat, ang
 
 
+    def _transform_to_pose_stamped(self, pose_2d):
+        the_pose = PoseStamped()
+        the_pose.header.frame_id = 'base_link'
+        the_pose.pose.position.x = pose_2d.pose.x#-1.0*pose_2d.pose.x
+        the_pose.pose.position.y = pose_2d.pose.y
+        the_pose.pose.position.z = 0.5
+        the_pose.pose.orientation.w = 1.0#tf.transformations.quaternion_from_euler(0.0,0.0,pose_2d.pose.theta)
+        #map_pose = self.listener.transformPose('map', the_pose)
+        return the_pose
+
 
     def _get_angle_between_quats(self, ori1, ori2):
         q1 = PyKDL.Rotation.Quaternion(ori1.x, ori1.y, ori1.z, ori1.w)
@@ -382,6 +443,34 @@ class inRowTravServer(object):
 
         print "Done: ", ang_diff
         
+    def get_forward_speed(self):
+        if not self.constant_forward_speed:
+            if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
+                #print "not limiting"
+                if self.backwards_mode:
+                    speed = -self.forward_speed
+                else:
+                    speed = self.forward_speed
+            else:
+                #print "limiting"
+                slowdown_delta=self.approach_dist_to_obj-self.min_dist_to_obj
+                current_percent = (self.curr_distance_to_object-self.min_dist_to_obj)/slowdown_delta
+                if current_percent >0:
+                    speed = current_percent*self.forward_speed
+                else:
+                    speed = 0.0
+                if self.backwards_mode:
+                    speed = -speed
+    #            else:
+    #                speed = self.forward_speed
+        else:
+            #print "not limiting"
+            if self.backwards_mode:
+                speed = -self.forward_speed
+            else:
+                speed = self.forward_speed
+        #print speed
+        return speed
 
     def go_forwards(self, path_to_goal, start_goal):        
         print "GOING FORWARDS NOW"
@@ -392,13 +481,14 @@ class inRowTravServer(object):
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
-            print "1-> ", dist, " ", self.cancelled
+            #print "1-> ", dist, " ", self.cancelled
             while np.abs(dist)>0.1 and not self.cancelled:
+                speed=self.get_forward_speed()
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
-                print "- ", dist, " ", self.cancelled
+                #print "- ", dist, " ", self.cancelled
             if not self.cancelled:
                 print("Next Goal")
             else:
@@ -560,7 +650,15 @@ class inRowTravServer(object):
         if not self.active:
             print "do_stop"
             self._send_velocity_commands(0.0, 0.0, 0.0)
-            
+
+
+    def nottim(self, timer):
+        if self.colision:
+            colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
+            self.not_pub.publish(colstr)
+        self.notification_timer_active=False
+        self.notified=True
+ 
         
         
     def preemptCallback(self):

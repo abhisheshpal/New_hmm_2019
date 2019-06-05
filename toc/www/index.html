@@ -118,7 +118,7 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
     document.onready = function() {
         $for r in config['robots']:
             setTimeout(function() {
-                init_robot("${r}", "$config['robots'][r]['ip']", "$config['robots'][r]['topics']['gps']");
+                init_robot("${r}", "$config['robots'][r]['ip']", "$config['robots'][r]['topics']['gps']", "$config['robots'][r]['port']");
             }, 500);
             
 
