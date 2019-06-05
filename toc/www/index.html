@@ -1,7 +1,7 @@
 $def with (config)
 $var title: Main
 $var show_nav: true
-$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js static/roslib.min.js  static/bootstrap-notify.min.js static/index.js
+$var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/ros2djs/include/EaselJS/easeljs.js static/roslib.min.js  static/bootstrap-notify.min.js /static/app.js static/index.js
 
 
 <style>
@@ -117,7 +117,10 @@ $var jsfiles: webtools/roslibjs/include/EventEmitter2/eventemitter2.js webtools/
 <script>
     document.onready = function() {
         $for r in config['robots']:
-            init_robot("${r}", "$config['robots'][r]['ip']", "$config['robots'][r]['topics']['gps']");
+            setTimeout(function() {
+                init_robot("${r}", "$config['robots'][r]['ip']", "$config['robots'][r]['topics']['gps']");
+            }, 500);
+            
 
     }
 </script>
