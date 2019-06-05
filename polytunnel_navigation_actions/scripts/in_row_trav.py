@@ -13,7 +13,7 @@ import actionlib
 import polytunnel_navigation_actions.msg
 import std_msgs.msg
 
-
+from datetime import datetime
 from std_srvs.srv import SetBool
 
 from dynamic_reconfigure.server import Server
@@ -654,7 +654,9 @@ class inRowTravServer(object):
 
     def nottim(self, timer):
         if self.colision:
-            colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
+            now = datetime.now()
+            s2 = now.strftime("%Y/%m/%d-%H:%M:%S")
+            colstr = "HELP!: too close to obstacle near "+ str(self.closest_node) +" time: "+s2
             self.not_pub.publish(colstr)
         self.notification_timer_active=False
         self.notified=True
