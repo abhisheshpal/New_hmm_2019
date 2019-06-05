@@ -241,11 +241,11 @@ class inRowTravServer(object):
         if min_obs_dist <= self.approach_dist_to_obj:
             if np.abs(obs_ang) <= (np.pi/16.0): 
                 if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
-                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 elif (obs_ang > np.pi/2.0 or obs_ang < -np.pi/2.0) and self.backwards_mode:
-                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -446,13 +446,13 @@ class inRowTravServer(object):
     def get_forward_speed(self):
         if not self.constant_forward_speed:
             if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
-                #print "not limiting"
+                print "not limiting"
                 if self.backwards_mode:
                     speed = -self.forward_speed
                 else:
                     speed = self.forward_speed
             else:
-                #print "limiting"
+                print "limiting"
                 slowdown_delta=self.approach_dist_to_obj-self.min_dist_to_obj
                 current_percent = (self.curr_distance_to_object-self.min_dist_to_obj)/slowdown_delta
                 if current_percent >0:
@@ -464,12 +464,12 @@ class inRowTravServer(object):
     #            else:
     #                speed = self.forward_speed
         else:
-            #print "not limiting"
+            print "not limiting"
             if self.backwards_mode:
                 speed = -self.forward_speed
             else:
                 speed = self.forward_speed
-        #print speed
+        print speed
         return speed
 
     def go_forwards(self, path_to_goal, start_goal):        

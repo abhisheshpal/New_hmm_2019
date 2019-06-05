@@ -13,7 +13,7 @@ y_row_detection_bias: 1.00        # Weight given to the reference given by row d
 y_path_following_bias: 0.15       # Weight given to the original path following
 ang_row_detection_bias: 1.06      # Weight given to the angular reference given by row detection
 ang_path_following_bias: 0.14     # Weight given to the angular refernce given by path following
-emergency_clearance_x: 0.55       # Clearance from corner frames to trigger emergency stop in x
+emergency_clearance_x: 0.65       # Clearance from corner frames to trigger emergency stop in x
 emergency_clearance_y: 0.2        # Clearance from corner frames to trigger emergency stop in y
 quit_on_timeout: False            # Wether the robot should cancel row traversal after collision detected
 time_to_quit: 10.0                # Time until the action is cancelled since collision detected
