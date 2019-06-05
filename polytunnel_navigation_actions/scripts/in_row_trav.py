@@ -237,14 +237,14 @@ class inRowTravServer(object):
                     obs_ang = math.atan2(obs_pose.pose.position.y, obs_pose.pose.position.x)
                     #obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
                     if obs_ang > np.pi:
-                        obs_ang_2 = obs_ang - 2*np.pi
+                        obs_ang = obs_ang - 2*np.pi
                     else:
-                        obs_ang_2 = obs_ang
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, obs_ang_2, " degrees ", obs_dist," meters away",  self.backwards_mode
+                        obs_ang = obs_ang
+#                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, obs_ang_2, " degrees ", obs_dist," meters away",  self.backwards_mode
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
-            if np.abs(obs_ang) <= (np.pi/40.0) or np.abs(obs_ang) >= (np.pi*39/40.0): 
+            if (np.abs(obs_ang) <= (np.pi/20.0)) or (np.abs(obs_ang) >= (np.pi*19/20.0)): 
                 if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
                     #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
                     self.object_detected = True
@@ -451,13 +451,13 @@ class inRowTravServer(object):
     def get_forward_speed(self):
         if not self.constant_forward_speed:
             if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
-                #print "not limiting"
+                print "not limiting"
                 if self.backwards_mode:
                     speed = -self.forward_speed
                 else:
                     speed = self.forward_speed
             else:
-                #print "limiting"
+                print "limiting"
                 slowdown_delta=self.approach_dist_to_obj-self.min_dist_to_obj
                 current_percent = (self.curr_distance_to_object-self.min_dist_to_obj)/slowdown_delta
                 if current_percent >0:
@@ -469,7 +469,7 @@ class inRowTravServer(object):
     #            else:
     #                speed = self.forward_speed
         else:
-            #print "not limiting"
+            print "not limiting"
             if self.backwards_mode:
                 speed = -self.forward_speed
             else:
