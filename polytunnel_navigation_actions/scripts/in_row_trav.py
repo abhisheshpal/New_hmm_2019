@@ -449,13 +449,13 @@ class inRowTravServer(object):
     def get_forward_speed(self):
         if not self.constant_forward_speed:
             if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
-                print "not limiting"
+                #print "not limiting"
                 if self.backwards_mode:
                     speed = -self.forward_speed
                 else:
                     speed = self.forward_speed
             else:
-                print "limiting"
+                #print "limiting"
                 slowdown_delta=self.approach_dist_to_obj-self.min_dist_to_obj
                 current_percent = (self.curr_distance_to_object-self.min_dist_to_obj)/slowdown_delta
                 if current_percent >0:
@@ -467,12 +467,12 @@ class inRowTravServer(object):
     #            else:
     #                speed = self.forward_speed
         else:
-            print "not limiting"
+            #print "not limiting"
             if self.backwards_mode:
                 speed = -self.forward_speed
             else:
                 speed = self.forward_speed
-        print speed
+        #print speed
         return speed
 
     def go_forwards(self, path_to_goal, start_goal):        
