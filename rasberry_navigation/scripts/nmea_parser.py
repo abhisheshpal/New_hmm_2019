@@ -9,9 +9,14 @@ from nmea_msgs.msg import Sentence
 
 class nmea_topic_publisher(object):
     
-    def __init__(self, ip , port):
+    def __init__(self):
         
         rospy.init_node('nmea_topic_publisher')
+
+
+        port = rospy.get_param('rtk_port', 21098)
+        ip = rospy.get_param('rtk_ip','192.168.0.20')
+        
         client = self.setup_connection(ip , port)
 
         main_antenna_GGA_pub = rospy.Publisher('nmea/main_GGA', Sentence, queue_size=10)
@@ -83,10 +88,6 @@ class nmea_topic_publisher(object):
 
 if __name__ == '__main__':
     try:
-        if not(2 < len(sys.argv) <= 3) or not str(sys.argv[1]).__contains__("ip:") or not str(sys.argv[2]).__contains__("port:"):
-            print("Incorrect passing of arguments. Please try again using the following format: \n"
-                          "rosrun nmea_fix nmea_fix.py ip:xxx.xxx.xxx.xxx port:xxxxxx")
-        else:
-            nmea_topic_publisher(str(sys.argv[1]).split(":")[1], int(str(sys.argv[2]).split(":")[1]))
+        nmea_topic_publisher()
     except rospy.ROSInterruptException:
         pass
