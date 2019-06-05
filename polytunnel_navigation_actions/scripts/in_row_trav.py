@@ -229,6 +229,7 @@ class inRowTravServer(object):
         min_obs_dist=1000
         for obs in msg.obstacles:
             if obs.radius > self.min_obj_size:
+                print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                 obs_pose = self._transform_to_pose_stamped(obs)
                 cobs_dist = np.hypot(obs_pose.pose.position.x, obs_pose.pose.position.y)
                 if cobs_dist < min_obs_dist:
@@ -236,6 +237,7 @@ class inRowTravServer(object):
                     min_obs_dist = obs_dist
                     obs_ang = math.atan2(obs_pose.pose.position.y, obs_pose.pose.position.x)
                     obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
+
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
