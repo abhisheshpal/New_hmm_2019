@@ -105,7 +105,7 @@ n_iteration: 3
 picker_ids: [picker101]
 picker_picking_rate:
   func: gauss
-  value: [0.2, 0.02]
+  value: [0.4, 0.02]
 picker_transportation_rate:
   func: gauss
   value: [1.0, 0.04]
@@ -115,5 +115,5 @@ picker_max_n_trays:
 picker_unloading_time:
   func: gauss
   value: [10.0, 0.2]
-tray_capacity: 3000
+tray_capacity: 2000
 
