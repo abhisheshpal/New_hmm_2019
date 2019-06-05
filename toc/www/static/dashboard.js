@@ -93,6 +93,9 @@ function init(robot, ns, topics, port) {
     console.log('Connection to websocket server closed.');
     $("#connection_ok").addClass('hide');
     $("#connection_broken").removeClass('hide');
+    setTimeout(function() {
+      init(robot, ns, topics, port);
+    }, 20000);
   });
 
 
