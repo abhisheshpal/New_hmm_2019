@@ -131,8 +131,8 @@ function init_robot(robot, ip, gps_topic, port) {
     $("#connection_ok"+robot).addClass('hide');
     $("#connection_broken"+robot).removeClass('hide');
     setTimeout(function() {
-      init_robot(robot, ip, gps_topic);
-    }, 10000);
+      init_robot(robot, ip, gps_topic, port);
+    }, 20000);
   });
 };
 
