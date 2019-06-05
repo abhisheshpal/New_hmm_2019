@@ -472,20 +472,22 @@ class inRowTravServer(object):
         return speed
 
     def go_forwards(self, path_to_goal, start_goal):        
+        print "GOING FORWARDS NOW"
         if self.backwards_mode:
             speed = -self.forward_speed
         else:
             speed = self.forward_speed
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
-            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])         
+            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
+            print "1-> ", dist, " ", self.cancelled
             while np.abs(dist)>0.1 and not self.cancelled:
                 speed=self.get_forward_speed()
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
-                
+                print "- ", dist, " ", self.cancelled
             if not self.cancelled:
                 print("Next Goal")
             else:

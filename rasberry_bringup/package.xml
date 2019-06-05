@@ -99,6 +99,8 @@
   <exec_depend>rasberry_people_perception</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>sentor</exec_depend>
+  <exec_depend>slackeros</exec_depend>
   <exec_depend>thorvald_base</exec_depend>
   <exec_depend>thorvald_description</exec_depend>
   <exec_depend>thorvald_twist_mux</exec_depend>
