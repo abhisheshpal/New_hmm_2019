@@ -61,6 +61,10 @@
   <run_depend>monitored_navigation</run_depend>
   <run_depend>nav_msgs</run_depend>
   <run_depend>nmea_navsat_driver</run_depend>
+  <run_depend>geometry_msgs</run_depend>
+  <run_depend>nmea_msgs</run_depend>
+  <run_depend>sensor_msgs</run_depend>
+  <run_depend>python-serial</run_depend>
   <run_depend>topological_navigation</run_depend>
   <run_depend>rasberry_move_base</run_depend>
   <run_depend>robot_localization</run_depend>

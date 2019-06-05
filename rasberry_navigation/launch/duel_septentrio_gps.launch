@@ -1,0 +1,30 @@
+<launch>
+
+  <!-- gps receiver communication configuration -->
+  <arg name="rtk_ip" default="192.168.1.50"/>
+  <arg name="rtk_port" default="21098"/>
+
+  <!-- launch the gps driver to publish nmea strings -->
+  <node name="rtk_topic_publisher" pkg="rasberry_navigation" type="nmea_parser.py" respawn="true" args="ip:$(arg rtk_ip) port:$(arg rtk_port)"/>
+
+
+
+  <!-- launch nodes to parse the strings to navsatfix messages -->
+  <node name="nmea_topic_driver_fix" pkg="rasberry_navigation" type="nmea_topic_driver.py" output="screen">
+    <remap from="nmea_sentence" to="nmea/main_GGA" /> <!-- sentence topic to parse -->
+    <param name="frame_id" value="septentrio"/> <!-- frame id of gps to fill in messages  -->
+    <remap from="fix" to="gps/fix_septentrio" /> <!-- fix output topic -->
+    <remap from="yaw" to="yaw/na" /> <!-- yaw output topic -->
+  </node>
+
+  <!-- depending on GGA string format we may need this node to get the yaw from HRP string instead -->
+  <!--
+  <node name="nmea_topic_driver_yaw"         pkg="rasberry_navigation"  type="nmea_topic_driver.py" output="screen">
+    <remap from="nmea_sentence" to="nmea/HRP" />
+    <param name="frame_id" value="septentrio"/>      
+    <remap from="fix" to="gps/na" />
+    <remap from="yaw" to="yaw/septentrio" />
+  </node>
+  -->
+
+</launch>
