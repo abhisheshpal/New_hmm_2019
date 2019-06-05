@@ -39,6 +39,8 @@ function init_robot_sentor(robot, ros) {
 
 }
 
+document.map_markers = {};
+
 function init_robot_gps(robot, ros, gps_topic) {
   console.log(robot +": " + ros);
   var nodeTopic = new ROSLIB.Topic({
@@ -48,7 +50,6 @@ function init_robot_gps(robot, ros, gps_topic) {
       throttle_rate: 10000
   });
 
-  document.map_markers = {};
   
   nodeTopic.subscribe(function(message) {
     console.log('GPS: ' + JSON.stringify(message));
@@ -57,7 +58,7 @@ function init_robot_gps(robot, ros, gps_topic) {
       if (document.map_markers[robot]) {
         document.map_markers[robot].setPosition(center)
       } else {
-        var marker = new google.maps.Marker({
+        document.map_markers[robot] = new google.maps.Marker({
           position: center,
           map: document.map,
           icon: {
@@ -73,7 +74,6 @@ function init_robot_gps(robot, ros, gps_topic) {
           },
           title: robot
         });
-        document.map_markers[robot] = marker;      
       }
     } else {
       console.log('gmap not yet initialised.')
@@ -83,12 +83,12 @@ function init_robot_gps(robot, ros, gps_topic) {
 }
 
 
-function init_robot(robot, ip, gps_topic) {
+function init_robot(robot, ip, gps_topic, port) {
   var hostname = location.host;
 
   //document.rob_ros = {};
   document.rob_ros[robot] = new ROSLIB.Ros({
-    url : rosws_protocol+"://"+hostname+"/robot/"+ip+"/ws/"
+    url : rosws_protocol+"://"+hostname+"/robot/"+ip+"/ws/"+port+"/"
   });
 
   console.log(document.rob_ros[robot]);
@@ -470,12 +470,22 @@ function init_mjpeg(hostname) {
 
 function init_map(hostname) {
   // Create the main viewer.
+  var half_window = $(window).innerHeight()/2;
+  var height = half_window < 300?300:half_window;
   var viewer = new ROS2D.Viewer({
     divID : 'nav',
-    width : window.innerWidth / 3,
-    height : window.innerHeight
+    width : $('#nav').width(),
+    height : height
   });
 
+  $(window).resize(function(e) {
+    var half_window = $(window).innerHeight()/2;
+    var height = half_window < 300?300:half_window;
+    //viewer.resizeCanvas($('#nav').width()-30,height);
+    var cvs = $('#nav > canvas')[0].getContext('2d').canvas;
+    cvs.width = $('#nav').width();
+    cvs.height = height;
+  });
   // Subscribes to the robot's OccupancyGrid, which is ROS representation of
   // the map, and renders the map in the scene.
   var gridClient = new ROS2D.OccupancyGridClient({
@@ -487,55 +497,62 @@ function init_map(hostname) {
     console.log(gridClient.currentGrid.width + " " + 
       gridClient.currentGrid.height);
     console.log(gridClient.currentGrid);
-    // scale the viewer to fit the map
-    viewer.scaleToDimensions(gridClient.currentGrid.width, 
-      gridClient.currentGrid.height);
-    //viewer.shift(-66, -66); //gridClient.currentGrid.x, gridClient.currentGrid.y);
-//    });
 
-  // get a handle to the stage
-  var stage;
-  if (viewer.scene instanceof createjs.Stage) {
-    stage = viewer.scene;
-  } else {
-    stage = viewer.scene.getStage();
-  }
-  // marker for the robot
-  var robotMarker = new ROS2D.NavigationArrow({
-    size : 1,
-    strokeSize : .1,
-    fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
-    pulse : true
-  });
-  // wait for a pose to come in first
-  robotMarker.visible = false;
- 
-  viewer.scene.addChild(robotMarker);
-  var initScaleSet = true;
-  // setup a listener for the robot pose
-  var poseListener = new ROSLIB.Topic({
-    ros : ros,
-    name : '/webthrottle/amcl_pose',
-    messageType : 'geometry_msgs/PoseWithCovarianceStamped',
-    throttle_rate : 5000
-  });
-  poseListener.subscribe(function(pose) {
-    // update the robots position on the map
-    robotMarker.x = pose.pose.pose.position.x;
-    robotMarker.y = -pose.pose.pose.position.y;
-    console.log(robotMarker.x +" "+ robotMarker.y);
-//      viewer.shift(robotMarker.x, robotMarker.y);
-    viewer.scene.x = (window.innerWidth / 6)-robotMarker.x * viewer.scene.scaleX;
-    viewer.scene.y = (window.innerHeight / 2)-robotMarker.y * viewer.scene.scaleY;
-    if (!initScaleSet) {
-      robotMarker.scaleX = 1.0 / stage.scaleX;
-      robotMarker.scaleY = 1.0 / stage.scaleY;
-      initScaleSet = true;
+    var half_window = $(window).innerHeight()/2;
+    var height = half_window < 300?300:half_window;
+    //viewer.resizeCanvas($('#nav').width()-30,height);
+    var cvs = $('#nav > canvas')[0].getContext('2d').canvas;
+    cvs.width = $('#nav').width();
+    cvs.height = height;
+    viewer.shift(gridClient.currentGrid.x, -gridClient.currentGrid.height-gridClient.currentGrid.y);
+    var scale = Math.max(gridClient.currentGrid.width, gridClient.currentGrid.height);
+    viewer.scaleToDimensions(scale, scale);
+    //$(window).resize(function(e) {
+    //  viewer.scaleToDimensions(gridClient.currentGrid.width, gridClient.currentGrid.height);
+    //});
+    // get a handle to the stage
+    var stage;
+    if (viewer.scene instanceof createjs.Stage) {
+      stage = viewer.scene;
+    } else {
+      stage = viewer.scene.getStage();
     }
-    // change the angle
-    robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.pose.pose.orientation);
-    robotMarker.visible = true;
-  });
+    // marker for the robot
+    var robotMarker = new ROS2D.NavigationArrow({
+      size : 1,
+      strokeSize : .1,
+      fillColor : createjs.Graphics.getRGB(255, 128, 0, 0.66),
+      pulse : true
+    });
+    // wait for a pose to come in first
+    robotMarker.visible = false;
+   
+    viewer.scene.addChild(robotMarker);
+    var initScaleSet = true;
+    // setup a listener for the robot pose
+    var poseListener = new ROSLIB.Topic({
+      ros : ros,
+      name : '/webthrottle/amcl_pose',
+      messageType : 'geometry_msgs/PoseWithCovarianceStamped',
+      throttle_rate : 5000
+    });
+    poseListener.subscribe(function(pose) {
+      // update the robots position on the map
+      robotMarker.x = pose.pose.pose.position.x;
+      robotMarker.y = -pose.pose.pose.position.y;
+      console.log(robotMarker.x +" "+ robotMarker.y);
+  //      viewer.shift(robotMarker.x, robotMarker.y);
+      //viewer.scene.x = (window.innerWidth / 6)-robotMarker.x * viewer.scene.scaleX;
+      //viewer.scene.y = (window.innerHeight / 2)-robotMarker.y * viewer.scene.scaleY;
+      if (!initScaleSet) {
+        robotMarker.scaleX = 1.0 / stage.scaleX;
+        robotMarker.scaleY = 1.0 / stage.scaleY;
+        initScaleSet = true;
+      }
+      // change the angle
+      robotMarker.rotation = stage.rosQuaternionToGlobalTheta(pose.pose.pose.orientation);
+      robotMarker.visible = true;
+    });
   });
 
 }

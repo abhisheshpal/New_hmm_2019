@@ -3,19 +3,22 @@ robots:
     description: "Lindsey"
     ip: "10.8.0.22"
     ns: ""
+    port: 9090
     motors: 2 
     topics: 
-      scan_front: "/scan_front"
-      scan_back: "/scan_back"
-      motor_control: "/motor_controller_data"
-      imu: "/imu/data"
-      gps: "/gps/fix"
-      battery: "/battery_data"
-      ouster: "/ouster/cloud"
+      scan_front: "/scan"
+      scan_back: ""
+      motor_control: ""
+      imu: ""
+      gps: ""
+      battery: ""
+      ouster: ""
+      camera: "/head_xtion/rgb/image_color"
   thorvald-010:
     description: "Thorvald 010"
     ip: "10.8.0.41"
     ns: ""
+    port: 9246
     motors: 4
     topics:
       scan_front: "/scan_front"
@@ -25,10 +28,12 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: ""
+      camera: ""
   thorvald-015:
     description: "Thorvald 015"
     ip: "10.8.0.42"
     ns: ""
+    port: 9246
     motors: 4
     topics:
       scan_front: "/scan_front"
@@ -38,10 +43,12 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
+      camera: "/camera/color/image_raw"
   thorvald-008:
     description: "UOL robot 008"
     ip: "10.8.0.31"
     ns: "" 
+    port: 9246
     motors: 4 
     topics: 
       scan_front: "/scan_front"
@@ -51,10 +58,12 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
+      camera: ""
   thorvald-014:
     description: "UOL robot 014"
     ip: "10.8.0.33"
     ns: "" 
+    port: 9246
     motors: 4 
     topics: 
       scan_front: "/scan_front"
@@ -64,10 +73,12 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
+      camera: ""
   dummy:
     description: "localhost for debugging"
     ip: "127.0.0.1"
     ns: ""
+    port: 9246
     motors: 2 
     topics: 
       scan_front: "/scan_front"
@@ -77,3 +88,4 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
+      camera: ""
