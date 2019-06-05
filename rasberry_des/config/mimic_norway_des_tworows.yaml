@@ -1,0 +1,119 @@
+##-----------------------------------------------------------------------------
+# map related parameters
+# ----------------------
+# map_name: name of the topological map
+# n_polytunnels: integer>0, 1 - open farm, n (>0) - n polytunnels
+# n_farm_rows:
+#   func: none/copy, function to populate values for all rows
+#   value: array of integers, number of rows in the farm (n_polytunnels == 0)
+#                             or in a polytunnel (n_polytunnels >= 1). list
+#                             with one value for open farm, one (func = 'copy')
+#                             or n_polytunnels (func = 'none') values for
+#                             polytunnels
+# second_head_lane: true/false, a secondary head lane at the other end.
+#                               edges connecting adjacent rows can be considered
+#                               only if there is continuity across all rows
+# pri_head_nodes:
+#   polytunnel_01: [], array of primary head nodes of rows in order
+#   polytunnel_02: [], array of primary head nodes of rows in order
+#   ...
+# sec_head_nodes:   , ignored if second_had_lane is false
+#   polytunnel_01: [], array of secondary head nodes of rows in order
+#   polytunnel_02: [], array of secondary head nodes of rows in order
+#   ...
+# row_nodes:
+#   polytunnel_01:
+#     row_01: [], array of nodes of first topo-nav row of first polytunnel in order
+#     row_02: [], array of nodes of second topo-nav row of first polytunnel in order
+#   polytunnel_02:
+#     row_01: [], array of nodes of first topo-nav row of second polytunnel in order
+#     row_02: [], array of nodes of second topo-nav row of second polytunnel in order
+#   ...
+# end_row_nodes:
+#   polytunnel_01: [], array of end nodes of rows in order
+#   polytunnel_02: [], array of end nodes of rows in order
+#   ...
+# yield_per_node:
+#   func: none/copy/gauss, function to populate values for all rows
+#   value: array of floats, yield at a topo_nav node (from the node to the
+#                           next), per row (values for all rows
+#                           (n_polytunnels = 0) or all polytunnels, or mu and
+#                           sigma), g
+# local_storage_nodes: string, nodes corresponding to the local storages. the
+#                              closest one will be assigned to each row. will be
+#                              used only as starting place for pickers when 
+#                              cold storage is used
+# use_cold_storage: true/false, unload at cold storage / local storage
+# cold_storage_node: string, name of the cold storage node in topo map
+##-----------------------------------------------------------------------------
+map_name: norway-hayfield_rowtrav
+n_polytunnels: 1
+n_farm_rows:
+  func: copy
+  value: [1]
+second_head_lane: false
+pri_head_nodes:
+  polytunnel_01: [WayPoint40, WayPoint41]
+sec_head_nodes:
+  polytunnel_01: [WayPoint44, WayPoint45]
+row_nodes:
+  polytunnel_01: 
+    row_01: [WayPoint0, WayPoint1, WayPoint2, WayPoint3, WayPoint4, WayPoint5, WayPoint6, WayPoint7, WayPoint8, WayPoint9]
+    row_02: [WayPoint10, WayPoint11, WayPoint12, WayPoint13, WayPoint14, WayPoint15, WayPoint16, WayPoint17, WayPoint18, WayPoint19]
+yield_per_node:
+  func: gauss
+  value: [200.0, 5.0]
+
+local_storage_nodes: [WayPoint52, WayPoint53]
+use_cold_storage: true
+cold_storage_node: WayPoint54
+
+##-----------------------------------------------------------------------------
+# des related parameters
+# ----------------------
+# with_robots: true/false, whether service robots are available or not.
+#                          if available, they are controlled from coordinator
+# n_iteration: integer, number of times whole picking has to be repeated
+##-----------------------------------------------------------------------------
+with_robots: true
+n_iteration: 3
+
+##-----------------------------------------------------------------------------
+# picker related parameters
+# ----------------------
+# n_pickers: integer > 0, number of pickers
+# picker_picking_rate:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, speed of pickers while picking (values for all
+#                           pickers, or mu and sigma), m/s
+# picker_transportation_rate:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, transportation speed of pickers (values for all
+#                           pickers, or mu and sigma), m/s
+# picker_max_n_trays:
+#   func: none/copy, function to populate values for all pickers
+#   value: array of integers, maximum number of trays that can be carried by
+#                             each pickers (values for all pickers, or single
+#                             value to be copied)
+# picker_unloading_time:
+#   func: none/copy/gauss, function to populate values for all pickers
+#   value: array of floats, time required by each picker to unload a tray at
+#                           local storage / robot (values for all pickers, or
+#                           mu and sigma), s
+# tray_capacity: 3000 # capacity of each tray, g
+##-----------------------------------------------------------------------------
+picker_ids: [picker101]
+picker_picking_rate:
+  func: gauss
+  value: [0.2, 0.02]
+picker_transportation_rate:
+  func: gauss
+  value: [1.0, 0.04]
+picker_max_n_trays:
+  func: copy
+  value: [1]
+picker_unloading_time:
+  func: gauss
+  value: [10.0, 0.2]
+tray_capacity: 3000
+
