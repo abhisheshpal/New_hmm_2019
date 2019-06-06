@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<launch>
+    <arg name="config_package" default="rasberry_han"/>
+    <arg name="config_directory" default="/resources/"/>
+    <arg name="config_filename" default="group_in_polytunnel.json"/>
+    <arg name="timeout_limit" default="5"/>
+
+    <!-- declare arg to be passed in -->
+    <node pkg="rasberry_han" type="proximity_monitor_node" name="human_proximity_monitor">
+      <param name="config_package" type="str" value="$(arg config_package)"/>
+      <param name="config_directory" type="str" value="$(arg config_directory)"/>
+      <param name="config_filename" type="str" value="$(arg config_filename)"/>
+      <param name="timeout_limit" type="int" value="$(arg timeout_limit)"/>
+    </node>
+</launch>

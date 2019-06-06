@@ -13,7 +13,7 @@ init_cmd: |
   # source ROS
   source "/opt/ros/kinetic/setup.bash"
   # search for VPN tun device:
-  default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" " || echo lo`
+  default_iface=`route -n | grep "^10.8.0.0" | tr -s " " |  cut -f8 -d" " || echo lo`
   default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@' || echo 127.0.0.1`
   
   # load robot-specific config file
@@ -23,9 +23,9 @@ init_cmd: |
   export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
   export_default SCENARIO_NAME "default"
   # load robot-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
+  if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
+  if [ -r "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
   export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
@@ -45,7 +45,7 @@ init_cmd: |
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
-  export MIMIC_DES_CONFIG=$(rospack find rasberry_des)/config/mimic_riseholme_des.yaml
+  export_default MIMIC_DES_CONFIG $(rospack find rasberry_des)/config/mimic_riseholme_des.yaml
 windows:
 - name: init
   panes:

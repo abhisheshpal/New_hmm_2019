@@ -1,0 +1,8 @@
+<?xml version="1.0" ?>
+<launch>
+
+  <arg name="config" default="$(find polytunnel_navigation_actions)/config/row_detector.yaml" />
+
+  <node pkg="polytunnel_navigation_actions" type="row_detector.py" name="row_detector" output="screen" args="$(arg config)" />
+
+</launch>
