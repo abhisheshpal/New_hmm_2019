@@ -66,6 +66,8 @@ windows:
   panes: 
   - sleep 3; echo "roslaunch rasberry_people_perception loc_aware_withvelodyne.launch"
   - sleep 3; roslaunch rasberry_people_perception people_tracker_ouster.launch
+  - echo "sleep 3; roslaunch rasberry_han rasberry_han.launch"
+  - sleep 3; roslaunch rasberry_hri extraction.launch
 
 - name: dataset_recording
   panes:

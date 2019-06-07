@@ -2,13 +2,14 @@
 
   
   <!-- FLOBOT 3D Object Detector -->
-  <remap from="/velodyne_points" to="/os1_cloud_node/points"/>
-  <node pkg="tf" type="static_transform_publisher" name="velo_to_os1" args="0 0 0 0 0 0 velodyne os1_lidar 100" />
-  <!-- <node pkg="tf" type="static_transform_publisher" name="base_to_os1" args="0 0 0 0 0 0 velodyne base_link 100" /> -->
+  <!-- <remap from="/velodyne_points" to="/os1_cloud_node/points"/> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="velo_to_os1" args="0 0 0 0 0 0 velodyne os1_lidar 100" /> -->
+  <!-- <node pkg="tf" type="static_transform_publisher" name="base_to_os1" args="0 0 0 0 0 3.141529 velodyne base_link 100" /> -->
   <node pkg="object3d_detector" type="object3d_detector" name="object3d_detector" output="screen" respawn="false">
     <param name="show_fps" type="bool" value="false" />
     <param name="model_file_name" type="string" value="$(find object3d_detector)/libsvm/ouster.model"/>
     <param name="range_file_name" type="string" value="$(find object3d_detector)/libsvm/ouster.range"/>
+    <param name="lidar_topic" type="string" value="/os1_cloud_node/points" />
   </node>
  
   
