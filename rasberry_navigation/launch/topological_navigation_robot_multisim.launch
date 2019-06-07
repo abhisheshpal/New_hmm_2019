@@ -9,6 +9,7 @@
   <arg name="machine" default="localhost" />
   <arg name="user" default="" />
   <arg name="launch_manager" default="true"/>
+  <arg name="execute_policy_retries" default="3"/>
   <arg name="move_base_reconf_service" default="DWAPlannerROS" />
   <arg name="reconfigure_edges" default="true" />
 
@@ -75,6 +76,13 @@
 
       <param name="reconfigure_edges" type="bool" value="$(arg reconfigure_edges)"/>
     </node>
+
+
+    <node pkg="topological_navigation" name="execute_policy_server" type="execute_policy_server.py" output="screen" respawn="true">
+      <param name="retries" type="int" value="$(arg execute_policy_retries)"/>
+      <param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/>
+    </node>
+
   </group>
 
 </launch>
