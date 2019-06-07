@@ -13,7 +13,7 @@ import actionlib
 import polytunnel_navigation_actions.msg
 import std_msgs.msg
 
-
+from datetime import datetime
 from std_srvs.srv import SetBool
 
 from dynamic_reconfigure.server import Server
@@ -235,17 +235,20 @@ class inRowTravServer(object):
                     obs_dist = cobs_dist
                     min_obs_dist = obs_dist
                     obs_ang = math.atan2(obs_pose.pose.position.y, obs_pose.pose.position.x)
-                    obs_ang = (obs_ang + 2*np.pi)%(2*np.pi)
+                    if obs_ang > np.pi:
+                        obs_ang = obs_ang - 2*np.pi
+
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees "#, obs_dist," meters away",  self.backwards_mode
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
-            if np.abs(obs_ang) <= (np.pi/4.0): 
-                if (obs_ang < np.pi/2.0 or obs_ang > -np.pi/2.0) and not self.backwards_mode:
-                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
+            if (np.abs(obs_ang) <= (np.pi/25.0)) or (np.abs(obs_ang) >= (np.pi*24/25.0)): 
+                if np.abs(obs_ang) < np.pi/2.0 :#and self.backwards_mode:
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
-                elif (obs_ang > np.pi/2.0 or obs_ang < -np.pi/2.0) and self.backwards_mode:
-                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
+                elif np.abs(obs_ang) > np.pi/2.0 :#and not self.backwards_mode:
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -654,7 +657,9 @@ class inRowTravServer(object):
 
     def nottim(self, timer):
         if self.colision:
-            colstr = "HELP!: Colision near "+ str(self.closest_node) +" at "+ str(rospy.Time.now().secs)
+            now = datetime.now()
+            s2 = now.strftime("%Y/%m/%d-%H:%M:%S")
+            colstr = "HELP!: too close to obstacle near "+ str(self.closest_node) +" time: "+s2
             self.not_pub.publish(colstr)
         self.notification_timer_active=False
         self.notified=True

@@ -53,11 +53,11 @@
 
 
 
-function init(robot, ns, topics) {
+function init(robot, ns, topics, port) {
   var hostname = location.host;
   console.log(hostname);
   ros = new ROSLIB.Ros({
-    url : rosws_protocol+"://"+hostname+"/robot/"+robot+"/ws/"
+    url : rosws_protocol+"://"+hostname+"/robot/"+robot+"/ws/"+port+"/"
   });
 
   ros.on('connection', function() {
@@ -93,6 +93,9 @@ function init(robot, ns, topics) {
     console.log('Connection to websocket server closed.');
     $("#connection_ok").addClass('hide');
     $("#connection_broken").removeClass('hide');
+    setTimeout(function() {
+      init(robot, ns, topics, port);
+    }, 20000);
   });
 
 

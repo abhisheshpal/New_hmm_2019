@@ -14,8 +14,8 @@ class nmea_topic_publisher(object):
         rospy.init_node('nmea_topic_publisher')
 
 
-        port = rospy.get_param('rtk_port', 21098)
-        ip = rospy.get_param('rtk_ip','192.168.0.20')
+        port = rospy.get_param('~rtk_port', 21098)
+        ip = rospy.get_param('~rtk_ip','192.168.0.20')
         
         client = self.setup_connection(ip , port)
 
