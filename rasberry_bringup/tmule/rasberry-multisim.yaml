@@ -96,9 +96,9 @@ windows:
   - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_2 initial_pose_x:=$ROBOT_POS_X_2 initial_pose_y:=$ROBOT_POS_Y_2 initial_pose_a:=$ROBOT_POS_A_2
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1 robot_no:=$ROBOT_NO_1
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1
-  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 robot_no:=$ROBOT_NO_2
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2
 - name: rosduct
   panes:
