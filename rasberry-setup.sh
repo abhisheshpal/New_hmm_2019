@@ -1,6 +1,6 @@
 #!/bin/bash
 
-WORKSPACE=rasberry_ws
+if [ -n "$1" ]; then WORKSPACE=$1; else WORKSPACE=rasberry_ws; fi
 
 cd /home/$USER
 if [ -d $WORKSPACE ]; then echo "Abort. $WORKSPACE is already present"; exit 1; else mkdir -p $WORKSPACE/src; fi
