@@ -10,12 +10,17 @@
 
 <!-- OS1 Driver -->
   <include file="$(find ouster_ros)/os1.launch">
-    <arg name="os1_hostname" value="192.168.1.52" />
+    <arg name="os1_hostname" value="192.168.1.50" />
     <arg name="os1_udp_dest" value="192.168.1.123" />
-    <arg name="lidar_mode" value="512x20" />
+    <arg name="lidar_mode" value="512x10" />
   </include>
 
 <!-- Intel Real Sense Driver -->
+  <!-- <include file="$(find rasberry_hri)/launch/d415_camera.launch"/> -->
+  <include file="$(find realsense2_camera)/launch/rs_camera.launch"/>
+
+  <!-- Set to match the cameras that are launched in the include file (camera launch script) -->
+  <arg name="topic_prefixes" default="rsense"/> <!-- Separate topic_prefixes with commas -->
 
 
 <!-- Thermal Camera -->

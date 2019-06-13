@@ -93,7 +93,7 @@
     <parent link="$(arg tf_prefix)/base_sensors"/>
     <child link="$(arg tf_prefix)/velodyne"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0 0 0" rpy="0 0 0"/>
+    <origin xyz="0 0 0" rpy="0 0 3.14159"/>
   </joint>
 
   <!--hokuyo-->
