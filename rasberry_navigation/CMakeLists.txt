@@ -112,6 +112,10 @@ find_package(catkin REQUIRED COMPONENTS
 ## LIBRARIES: libraries you create in this project that dependent projects also need
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
+
+catkin_python_setup()
+
+
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rasberry_navigation
@@ -182,6 +186,9 @@ include_directories(
    scripts/uni_to_bidirectional_edges.py
    scripts/utils.py
    scripts/nmea_parser.py
+   scripts/nmea_serial_driver.py
+   scripts/nmea_topic_driver.py
+   scripts/nmea_topic_serial_reader.py
    DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
  )
 

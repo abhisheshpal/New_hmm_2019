@@ -185,6 +185,7 @@ class row_detector(object):
 
         if len(self.pole_array) < self.MIN_NUM_POLES: 
             line_fitted = self.fit_line(self.xs_all, self.ys_all)
+            self.obstacle_array = []
         else:
             line_fitted = self.fit_line(self.xs, self.ys)
         
@@ -205,6 +206,7 @@ class row_detector(object):
             indices_region_1 = np.where(self.ys_all >= 0)[0]
             xs_region_1 = self.xs_all[indices_region_1]
             ys_region_1 = self.ys_all[indices_region_1]  
+            self.obstacle_array = []
         else:
             indices_region_1 = np.where(self.ys >= 0)[0]
             xs_region_1 = self.xs[indices_region_1]
@@ -214,6 +216,7 @@ class row_detector(object):
             indices_region_2 = np.where(self.ys_all < 0)[0]
             xs_region_2 = self.xs_all[indices_region_2]
             ys_region_2 = self.ys_all[indices_region_2]
+            self.obstacle_array = []
         else:
             indices_region_2 = np.where(self.ys < 0)[0]
             xs_region_2 = self.xs[indices_region_2]

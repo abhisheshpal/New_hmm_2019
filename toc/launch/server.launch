@@ -1,5 +1,7 @@
 <launch>
-	<node pkg="toc" type="server.py" name="aaf_control_ui_server" output="screen" respawn="true">
+	<arg name="config" default="$(find toc)/conf/default.yaml" />
+	<node pkg="toc" type="server.py" name="toc_server" output="screen" respawn="true">
+		<param name="config" value="$(arg config)" />
 	</node>
 	<node pkg="toc" type="nginx.sh" name="nginx" output="screen" respawn="true" />
 </launch>

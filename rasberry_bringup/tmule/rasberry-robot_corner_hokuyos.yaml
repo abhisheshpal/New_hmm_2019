@@ -58,6 +58,8 @@ init_cmd: |
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
   export_default USE_CARROT false
+  # put this in your local file only:
+  # export_default SLACK_WEBHOOK https://hooks.slack.com/services/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
   export_default USE_GUI false
   export_default USE_OMNI false
   export_default LOC_EDGE_RECONF "norway"
@@ -78,7 +80,7 @@ windows:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
   - roslaunch rasberry_navigation rasberry_localisation_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" use_omni:="$USE_OMNI"
-  - if $USE_RTK; then roslaunch rasberry_navigation rtk_parser.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT"; fi
+  - if $USE_RTK; then roslaunch rasberry_navigation dual_septentrio_gps.launch rtk_ip:="$RTK_IP" rtk_port:="$RTK_PORT"; fi
 - name: navigation
   panes:
   - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI"
@@ -94,9 +96,6 @@ windows:
 - name: coordination_robot
   panes:
   - roslaunch rasberry_coordination robot_websocket_adapter.launch robot_name:=$ROBOT_NAME rosbridge_ip:=$ROSBRIDGE_IP rosbridge_port:=$ROSBRIDGE_PORT
-- name: toc_provider
-  panes:
-  - roslaunch toc robot.launch
 - name: dataset_recording
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation.rviz
@@ -105,3 +104,8 @@ windows:
   panes:
   - roslaunch rasberry_data_capture auto_any_camera.launch
   - ls
+- name: monitoring
+  panes:
+  - roslaunch sentor sentor.launch config_file:=$(rospack find rasberry_bringup)/config/sentor.yaml
+  - roslaunch toc robot.launch
+  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/to_slack /row_traversal/notification" loggers:="/rosout:error /amcl:warn /sentor:warn /base_driver:warn"; else cat; fi

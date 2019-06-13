@@ -7,8 +7,10 @@
     <arg name="config" value="$(arg detector_config)" />
   </include>
 
-  <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal">
+  <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal" output="screen">
     <rosparam file="$(arg traversal_config)" command="load"/>
   </node>
+
+  <node pkg="polytunnel_navigation_actions" type="row_detector_vis.py" name="row_detector_vis" output="screen" />
 
 </launch>
