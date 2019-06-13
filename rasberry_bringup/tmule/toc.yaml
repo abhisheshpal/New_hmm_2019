@@ -13,61 +13,45 @@ init_cmd: |
   # source ROS
   source "/opt/ros/kinetic/setup.bash"
   # search for VPN tun device:
-  #default_iface=`route -n | grep "^10.8" | tr -s " " |  cut -f8 -d" " || echo lo`
-  #default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@' || echo 127.0.0.1`
+  default_iface=`route -n | grep "^10.8.0.0" | tr -s " " |  cut -f8 -d" " || echo lo`
+  default_ip=`ip addr show dev "$default_iface" | grep "inet " | sed 's@ *inet \([0-9\.]*\).*@\1@' || echo 127.0.0.1`
   
-  # load robot-specific config file
-  if [ -r "$HOME/.rasberryrc" ]; then echo "*** loading $HOME/.rasberryrc" ; source "$HOME/.rasberryrc"; fi
+  # load robot-specific config file (NONE for TOC!)
+  # if [ -r "$HOME/.rasberryrc" ]; then echo "*** loading $HOME/.rasberryrc" ; source "$HOME/.rasberryrc"; fi
   
   export_default BASE_CONFIG_DIR `readlink -f . || echo .`
   export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
-  export_default SCENARIO_NAME "default"
+  export_default SCENARIO_NAME "toc"
   # load robot-specific config file
   if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
   if [ -r "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
-  export_default CATKIN_WORKSPACE "`echo $HOME/catkin_ws`"
+  export_default CATKIN_WORKSPACE "`readlink -f ../../../.. || echo $HOME/rasberry_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
-  export_default ROS_MASTER "10.8.0.42" # "192.168.1.123" # "10.8.0.31" #"192.168.0.30" #
+  export_default ROS_MASTER $default_ip
   # set ROS_IP not to the IP that we will connect to remotely
   export_default ROS_IP `ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/' || echo $ROS_MASTER`
   # set ROS_HOSTNAME to the ROS_IP to avoid configuring /etc/hosts for anyone who connects
   export_default ROS_HOSTNAME "$ROS_IP"
   # path where to expect MONGODB
   export_default MONGO_PATH "$HOME/mongodb"
-  # use IMU?
-  export_default USE_IMU true
-  # figure out the robot number from the hostname, assuming it is like `thorvald-XXX`
-  export_default ROBOT_NO `hostname | cut -f2 -d"-"`
-  # set the robot type
-  export_default ROBOT_TYPE "thorvald_ii_4wd4ws_slim"
   # the topomap to be used
   export_default TMAP riseholme
   # the gridmap to be used (key in mongodb)
   export_default MAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
   export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/riseholme.yaml"
-  # ROS env variables
-  export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
+  # ROS env variables (special port for TOC here!)
+  export ROS_MASTER_URI="http://$ROS_MASTER:11333/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
-  export_default USE_SIM false
-  export_default GAZEBO_WORLD riseholme
-  export_default EKF_PUBLISH_TF true
-  export_default NO_ROBOT false
 windows:
 - name: init
   panes:
-  - WEBSOCKET_URL='wss://car_vicky.ngrok.lcas.group:4433/carws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-- name: sensors
+  - roscore -p 11333
+- name: ngrok
   panes:
-  - sleep 3; roslaunch rasberry_bringup people_perception_sensors_ouster.launch no_robot:=$NO_ROBOT
-- name: people_perception
-  panes: 
-  - sleep 3; echo "roslaunch rasberry_people_perception loc_aware_withvelodyne.launch"
-  - sleep 3; roslaunch rasberry_people_perception people_tracker_ouster.launch
-
-- name: dataset_recording
+  - while true; do ngrok1 -config $(rospack find toc)/conf/ngrok -log-level INFO -log stdout start-all; sleep 1; done
+- name: toc
   panes:
-#  - sleep 3; DISPLAY=:0 rviz -d $(rospack find rasberry_people_perception)/rviz/rasberry_tracker.rviz
-  - ls
+  - roslaunch toc server.launch

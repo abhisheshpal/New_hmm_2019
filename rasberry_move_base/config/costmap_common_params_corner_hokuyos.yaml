@@ -1,9 +1,7 @@
 global_frame: /map
 robot_base_frame: /base_link
 
-#footprint: [[0.785, 0.60], [0.785, -0.60], [-0.785, -0.60], [-0.785, 0.60]]
-#footprint: [[0.67, 0.385], [0.67, -0.385], [-0.67, -0.385], [-0.67, 0.385]]
-footprint: [[0.76, 0.50], [0.76, -0.50], [-0.76, -0.50], [-0.76, 0.50]]
+#footprint parameter has been moved to footprints/robot_xxx_footprint.yaml.
 
 map_layer:
   map_topic: /map

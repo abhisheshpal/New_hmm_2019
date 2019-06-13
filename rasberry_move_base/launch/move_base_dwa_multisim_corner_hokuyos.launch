@@ -5,6 +5,7 @@
     <arg name="tf_prefix" default="$(arg robot_name)"/>
     <arg name="use_carrot_planner" default="false"/>
     <arg name="use_omni" default="false"/>
+    <arg name="robot_no"/>
 
     <group ns="$(arg robot_name)">
 
@@ -44,6 +45,9 @@
           <rosparam param="local_costmap/obstacle_layer/back_laser_scan_sensor/sensor_frame" subst_value="True">$(arg tf_prefix)/hokuyo_front</rosparam>
           <rosparam param="local_costmap/obstacle_layer/back_laser_scan_sensor/topic" subst_value="True">scan_front</rosparam>
           <rosparam param="local_costmap/robot_base_frame" subst_value="True">$(arg tf_prefix)/base_link</rosparam>
+
+          <rosparam file="$(find rasberry_move_base)/config/footprints/robot_$(arg robot_no)_footprint.yaml" command="load" ns="global_costmap"/>
+          <rosparam file="$(find rasberry_move_base)/config/footprints/robot_$(arg robot_no)_footprint.yaml" command="load" ns="local_costmap"/>
 
           <rosparam file="$(find rasberry_move_base)/config/local_costmap_params.yaml" command="load"/>
           <rosparam file="$(find rasberry_move_base)/config/global_costmap_params.yaml" command="load"/>
