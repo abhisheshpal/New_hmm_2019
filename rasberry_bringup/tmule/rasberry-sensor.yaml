@@ -23,13 +23,13 @@ init_cmd: |
   export_default ROBOT_NAME `hostname | tr "-" "_" | tr "." "_"`
   export_default SCENARIO_NAME "default"
   # load robot-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/$ROBOT_NAME.sh"; fi
+  if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh" ; source "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.sh"; fi
   # load scenario-specific config file
-  if [ -r "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
+  if [ -r "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ]; then echo "*** loading $BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh" ; source "$BASE_CONFIG_DIR/scenarios/$SCENARIO_NAME.sh"; fi  # configure the development workspace (assuming we are in rasberry_bringup/tmule)
   export_default CATKIN_WORKSPACE "`echo $HOME/catkin_ws`"
   source "$CATKIN_WORKSPACE/devel/setup.bash"
   # set ROS_MASTER to the correct IP
-  export_default ROS_MASTER "10.8.0.31" # "192.168.1.123" # "10.8.0.31" #"192.168.0.30" #
+  export_default ROS_MASTER "10.8.0.42" # "192.168.1.123" # "10.8.0.31" #"192.168.0.30" #
   # set ROS_IP not to the IP that we will connect to remotely
   export_default ROS_IP `ip route get $ROS_MASTER | grep "src" | sed 's/.*src \([0-9\.]*\).*/\1/' || echo $ROS_MASTER`
   # set ROS_HOSTNAME to the ROS_IP to avoid configuring /etc/hosts for anyone who connects
@@ -54,15 +54,11 @@ init_cmd: |
   export_default USE_SIM false
   export_default GAZEBO_WORLD riseholme
   export_default EKF_PUBLISH_TF true
-  export_default NO_ROBOT true
+  export_default NO_ROBOT false
 windows:
 - name: init
   panes:
   - WEBSOCKET_URL='wss://car_vicky.ngrok.lcas.group:4433/carws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-#  - sudo openvpn scosar.ovpn; sleep 3
-  #- roscore
-  #- sudo ifconfig enp3s0 192.168.1.123
-  #- sudo systemctl restart isc-dhcp-server
 - name: sensors
   panes:
   - sleep 3; roslaunch rasberry_bringup people_perception_sensors_ouster.launch no_robot:=$NO_ROBOT

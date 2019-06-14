@@ -99,12 +99,15 @@
   <exec_depend>rasberry_people_perception</exec_depend>
   <exec_depend>rospy</exec_depend>
   <exec_depend>rviz</exec_depend>
+  <exec_depend>sentor</exec_depend>
+  <exec_depend>slackeros</exec_depend>
   <exec_depend>thorvald_base</exec_depend>
   <exec_depend>thorvald_description</exec_depend>
   <exec_depend>thorvald_twist_mux</exec_depend>
   <exec_depend>thorvald_teleop</exec_depend>
   <exec_depend>urg_node</exec_depend>
   <exec_depend>xsens_driver</exec_depend>
+  <exec_depend>gmapping</exec_depend>
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
