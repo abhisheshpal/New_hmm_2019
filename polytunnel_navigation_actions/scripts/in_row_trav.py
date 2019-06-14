@@ -656,7 +656,7 @@ class inRowTravServer(object):
 
 
     def nottim(self, timer):
-        if self.colision:
+        if self.colision and self.active:
             now = datetime.now()
             s2 = now.strftime("%Y/%m/%d-%H:%M:%S")
             colstr = "HELP!: too close to obstacle near "+ str(self.closest_node) +" time: "+s2
