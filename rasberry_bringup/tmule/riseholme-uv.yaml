@@ -74,7 +74,7 @@ windows:
   - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT use_uv_params:=$USE_UV_PARAMS
+  - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT use_uv_params:=$USE_UV_PARAMS robot_no:=$ROBOT_NO
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: uv
