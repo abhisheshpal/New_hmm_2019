@@ -8,4 +8,4 @@ min_samples_ransac: 3      # Parameter of ransac linear regression. Minimum numb
 residual_threshold: 0.2    # Parameter of ransac linear regression. Maximum residual for a data sample to be classified as an inlier.        
 num_attempted_fits: 3      # Number of attempts allowed for ransac to fit a line
 line_granularity: 1000     # Granularity of fitted line
-min_num_poles: 2           # turn off svm filtering if less than min_num_poles found in a scan. Set to zero to always filter with svm.
+min_num_poles: 0           # turn off svm filtering if less than min_num_poles found in a scan. Set to zero to always filter with svm.
