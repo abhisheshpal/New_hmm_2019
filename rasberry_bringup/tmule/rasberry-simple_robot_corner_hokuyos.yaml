@@ -83,7 +83,7 @@ windows:
   - roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI"
+  - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI" robot_no:=$ROBOT_NO
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS use_omni:="$USE_OMNI" scenario:="$LOC_EDGE_RECONF"
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: row_traversal

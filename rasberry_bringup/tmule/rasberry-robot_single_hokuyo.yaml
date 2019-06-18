@@ -73,7 +73,7 @@ windows:
   - roslaunch rasberry_navigation rasberry_localisation.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF"
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT
+  - roslaunch rasberry_move_base move_base_dwa.launch use_carrot_planner:=$USE_CARROT robot_no:=$ROBOT_NO
   - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: people_perception
