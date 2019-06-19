@@ -47,6 +47,7 @@ def init():
 
             for i,j in itertools.product(range(4),range(2)):
                 robot_dimensions[i][j] = base_link_to_drives[i][j] + dimensions_from_drives[i][j]
+                robot_dimensions[i][j] = round(robot_dimensions[i][j], 5)
 
             footprint = {'footprint': robot_dimensions}
 
