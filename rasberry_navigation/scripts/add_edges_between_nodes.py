@@ -14,14 +14,15 @@ from utils import load_data_from_yaml
 
 write_map = True
 
-base_dir = "/home/adam/workspaces/rasberry_ws/src/RASberry/rasberry_navigation/maps"
-infile = "riseholme-uv_bidirectional.tmap"
-outfile = "riseholme-uv_bidirectional.tmap"
+base_dir = "/home/adam/rasberry_ws/src/RASberry/rasberry_navigation/maps"
+infile = "riseholme-uv_poly_act_sim_2.tmap"
+outfile = "riseholme-uv_poly_act_sim_3.tmap"
 
-edges = [[131,120],[120,131],[132,119],[119,132],[133,110],[110,133]]
-edges.extend([[134,101],[101,134],[138,84],[84,138],[139,83],[83,139]])
+edge_action = "row_traversal"
+edges = [[131,120],[120,131],[132,119],[119,132],[133,110]]
+edges.extend([[110,133],[134,101],[101,134],[138,84],[84,138]])
 edges.extend([[57,46],[46,57],[58,45],[45,58],[59,36],[36,59]])
-edges.extend([[60,27],[27,60],[64,10],[10,64],[65,9],[9,65]])
+edges.extend([[60,27],[27,60],[64,10],[10,64]])
 
 
 f_in = base_dir + "/" + infile        
@@ -37,7 +38,7 @@ for edge in edges:
             
             print "adding edge " + edge_id
             
-            new_edge = {'action': 'move_base',
+            new_edge = {'action':   edge_action,
                         'edge_id': edge_id,
                         'inflation_radius': 0.0,
                         'map_2d': 'riseholme',
