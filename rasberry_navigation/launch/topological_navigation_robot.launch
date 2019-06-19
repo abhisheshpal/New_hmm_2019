@@ -35,6 +35,7 @@
     <param name="retries" type="int" value="$(arg topological_navigation_retries)"/>
     <param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/>
     <param name="reconfigure_edges" type="bool" value="$(arg reconfigure_edges)"/>
+    <rosparam param="move_base_actions">['row_traversal','move_base', 'human_aware_navigation','han_adapt_speed','han_vc_corridor','han_vc_junction']</rosparam>
   </node>
 
 </launch>
