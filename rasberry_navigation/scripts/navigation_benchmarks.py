@@ -3,69 +3,99 @@
 import rospy
 import sys
 import math
-import std_srvs
-import socket
-
-# Brings in the SimpleActionClient
-from std_srvs.srv import SetBool
-import actionlib
-import topological_navigation.msg
 import yaml
+import json
+import socket
+import time
+import requests
+
+import actionlib
+import std_srvs
+from std_srvs.srv import SetBool
+import topological_navigation.msg
+
 from geometry_msgs.msg import Pose
 
-class topol_nav_patrol(object):
+
+class nav_benchmark(object):
     
     def __init__(self, filename) :
+        self.hostname=None       
+        
+        
         self.cancel=False
         self.pause=False
         self.robot_pose = None
+
         rospy.on_shutdown(self._on_node_shutdown)
+        
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
         self.total_dist = 0.0        
 
-
+        topo_map = rospy.get_param('/topological_map_name','none')
+        self.hostname= socket.gethostname()
+        rospy.loginfo("Benchmarking Navigation in: %s" %self.hostname)        
         print "starting benchmarking in: "
-        print(socket.gethostname())        
+        
+        
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         
-        rospy.Service('/patroller_pause', SetBool, self.pause_cb)
+        rospy.Service('/benchmark_pause', SetBool, self.pause_cb)
         wplist = self.open_waypoint_list(filename)
         start_time = rospy.Time.now()
-        
+        start_date =  time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         navtasks=0
         while not self.cancel:
             for i in wplist:
                 self.navigate_to_waypoint(i)
-                rospy.sleep(0.5)
-                while self.pause:
+                #rospy.sleep(0.5)
+                while self.pause and not self.cancel:
                     rospy.sleep(0.5)
                 if self.cancel:
                     break
                 navtasks+=1
-
+                print (rospy.Time.now() - start_time).secs, self.total_dist, navtasks
+                
         end_time = rospy.Time.now()
-        
+        end_date = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         opr_time = end_time - start_time
         
         d={}
-        d['navtaks']=navtasks
-        d['op_time']=opr_time
-        d['end_time']=end_time
-        d['start_time']=start_time
+        d['robot']=self.hostname
+        d['scenario']='navigation benchmarks'
+        d['navigation_tasks']=navtasks
+        d["start_epoch"]=start_time.secs
+        d["end_epoch"]=end_time.secs
+        d['operation_time']=opr_time.secs
+        d['end_date']=end_date
+        d['start_date']=start_date
         d['total_dist']=self.total_dist
+        d['map']= topo_map
+        d['tmap']= topo_map
 
-        yml = yaml.safe_dump(d, default_flow_style=False)
+
+#        yml = yaml.safe_dump(d, default_flow_style=False)
             #print yml
             #print s_output
         filename= str(rospy.Time.now().secs)
         fh = open(filename, "w")
-        s_output = str(yml)
+#        s_output = str(yml)
+#        print s_output
+#        fh.write(s_output)
+        
+        jsn = json.dumps(d)
+        print jsn
+
+        s_output = str(jsn)
         print s_output
         fh.write(s_output)
+        
         fh.close()
+
+        requests.post('https://script.google.com/macros/s/AKfycbxy1ekygUzxROVlPKU_frO2u68cBx7ti3NNVtLzpoOymxSVyjv-/exec', json=d)
 
         print self.total_dist, start_time, end_time, opr_time
 
@@ -132,6 +162,6 @@ if __name__ == '__main__':
     print 'Argument List:',str(sys.argv)
     if len(sys.argv) < 2 :
 	sys.exit(2)
-    rospy.init_node('topol_nav_test')
-    ps = topol_nav_patrol(sys.argv[1])
+    rospy.init_node('navigation_benchmarking')
+    ps = nav_benchmark(sys.argv[1])
     
