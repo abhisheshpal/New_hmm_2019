@@ -59,7 +59,7 @@ init_cmd: |
 windows:
 - name: init
   panes:
-  - roscore
+  - roslaunch rasberry_bringup roscore.launch use_sim:=$USE_SIM
   - sleep 3; mkdir -p "$MONGO_PATH" && roslaunch mongodb_store mongodb_store.launch db_path:=$MONGO_PATH
   - sleep 3; if [ -r "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.yaml" ]; then rosparam load "$BASE_CONFIG_DIR/robots/$ROBOT_NAME.yaml"; fi
 - name: robot
