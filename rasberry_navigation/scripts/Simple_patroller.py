@@ -45,6 +45,7 @@ class topol_nav_patrol(object):
                 if self.cancel:
                     break
                 navtasks+=1
+                print navtasks, self.total_dist, rospy.Time.now() - start_time
 
         end_time = rospy.Time.now()
         
@@ -52,9 +53,9 @@ class topol_nav_patrol(object):
         
         d={}
         d['navtaks']=navtasks
-        d['op_time']=opr_time
-        d['end_time']=end_time
-        d['start_time']=start_time
+        d['op_time']=float(opr_time.to_sec())
+        #d['end_time']=end_time
+        #d['start_time']=start_time
         d['total_dist']=self.total_dist
 
         yml = yaml.safe_dump(d, default_flow_style=False)
