@@ -14,14 +14,19 @@ import std_srvs
 from std_srvs.srv import SetBool
 import topological_navigation.msg
 
-from geometry_msgs.msg import Pose
+from geometry_msgs.msg import Pose, PoseWithCovarianceStamped
 
 
 class nav_benchmark(object):
     
     def __init__(self, filename) :
         self.hostname=None       
-        
+        self._cov_xx=[]
+        self._cov_xy=[]
+        self._cov_xw=[]
+        self._cov_yy=[]
+        self._cov_yw=[]
+        self._cov_ww=[]
         
         self.cancel=False
         self.pause=False
@@ -42,6 +47,8 @@ class nav_benchmark(object):
         rospy.loginfo(" ... Init done")
 
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
+        rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, self.amcl_pose_cb)
+
         
         rospy.Service('/benchmark_pause', SetBool, self.pause_cb)
         wplist = self.open_waypoint_list(filename)
@@ -123,6 +130,17 @@ class nav_benchmark(object):
             self.total_dist += pd
             
         self.robot_pose = msg    
+    
+    
+    def amcl_pose_cb(self, msg):
+        self._cov_xx.append(msg.pose.covariance[0])
+        self._cov_xy.append(msg.pose.covariance[1])
+        self._cov_xw.append(msg.pose.covariance[5])
+        self._cov_yy.append(msg.pose.covariance[7])
+        self._cov_yw.append(msg.pose.covariance[11])
+        self._cov_ww.append(msg.pose.covariance[35])
+    
+    
     
     def open_waypoint_list(self, filename):
                 
