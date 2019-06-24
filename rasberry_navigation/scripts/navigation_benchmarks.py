@@ -1,8 +1,11 @@
 #! /usr/bin/env python
 
+
+
 import rospy
 import sys
 import math
+import numpy as np
 import yaml
 import json
 import socket
@@ -11,6 +14,8 @@ import requests
 
 import actionlib
 import std_srvs
+
+from std_msgs.msg import Bool
 from std_srvs.srv import SetBool
 import topological_navigation.msg
 
@@ -31,6 +36,8 @@ class nav_benchmark(object):
         self.cancel=False
         self.pause=False
         self.robot_pose = None
+        self.user_interventions=0
+        self._user_lock=False
 
         rospy.on_shutdown(self._on_node_shutdown)
         
@@ -48,6 +55,8 @@ class nav_benchmark(object):
 
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, self.amcl_pose_cb)
+        rospy.Subscriber('/joy_priority', Bool, self.joy_lock_cb)
+
 
         
         rospy.Service('/benchmark_pause', SetBool, self.pause_cb)
@@ -82,11 +91,20 @@ class nav_benchmark(object):
         d['total_dist']=self.total_dist
         d['map']= topo_map
         d['tmap']= topo_map
+        d['max_cov_xx'] = np.max(np.asarray(self._cov_xx, dtype=np.float32))
+        d['max_cov_xy'] = np.max(np.asarray(self._cov_xy, dtype=np.float32))
+        d['max_cov_xw'] = np.max(np.asarray(self._cov_xw, dtype=np.float32))
+        d['max_cov_yy'] = np.max(np.asarray(self._cov_yy, dtype=np.float32))
+        d['max_cov_yw'] = np.max(np.asarray(self._cov_yw, dtype=np.float32))
+        d['max_cov_ww'] = np.max(np.asarray(self._cov_ww, dtype=np.float32))
+        d['mean_cov_xx'] = np.average(np.asarray(self._cov_xx, dtype=np.float32))
+        d['mean_cov_xy'] = np.average(np.asarray(self._cov_xy, dtype=np.float32))
+        d['mean_cov_xw'] = np.average(np.asarray(self._cov_xw, dtype=np.float32))
+        d['mean_cov_yy'] = np.average(np.asarray(self._cov_yy, dtype=np.float32))
+        d['mean_cov_yw'] = np.average(np.asarray(self._cov_yw, dtype=np.float32))
+        d['mean_cov_ww'] = np.average(np.asarray(self._cov_ww, dtype=np.float32))
+        d['user_interventions'] = self.user_interventions
 
-
-#        yml = yaml.safe_dump(d, default_flow_style=False)
-            #print yml
-            #print s_output
         filename= str(rospy.Time.now().secs)
         fh = open(filename, "w")
 #        s_output = str(yml)
@@ -139,8 +157,14 @@ class nav_benchmark(object):
         self._cov_yy.append(msg.pose.covariance[7])
         self._cov_yw.append(msg.pose.covariance[11])
         self._cov_ww.append(msg.pose.covariance[35])
+
     
-    
+    def joy_lock_cb(self, msg):
+        if msg.data:            
+            if not self._user_lock:
+                self.user_interventions+=1
+        
+        self._user_lock=msg.data
     
     def open_waypoint_list(self, filename):
                 
