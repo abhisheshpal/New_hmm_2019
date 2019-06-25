@@ -91,19 +91,22 @@ class nav_benchmark(object):
         d['total_dist']=self.total_dist
         d['map']= topo_map
         d['tmap']= topo_map
-        d['max_cov_xx'] = np.max(np.asarray(self._cov_xx, dtype=np.float32))
-        d['max_cov_xy'] = np.max(np.asarray(self._cov_xy, dtype=np.float32))
-        d['max_cov_xw'] = np.max(np.asarray(self._cov_xw, dtype=np.float32))
-        d['max_cov_yy'] = np.max(np.asarray(self._cov_yy, dtype=np.float32))
-        d['max_cov_yw'] = np.max(np.asarray(self._cov_yw, dtype=np.float32))
-        d['max_cov_ww'] = np.max(np.asarray(self._cov_ww, dtype=np.float32))
-        d['mean_cov_xx'] = np.average(np.asarray(self._cov_xx, dtype=np.float32))
-        d['mean_cov_xy'] = np.average(np.asarray(self._cov_xy, dtype=np.float32))
-        d['mean_cov_xw'] = np.average(np.asarray(self._cov_xw, dtype=np.float32))
-        d['mean_cov_yy'] = np.average(np.asarray(self._cov_yy, dtype=np.float32))
-        d['mean_cov_yw'] = np.average(np.asarray(self._cov_yw, dtype=np.float32))
-        d['mean_cov_ww'] = np.average(np.asarray(self._cov_ww, dtype=np.float32))
+        d['max_cov_xx'] = float(np.max(np.asarray(self._cov_xx, dtype=np.float32)))
+        d['max_cov_xy'] = float(np.max(np.asarray(self._cov_xy, dtype=np.float32)))
+        d['max_cov_xw'] = float(np.max(np.asarray(self._cov_xw, dtype=np.float32)))
+        d['max_cov_yy'] = float(np.max(np.asarray(self._cov_yy, dtype=np.float32)))
+        d['max_cov_yw'] = float(np.max(np.asarray(self._cov_yw, dtype=np.float32)))
+        d['max_cov_ww'] = float(np.max(np.asarray(self._cov_ww, dtype=np.float32)))
+        d['mean_cov_xx'] = float(np.average(np.asarray(self._cov_xx, dtype=np.float32)))
+        d['mean_cov_xy'] = float(np.average(np.asarray(self._cov_xy, dtype=np.float32)))
+        d['mean_cov_xw'] = float(np.average(np.asarray(self._cov_xw, dtype=np.float32)))
+        d['mean_cov_yy'] = float(np.average(np.asarray(self._cov_yy, dtype=np.float32)))
+        d['mean_cov_yw'] = float(np.average(np.asarray(self._cov_yw, dtype=np.float32)))
+        d['mean_cov_ww'] = float(np.average(np.asarray(self._cov_ww, dtype=np.float32)))
         d['user_interventions'] = self.user_interventions
+
+
+        requests.post('https://script.google.com/macros/s/AKfycbxy1ekygUzxROVlPKU_frO2u68cBx7ti3NNVtLzpoOymxSVyjv-/exec', json=d)
 
         filename= str(rospy.Time.now().secs)
         fh = open(filename, "w")
@@ -119,8 +122,6 @@ class nav_benchmark(object):
         fh.write(s_output)
         
         fh.close()
-
-        requests.post('https://script.google.com/macros/s/AKfycbxy1ekygUzxROVlPKU_frO2u68cBx7ti3NNVtLzpoOymxSVyjv-/exec', json=d)
 
         print self.total_dist, start_time, end_time, opr_time
 
