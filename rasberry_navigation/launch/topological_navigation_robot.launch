@@ -17,12 +17,7 @@
   <arg name="steering_type" value="omni" if="$(arg use_omni)"/>
   <arg name="steering_type" value="diff" unless="$(arg use_omni)"/>
 
-  <arg name="multi_robot" default="false"/>
-
-
   <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
-
-  <rosparam command="load" file="$(find rasberry_navigation)/config/topological_presence_topics.yaml" if="$(arg multi_robot)"/>
 
   <rosparam command="load" file="$(find rasberry_navigation)/config/$(arg scenario)_$(arg steering_type)_edge_reconfig_groups.yaml" if="$(arg reconfigure_edges)"/>
 
