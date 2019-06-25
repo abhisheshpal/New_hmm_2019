@@ -45,6 +45,7 @@ init_cmd: |
   export ROS_MASTER_URI="http://$ROS_MASTER:11311/"
   export_default ROSBRIDGE_IP "10.8.0.4"
   export_default ROSBRIDGE_PORT "9090"
+  export_default MIMIC_DES_CONFIG $(rospack find rasberry_des)/config/mimic_riseholme_des.yaml
 windows:
 - name: init
   panes:
@@ -59,10 +60,13 @@ windows:
 - name: callarobot
   panes:
   - WEBSOCKET_URL='wss://lcas.lincoln.ac.uk/car/ws' python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-  - rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_$SCENARIO_NAME.yaml
+  - roslaunch rasberry_coordination simple_task_coordinator.launch scenario:=$SCENARIO_NAME
 - name: coordination_server
   panes:
-  - roslaunch rasberry_coordination coordination.launch
+  - roslaunch rasberry_coordination coordination.launch rosbridge_port:=$ROSBRIDGE_PORT
+- name: des
+  panes:
+  - echo "rosrun rasberry_des mimic_longpicks.py $MIMIC_DES_CONFIG"
 - name: debug
   panes:
   - ls
