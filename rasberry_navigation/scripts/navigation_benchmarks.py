@@ -18,6 +18,8 @@ import std_srvs
 from std_msgs.msg import Bool
 from std_srvs.srv import SetBool
 import topological_navigation.msg
+from sensor_msgs.msg import LaserScan
+
 
 from geometry_msgs.msg import Pose, PoseWithCovarianceStamped
 
@@ -38,6 +40,9 @@ class nav_benchmark(object):
         self.robot_pose = None
         self.user_interventions=0
         self._user_lock=False
+        self.min_scan_range=100.0
+        self.dist2obs=[]
+
 
         rospy.on_shutdown(self._on_node_shutdown)
         
@@ -55,13 +60,13 @@ class nav_benchmark(object):
 
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, self.amcl_pose_cb)
-        rospy.Subscriber('/joy_priority', Bool, self.joy_lock_cb)
-
+        rospy.Subscriber('/teleop_joy/joy_priority', Bool, self.joy_lock_cb)
+        rospy.Subscriber('/scan', LaserScan, self.scan_cb)
 
         
         rospy.Service('/benchmark_pause', SetBool, self.pause_cb)
         wplist = self.open_waypoint_list(filename)
-        start_time = rospy.Time.now()
+        start_time = time.time()
         start_date =  time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         navtasks=0
         while not self.cancel:
@@ -73,42 +78,46 @@ class nav_benchmark(object):
                 if self.cancel:
                     break
                 navtasks+=1
-                print (rospy.Time.now() - start_time).secs, self.total_dist, navtasks
+                print time.time() - start_time, self.total_dist, navtasks
                 
-        end_time = rospy.Time.now()
+        end_time = time.time()
         end_date = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         opr_time = end_time - start_time
         
         d={}
         d['robot']=self.hostname
         d['scenario']='navigation benchmarks'
-        d['navigation_tasks']=navtasks
-        d["start_epoch"]=start_time.secs
-        d["end_epoch"]=end_time.secs
-        d['operation_time']=opr_time.secs
-        d['end_date']=end_date
+        d["start_epoch"]=start_time
+        d["end_epoch"]=end_time
+        d['operation_time']=opr_time
         d['start_date']=start_date
         d['total_dist']=self.total_dist
-        d['map']= topo_map
+        d['average_speed']= self.total_dist/opr_time
         d['tmap']= topo_map
+        d['user_interventions'] = self.user_interventions
+        d['navigation_tasks']=navtasks
+        d['end_date']=end_date
+        d['map']= topo_map
+        d['min_dist_to_obs'] = self.min_scan_range
+        d['mean_dist_to_obs'] = float(np.average(np.asarray(self.dist2obs, dtype=np.float32)))
         d['max_cov_xx'] = float(np.max(np.asarray(self._cov_xx, dtype=np.float32)))
         d['max_cov_xy'] = float(np.max(np.asarray(self._cov_xy, dtype=np.float32)))
-        d['max_cov_xw'] = float(np.max(np.asarray(self._cov_xw, dtype=np.float32)))
         d['max_cov_yy'] = float(np.max(np.asarray(self._cov_yy, dtype=np.float32)))
-        d['max_cov_yw'] = float(np.max(np.asarray(self._cov_yw, dtype=np.float32)))
         d['max_cov_ww'] = float(np.max(np.asarray(self._cov_ww, dtype=np.float32)))
         d['mean_cov_xx'] = float(np.average(np.asarray(self._cov_xx, dtype=np.float32)))
         d['mean_cov_xy'] = float(np.average(np.asarray(self._cov_xy, dtype=np.float32)))
-        d['mean_cov_xw'] = float(np.average(np.asarray(self._cov_xw, dtype=np.float32)))
         d['mean_cov_yy'] = float(np.average(np.asarray(self._cov_yy, dtype=np.float32)))
-        d['mean_cov_yw'] = float(np.average(np.asarray(self._cov_yw, dtype=np.float32)))
         d['mean_cov_ww'] = float(np.average(np.asarray(self._cov_ww, dtype=np.float32)))
-        d['user_interventions'] = self.user_interventions
+        
 
 
         requests.post('https://script.google.com/macros/s/AKfycbxy1ekygUzxROVlPKU_frO2u68cBx7ti3NNVtLzpoOymxSVyjv-/exec', json=d)
 
-        filename= str(rospy.Time.now().secs)
+
+
+
+
+        filename= str(int(time.time()))+'.json'
         fh = open(filename, "w")
 #        s_output = str(yml)
 #        print s_output
@@ -154,12 +163,18 @@ class nav_benchmark(object):
     def amcl_pose_cb(self, msg):
         self._cov_xx.append(msg.pose.covariance[0])
         self._cov_xy.append(msg.pose.covariance[1])
-        self._cov_xw.append(msg.pose.covariance[5])
         self._cov_yy.append(msg.pose.covariance[7])
-        self._cov_yw.append(msg.pose.covariance[11])
         self._cov_ww.append(msg.pose.covariance[35])
 
+        print msg.pose.covariance[0], msg.pose.covariance[1], msg.pose.covariance[7], msg.pose.covariance[35]
+
     
+    def scan_cb(self, msg):
+        min_range = min(x for x in msg.ranges if x > msg.range_min)
+        self.min_scan_range=min(self.min_scan_range, min_range)
+        self.dist2obs.append(min_range)
+        
+
     def joy_lock_cb(self, msg):
         if msg.data:            
             if not self._user_lock:
