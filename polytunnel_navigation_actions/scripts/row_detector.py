@@ -16,27 +16,13 @@ from sklearn import linear_model
 class row_detector(object):
     
     
-    def __init__(self, config, clf):
+    def __init__(self, config_ellipses, ep):
         
-        self.ONE_LINE = config["one_line"]
-        self.RX = config["rx"]
-        self.RY = config["ry"]
-        self.EPS = config["eps"]
-        self.MIN_SAMPLES_DBSCAN = config["min_samples_dbscan"]
-        self.MIN_SAMPLES_RANSAC = config["min_samples_ransac"]
-        self.RESIDUAL_THRESHOLD = config["residual_threshold"]
-        self.NUM_ATTEMPTED_FITS = config["num_attempted_fits"]
-        self.LINE_GRANULARITY = config["line_granularity"]
-        self.MIN_NUM_POLES = config["min_num_poles"]
-        self.clf = clf
+        self.config = config_ellipses
+        self.ep = ep
         self.is_active= False
         
         rospy.Subscriber("/scan", LaserScan, self.scan_callback)
-        
-        self.db = DBSCAN(eps=self.EPS, min_samples=self.MIN_SAMPLES_DBSCAN)
-        
-        self.ransac = linear_model.RANSACRegressor(
-        residual_threshold=self.RESIDUAL_THRESHOLD, min_samples=self.MIN_SAMPLES_RANSAC)
         
         self.path_err_pub = \
         rospy.Publisher("/row_detector/path_error", Pose2D, queue_size=10)
@@ -48,8 +34,8 @@ class row_detector(object):
         rospy.Publisher("/row_detector/obstacles", ObstacleArray, queue_size=10)
 
         rospy.Service('/row_detector/activate_detection', SetBool, self.activate_callback)
-    
-    
+        
+        
     def activate_callback(self, req):
 
         self.is_active=req.data
@@ -59,55 +45,142 @@ class row_detector(object):
 
         return ans
         
-
+        
     def scan_callback(self, scan):
 
         if self.is_active:
-            self.poles_identified = False
             
             angles = np.arange(scan.angle_min, scan.angle_max, scan.angle_increment)
             ranges = np.array(scan.ranges)
             
-            self.xs = ranges * np.cos(angles)
-            self.ys = ranges * np.sin(angles)
+            xs = ranges * np.cos(angles)
+            ys = ranges * np.sin(angles)
             
-            self.filter_by_elipse()
-            self.xs_all = self.xs
-            self.ys_all = self.ys
-            self.filter_by_svm()
+            success = True        
+            lines_x = []
+            lines_y = []
+            pole_array = []
+            obstacle_array = []
             
-            if self.poles_identified:
-                if self.ONE_LINE:
-                    error_y, error_theta = self.fit_one_line()
-                else:
-                    error_y, error_theta = self.fit_two_lines()
+            for ellipse in self.config:
+                
+                data = self.ep.process(ellipse, xs, ys)
+                
+                if ellipse["detect_rows"] and ellipse["fit_required"] and not data["fitted"]:
+                    success = False
+                
+                if ellipse["detect_rows"] and data["fitted"]:
+                    lines_x.append(data["lines_x"])
+                    lines_y.append(data["lines_y"])
+                    
+                if ellipse["publish_poles"]:
+                    pole_array.append(data["pole_array"])
+                    
+                if ellipse["publish_obstacles"]:
+                    obstacle_array.append(data["obstacle_array"])
+    
+            lines_x = self.flatten(lines_x)        
+            lines_y = self.flatten(lines_y) 
+            self.pole_array = self.flatten(pole_array)        
+            self.obstacle_array = self.flatten(obstacle_array)      
+    
+            if success:            
+                self.error_y, self.error_theta = self.calc_error(lines_x, lines_y)    
             else:
-                error_y = np.NaN; error_theta = np.NaN
+                self.error_y = np.nan; self.error_theta = np.nan
+                
+            self.publish_msgs()
             
-            path_error = Pose2D()
-            path_error.x = np.NaN
-            path_error.y = error_y
-            path_error.theta = error_theta
             
-            poles = ObstacleArray()
-            poles.obstacles = self.pole_array
-            
-            obstacles = ObstacleArray()
-            obstacles.obstacles = self.obstacle_array
-            
-            self.path_err_pub.publish(path_error)
-            self.poles_pub.publish(poles)
-            self.obstacles_pub.publish(obstacles)
-            
+    def flatten(self, list_):
+        return [item for sublist in list_ for item in sublist]
+    
+    
+    def calc_error(self, lines_x, lines_y):
         
-    def filter_by_elipse(self):
+        try:
+            centre_x = np.mean(np.concatenate(lines_x, axis=1), axis=1)
+            centre_y = np.mean(np.concatenate(lines_y, axis=1), axis=1)
+    
+            error_y = centre_y[np.argmin(np.sqrt(centre_x**2 + centre_y**2))]
+            error_theta = np.arctan2((centre_y[-1] - centre_y[0]), (centre_x[-1] - centre_x[0])) 
+            
+            if error_theta > 0.79:
+                error_y = np.nan; error_theta = np.nan  
+                
+        except:
+            error_y = np.nan; error_theta = np.nan  
+            
+        return error_y, error_theta    
         
-        indices_elipse = np.where((self.xs**2/self.RX**2 + self.ys**2/self.RY**2) <= 1)[0]
-        self.xs = self.xs[indices_elipse]
-        self.ys = self.ys[indices_elipse]
+        
+    def publish_msgs(self):
+        
+        path_error = Pose2D()
+        path_error.x = np.nan
+        path_error.y = self.error_y
+        path_error.theta = self.error_theta
+        
+        poles = ObstacleArray()
+        poles.obstacles = self.pole_array
+        
+        obstacles = ObstacleArray()
+        obstacles.obstacles = self.obstacle_array
+        
+        self.path_err_pub.publish(path_error)
+        self.poles_pub.publish(poles)
+        self.obstacles_pub.publish(obstacles)
+#####################################################################################
 
+
+#####################################################################################
+class ellipse_processor(object):
+    
+    
+    def __init__(self, config_common, clf):
         
-    def filter_by_svm(self):
+        self.config = config_common
+        self.clf = clf
+        
+        self.db = DBSCAN(eps=self.config["eps"], 
+                         min_samples=self.config["min_samples_dbscan"])
+        
+        self.ransac = linear_model.RANSACRegressor(
+                      residual_threshold=self.config["residual_threshold"], 
+                      min_samples=self.config["min_samples_ransac"])
+                      
+                      
+    def process(self, ellipse, xs, ys):
+        
+        self.poles_identified = False
+        self.data = {"fitted": False, "lines_x": [], "lines_y": []}
+        
+        indices_ellipse = np.where(((xs - ellipse["x"])**2 / ellipse["rx"]**2 + (ys - ellipse["y"])**2 / ellipse["ry"]**2) <= 1)[0]
+        self.xs = xs[indices_ellipse]
+        self.ys = ys[indices_ellipse]
+        
+        self.xs_all = self.xs
+        self.ys_all = self.ys
+        
+        self.classify()
+        self.data["pole_array"] = self.pole_array
+        self.data["obstacle_array"] = self.obstacle_array
+        
+        if self.poles_identified:
+            if ellipse["split"]:
+                self.fit_two_lines(ellipse)
+            else:
+                self.fit_one_line(ellipse)
+        
+        return self.data
+        
+        
+    def classify(self):
+        
+        pole_clusters = []
+        muys = []          
+        self.pole_array = []
+        self.obstacle_array = []
         
         X = np.vstack((self.xs, self.ys)).T
         
@@ -116,14 +189,8 @@ class row_detector(object):
         except:
             return
             
-        labels = self.db.labels_
+        labels = self.db.labels_        
         
-        pole_clusters = []
-        pole_xs = []
-        pole_ys = []
-        self.pole_array = []
-        self.obstacle_array = []
-
         for label in set(labels):
             if label == -1:
                 continue
@@ -149,8 +216,7 @@ class row_detector(object):
             
             if is_pole:
                 pole_clusters.append(cluster)
-                pole_xs.append(self.mux)
-                pole_ys.append(self.muy)
+                muys.append(self.muy)
                 self.pole_array.append(obstacle)
             else:
                 self.obstacle_array.append(obstacle)
@@ -159,9 +225,7 @@ class row_detector(object):
             pole_clusters = np.concatenate(pole_clusters, axis=0)
             self.xs = pole_clusters[:, 0]
             self.ys = pole_clusters[:, 1]
-            
-            self.pole_xs = np.array(pole_xs)
-            self.pole_ys = np.array(pole_ys)
+            self.muys = np.array(muys)            
             
             self.poles_identified = True
             
@@ -175,83 +239,73 @@ class row_detector(object):
         msg.header.frame_id = "/base_link"
         msg.pose.x = self.mux
         msg.pose.y = self.muy
-        msg.pose.theta = np.NaN
+        msg.pose.theta = np.nan
         msg.radius = np.max(self.eds)
         
         return msg
-                
+    
+    
+    def fit_one_line(self, ellipse):
         
-    def fit_one_line(self):
-
-        if len(self.pole_array) < self.MIN_NUM_POLES: 
+        if len(self.muys) < ellipse["min_num_poles"]:
             line_fitted = self.fit_line(self.xs_all, self.ys_all)
-            self.obstacle_array = []
         else:
             line_fitted = self.fit_line(self.xs, self.ys)
-        
-        if line_fitted:
-            error_y, error_theta = self.calc_error(self.line_x, self.line_y)
-        else:
-            error_y = np.NaN; error_theta = np.NaN
             
-        return error_y, error_theta
+        if line_fitted:
+            self.data["lines_x"].append(self.line_x)
+            self.data["lines_y"].append(self.line_y)
+            self.data["fitted"] = True
+
         
+    def fit_two_lines(self, ellipse):
         
-    def fit_two_lines(self):
+        num_poles_region_1 = len(np.where(self.muys >= ellipse["y"])[0])
+        num_poles_region_2 = len(np.where(self.muys < ellipse["y"])[0])
         
-        num_poles_region_1 = len(np.where(self.pole_ys >= 0)[0])
-        num_poles_region_2 = len(np.where(self.pole_ys < 0)[0])
-        
-        if num_poles_region_1 < self.MIN_NUM_POLES: 
+        if num_poles_region_1 < ellipse["min_num_poles"]: 
             indices_region_1 = np.where(self.ys_all >= 0)[0]
             xs_region_1 = self.xs_all[indices_region_1]
             ys_region_1 = self.ys_all[indices_region_1]  
-            self.obstacle_array = []
         else:
             indices_region_1 = np.where(self.ys >= 0)[0]
             xs_region_1 = self.xs[indices_region_1]
             ys_region_1 = self.ys[indices_region_1]  
             
-        if num_poles_region_2 < self.MIN_NUM_POLES: 
+        if num_poles_region_2 < ellipse["min_num_poles"]: 
             indices_region_2 = np.where(self.ys_all < 0)[0]
             xs_region_2 = self.xs_all[indices_region_2]
             ys_region_2 = self.ys_all[indices_region_2]
-            self.obstacle_array = []
         else:
             indices_region_2 = np.where(self.ys < 0)[0]
             xs_region_2 = self.xs[indices_region_2]
             ys_region_2 = self.ys[indices_region_2]
-            
+        
         line_fitted_region_1 = self.fit_line(xs_region_1, ys_region_1)
         if line_fitted_region_1:
-            line_x_region_1 = self.line_x
-            line_y_region_1 = self.line_y
+            self.data["lines_x"].append(self.line_x)
+            self.data["lines_y"].append(self.line_y)
         
         line_fitted_region_2 = self.fit_line(xs_region_2, ys_region_2)
         if line_fitted_region_2:
-            line_x_region_2 = self.line_x
-            line_y_region_2 = self.line_y
+            self.data["lines_x"].append(self.line_x)
+            self.data["lines_y"].append(self.line_y)
             
         if line_fitted_region_1 and line_fitted_region_2:
-            centre_x = np.mean(np.hstack((line_x_region_1, line_x_region_2)), axis=1)
-            centre_y = np.mean(np.hstack((line_y_region_1, line_y_region_2)), axis=1)
-            error_y, error_theta = self.calc_error(centre_x, centre_y)
-        else:
-            error_y = np.NaN; error_theta = np.NaN
+            self.data["fitted"] = True
             
-        return error_y, error_theta
-        
-        
+
     def fit_line(self, xs, ys):
         
         line_fitted = False
-        for try_ in range(self.NUM_ATTEMPTED_FITS):
+        X = xs.reshape(-1, 1)
+        for try_ in range(self.config["num_attempted_fits"]):
             
-            try:    
-                self.ransac.fit(xs.reshape(-1, 1), ys)
+            try:
+                self.ransac.fit(X, ys)
                 x_inlier = xs[self.ransac.inlier_mask_]
                 
-                self.line_x = np.linspace(np.min(x_inlier), np.max(x_inlier), self.LINE_GRANULARITY)[:, np.newaxis]
+                self.line_x = np.linspace(np.min(x_inlier), np.max(x_inlier), self.config["line_granularity"])[:, np.newaxis]
                 self.line_y = self.ransac.predict(self.line_x).reshape(-1, 1)
                      
                 line_fitted = True
@@ -261,16 +315,8 @@ class row_detector(object):
             
             if line_fitted:
                 break
-            
+    
         return line_fitted
-        
-        
-    def calc_error(self, centre_x, centre_y):
-        
-        error_y = centre_y[np.argmin(np.sqrt(centre_x**2 + centre_y**2))]
-        error_theta = np.arctan2((centre_y[-1] - centre_y[0]), (centre_x[-1] - centre_x[0])) # angle of centre line wrt x-axis
-        
-        return error_y, error_theta
 #####################################################################################
 
 
@@ -279,20 +325,25 @@ if __name__ == "__main__":
     
     rospy.init_node("row_detector", anonymous=True)
     
-    if len(sys.argv) < 2:
-        rospy.logerr("usage is row_detector.py path_to_config_yaml")
+    if len(sys.argv) < 3:
+        rospy.logerr("usage is row_detector.py path_to_common_cfg_yaml path_to_ellipse_cfg_yaml")
         exit()
     else:
         print sys.argv
-        config_path = sys.argv[1]
-
-    with open(config_path, 'r') as f:
-        config = yaml.load(f)
+        common_cfg_path = sys.argv[1]
+        ellipse_cfg_path = sys.argv[2]
+        
+    with open(common_cfg_path, 'r') as f:
+        config_common = yaml.load(f)
+        
+    with open(ellipse_cfg_path, 'r') as f:
+        config_ellipses = yaml.load(f)
         
     package_dir = rospkg.RosPack().get_path("polytunnel_navigation_actions")   
     clf = joblib.load(package_dir + "/resources/svm/svm.pkl" )
-    
-    rd = row_detector(config, clf)
+
+    ep = ellipse_processor(config_common, clf)    
+    rd = row_detector(config_ellipses, ep)
     
     rospy.spin()
 #####################################################################################

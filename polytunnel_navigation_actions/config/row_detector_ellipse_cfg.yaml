@@ -1,0 +1,25 @@
+# PARAMETERS OF ELIPTICAL REGIONS
+
+#- x:                             float. x origin of elipse wrt to base link
+#  y:                             float. y origin of elipse wrt to base link
+#  rx:                            float. radius in x of elipse
+#  ry:                            float. radius in y of elipse
+#  publish_poles:                 bool. publish poles detected in this elipse
+#  publish_obstacles:             bool. publish obstacles detected in this elipse
+#  detect_rows:                   bool. detect rows (fit lines) in this ellipse. If false then params below are irrelevant
+#  split:                         bool. Split elipse in half along its x origin and fit lines in each region. 
+#  strict:                        bool. A line must be fitted in this ellipse in order for the path error to be computed. If split then lines must be fitted in each region.
+#  min_num_poles:                 int. If < min_num_poles detected then a line/lines are fitted to all data in the elipse/each region of elipse.
+
+
+- x: 0.0
+  y: 0.0
+  rx: 7.0
+  ry: 1.5
+  publish_poles: true
+  publish_obstacles: true
+  detect_rows: true
+  split: true
+  fit_required: true
+  min_num_poles: 0
+
