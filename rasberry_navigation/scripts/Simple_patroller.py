@@ -4,6 +4,8 @@ import rospy
 import sys
 import math
 import std_srvs
+import socket
+
 # Brings in the SimpleActionClient
 from std_srvs.srv import SetBool
 import actionlib
@@ -20,7 +22,10 @@ class topol_nav_patrol(object):
         rospy.on_shutdown(self._on_node_shutdown)
         self.client = actionlib.SimpleActionClient('topological_navigation', topological_navigation.msg.GotoNodeAction)
         self.total_dist = 0.0        
-        
+
+
+        print "starting benchmarking in: "
+        print(socket.gethostname())        
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
