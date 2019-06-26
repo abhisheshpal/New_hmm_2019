@@ -7,7 +7,7 @@
   <link name="$(arg tf_prefix)/base_sensors"/>
   <link name="$(arg tf_prefix)/septentrio"/>
   <link name="$(arg tf_prefix)/xsens"/>
-  <link name="$(arg tf_prefix)/velodyne"/>
+  <link name="$(arg tf_prefix)/os1_sensor"/>
 
   <!-- Hokuyo Laser -->
   <link name="$(arg tf_prefix)/hokuyo_front">
@@ -89,11 +89,11 @@
     <origin xyz="0.172 -0.152 -0.034" rpy="0.0 0.0 -0.79"/>
   </joint>
 
- <joint name="base_sens_velodyne" type="fixed">
+ <joint name="base_sens_ouster" type="fixed">
     <parent link="$(arg tf_prefix)/base_sensors"/>
-    <child link="$(arg tf_prefix)/velodyne"/>
+    <child link="$(arg tf_prefix)/os1_sensor"/>
     <axis xyz="0 1 0" />
-    <origin xyz="0 0 0" rpy="0 0 3.14159"/>
+    <origin xyz="0 0 0" rpy="0 0 0"/>
   </joint>
 
   <!--hokuyo-->
