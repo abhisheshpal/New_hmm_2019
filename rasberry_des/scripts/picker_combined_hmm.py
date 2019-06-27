@@ -2,13 +2,6 @@
 """
 Created on Fri May 24 19:23:13 2019
 
-@author: abhishesh
-"""
-
-
-"""
-Created on: Day Mon DD HH:MM:SS YYYY
-
 @author: marc-hanheide
 @author: abhisheshpal
 @author: gpdas
@@ -209,18 +202,18 @@ if __name__ == "__main__":
     _rate[2,3] = 0.00025477 # 3925.007
     _rate[3,4] = 0.0037 # 267.117
     _rate[4,1] = 0.009 # 110.100
-   
+
     # To Calculate the transition matrix by multiplying with rates
-    
+
     # state matrix with rates for state_0
     state_map[0,:] = np.multiply(state_map[0,:], 10)
-    
+
     # state matrix with rates for state_1
     state_map[1,:] = np.multiply(state_map[1,:], 0.005)  # 200s
 
-    # state matrix with rates for state_2 ( with 10 substates) 
+    # state matrix with rates for state_2 ( with 10 substates)
     state_map[2, :] = np.multiply(state_map[2,:], 0.00356677)
-    state_map[3, :] = np.multiply(state_map[3,:], 0.00356677) 
+    state_map[3, :] = np.multiply(state_map[3,:], 0.00356677)
     state_map[4, :] = np.multiply(state_map[4,:], 0.00356677)
     state_map[5, :] = np.multiply(state_map[5,:], 0.00356677)
     state_map[6, :] = np.multiply(state_map[6,:], 0.00356677)
@@ -228,7 +221,7 @@ if __name__ == "__main__":
     state_map[8, :] = np.multiply(state_map[8,:], 0.00356677)
     state_map[9, :] = np.multiply(state_map[9,:], 0.00356677)
     state_map[10, :] = np.multiply(state_map[10,:], 0.00356677)
-    state_map[11, :] = np.multiply(state_map[11,:], 0.00356677) 
+    state_map[11, :] = np.multiply(state_map[11,:], 0.00356677)
     state_map[12, :] = np.multiply(state_map[12,:], 0.00356677)
     state_map[13, :] = np.multiply(state_map[13,:], 0.00356677)
     state_map[14, :] = np.multiply(state_map[14,:], 0.00356677)
@@ -236,13 +229,13 @@ if __name__ == "__main__":
 
     # state matrix with rates for state_3
     state_map[16, :] = np.multiply(state_map[16,:], 0.0035) #  1/ 0.0035 = 285.71
-    
+
     # state matrix with rates for state_4
     state_map[17, :] = np.multiply(state_map[17,:], 0.009) # 111.11
-     
+
     rs = np.sum(state_map,1)
     Q = (np.diag(-rs) + state_map)
-    
+
     # creating observation matrix, assuming each states has ~70% prob to emit the state itself as observation
     # and another ~10% for neighbouring states each (confusing them). and +.1% for all observations
     # for numerical stability
@@ -259,14 +252,14 @@ if __name__ == "__main__":
     row_sums = B.sum(axis=1)
     B = B / row_sums[:, np.newaxis]
 
-    
+
     # Pi is the vector of initial state probabilities. Assuming uniform here
     # (We may make a stronger assumption here at some point)
 #    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
 
     Pi = np.array([1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0])
-    
-    
+
+
     # Create CtHMM by given parameters.
     mode_model = HMModel(n_states, False, None, Q, B, Pi)
     # save model
@@ -276,10 +269,10 @@ if __name__ == "__main__":
 
     # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
     t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=10000, sample_step=1)
-    
+
 
     #print(s_seq)
-    
+
     # predict for a specific time from an initial observation
     (state, KL, posteriors) = mode_model.predict(
                                                  # start with some observations assumed to have made up to a point
@@ -309,10 +302,10 @@ if __name__ == "__main__":
     state_map[-1,0] = 1
     state_map += np.eye(n_states, k=-1)*0.1 # connect all the successive nodes reverse
     state_map[0,-1] = 0.1
-    
+
     rs = np.sum(state_map,1)
     print('rs',rs)
-   
+
     Q = (np.diag(-rs) + state_map)*_rate
     print ('Q', Q)
     # creating observation matrix, assuming each states has ~70% prob to emit the state itself as observation
@@ -326,23 +319,23 @@ if __name__ == "__main__":
     B = np.transpose(np.vstack([B_pre, [.101] * n_states]))  # np.vstack will add extra column in B_pre matrix
                                                              # vertically
     print ('B',B)
-    
+
     B[0,-2] = .101     # first row and second last column is filled with 0.101
     B[-1,0] = .101     # Last row and first columm is filled with 0.101
     print ('B', B)
-    
+
     # normalise B (make sure probs sum up to 1)
     row_sums = B.sum(axis=1)
     B = B / row_sums[:, np.newaxis]
     print ('B', B)
-    
+
     # Pi is the vector of initial state probabilities. Assuming uniform here
     # (We may make a stronger assumption here at some point)
     Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
 #    Pi = np.array([1., 0.0, 0.0, 0.0, 0.0 , 0.0])
 #    Pi = np.array([.1, 0.1, 0.1, 0.1, 0.1 , 0.1 , 0.1 , 0.1, 0.1, 0.1])
 
-    
+
     # Create CtHMM by given parameters.
     mode_model = HMModel(n_states, False, None, Q, B, Pi)
     # save model
@@ -352,10 +345,10 @@ if __name__ == "__main__":
 
     # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
     t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=3000, sample_step=1)
-    
+
 
     #print(s_seq)
-    
+
     # predict for a specific time from an initial observation
     (state, KL, posteriors) = mode_model.predict(
                                                  # start with some observations assumed to have made up to a point
@@ -501,7 +494,7 @@ if __name__ == "__main__":
 
     Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
 #    print ('Q', Q)
-    
+
     # MODE = 1
     # creating observation matrix based on DES data, each node has ~1.0% prob to emit the state itself as observation
     # and another ~60% for neighbouring nodes in forward direction and ~28% for neighbouring nodes in reverse direction each.
@@ -529,13 +522,13 @@ if __name__ == "__main__":
 
     # save model
     mode_model.to_file("mode_model")
-    
+
     # load model from file
     mode_model = HMModel(n_states, True, "mode_model.npz")
 
     # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
     t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=6000, sample_step=1)
-   
+
    # predict for a specific time from an initial observation
     (state, KL, posteriors) = mode_model.predict(
                                                  # start with some observations assumed to have made up to a point
@@ -616,7 +609,7 @@ if __name__ == "__main__":
     mode_model = HMModel(n_states, False, None, Q, B, Pi)
     # save model
     mode_model.to_file("mode_model")
-    
+
     # load model from file
     mode_model = HMModel(n_states, True, "mode_model.npz")
 
@@ -635,8 +628,8 @@ if __name__ == "__main__":
 
     # forecast max seconds
     times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[111,112,113], forecast_max=6000., forecast_steps=200, verbose=True)
-    
-    
+
+
 #==============================================================================
 # mode3_node_model
 #==============================================================================
