@@ -105,7 +105,7 @@ class row_detector(object):
             error_y = centre_y[np.argmin(np.sqrt(centre_x**2 + centre_y**2))]
             error_theta = np.arctan2((centre_y[-1] - centre_y[0]), (centre_x[-1] - centre_x[0])) 
             
-            if error_theta > 0.79:
+            if error_theta > 0.52:
                 error_y = np.nan; error_theta = np.nan  
                 
         except:
@@ -167,10 +167,11 @@ class ellipse_processor(object):
         self.data["obstacle_array"] = self.obstacle_array
         
         if self.poles_identified:
-            if ellipse["split"]:
-                self.fit_two_lines(ellipse)
-            else:
-                self.fit_one_line(ellipse)
+            if ellipse["detect_rows"]:
+                if ellipse["split"]:
+                    self.fit_two_lines(ellipse)
+                else:
+                    self.fit_one_line(ellipse)
         
         return self.data
         
