@@ -16,9 +16,9 @@ from sklearn import linear_model
 class row_detector(object):
     
     
-    def __init__(self, config_ellipses, ep):
+    def __init__(self, config, ep):
         
-        self.config = config_ellipses
+        self.config = config
         self.ep = ep
         self.is_active= False
         
@@ -129,9 +129,9 @@ class row_detector(object):
 class ellipse_processor(object):
     
     
-    def __init__(self, config_common, clf):
+    def __init__(self, config, clf):
         
-        self.config = config_common
+        self.config = config
         self.clf = clf
         
         self.db = DBSCAN(eps=self.config["eps"], 
