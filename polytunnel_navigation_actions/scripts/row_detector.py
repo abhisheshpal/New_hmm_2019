@@ -57,10 +57,10 @@ class row_detector(object):
             ys = ranges * np.sin(angles)
             
             success = True        
-            lines_x = []
-            lines_y = []
-            pole_array = []
-            obstacle_array = []
+            self.lines_x = []
+            self.lines_y = []
+            self.pole_array = []
+            self.obstacle_array = []
             
             for ellipse in self.config:
                 
@@ -70,30 +70,22 @@ class row_detector(object):
                     success = False
                 
                 if ellipse["detect_rows"] and data["fitted"]:
-                    lines_x.append(data["lines_x"])
-                    lines_y.append(data["lines_y"])
+                    self.lines_x.extend(data["lines_x"])
+                    self.lines_y.extend(data["lines_y"])
                     
                 if ellipse["publish_poles"]:
-                    pole_array.append(data["pole_array"])
+                    self.pole_array.extend(data["pole_array"])
                     
                 if ellipse["publish_obstacles"]:
-                    obstacle_array.append(data["obstacle_array"])
-    
-            lines_x = self.flatten(lines_x)        
-            lines_y = self.flatten(lines_y) 
-            self.pole_array = self.flatten(pole_array)        
-            self.obstacle_array = self.flatten(obstacle_array)      
+                    self.obstacle_array.extend(data["obstacle_array"]) 
     
             if success:            
-                self.error_y, self.error_theta = self.calc_error(lines_x, lines_y)    
+                self.error_y, self.error_theta = \
+                self.calc_error(self.lines_x, self.lines_y)    
             else:
                 self.error_y = np.nan; self.error_theta = np.nan
                 
             self.publish_msgs()
-            
-            
-    def flatten(self, list_):
-        return [item for sublist in list_ for item in sublist]
     
     
     def calc_error(self, lines_x, lines_y):
