@@ -1,3 +1,4 @@
+#!/usr/bin/python
 # -*- coding: utf-8 -*-
 """
 Created on Fri May 24 19:23:13 2019
@@ -59,6 +60,8 @@ class HMModel(object):
         self._model = hmms.CtHMM.from_file(f_name)
 
     def to_file(self, f_name):
+        """save cthmm model to a npz file
+        """
         self._model.save_params(f_name)
 
     def generate_random(self, sample_len, sample_step , verbose=False):

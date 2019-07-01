@@ -1,11 +1,12 @@
-
-"""
-Created on: Day Mon DD HH:MM:SS YYYY
-
-@author: marc-hanheide
-@author: abhisheshpal
-@author: gpdas
-"""
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+#
+# Created on: Day Mon DD HH:MM:SS YYYY
+#
+# @author: marc-hanheide
+# @author: abhisheshpal
+# @author: gpdas
+#
 
 
 
@@ -18,6 +19,7 @@ import hmms
 from pprint import pformat
 import sys
 import operator
+import os
 
 #%matplotlib inline
 #%config InlineBackend.figure_format = 'svg'
@@ -73,7 +75,7 @@ class HMModel(object):
 
 #        resize plot
 #        plt.rcParams['figure.figsize'] = [20,20]
-        
+
 #        hmms.plot_hmm(s_seq, e_seq, time=t_seq )
 
         if verbose:
@@ -131,7 +133,7 @@ class HMModel(object):
         D_KL = np.sum(np.multiply(post_distribution, np.log(np.divide(post_distribution, uniform))))
 
         if verbose:
-            print("Kullback–Leibler divergence (high is good in this case, as I compare against uniform): %f" % D_KL)
+            print( "Kullback–Leibler divergence (high is good in this case, as I compare against uniform): %f" % (D_KL) )
 
         return (s_seq[-1], D_KL, post_distribution)
 
@@ -207,18 +209,18 @@ if __name__ == "__main__":
     _rate[2,3] = 0.00025477 # 3925.007
     _rate[3,4] = 0.0037 # 267.117
     _rate[4,1] = 0.009 # 110.100
-   
+
     # To Calculate the transition matrix by multiplying with rates
-    
+
     # state matrix with rates for state_0
     state_map[0,:] = np.multiply(state_map[0,:], 10)
-    
+
     # state matrix with rates for state_1
     state_map[1,:] = np.multiply(state_map[1,:], 0.005)  # 200s
 
-    # state matrix with rates for state_2 ( with 10 substates) 
+    # state matrix with rates for state_2 ( with 10 substates)
     state_map[2, :] = np.multiply(state_map[2,:], 0.00356677)
-    state_map[3, :] = np.multiply(state_map[3,:], 0.00356677) 
+    state_map[3, :] = np.multiply(state_map[3,:], 0.00356677)
     state_map[4, :] = np.multiply(state_map[4,:], 0.00356677)
     state_map[5, :] = np.multiply(state_map[5,:], 0.00356677)
     state_map[6, :] = np.multiply(state_map[6,:], 0.00356677)
@@ -226,7 +228,7 @@ if __name__ == "__main__":
     state_map[8, :] = np.multiply(state_map[8,:], 0.00356677)
     state_map[9, :] = np.multiply(state_map[9,:], 0.00356677)
     state_map[10, :] = np.multiply(state_map[10,:], 0.00356677)
-    state_map[11, :] = np.multiply(state_map[11,:], 0.00356677) 
+    state_map[11, :] = np.multiply(state_map[11,:], 0.00356677)
     state_map[12, :] = np.multiply(state_map[12,:], 0.00356677)
     state_map[13, :] = np.multiply(state_map[13,:], 0.00356677)
     state_map[14, :] = np.multiply(state_map[14,:], 0.00356677)
@@ -241,13 +243,13 @@ if __name__ == "__main__":
     # state matrix with rates for state_3
     state_map[16, :] = np.multiply(state_map[16,:], 0.0035) #  1/ 0.0035 = 285.71
 #    state_map[9, :] = np.multiply(state_map[9,:], 0.00175)
-    
+
     # state matrix with rates for state_4
     state_map[17, :] = np.multiply(state_map[17,:], 0.009) # 111.11
-     
+
     rs = np.sum(state_map,1)
     Q = (np.diag(-rs) + state_map)
-    
+
     # creating observation matrix, assuming each states has ~70% prob to emit the state itself as observation
     # and another ~10% for neighbouring states each (confusing them). and +.1% for all observations
     # for numerical stability
@@ -264,14 +266,14 @@ if __name__ == "__main__":
     row_sums = B.sum(axis=1)
     B = B / row_sums[:, np.newaxis]
 
-    
+
     # Pi is the vector of initial state probabilities. Assuming uniform here
     # (We may make a stronger assumption here at some point)
 #    Pi = np.array([1.0 / n_states] * n_states )   # We need to change Pi based on des data as Pi = [0.03, 0.26, 0.23, 0.23, 0.23]
 
     Pi = np.array([1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0,0.0,0.0])
-    
-    
+
+
     # Create CtHMM by given parameters.
     mode_model = HMModel(n_states, False, None, Q, B, Pi)
     # save model
@@ -281,10 +283,10 @@ if __name__ == "__main__":
 
     # sample a random sequence within desired time peroiod from the above created model(for testing and generation)
     t_seq, s_seq, e_seq = mode_model.generate_random(sample_len=10000, sample_step=1)
-    
+
 
     #print(s_seq)
-    
+
     # predict for a specific time from an initial observation
     (state, KL, posteriors) = mode_model.predict(
                                                  # start with some observations assumed to have made up to a point
@@ -298,7 +300,7 @@ if __name__ == "__main__":
     # forecast max seconds
     times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[0,1,2,3,4], forecast_max=6000, forecast_steps=100, verbose=True)
 #    print(states)
-    
+
     data = []
     data = states.get("1")
     print (data)
@@ -307,7 +309,7 @@ if __name__ == "__main__":
 #    print(posteriors)
     lists = sorted(states.items()) # sorted by key, return a list of tuples
     x, y = zip(*lists) # unpack a list of pairs into two tuples
-#    
+#
 ##    lists_2 = []
 ##    for i in y:
 ##        if i < 2:
@@ -316,9 +318,9 @@ if __name__ == "__main__":
 ##            pass
 ##        else:
 ##            lists_2 = x
-##    print ('lists_2', lists_2)   
-##    
-#    
+##    print ('lists_2', lists_2)
+##
+#
 ##    lists_2 = []
 ##    errorCount = 0
 ##    for log in lists:
@@ -329,13 +331,16 @@ if __name__ == "__main__":
 ###          lists_2 = time
 ##    print ('errorCount %d', errorCount)
 ##    print (lists_2)
-#    
+#
     plt.plot(x, y)
     plt.axis([0,6000,0,25])
     plt.suptitle('states_prediction')
     plt.xlabel('time')
     plt.ylabel('states_propagation')
-    plt.savefig('/home/abhishesh/des_logs/figures/state_prediction_rate_0.0175.png')    
+    home = os.environ["HOME"]
+    if not os.path.exists(os.path.join(home, "des_logs", "figures")):
+        os.makedirs(os.path.join(home, "des_logs", "figures"))
+    plt.savefig(os.path.join(home, "des_logs", "figures", "state_prediction_rate_0.0175.png"))
     plt.show()
 
 # The modex_node_models below model the transition of the pickers along the topological map, and could be used
@@ -600,15 +605,15 @@ if __name__ == "__main__":
 #    # forecast max seconds
 #    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[110,112,113], forecast_max=20., forecast_steps=20, verbose=True)
 #    print (states)
-#    
+#
 
 
 
-    
+
 ##------------------------------------------------------------------------------------------------------------------
-## -------------------------------- SECOND METHOD FOR MODE 2 (ALL THE NODES (196) ARE CONNECTED IN CIRCULAR FASHION)    
-##------------------------------------------------------------------------------------------------------------------    
-#     
+## -------------------------------- SECOND METHOD FOR MODE 2 (ALL THE NODES (196) ARE CONNECTED IN CIRCULAR FASHION)
+##------------------------------------------------------------------------------------------------------------------
+#
 ## My experiment for prediction of emmission states within STATE 2
 ##(as state2 consists of several node transition in a unidirectional way in forward direction):
 #
@@ -620,7 +625,7 @@ if __name__ == "__main__":
 #
 #    state_map=np.eye(n_states, k=1)
 #    state_map[-1,0] = 1
-#    
+#
 #    # this will add an unlikely reverse move:
 #    state_map+=np.eye(n_states, k=-1) * .1
 #    state_map[0,-1] = .1
@@ -668,7 +673,7 @@ if __name__ == "__main__":
 #    mode_model = HMModel(n_states, False, None, Q, B, Pi)
 #    # save model
 #    mode_model.to_file("mode_model")
-#    
+#
 #    # load model from file
 #    mode_model = HMModel(n_states, True, "mode_model.npz")
 #
@@ -687,11 +692,11 @@ if __name__ == "__main__":
 #
 #    # forecast max seconds
 #    times, states, kls, posteriors = mode_model.check_prediction_probs(obs=[111,112,113], forecast_max=3000., forecast_steps=200, verbose=True)
-#    print (sorted(states.items(), key=operator.itemgetter(0)))    
-#    
-#    
-#    
-#    
+#    print (sorted(states.items(), key=operator.itemgetter(0)))
+#
+#
+#
+#
 
 
 
