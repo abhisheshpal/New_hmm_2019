@@ -9,10 +9,6 @@
 #
 
 
-
-#==============================================================================
-#
-#==============================================================================
 import numpy as np
 import matplotlib.pyplot as plt
 import hmms
@@ -20,9 +16,6 @@ from pprint import pformat
 import sys
 import operator
 import os
-
-#%matplotlib inline
-#%config InlineBackend.figure_format = 'svg'
 
 np.set_printoptions(threshold=sys.maxsize)
 
@@ -73,9 +66,9 @@ class HMModel(object):
 
         t_seq, s_seq, e_seq = self._model.generate(len(t_seq), time=t_seq)
 
+#        fig = plt.Figure()
 #        resize plot
 #        plt.rcParams['figure.figsize'] = [20,20]
-
 #        hmms.plot_hmm(s_seq, e_seq, time=t_seq )
 
         if verbose:
@@ -340,7 +333,7 @@ if __name__ == "__main__":
     home = os.environ["HOME"]
     if not os.path.exists(os.path.join(home, "des_logs", "figures")):
         os.makedirs(os.path.join(home, "des_logs", "figures"))
-    plt.savefig(os.path.join(home, "des_logs", "figures", "state_prediction_rate_0.0175.png"))
+    plt.savefig(os.path.join(home, "des_logs", "figures", "state_prediction_rate_0.0175.svg"))
     plt.show()
 
 # The modex_node_models below model the transition of the pickers along the topological map, and could be used

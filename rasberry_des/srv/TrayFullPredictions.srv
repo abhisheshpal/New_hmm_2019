@@ -1,0 +1,13 @@
+string[] picker_ids
+string[] current_modes
+string[] current_mode_row_ids
+string[] current_mode_node_ids
+string[] current_mode_picking_directions
+time[] current_mode_start_times
+---
+string[] picker_ids
+string[] row_ids
+string[] node_ids
+string[] picking_directions
+time[] tray_full_time
+
