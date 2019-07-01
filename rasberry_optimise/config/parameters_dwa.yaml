@@ -1,67 +1,84 @@
 # REGISTER YOUR PARAMETERS FOR OPTMISATION HERE.
-# You must specify the reconfigure services and group your parameters accordingly (as below).
+# You must specify the name space (ns) of your parameters (as below).
 # type: parameter type - can be double, integer (int) or boolean (bool).
 # min: minimum value of parameter considered by the genetic algorithm (does not apply to type bool).
 # max: maximum value of parameter considered by the genetic algorithm (does not apply to type bool).
 
-/move_base/DWAPlannerROS: 
-  prune_plan:
-    type: "bool"
-  path_distance_bias: 
-    type: "int"
-    min: 5
-    max: 64
-  goal_distance_bias: 
-    type: "int"
-    min: 5
-    max: 64
-  occdist_scale: 
-    type: "double"
-    min: 0.001
-    max: 1.0
-  sim_time: 
-    type: "double"
-    min: 0.3
-    max: 3.4
-  sim_granularity: 
-    type: "double"
-    min: 0.025
-    max: 0.3
-  stop_time_buffer:
-    type: "double"
-    min: 0.1
-    max: 1.0
-  oscillation_reset_dist:
-    type: "double"
-    min: 0.01
-    max: 0.1
-  forward_point_distance:
-    type: "double"
-    min: 0.05
-    max: 1.5
-  scaling_speed:
-    type: "double"
-    min: 0.01
-    max: 0.35
-  max_scaling_factor:
-    type: "double"
-    min: 0.0
-    max: 1.0
-  vx_samples:
-    type: "int"
-    min: 3
-    max: 100
-  vth_samples:
-    type: "int"
-    min: 3
-    max: 100
+- name: prune_plan
+  ns: move_base/DWAPlannerROS
+  type: bool
+  min: nan
+  max: nan
 
-#/move_base/local_costmap/local_inflation_layer:
-#  inflation_radius: 
-#    type: "double"
-#    min: 0.05
-#    max: 10.0
-#  cost_scaling_factor: 
-#    type: "double"
-#    min: 0.05
-#    max: 10.0
+- name: path_distance_bias
+  ns: move_base/DWAPlannerROS
+  type: int
+  min: 5
+  max: 64
+
+- name: goal_distance_bias
+  ns: move_base/DWAPlannerROS
+  type: int
+  min: 5
+  max: 64
+
+- name: occdist_scale
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.001
+  max: 1.0
+
+- name: sim_time
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.3
+  max: 3.4
+
+- name: sim_granularity
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.025
+  max: 0.3
+
+- name: stop_time_buffer
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.1
+  max: 1.0
+
+- name: oscillation_reset_dist
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.01
+  max: 0.1
+
+- name: forward_point_distance
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.05
+  max: 1.5
+
+- name: scaling_speed
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.01
+  max: 0.35
+
+- name: max_scaling_factor
+  ns: move_base/DWAPlannerROS
+  type: double
+  min: 0.0
+  max: 1.0
+
+- name: vx_samples
+  ns: move_base/DWAPlannerROS
+  type: int
+  min: 3
+  max: 100
+
+- name: vth_samples
+  ns: move_base/DWAPlannerROS
+  type: int
+  min: 3
+  max: 100
+
