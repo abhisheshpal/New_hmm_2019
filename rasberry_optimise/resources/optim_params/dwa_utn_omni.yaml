@@ -1,0 +1,16 @@
+- - {name: vth_samples, ns: move_base/DWAPlannerROS, type: int, value: 8.0}
+  - {name: goal_distance_bias, ns: move_base/DWAPlannerROS, type: int, value: 29.0}
+  - {name: path_distance_bias, ns: move_base/DWAPlannerROS, type: int, value: 41.0}
+  - {name: min_vel_y, ns: move_base/DWAPlannerROS, type: double, value: -0.35}
+  - {name: forward_point_distance, ns: move_base/DWAPlannerROS, type: double, value: 0.05}
+  - {name: max_vel_y, ns: move_base/DWAPlannerROS, type: double, value: 0.35}
+  - {name: prune_plan, ns: move_base/DWAPlannerROS, type: bool, value: 0}
+  - {name: occdist_scale, ns: move_base/DWAPlannerROS, type: double, value: 0.354307473006}
+  - {name: vx_samples, ns: move_base/DWAPlannerROS, type: int, value: 1.0}
+  - {name: sim_time, ns: move_base/DWAPlannerROS, type: double, value: 3.33906319807}
+  - {name: max_scaling_factor, ns: move_base/DWAPlannerROS, type: double, value: 0.283085202888}
+  - {name: scaling_speed, ns: move_base/DWAPlannerROS, type: double, value: 0.302724798452}
+  - {name: vy_samples, ns: move_base/DWAPlannerROS, type: int, value: 49.0}
+  - {name: sim_granularity, ns: move_base/DWAPlannerROS, type: double, value: 0.216821592816}
+  - {name: stop_time_buffer, ns: move_base/DWAPlannerROS, type: double, value: 0.789168747746}
+  - {name: oscillation_reset_dist, ns: move_base/DWAPlannerROS, type: double, value: 0.033945588782}

@@ -3,7 +3,7 @@
 
   <arg name="bag_file" default="dwa_s2_0_1.bag" />    
   <arg name="path_to_bag_file" default="/home/adam/Documents/SagaRobotics/RASberry/optim/field_data" /> 
-  <arg name="centres" default="centres_row4.json" />
+  <arg name="centres" default="centres_row4.yaml" />
 
   <node pkg="rasberry_optimise" type="get_metrics.py" name="get_metrics" output="screen" 
         args="$(arg bag_file) $(arg path_to_bag_file) $(arg centres)" />
