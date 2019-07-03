@@ -11,10 +11,13 @@
   <arg name="launch_manager" default="true"/>
   <arg name="move_base_reconf_service" default="DWAPlannerROS" />
   <arg name="reconfigure_edges" default="true" />
-  <arg name="steering_type" default="diff"/>
+
   <arg name="scenario" default="riseholme"/>
   <arg name="use_omni" default="false"/>
   <arg name="multi_robot" default="true"/>
+
+  <arg name="steering_type" value="omni" if="$(arg use_omni)"/>
+  <arg name="steering_type" value="diff" unless="$(arg use_omni)"/>
 
   <machine name="$(arg machine)" address="$(arg machine)" env-loader="$(optenv ROS_ENV_LOADER )" user="$(arg user)" default="true"/>
 

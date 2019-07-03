@@ -1,0 +1,9 @@
+<?xml version="1.0" ?>
+
+<launch>
+  <arg name="robot_no" />
+
+  <node pkg="rasberry_bringup" type="update_footprint_from_robot_config.py" name="update_footprint_from_robot_config" output="screen" required="true" args="$(arg robot_no)"/>
+  <rosparam command="load" file="$(find rasberry_bringup)/config/robot_$(arg robot_no).yaml" />
+</launch>
+

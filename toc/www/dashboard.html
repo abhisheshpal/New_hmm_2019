@@ -1,7 +1,7 @@
 $def with (robot, config)
 $var title: Dashboard for $robot
 $var show_nav: True
-$var jsfiles: /webtools/roslibjs/include/EventEmitter2/eventemitter2.js /webtools/ros2djs/include/EaselJS/easeljs.js /webtools/roslibjs/build/roslib.js /webtools/ros2djs/build/ros2d.js /webtools/nav2djs/build/nav2d.js /webtools/mjpegcanvasjs/build/mjpegcanvas.min.js /static/dashboard.js
+$var jsfiles: /webtools/roslibjs/include/EventEmitter2/eventemitter2.js /webtools/ros2djs/include/EaselJS/easeljs.js /webtools/roslibjs/build/roslib.js /webtools/ros2djs/build/ros2d.js /webtools/nav2djs/build/nav2d.js /webtools/mjpegcanvasjs/build/mjpegcanvas.min.js /static/bootstrap-notify.min.js /static/app.js /static/dashboard.js
 
 
 
@@ -10,8 +10,8 @@ $var jsfiles: /webtools/roslibjs/include/EventEmitter2/eventemitter2.js /webtool
 config = JSON.parse('$:config');
 document.onready = function() {
     console.log(config);
-    init(config['ip'], config['ns'], config['topics']);
-    $$('#camera').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/rsense_camera/color/image_raw")
+    init(config['ip'], config['ns'], config['topics'], config['port']);
+    $$('#camera').attr("src", "/robot/"+config['ip']+"/video/stream?topic="+config['topics']['camera'])
     $$('#datacapture').attr("src", "/robot/"+config['ip']+"/video/stream?topic=/rasberry_data_capture/summary")
 }
 </script>
@@ -25,12 +25,12 @@ document.onready = function() {
                     <div class="panel-heading">
                         <h3 class="panel-title">Map</h3>
                     </div>
-                    <div class="panel-body">
+                    <div class="panel-body" >
                         <div id="nav"></div>
                     </div>
                 </div>
             </div>
-            <div class="col-md-3">
+            <div class="col-md-6">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Camera</h3>
@@ -43,19 +43,18 @@ document.onready = function() {
                         </div>
                     </div>
             </div>
-            <div class="col-md-3">
+<!--             <div class="col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">Data</h3>
                         </div>
                         <div class="panel-body">
                             <div class="embed-responsive embed-responsive-4by3">
-                                <!--<div id="mjpeg"></div>-->      
                                 <img id="datacapture" width="100%" src="" />
                             </div>
                         </div>
                     </div>
-            </div>
+            </div> -->
         </div>
     </div>
 </div>

@@ -27,6 +27,7 @@ class row_detector(object):
         self.RESIDUAL_THRESHOLD = config["residual_threshold"]
         self.NUM_ATTEMPTED_FITS = config["num_attempted_fits"]
         self.LINE_GRANULARITY = config["line_granularity"]
+        self.MIN_NUM_POLES = config["min_num_poles"]
         self.clf = clf
         self.is_active= False
         
@@ -71,6 +72,8 @@ class row_detector(object):
             self.ys = ranges * np.sin(angles)
             
             self.filter_by_elipse()
+            self.xs_all = self.xs
+            self.ys_all = self.ys
             self.filter_by_svm()
             
             if self.poles_identified:
@@ -107,10 +110,17 @@ class row_detector(object):
     def filter_by_svm(self):
         
         X = np.vstack((self.xs, self.ys)).T
-        self.db.fit(X)
+        
+        try:
+            self.db.fit(X)
+        except:
+            return
+            
         labels = self.db.labels_
         
         pole_clusters = []
+        pole_xs = []
+        pole_ys = []
         self.pole_array = []
         self.obstacle_array = []
 
@@ -139,6 +149,8 @@ class row_detector(object):
             
             if is_pole:
                 pole_clusters.append(cluster)
+                pole_xs.append(self.mux)
+                pole_ys.append(self.muy)
                 self.pole_array.append(obstacle)
             else:
                 self.obstacle_array.append(obstacle)
@@ -147,6 +159,10 @@ class row_detector(object):
             pole_clusters = np.concatenate(pole_clusters, axis=0)
             self.xs = pole_clusters[:, 0]
             self.ys = pole_clusters[:, 1]
+            
+            self.pole_xs = np.array(pole_xs)
+            self.pole_ys = np.array(pole_ys)
+            
             self.poles_identified = True
             
         except:
@@ -166,8 +182,13 @@ class row_detector(object):
                 
         
     def fit_one_line(self):
+
+        if len(self.pole_array) < self.MIN_NUM_POLES: 
+            line_fitted = self.fit_line(self.xs_all, self.ys_all)
+            self.obstacle_array = []
+        else:
+            line_fitted = self.fit_line(self.xs, self.ys)
         
-        line_fitted = self.fit_line(self.xs, self.ys)
         if line_fitted:
             error_y, error_theta = self.calc_error(self.line_x, self.line_y)
         else:
@@ -178,14 +199,29 @@ class row_detector(object):
         
     def fit_two_lines(self):
         
-        indices_region_1 = np.where(self.ys >= 0)[0]
-        indices_region_2 = np.where(self.ys < 0)[0]
-
-        xs_region_1 = self.xs[indices_region_1]
-        ys_region_1 = self.ys[indices_region_1]
-        xs_region_2 = self.xs[indices_region_2]
-        ys_region_2 = self.ys[indices_region_2]
+        num_poles_region_1 = len(np.where(self.pole_ys >= 0)[0])
+        num_poles_region_2 = len(np.where(self.pole_ys < 0)[0])
         
+        if num_poles_region_1 < self.MIN_NUM_POLES: 
+            indices_region_1 = np.where(self.ys_all >= 0)[0]
+            xs_region_1 = self.xs_all[indices_region_1]
+            ys_region_1 = self.ys_all[indices_region_1]  
+            self.obstacle_array = []
+        else:
+            indices_region_1 = np.where(self.ys >= 0)[0]
+            xs_region_1 = self.xs[indices_region_1]
+            ys_region_1 = self.ys[indices_region_1]  
+            
+        if num_poles_region_2 < self.MIN_NUM_POLES: 
+            indices_region_2 = np.where(self.ys_all < 0)[0]
+            xs_region_2 = self.xs_all[indices_region_2]
+            ys_region_2 = self.ys_all[indices_region_2]
+            self.obstacle_array = []
+        else:
+            indices_region_2 = np.where(self.ys < 0)[0]
+            xs_region_2 = self.xs[indices_region_2]
+            ys_region_2 = self.ys[indices_region_2]
+            
         line_fitted_region_1 = self.fit_line(xs_region_1, ys_region_1)
         if line_fitted_region_1:
             line_x_region_1 = self.line_x

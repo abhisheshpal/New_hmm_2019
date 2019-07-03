@@ -13,6 +13,12 @@
   <arg name="initial_pose_y" default="0.0"/>
   <arg name="initial_pose_a" default="0.0"/>
 
+  <arg name="initial_cov_xx" default="0.0"/>
+  <arg name="initial_cov_yy" default="0.0"/>
+  <arg name="initial_cov_aa" default="0.0"/>
+
+  <arg name="use_omni" default="false" />
+
   <group ns="$(arg robot_name)">
     <remap from="map" to="/map" />
 
@@ -39,12 +45,21 @@
     </node> 
 
     <!-- launch AMCL -->
-    <include file="$(find rasberry_navigation)/launch/amcl.launch" />
-    <rosparam param="amcl/odom_frame_id" subst_value="True">$(arg tf_prefix)/odom</rosparam>
-    <rosparam param="amcl/base_frame_id" subst_value="True">$(arg tf_prefix)/base_link</rosparam>
-    <rosparam param="amcl/initial_pose_x" subst_value="True">$(arg initial_pose_x)</rosparam>
-    <rosparam param="amcl/initial_pose_y" subst_value="True">$(arg initial_pose_y)</rosparam>
-    <rosparam param="amcl/initial_pose_a" subst_value="True">$(arg initial_pose_a)</rosparam>
+    <include file="$(find rasberry_navigation)/launch/amcl.launch">
+      <arg name="initial_pose_x" value="$(arg initial_pose_x)"/>
+      <arg name="initial_pose_y" value="$(arg initial_pose_y)"/>
+      <arg name="initial_pose_a" value="$(arg initial_pose_a)"/>
+
+      <arg name="initial_cov_xx" value="$(arg initial_cov_xx)"/>
+      <arg name="initial_cov_yy" value="$(arg initial_cov_yy)"/>
+      <arg name="initial_cov_aa" value="$(arg initial_cov_aa)"/>
+
+      <arg name="odom_frame_id" value="$(arg tf_prefix)/odom"/>
+      <arg name="base_frame_id" value="$(arg tf_prefix)/base_link"/>
+
+      <arg name="use_omni" value="$(arg use_omni)" />
+    </include>
+
 
   </group>
 </launch>

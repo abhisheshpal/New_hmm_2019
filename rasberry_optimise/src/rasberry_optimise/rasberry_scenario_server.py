@@ -20,12 +20,11 @@ class scenario_server(object):
     """scenario_server class definition.    
     """
     
-    def __init__(self, config_scenario, rcnfsrvs=None):
+    def __init__(self, config_scenario):
         """
         Keyword arguments:
         config   -- dictionary containing the configuration parameters for running a 
                     test scenario.
-        rcnfsrvs -- list of reconfigure services to make clients for (optional).
         """
         
         rospy.loginfo("Initialising scenario server ...")        
@@ -34,18 +33,13 @@ class scenario_server(object):
         self.start_node = config_scenario["start_node"]
         self.goal_nodes = config_scenario["goal_nodes"]
         self.robot_name = config_scenario["robot_name"]
+        self.max_wait_times = [rospy.Duration(mwt) for mwt in config_scenario["max_wait_times"]]
         
-        max_wait_times_temp = config_scenario["max_wait_times"]  
-        self.max_wait_times = []
-        for max_wait_time in max_wait_times_temp:
-            self.max_wait_times.append(rospy.Duration(max_wait_time))
-        
-        if "centres" in config_scenario.keys():
-            rospack = rospkg.RosPack()
-            base_dir = rospack.get_path("rasberry_optimise")    
-            self.centres = load_data_from_json(base_dir + "/resources/" + config_scenario["centres"])
+        if "path" in config_scenario.keys():
+            package_dir = rospkg.RosPack().get_path("rasberry_optimise")    
+            self.path = load_data_from_yaml(package_dir + "/resources/" + config_scenario["path"])
         else:
-            self.centres = None
+            self.path = None
             
         
         try:
@@ -113,21 +107,6 @@ class scenario_server(object):
         self.init_pose_pub = \
         rospy.Publisher("/initialpose", PoseWithCovarianceStamped, queue_size=10)
         
-        
-        # Create reconfigure clients.
-        if rcnfsrvs is not None:
-            rospy.loginfo("Creating reconfigure clients ...")
-            self.rcnfclients = {}
-            for rcnfsrv in rcnfsrvs:
-                try:
-                    self.rcnfclients[rcnfsrv] \
-                    = dynamic_reconfigure.client.Client(rcnfsrv, timeout=5.0)
-                    rospy.loginfo("Created client for {}".format(rcnfsrv))
-                except rospy.ROSException as e:
-                    rospy.logerr(e)
-                    rospy.signal_shutdown(e)
-                    exit()
-
         
         # Get pose of the start node from the topological map and store 
         # for robot teleportation.
@@ -224,8 +203,7 @@ class scenario_server(object):
             
             # Reconfigure parameters
             if params is not None:
-                for rcnfsrv in params.keys():
-                    self.do_reconf(self.rcnfclients[rcnfsrv], params[rcnfsrv])
+                self.do_reconf(params)
                 
             # For getting the robot's trajectory
             rp_sub = rospy.Subscriber("/odometry/gazebo", Odometry, self.rp_callback)
@@ -242,9 +220,8 @@ class scenario_server(object):
             
             time_1 = rospy.Time.now()
             num_successes = 0
-            for i, goal_node in enumerate(self.goal_nodes):
+            for goal_node, max_wait_time in zip(self.goal_nodes, self.max_wait_times):
                 topo_goal = GotoNodeGoal(target=goal_node)    
-                max_wait_time = self.max_wait_times[i]
 
                 self.topo_nav_client.send_goal_and_wait(topo_goal, max_wait_time)
                 result = self.topo_nav_client.get_result()
@@ -278,8 +255,8 @@ class scenario_server(object):
                 rotation_cost = scorepath(np.array(trajectory))
                 trajectory_length = get_trajectory_length(trajectory)
                 
-                if self.centres is not None:
-                    path_error = get_path_error(trajectory, self.centres)
+                if self.path is not None:
+                    path_error = get_path_error(trajectory, self.path)
                 else:
                     path_error = 0.0
                     
@@ -311,13 +288,15 @@ class scenario_server(object):
             return metrics, trajectory, trajectory_ground_truth, trajectory_amcl
             
             
-    def do_reconf(self, rcnfclient, params):
+    def do_reconf(self, params):
         """Reconfigure parameters.
         """
         try:
-            for param in params.keys():
-                print "Setting {} = {}".format(param, params[param]) 
-            rcnfclient.update_configuration(params)
+            for param in params:
+                print "Setting {} = {}".format("/".join((param["ns"], param["name"])), param["value"])
+                rcnfclient = dynamic_reconfigure.client.Client(param["ns"], timeout=5.0)
+                rcnfclient.update_configuration({param["name"]: param["value"]})
+                
         except rospy.ROSException as e:
             rospy.logerr(e)
             rospy.signal_shutdown(e)
