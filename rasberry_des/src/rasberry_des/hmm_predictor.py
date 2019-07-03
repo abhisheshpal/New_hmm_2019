@@ -43,54 +43,41 @@ class HMMPredictor(object):
 
         self.n_picking_mode_substates = 10 # 10 percentage increments
 
+        # track picker states
+        self.current_modes = {picker_id: 0 for picker_id in self.picker_ids}
+        self.current_mode_start_times = {picker_id: 0 for picker_id in self.picker_ids}
+        self.current_mode_row_ids = {picker_id: None for picker_id in self.picker_ids}
+        self.current_mode_node_ids = {picker_id: None for picker_id in self.picker_ids}
+        self.current_mode_picking_directions = {picker_id: "forward" for picker_id in self.picker_ids}
+
+
         self.mode_models = {} # will give time at which the tray would be full
         self.forward_picking_models = {} # used to predict where a picker will be in a given time period
         self.reverse_picking_models = {} # used to predict where a picker will be in a given time period
         self.init_models()
 
-        # given an observation (where pickers are and at what states),
-        self.advertise_services()
-
-    def advertise_services(self, ):
-        """Adverstise ROS services.
-        Only call at the end of constructor to avoid calls during construction.
-        """
-        # advertise ros services
-        for attr in dir(self):
-            if attr.endswith("_ros_srv"):
-                service = getattr(self, attr)
-                rospy.Service(
-                    self.ns+attr[:-8],
-                    service.type,
-                    service
-                )
-                rospy.loginfo('advertised %s', attr[:-8])
-
-    def get_trayfull_predictions_ros_srv(self, req):
+    def get_trayfull_predictions(self, ):
         """get the state of a robot"""
-        resp = rasberry_des.srv.TrayFullPredictionsResponse()
-        for i, picker_id in enumerate(req.picker_ids):
+        for picker_id in self.picker_ids:
             # make predictions
             # needs all picker_ids, their current states, time at which these current states started,
             print (picker_id,
-                   req.current_modes[i],
-                   req.current_mode_start_times[i],
-                   req.current_mode_row_ids[i],
-                   req.current_mode_node_ids[i],
-                   req.current_mode_picking_directions)
+                   self.current_modes[picker_id],
+                   self.current_mode_start_times[picker_id],
+                   self.current_mode_row_ids[picker_id],
+                   self.current_mode_node_ids[picker_id],
+                   self.current_mode_picking_directions[picker_id])
 
         # finds state, row_id, node_id, picking_dir, time for all pickers in picking mode
-        predictions = self.predict()
-        for picker_id in predictions:
-            resp.picker_ids.append(picker_id)
-            resp.row_ids.append(predictions[picker_id][1])
-            resp.node_ids.append(predictions[picker_id][2])
-            resp.picking_directions.append(predictions[picker_id][3])
-            resp.times.append(predictions[picker_id][4])
+        predictions = {}
 
-        return resp
+        #TODO:
+        # Use mode_models to get a time at which each picker will finish his trays
+        # use forward_picking_models to find when the picker reaches end of row / where the picker will reach in the given time during forward picking
+        # use reverse_picking_models to find when the picker reaches end of row / where the picker will reach in the given time during reverse picking
+        # find the sequence of events from different pickers to decide the assignment of next rows (see tray_full_predictor)
 
-    get_trayfull_predictions_ros_srv.type = rasberry_des.srv.TrayFullPredictions
+        return predictions
 
     def init_models(self, ):
         """
@@ -132,18 +119,4 @@ class HMMPredictor(object):
                                                                                   obs_prob_mat=B,
                                                                                   init_stae_prob=Pi
                                                                                   )
-
-    def predict(self, ):
-        """
-        """
-        predictions = {}
-
-        #TODO:
-        # Use mode_models to get a time at which each picker will finish his trays
-        # use forward_picking_models to find when the picker reaches end of row / where the picker will reach in the given time during forward picking
-        # use reverse_picking_models to find when the picker reaches end of row / where the picker will reach in the given time during reverse picking
-        # find the sequence of events from different pickers to decide the assignment of next rows (see tray_full_predictor)
-
-        return predictions
-
 

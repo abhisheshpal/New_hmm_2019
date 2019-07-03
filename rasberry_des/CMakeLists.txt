@@ -10,7 +10,7 @@ project(rasberry_des)
 find_package(catkin REQUIRED COMPONENTS
   rospy
 #  actionlib_msgs
-  message_generation
+#  message_generation
 #  geometry_msgs
 #  std_msgs
   strands_navigation_msgs
@@ -60,12 +60,12 @@ catkin_python_setup()
 #)
 
 ## Generate services in the 'srv' folder
-add_service_files(
-  FILES
-  TrayFullPredictions.srv
+#add_service_files(
+#  FILES
+#  TrayFullPredictions.srv
 #  Robot_Info.srv
 #   Service2.srv
-)
+#)
 
 ## Generate actions in the 'action' folder
 #add_action_files(
@@ -75,12 +75,12 @@ add_service_files(
 #)
 
 ## Generate added messages and services with any dependencies listed here
-generate_messages(
-  DEPENDENCIES
+#generate_messages(
+#  DEPENDENCIES
 #  actionlib_msgs
 #  geometry_msgs
-  std_msgs  # Or other packages containing msgs
-)
+#  std_msgs  # Or other packages containing msgs
+#)
 
 ################################################
 ## Declare ROS dynamic reconfigure parameters ##
@@ -114,7 +114,7 @@ generate_messages(
 catkin_package(
 #  INCLUDE_DIRS include
 #  LIBRARIES rasberry_des
-  CATKIN_DEPENDS message_runtime #actionlib_msgs geometry_msgs std_msgs
+#  CATKIN_DEPENDS #message_runtime #actionlib_msgs geometry_msgs std_msgs
 #  DEPENDS system_lib
 )
 
@@ -204,13 +204,10 @@ install(PROGRAMS
   ${USE_SOURCE_PERMISSIONS}
 )
 
-install(DIRECTORY launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
-
-install(DIRECTORY maps
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}
-)
+foreach (dir launch config maps)
+    install(DIRECTORY ${dir}/
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION}/${dir}/)
+endforeach(dir)
 
 #############
 ## Testing ##
