@@ -6,8 +6,9 @@
 
   <!-- Robot arguments -->
   <arg name="with_teleoperation" default="false" />
-  <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_008.yaml"/>
-  <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_008_sensors.xacro"/>
+  <arg name="robot_no" default="014"/>
+  <arg name="robot_model" default="$(find rasberry_bringup)/config/robot_014.yaml"/>
+  <arg name="model_extras" default="$(find rasberry_bringup)/urdf/robot_014_sensors_corner_hokuyos.xacro"/>
 
   <!-- Gazebo arguments -->
   <arg name="world_name" default="riseholme_0.0-0.005" />
@@ -17,16 +18,14 @@
   <arg name="map" default="$(find rasberry_navigation)/maps/riseholme_sim.yaml" />
   <arg name="use_no_go_map" default="true" />
   <arg name="no_go_map" default="$(find rasberry_navigation)/maps/riseholme_sim_no_go.yaml" />
-  <arg name="topo_map" default="riseholme_sim" />
-
-  <!-- Localisation arguments -->
-  <arg name="use_fake_localisation" default="false"/>
+  <arg name="topo_map" default="riseholme_bidirectional_sim" />
 
   <!-- Move base arguments -->
   <arg name="use_carrot_planner" default="false"/>
   <arg name="use_teb_planner" default="false"/>
 
-
+  <arg name="use_omni" default="false" />
+  <arg name="reconfigure_edges" default="false" /> <!-- set to false when optimising -->
 
  
   <!-- Mongo database -->
@@ -60,31 +59,25 @@
     <arg name="map" value="$(arg topo_map)" />
   </include>
 
-  <!-- Localisation -->
-  <node name="fake_localization" pkg="fake_localization" type="fake_localization" if="$(arg use_fake_localisation)">
-    <remap from="base_pose_ground_truth" to="odometry/gazebo" /> 
-    <param name="odom_frame_id" type="string" value="odom"/>
-    <param name="base_frame_id" type="string" value="base_link"/>
-  </node>
-
-  <include file="$(find rasberry_navigation)/launch/rasberry_localisation.launch" unless="$(arg use_fake_localisation)" >
-    <arg name="use_imu" value="false" />
-    <arg name="publish_tf" value="false" />
-  </include>
-
   <!-- Move base bringup -->
-  <include file="$(find rasberry_move_base)/launch/move_base_teb.launch" if="$(arg use_teb_planner)">
+  <include file="$(find rasberry_move_base)/launch/move_base_teb_corner_hokuyos.launch" if="$(arg use_teb_planner)">
+    <arg name="robot_no" value="$(arg robot_no)"/>
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
+    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
-  <include file="$(find rasberry_move_base)/launch/move_base_dwa.launch" unless="$(arg use_teb_planner)">
+  <include file="$(find rasberry_move_base)/launch/move_base_dwa_corner_hokuyos.launch" unless="$(arg use_teb_planner)">
+    <arg name="robot_no" value="$(arg robot_no)"/>
     <arg name="use_carrot_planner" value="$(arg use_carrot_planner)"/>
+    <arg name="use_omni" value="$(arg use_omni)" />
   </include>
 
   <!-- Topological navigation bringup -->
   <include file="$(find rasberry_navigation)/launch/topological_navigation_robot.launch">
     <arg name="move_base_reconf_service" value="TebLocalPlannerROS" if="$(arg use_teb_planner)"/>
     <arg name="move_base_reconf_service" value="DWAPlannerROS" unless="$(arg use_teb_planner)"/>
+    <arg name="use_omni" value="$(arg use_omni)" />
+    <arg name="reconfigure_edges" default="$(arg reconfigure_edges)"/>
   </include>
 
   <!-- Run rviz -->

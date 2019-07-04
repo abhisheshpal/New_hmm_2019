@@ -31,7 +31,7 @@ if __name__ == "__main__":
     t, trajectory = get_trajectory(bag)
     bag.close()
     
-    centres = load_data_from_json(resource_dir + f_centres)  
+    centres = load_data_from_yaml(resource_dir + f_centres)  
      
     rotation_cost = scorepath(np.array(trajectory))
     trajectory_length = get_trajectory_length(trajectory)
