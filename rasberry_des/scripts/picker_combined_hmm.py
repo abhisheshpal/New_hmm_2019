@@ -141,12 +141,11 @@ if __name__ == "__main__":
     rs = np.sum(state_map, 1)       # it sums up all the columns of a single row,so that it can help in defining Q in next step
 
     # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
-    # expected mean rate in seconds
-    _rate =   0.001724078  # The rate is calculated from DES
-    _lambda = _rate
-#    _lambda = 1.0/_rate
+    # expected mean rate in per seconds
+    mean_node_dist = 5.0 # distance between two nodes (for single bed it is 5m)
+    _rate =   0.001724078 / mean_node_dist # The picking_rate (0.001724078) is calculated from DES
 
-    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+    Q = (np.diag(-rs) + state_map) * _rate   # Keep in mind that, sum(Qij) = -Qii =< 1.
 
 
     # MODE = 2
@@ -227,12 +226,11 @@ if __name__ == "__main__":
 
     # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
     # DONE : TODO: transition rates are not constant across the nodes hence need to be cal.
-    # expected mean rate in seconds
-    _rate =  0.001724078  #The rate is calculated from DES
-    _lambda = _rate
-#    _lambda = 1.0/_rate
+    # expected mean rate in per seconds
+    mean_node_dist = 5.0 # distance between two nodes (for single bed it is 5m)
+    _rate =   0.001724078 / mean_node_dist # The picking_rate (0.001724078) is calculated from DES
 
-    Q = (np.diag(-rs) + state_map) * _lambda   # Keep in mind that, sum(Qij) = -Qii =< 1.
+    Q = (np.diag(-rs) + state_map) * _rate   # Keep in mind that, sum(Qij) = -Qii =< 1.
 
 
     # MODE = 2
