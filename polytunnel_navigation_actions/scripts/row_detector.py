@@ -158,12 +158,12 @@ class ellipse_processor(object):
         self.data["pole_array"] = self.pole_array
         self.data["obstacle_array"] = self.obstacle_array
         
-        if self.poles_identified:
-            if ellipse["detect_rows"]:
-                if ellipse["split"]:
-                    self.fit_two_lines(ellipse)
-                else:
-                    self.fit_one_line(ellipse)
+        if ellipse["detect_rows"] and self.poles_identified:
+            
+            if ellipse["split"]:
+                self.fit_two_lines(ellipse)
+            else:
+                self.fit_one_line(ellipse)
         
         return self.data
         
