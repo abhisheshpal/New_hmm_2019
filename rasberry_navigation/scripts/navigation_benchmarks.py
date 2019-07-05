@@ -76,7 +76,7 @@ class nav_benchmark(object):
         while not self.cancel:
             if not self.cancel:
                 self.home_wheels()
-                rospy.sleep(5.0)
+                rospy.sleep(10.0)
             
             for i in wplist:
                 self.navigate_to_waypoint(i)
