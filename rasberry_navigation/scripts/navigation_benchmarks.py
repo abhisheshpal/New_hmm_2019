@@ -16,7 +16,9 @@ import actionlib
 import std_srvs
 
 from std_msgs.msg import Bool
+from std_msgs.msg import String
 from std_srvs.srv import SetBool
+from std_srvs.srv import Trigger
 import topological_navigation.msg
 from sensor_msgs.msg import LaserScan
 
@@ -39,6 +41,7 @@ class nav_benchmark(object):
         self.pause=False
         self.robot_pose = None
         self.user_interventions=0
+        self.help_requested=0
         self._user_lock=False
         self.min_scan_range=100.0
         self.dist2obs=[]
@@ -58,6 +61,7 @@ class nav_benchmark(object):
         self.client.wait_for_server()
         rospy.loginfo(" ... Init done")
 
+        rospy.Subscriber('/row_traversal/notification', String, self.row_traversal_not_cb)
         rospy.Subscriber('/robot_pose', Pose, self.robot_pose_cb)
         rospy.Subscriber('/amcl_pose', PoseWithCovarianceStamped, self.amcl_pose_cb)
         rospy.Subscriber('/teleop_joy/joy_priority', Bool, self.joy_lock_cb)
@@ -70,6 +74,10 @@ class nav_benchmark(object):
         start_date =  time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         navtasks=0
         while not self.cancel:
+            if not self.cancel:
+                self.home_wheels()
+                rospy.sleep(10.0)
+            
             for i in wplist:
                 self.navigate_to_waypoint(i)
                 #rospy.sleep(0.5)
@@ -79,7 +87,7 @@ class nav_benchmark(object):
                     break
                 navtasks+=1
                 print time.time() - start_time, self.total_dist, navtasks
-                
+            
         end_time = time.time()
         end_date = time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         opr_time = end_time - start_time
@@ -95,6 +103,7 @@ class nav_benchmark(object):
         d['average_speed']= self.total_dist/opr_time
         d['tmap']= topo_map
         d['user_interventions'] = self.user_interventions
+        d['help_requested'] = self.help_requested        
         d['navigation_tasks']=navtasks
         d['end_date']=end_date
         d['map']= topo_map
@@ -134,6 +143,20 @@ class nav_benchmark(object):
 
         print self.total_dist, start_time, end_time, opr_time
 
+
+
+    def home_wheels(self):
+        rospy.wait_for_service('/base_driver/home_steering')
+        try:
+            activate_service = rospy.ServiceProxy('/base_driver/home_steering', Trigger)
+            resp1 = activate_service()
+            print resp1.message
+            return resp1.success
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e      
+
+    def row_traversal_not_cb(self, msg):
+        self.help_requested+=1
         
     def pause_cb(self, req):
         if not req.data:

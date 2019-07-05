@@ -12,8 +12,9 @@ def evaluate(individual):
        parameters (individual) and get metrics.
     """
 
-    # Make dictionary of parameters to pass to the scenario server.
-    params = make_param_dict(config_params, individual)
+    # Make list of parameters to pass to the scenario server.
+    params = make_param_list(config_params, individual)
+    params = apply_constraints(params)
 
     metric_array = np.empty((NUM_RUNS, 6))
     for i in range(NUM_RUNS):
@@ -149,51 +150,48 @@ if __name__ == "__main__":
     creator.create("FitnessMulti", base.Fitness, weights=weights)
     creator.create("Individual", list, fitness=creator.FitnessMulti)
     toolbox = base.Toolbox()
-
-    rcnfsrvs = config_params.keys()
+    
     attributes = []
     sigmas = [] # std of gaussian mutation
     mins = []
     maxs = []
-
+    
     print "\nRegistering the following parameters for optimisation ..."
-    for i, rcnfsrv in enumerate(rcnfsrvs):
-        param_names = config_params.values()[i].keys()
+    
+    for param in config_params:
+        
+        attr = param["ns"] + "/" + param["name"]
+        print attr
+        
+        if param["type"] == "double":
+            
+            toolbox.register(attr, random.uniform, param["min"], param["max"])
 
-        for param_name in param_names:
-            attr = rcnfsrv + "/" + param_name
-            print attr
+            sigmas.append((0.5 * (param["max"] - param["min"])) / C)
+            mins.append(param['min'])
+            maxs.append(param['max'])
+        
+        elif param["type"] == "int":
+            
+            toolbox.register(attr, random.randint, param["min"], param["max"])
 
-            if config_params.values()[i][param_name]['type'] == "double":
-                attr_min = config_params.values()[i][param_name]['min']
-                attr_max = config_params.values()[i][param_name]['max']
-                toolbox.register(attr, random.uniform, attr_min, attr_max)
+            sigmas.append((0.5 * (param["max"] - param["min"])) / C)
+            mins.append(param["min"])
+            maxs.append(param["max"]) 
+            
+        elif param["type"] == "bool":
+            
+            toolbox.register(attr, random.randint, 0, 1)
 
-                sigmas.append((0.5 * (attr_max - attr_min)) / C)
-                mins.append(attr_min)
-                maxs.append(attr_max)
+            sigmas.append(1.0)
+            mins.append(0)
+            maxs.append(1)
+            
+        else:
+            print "Please set {} to type `double`, `int` or `bool` in parameter configuration file.".format(param["name"])
+            sys.exit()
 
-            elif config_params.values()[i][param_name]['type'] == "int":
-                attr_min = config_params.values()[i][param_name]['min']
-                attr_max = config_params.values()[i][param_name]['max']
-                toolbox.register(attr, random.randint, attr_min, attr_max)
-
-                sigmas.append((0.5 * (attr_max - attr_min)) / C)
-                mins.append(attr_min)
-                maxs.append(attr_max)
-
-            elif config_params.values()[i][param_name]['type'] == "bool":
-                toolbox.register(attr, random.randint, 0, 1)
-
-                sigmas.append(1.0)
-                mins.append(0)
-                maxs.append(1)
-
-            else:
-                print "Please set {} to type `float`, `int` or `bool` in parameter configuration file.".format(param_name)
-                sys.exit()
-
-            attributes.append(toolbox.__getattribute__(attr))
+        attributes.append(toolbox.__getattribute__(attr))
 
     print "\n"
 #####################################################################################
@@ -234,13 +232,7 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Initialise the scenario server and run the genetic algorithm.
-    rcnfsrv1 = "/move_base/local_costmap/local_inflation_layer"
-    rcnfsrv2 = "/move_base/global_costmap/global_inflation_layer"
-
-    if rcnfsrv1 in rcnfsrvs and rcnfsrv2 not in rcnfsrvs:
-        rcnfsrvs.append(rcnfsrv2)
-
-    ss = scenario_server(config_scenario, rcnfsrvs)
+    ss = scenario_server(config_scenario)
 
     eval_calls = []
     times = []
@@ -255,10 +247,9 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Save data.
-    hof_dictionaries = [make_param_dict(config_params, ind) for ind in hof]
+    hof = [make_param_list(config_params, ind) for ind in hof]
 
-    rospack = rospkg.RosPack()
-    save_path = rospack.get_path("rasberry_optimise")
+    save_path = rospkg.RosPack().get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
 
@@ -266,11 +257,9 @@ if __name__ == "__main__":
     datetime.datetime.now().strftime('%Y-%m-%d_%H-%M-%S'))
     os.mkdir(save_dir)
 
-    save_data_to_json(save_dir + "/hof.json", [ind for ind in hof])
-    save_data_to_json(save_dir + "/pop.json", pop)
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
-
-    save_data_to_yaml(save_dir + "/hof_dictionaries.yaml", hof_dictionaries)
+    #save_data_to_yaml(save_dir + "/final_pop.yaml", make_param_list(config_params, pop))
+    save_data_to_yaml(save_dir + "/hof.yaml", hof)
     save_data_to_yaml(save_dir + "/config_scenario.yaml", config_scenario)
     save_data_to_yaml(save_dir + "/config_params.yaml", config_params)
     save_data_to_yaml(save_dir + "/config_ga.yaml", config_ga)
