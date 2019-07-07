@@ -57,8 +57,8 @@ class row_detector(object):
             ys = ranges * np.sin(angles)
             
             success = True        
-            self.lines_x = []
-            self.lines_y = []
+            lines_x = []
+            lines_y = []
             self.pole_array = []
             self.obstacle_array = []
             
@@ -70,8 +70,8 @@ class row_detector(object):
                     success = False
                 
                 if ellipse["detect_rows"] and data["fitted"]:
-                    self.lines_x.extend(data["lines_x"])
-                    self.lines_y.extend(data["lines_y"])
+                    lines_x.extend(data["lines_x"])
+                    lines_y.extend(data["lines_y"])
                     
                 if ellipse["publish_poles"]:
                     self.pole_array.extend(data["pole_array"])
@@ -80,8 +80,7 @@ class row_detector(object):
                     self.obstacle_array.extend(data["obstacle_array"]) 
     
             if success:            
-                self.error_y, self.error_theta = \
-                self.calc_error(self.lines_x, self.lines_y)    
+                self.error_y, self.error_theta = self.calc_error(lines_x, lines_y)    
             else:
                 self.error_y = np.nan; self.error_theta = np.nan
                 
