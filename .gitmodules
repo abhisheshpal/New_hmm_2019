@@ -6,3 +6,7 @@
 	path = rasberry_data_capture
 	url = https://github.com/RaymondKirk/StrawberryData.git
 	branch = ros
+[submodule "fhu_auto"]
+	path = fhu_auto
+	url = https://github.com/LCAS/fhu_auto.git
+	branch = master
