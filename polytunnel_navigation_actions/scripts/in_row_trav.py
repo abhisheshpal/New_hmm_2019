@@ -61,6 +61,7 @@ class inRowTravServer(object):
         self.minimum_turning_speed = 0.01       # Minimum turning speed
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
+        self.goal_tolerance_radius = 0.1        # Goal tolerance Radius in metres
         self.forward_speed= 0.8                 
         self.quit_on_timeout=False
         self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
@@ -482,10 +483,12 @@ class inRowTravServer(object):
         else:
             speed = self.forward_speed
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
-        for i in range(start_goal, len(path_to_goal.poses)):
+        dist, y_err, ang_diff = self._get_references(path_to_goal.poses[0])
+        for i in range(start_goal, len(path_to_goal.poses)):           
+            pre_dist=dist     #Hack to stop the robot if it overshot
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
             #print "1-> ", dist, " ", self.cancelled
-            while np.abs(dist)>0.1 and not self.cancelled:
+            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and (np.sign(pre_dist) == np.sign(dist)):
                 speed=self.get_forward_speed()
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
@@ -559,11 +562,12 @@ class inRowTravServer(object):
     #        print 'ANg: ', cmd_vel.angular.z
             self.cmd_pub.publish(cmd_vel)
         else:
-            cmd_vel = Twist()
-            cmd_vel.linear.x = 0.0
-            cmd_vel.linear.y = 0.0
-            cmd_vel.angular.z = 0.0            
-            self.cmd_pub.publish(cmd_vel)
+            if self.active:
+                cmd_vel = Twist()
+                cmd_vel.linear.x = 0.0
+                cmd_vel.linear.y = 0.0
+                cmd_vel.angular.z = 0.0            
+                self.cmd_pub.publish(cmd_vel)
 
 
 
@@ -586,7 +590,7 @@ class inRowTravServer(object):
             ang_diff = ang_path_diff
 
 
-        #print dist, y_err, ang_diff
+        print dist, y_err, ang_diff
         return dist, y_err, ang_diff
 
 
@@ -608,6 +612,7 @@ class inRowTravServer(object):
         
         
         return transform.pose.position.x, transform.pose.position.y, ang_diff
+
 
     def activate_row_detector(self, onoff):
         rospy.wait_for_service('/row_detector/activate_detection')
