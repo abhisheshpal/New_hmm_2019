@@ -6,6 +6,6 @@ export USE_RTK=true
 export RTK_IP="192.168.0.20"
 export RTK_PORT="21098"
 export USE_OMNI=false
-export LOC_EDGE_RECONF="norway"
+export SITE_CONFIG="norway"
 #export MIMIC_DES_CONFIG=$(rospack find rasberry_des)/config/mimic_norway_des_tworows.yaml
 export MIMIC_DES_CONFIG="`readlink -f ../../rasberry_des/config/mimic_norway_des_tworows.yaml`"
