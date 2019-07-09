@@ -4,4 +4,4 @@ export NOGOMAP="`readlink -f ../../rasberry_navigation/maps/riseholme/Riseholme_
 export ROSBRIDGE_IP="10.8.0.18"
 #export ROSBRIDGE_IP="localhost"
 export USE_OMNI=false
-export LOC_EDGE_RECONF="riseholme"
+export SITE_CONFIG="riseholme"

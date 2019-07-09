@@ -60,7 +60,7 @@ init_cmd: |
   export_default USE_CARROT false
   export_default USE_GUI false
   export_default USE_OMNI false
-  export_default LOC_EDGE_RECONF "norway"
+  export_default SITE_CONFIG "norway"
 windows:
 - name: init
   panes:
@@ -84,7 +84,7 @@ windows:
 - name: navigation
   panes:
   - roslaunch rasberry_move_base move_base_dwa_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT use_omni:="$USE_OMNI" robot_no:=$ROBOT_NO
-  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS use_omni:="$USE_OMNI" scenario:="$LOC_EDGE_RECONF"
+  - roslaunch rasberry_navigation topological_navigation_robot.launch move_base_reconf_service:=DWAPlannerROS use_omni:="$USE_OMNI" scenario:="$SITE_CONFIG"
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: row_traversal
   panes:

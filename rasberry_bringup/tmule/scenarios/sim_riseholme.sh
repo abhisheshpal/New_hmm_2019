@@ -10,4 +10,4 @@ export USE_IMU=false
 export USE_CARROT=false
 export USE_GUI=false
 export USE_OMNI=false
-export LOC_EDGE_RECONF="riseholme"
+export SITE_CONFIG="riseholme"
