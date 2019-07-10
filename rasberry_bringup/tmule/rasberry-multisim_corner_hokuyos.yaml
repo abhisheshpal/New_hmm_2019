@@ -55,7 +55,7 @@ init_cmd: |
   export_default USE_CARROT false
   export_default USE_IMU false
   export_default USE_OMNI false
-  export_default LOC_EDGE_RECONF "norway"
+  export_default SITE_CONFIG "norway"
   # robot_1
   export ROBOT_NO_1="008"
   export ROBOT_NAME_1=thorvald_001
@@ -101,9 +101,9 @@ windows:
 - name: navigation
   panes:
   - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_1
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1 scenario:=$LOC_EDGE_RECONF
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1 scenario:=$SITE_CONFIG
   - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_2
-  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2 scenario:=$LOC_EDGE_RECONF
+  - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2 scenario:=$SITE_CONFIG
 - name: rosduct
   panes:
   - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination coordination.launch rosbridge_port:=$ROSBRIDGE_PORT
