@@ -239,7 +239,7 @@ if __name__ == "__main__":
     tot_eval_calls = NUM_RUNS * (int(NGEN * np.round(LAMBDA_ * (CXPB + MUTPB))) + POPSIZE) # average
     initial_pop = toolbox.population(POPSIZE)
 
-    pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU,
+    final_pop, logbook = algorithms.eaMuPlusLambda(initial_pop, toolbox, mu=MU,
     lambda_=LAMBDA_, cxpb=CXPB, mutpb=MUTPB, ngen=NGEN, stats=stats, halloffame=hof,
     verbose=True)
 #####################################################################################
@@ -247,8 +247,12 @@ if __name__ == "__main__":
 
 #####################################################################################
     # Save data.
+    final_pop = [make_param_list(config_params, ind) for ind in final_pop]
+    final_pop = [apply_constraints(ind) for ind in final_pop]
+    
     hof = [make_param_list(config_params, ind) for ind in hof]
-
+    hof = [apply_constraints(ind) for ind in hof]
+    
     save_path = rospkg.RosPack().get_path("rasberry_optimise")
     if "save_path" in config_ga.keys():
         save_path = config_ga["save_path"]
@@ -258,7 +262,7 @@ if __name__ == "__main__":
     os.mkdir(save_dir)
 
     pickle.dump(logbook, open(save_dir + "/logbook.p", "wb"))
-    #save_data_to_yaml(save_dir + "/final_pop.yaml", make_param_list(config_params, pop))
+    save_data_to_yaml(save_dir + "/final_pop.yaml", final_pop)
     save_data_to_yaml(save_dir + "/hof.yaml", hof)
     save_data_to_yaml(save_dir + "/config_scenario.yaml", config_scenario)
     save_data_to_yaml(save_dir + "/config_params.yaml", config_params)

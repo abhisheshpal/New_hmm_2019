@@ -4,6 +4,6 @@ start_node: WayPoint27
 start_orientation: 3.14 # (radians). Optional - defaults to orientation of the start node
 goal_nodes: [WayPoint9, WayPoint46]
 max_wait_times: [45, 90] # time (seconds) allowed to complete each goal.
-path: centres_row3_sim.yaml # optional - the GA will try to minimise to this path
+path: centres_row3_sim.yaml # optional - the deviation of the robot's trajectory from this path is reported by the scenario server as the `path error`.
 
-# Note on centres file: should be located in `/rasberry_optimise/resources`
+# Note on path file: should be located in `/rasberry_optimise/resources`
