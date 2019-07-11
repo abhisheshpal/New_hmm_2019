@@ -484,16 +484,24 @@ class inRowTravServer(object):
             speed = self.forward_speed
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         dist, y_err, ang_diff = self._get_references(path_to_goal.poses[0])
+#        goal_overshot=False
         for i in range(start_goal, len(path_to_goal.poses)):           
             pre_dist=dist     #Hack to stop the robot if it overshot
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
             #print "1-> ", dist, " ", self.cancelled
-            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and (np.sign(pre_dist) == np.sign(dist)):
+            goal_overshot=False
+            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and not goal_overshot:
                 speed=self.get_forward_speed()
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
+                pre_dist=dist     #Hack to stop the robot if it overshot
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
+                
+                progress=np.abs(pre_dist)-np.abs(dist)
+                if progress > 0.0 :
+                    goal_overshot= True
+
                 #print "- ", dist, " ", self.cancelled
             if not self.cancelled:
                 print("Next Goal")
