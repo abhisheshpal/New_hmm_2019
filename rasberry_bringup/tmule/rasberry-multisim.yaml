@@ -96,13 +96,13 @@ windows:
   panes:
   - rosrun persistent_topics single_channel_persistent_topics_node _topics:="['/topological_map']" _file_name:="$HOME/.ros/rasberry.ptb"
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
-  - roslaunch rasberry_navigation rasberry_localisation_multisim_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_1 initial_pose_x:=$ROBOT_POS_X_1 initial_pose_y:=$ROBOT_POS_Y_1 initial_pose_a:=$ROBOT_POS_A_1
-  - roslaunch rasberry_navigation rasberry_localisation_multisim_corner_hokuyos.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_2 initial_pose_x:=$ROBOT_POS_X_2 initial_pose_y:=$ROBOT_POS_Y_2 initial_pose_a:=$ROBOT_POS_A_2
+  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_1 initial_pose_x:=$ROBOT_POS_X_1 initial_pose_y:=$ROBOT_POS_Y_1 initial_pose_a:=$ROBOT_POS_A_1
+  - roslaunch rasberry_navigation rasberry_localisation_multisim.launch use_imu:="$USE_IMU" publish_tf:="$EKF_PUBLISH_TF" robot_name:=$ROBOT_NAME_2 initial_pose_x:=$ROBOT_POS_X_2 initial_pose_y:=$ROBOT_POS_Y_2 initial_pose_a:=$ROBOT_POS_A_2
 - name: navigation
   panes:
-  - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_1
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_1 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_1
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1 scenario:=$SITE_CONFIG
-  - roslaunch rasberry_move_base move_base_dwa_multisim_corner_hokuyos.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_2
+  - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_2
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2 scenario:=$SITE_CONFIG
 - name: rosduct
   panes:
