@@ -20,6 +20,7 @@ from dynamic_reconfigure.server import Server
 from polytunnel_navigation_actions.cfg import RowTraversalConfig
 
 from std_msgs.msg import String
+from std_msgs.msg import Bool
 from nav_msgs.msg import Path
 from geometry_msgs.msg import Pose2D
 from geometry_msgs.msg import PointStamped
@@ -41,6 +42,8 @@ class inRowTravServer(object):
 
     def __init__(self, name):
         self.colision=False
+        self._user_controlled=False
+
         self.giveup_timer_active=False
         self.notification_timer_active=False
         self.notified=False
@@ -100,6 +103,7 @@ class inRowTravServer(object):
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
         rospy.Subscriber('/row_detector/path_error',Pose2D, self.row_correction_cb)
         rospy.Subscriber("/row_detector/obstacles", ObstacleArray, self.obstacles_callback,  queue_size=1)
+        rospy.Subscriber('/teleop_joy/joy_priority', Bool, self.joy_lock_cb)
 
         self._tf_listerner = tf.TransformListener()
         self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
@@ -222,6 +226,13 @@ class inRowTravServer(object):
                         break
             if not self.colision:
                 self.notified=False
+    
+    
+    def joy_lock_cb(self, msg):
+        if msg.data:
+            self._user_controlled=True
+        else:
+            self._user_controlled=False
     
 
 
@@ -485,9 +496,12 @@ class inRowTravServer(object):
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         dist, y_err, ang_diff = self._get_references(path_to_goal.poses[0])
 #        goal_overshot=False
+        gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
+
+        
         for i in range(start_goal, len(path_to_goal.poses)):           
-            pre_dist=dist     #Hack to stop the robot if it overshot
-            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
+            pre_gdist=gdist     #Hack to stop the robot if it overshot
+            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
             #print "1-> ", dist, " ", self.cancelled
             goal_overshot=False
             while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and not goal_overshot:
@@ -495,11 +509,16 @@ class inRowTravServer(object):
                 self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
-                pre_dist=dist     #Hack to stop the robot if it overshot
+
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
+
+                pre_gdist=gdist     #Hack to stop the robot if it overshot         
+                gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
                 
-                progress=np.abs(pre_dist)-np.abs(dist)
-                if progress > 0.0 :
+                # To see if the robot has overshot we check if the distance to goal has actually increased 
+                # and that is not being controlled (helped) by the user.
+                progress_to_goal=np.abs(gdist)-np.abs(pre_gdist)
+                if progress_to_goal > 0.0 and not self._user_controlled: 
                     goal_overshot= True
 
                 #print "- ", dist, " ", self.cancelled
@@ -598,7 +617,7 @@ class inRowTravServer(object):
             ang_diff = ang_path_diff
 
 
-        print dist, y_err, ang_diff
+#        print dist, y_err, ang_diff
         return dist, y_err, ang_diff
 
 
