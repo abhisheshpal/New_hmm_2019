@@ -4,6 +4,7 @@
   <arg name="model_extras" default=""/>
   <arg name="simple_sim" />
 
+  <arg name="ekf_publish_tf" default="false" />
   <arg name="robot_name" default="" />
   <arg name="tf_prefix" default="" />
   <arg name="with_teleoperation" default="false" />
@@ -31,11 +32,19 @@
   </include>
 
   <!-- base bringup-->
-  <include file="$(find thorvald_base)/launch/base_bringup.launch">
+  <include file="$(find thorvald_base)/launch/base_bringup.launch" if="$(arg simple_sim)">
     <arg name="robot_model" value="$(arg robot_model)" />
     <arg name="simple_sim" value="$(arg simple_sim)" />
-    <arg name="enable_odom_tf" value="false" if="$(arg simple_sim)"/>
+    <arg name="enable_odom_tf" value="false"/>
   </include>
+
+  <!-- base bringup-->
+  <include file="$(find thorvald_base)/launch/base_bringup.launch" unless="$(arg simple_sim)">
+    <arg name="robot_model" value="$(arg robot_model)" />
+    <arg name="simple_sim" value="$(arg simple_sim)" />
+    <arg name="enable_odom_tf" value="false" if="ekf_publish_tf"/>
+  </include>
+
 
   <!-- teleop bringup -->
   <include file="$(find thorvald_teleop)/launch/teleop_xbox.launch" if="$(arg with_teleoperation)">
