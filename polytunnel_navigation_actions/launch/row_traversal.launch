@@ -1,10 +1,12 @@
 <?xml version="1.0" ?>
 <launch>
-  <arg name="detector_config" default="$(find polytunnel_navigation_actions)/config/row_detector.yaml" />
+  <arg name="detector_config_common" default="$(find polytunnel_navigation_actions)/config/row_detector_common_cfg.yaml" />
+  <arg name="detector_config_ellipse" default="$(find polytunnel_navigation_actions)/config/row_detector_ellipse_cfg.yaml" />
   <arg name="traversal_config" default="$(find polytunnel_navigation_actions)/config/row_traversal_cfg.yaml" />
 
   <include file="$(find polytunnel_navigation_actions)/launch/row_detector.launch">
-    <arg name="config" value="$(arg detector_config)" />
+    <arg name="config_common" value="$(arg detector_config_common)" />
+    <arg name="config_ellipse" value="$(arg detector_config_ellipse)" />
   </include>
 
   <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal" output="screen">
