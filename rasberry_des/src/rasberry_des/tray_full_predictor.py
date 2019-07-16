@@ -17,8 +17,8 @@ class TrayFullPredictor(object):
     """
     A class that can predict when pickers are going to finish their current tray
     """
-    def __init__(self, picker_ids, env, topo_graph, n_robots, mean_idle_time, mean_tray_pick_dist,
-                 mean_pick_rate, mean_trans_rate, mean_unload_time, mean_load_time, verbose=False):
+    def __init__(self, picker_ids, env, topo_graph, n_robots, mean_idle_times, mean_tray_pick_dists,
+                 mean_pick_rates, mean_trans_rates, mean_unload_times, mean_load_times, verbose=False):
         """
         initialise the TrayFullPredictor object
 
@@ -43,9 +43,9 @@ class TrayFullPredictor(object):
         # PickerPredictor is used as logging object for each picker
         self.predictors = {picker_id:rasberry_des.picker_predictor.PickerPredictor(picker_id, self.env,
                                                                                    self.graph, self.n_pickers, self.n_robots,
-                                                                                   mean_idle_time, mean_tray_pick_dist,
-                                                                                   mean_pick_rate, mean_trans_rate,
-                                                                                   mean_unload_time, mean_load_time,
+                                                                                   mean_idle_times[picker_id], mean_tray_pick_dists[picker_id],
+                                                                                   mean_pick_rates[picker_id], mean_trans_rates[picker_id],
+                                                                                   mean_unload_times[picker_id], mean_load_times[picker_id],
                                                                                    self.verbose) for picker_id in self.picker_ids}
 
         # prediction related
@@ -98,6 +98,7 @@ class TrayFullPredictor(object):
         self._curr_rows = {picker_id:self.predictors[picker_id].curr_row for picker_id in self.picker_ids}
         self._goal_nodes = {picker_id:self.predictors[picker_id].goal_node for picker_id in self.picker_ids}
         self._dists_picked = {picker_id:None for picker_id in self.picker_ids}
+        self._times_picked = {picker_id:None for picker_id in self.picker_ids}
         self._update_needed = {picker_id:True for picker_id in self.picker_ids}
         self._tray_started = {picker_id:False for picker_id in self.picker_ids}
 
@@ -111,8 +112,10 @@ class TrayFullPredictor(object):
                 # tray_start index must be > tray_stop index for the picker to be filling up a tray
                 picking_pickers.append(picker_id)
                 self._dists_picked[picker_id] = self.predictors[picker_id].get_dist_picked_so_far()
+                self._times_picked[picker_id] = self.predictors[picker_id].get_time_picked_so_far(time_now)
             else:
                 self._dists_picked[picker_id] = 0.0
+                self._times_picked[picker_id] = 0.0
 
         predictions = {}
         # in a loop virtually populate MDP
@@ -266,27 +269,22 @@ class TrayFullPredictor(object):
                 self._update_needed[picker_id] = False
 
             elif self._picker_modes[picker_id] == 2:
-                # TODO: predict_picking_finish must take a pose(node, dir) and predict the
-                # event, as the picker might be resuming picking from an intermediate node
                 # two possible events - tray_full -> [3/5] and row_finish -> [0/3]
                 next_event, event_details = self.predictors[picker_id].predict_picking_finish_event(self._curr_nodes[picker_id],
                                                                                                     self._curr_dirs[picker_id],
                                                                                                     self._dists_picked[picker_id],
-                                                                                                    self._mode_start_times[picker_id],
                                                                                                     time_now)
 
                 self._mode_finish_details[picker_id] = event_details # full details
                 if next_event == "tray_full":
                     self._mode_finish_modes[picker_id] = 3 if self.n_robots==0 else 5
-                    self._dists_picked[picker_id] = self._mode_finish_details[picker_id][3]
-                    self._update_needed[picker_id] = False
                 elif next_event == "row_finish":
                     self._mode_finish_modes[picker_id] = 0
-                    self._dists_picked[picker_id] = self._mode_finish_details[picker_id][3]
-                    self._update_needed[picker_id] = False
-#                else:
-#                    # TODO: event_details can nto be empty when predicting before having any picking tracker info
-#                    self._update_needed[picker_id] = True
+                else:
+                    raise Exception("event must be tray_full or row_finish")
+
+                self._dists_picked[picker_id] = self._mode_finish_details[picker_id][3]
+                self._update_needed[picker_id] = False
 
             elif self._picker_modes[picker_id] == 3:
                 # next mode - unload_at_storage [4]
@@ -355,7 +353,7 @@ class TrayFullPredictor(object):
             if len(self._mode_finish_details[picker_id]) == 0:
                 continue
 
-            # TODO: This is a fake correction on predicted time
+            # This is a fake correction on predicted time by moving prediction to time_now
             # This happens when an event predicted to happen in the past has not
             # happened yet. As this can affect the MDP progression, a fix to the
             # predicted_time is done.

@@ -82,31 +82,24 @@ class Farm(object):
         self.scheduler_policy = policy
 
         # picker predictor
-        mean_idle_time = 0. # assumed to be zero
+        mean_idle_times = {picker_id: 0.0 for picker_id in self.picker_ids}
+        mean_pick_rates = {picker_id:self.pickers[picker_id].picking_rate for picker_id in self.picker_ids}
+        mean_trans_rates = {picker_id:self.pickers[picker_id].transportation_rate for picker_id in self.picker_ids}
+        mean_unload_times = {picker_id:self.pickers[picker_id].unloading_time for picker_id in self.picker_ids}
+        mean_load_times = {picker_id:self.pickers[picker_id].unloading_time for picker_id in self.picker_ids}
+
         mean_tray_pick_dist = 0. # assumed to be average row length
-        mean_pick_rate = 0.
-        mean_trans_rate = 0.
-        mean_unload_time = 0.
-        mean_load_time = 0.
-        for picker_id in self.picker_ids:
-            mean_pick_rate += self.pickers[picker_id].picking_rate
-            mean_trans_rate += self.pickers[picker_id].transportation_rate
-            mean_unload_time += self.pickers[picker_id].unloading_time
-            mean_load_time += self.pickers[picker_id].unloading_time # loading and unloading time are assumed to be the same
-        mean_pick_rate /= self.n_pickers
-        mean_trans_rate /= self.n_pickers
-        mean_unload_time /= self.n_pickers
-        mean_load_time /= self.n_pickers
         for row_id in self.graph.row_ids:
             _, _, dists = self.graph.get_path_details(self.graph.row_info[row_id][1], self.graph.row_info[row_id][2])
             mean_tray_pick_dist += sum(dists)
         mean_tray_pick_dist /= self.graph.n_topo_nav_rows
+        mean_tray_pick_dists = {picker_id:mean_tray_pick_dist for picker_id in self.picker_ids}
 
         self.predictor = rasberry_des.tray_full_predictor.TrayFullPredictor(self.picker_ids, self.env,
                                                                             self.graph, self.n_robots,
-                                                                            mean_idle_time, mean_tray_pick_dist,
-                                                                            mean_pick_rate, mean_trans_rate,
-                                                                            mean_unload_time, mean_load_time,
+                                                                            mean_idle_times, mean_tray_pick_dists,
+                                                                            mean_pick_rates, mean_trans_rates,
+                                                                            mean_unload_times, mean_load_times,
                                                                             self.verbose)
 
         # to check predictions

@@ -567,6 +567,35 @@ class PickerPredictor(object):
                 dist_so_far += self.get_picking_distance(self.mode_start_poses[-1], (self.curr_node, self.curr_dir))
         return dist_so_far
 
+    def get_time_picked_so_far(self, time_now):
+        """get the distance travelled so far while picking the current tray
+
+        Keyword arguments:
+
+        time_now - current time
+        """
+        if not self.has_started_a_tray():
+            # if a tray is not started, nothing to calculate
+            return 0.0
+
+        # for how long (time) the picking (of the current tray) has been going on?
+        time_so_far = 0.
+        if self.mode_index_tray_start[-1] == len(self.mode) - 1:
+            # picking started and no mode changes so far
+            time_so_far = time_now - self.mode_start_times[-1]
+        else:
+            # picking started earlier, and there has been some mode changes bcz of row_finish
+            # a single row picking may not fill up a tray - so there could be more than one
+            # picking modes. curr_mode is not finished yet
+            for idx in range(self.mode_index_tray_start[-1], len(self.mode) - 1):
+                if self.mode[idx] == 2:
+                    time_so_far += self.mode_stop_times[idx] - self.mode_start_times[idx]
+            # if curr_mode == 2
+            if self.mode[-1] == 2:
+                time_so_far += time_now - self.mode_start_times[-1]
+
+        return time_so_far
+
     def get_trans_time_to_node(self, curr_node=None, goal_node=None):
         """If a picker is transporting to a row node, when will it reach there
         from the curr_node? Either both arguments must be given or both must
@@ -589,7 +618,7 @@ class PickerPredictor(object):
             _, _, dists = self.graph.get_path_details(curr_node, goal_node)
             return sum(dists) / self.mean_trans_rate()
 
-    def predict_picking_finish_event(self, curr_node, curr_dir, dist_so_far, mode_start_time, time_now):
+    def predict_picking_finish_event(self, curr_node, curr_dir, dist_so_far, time_now):
         """predict which of tray_full and row_finish will be the first event
         if tray_full, event: `tray_full`, details: [node, dir, time, dist_so_far]
         if row_finish, event: `row_finish`, details: [node, dir, time, dist_so_far]
@@ -600,7 +629,6 @@ class PickerPredictor(object):
         curr_node -- current node
         curr_dir -- current direction
         dist_so_far -- if already started picking a tray, how much is picked so far
-        mode_start_time -- time at which this mode is started
         time_now -- current time
         """
         next_event = None
@@ -636,14 +664,14 @@ class PickerPredictor(object):
                 event_details.append(cn_nodes[0])
                 event_details.append(cn_dirs[0])
                 tot_dist = dist_so_far + cn_dists[0]
-                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(time_now + (cn_dists[0] / self.mean_pick_rate())) # picking time
                 event_details.append(tot_dist) # picked distance
             else:
                 # picking_to_finish, remain_dist is cn_dists[1]
                 event_details.append(cn_nodes[1])
                 event_details.append(cn_dirs[1])
                 tot_dist = dist_so_far + cn_dists[1]
-                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(time_now + (cn_dists[1] / self.mean_pick_rate())) # picking time
                 event_details.append(tot_dist) # picked distance
 
         else:
@@ -652,7 +680,7 @@ class PickerPredictor(object):
             event_details.append(cn_nodes[0])
             event_details.append(cn_dirs[0])
             tot_dist = dist_so_far + cn_dists[0]
-            event_details.append(mode_start_time + (tot_dist / self.mean_pick_rate())) # picking time
+            event_details.append(time_now + (cn_dists[0] / self.mean_pick_rate())) # picking time
             event_details.append(tot_dist) # picked distance
 
         return (next_event, event_details)
@@ -729,12 +757,12 @@ class PickerPredictor(object):
             if (len(route_dists) == 0):
                 # start and end nodes are the same -> empty route_dists
                 closest_nodes.append(curr_node)
-                finish_dists.append(remain_tray_pick_dist)
+                finish_dists.append(0.0)
                 finish_dirs.append(curr_dir)
             else:
                 # won't be finishing in this row
                 closest_nodes.append(route_nodes[-1])
-                finish_dists.append(remain_tray_pick_dist - remain_row_dist)
+                finish_dists.append(remain_row_dist)
                 finish_dirs.append(route_dir[-1])
 
         return (closest_nodes, finish_dists, finish_dirs)
