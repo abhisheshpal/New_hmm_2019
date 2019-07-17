@@ -2,7 +2,7 @@
 <launch> 
   <arg name="patrol_scenario" default="riseholme"/>
   <arg name="record_bag" default="true"/>  
-  <arg name="data_folder" default="/home/jaime/Data/"/>  
+  <arg name="data_folder" default="~/Data/"/>  
 
   <node name="navigation_benchmarks" pkg="rasberry_navigation" type="navigation_benchmarks.py" args="$(find rasberry_navigation)/resources/$(arg patrol_scenario)_waypoints.yaml" output="screen"/>
 
