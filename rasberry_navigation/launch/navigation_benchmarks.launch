@@ -8,7 +8,6 @@
 
 
   <node pkg="rosbag" type="record" name="rosbag_record_benchmarks"
-       args="record --split --duration=15m -o $(arg data_folder) /tf /scan /map /closest_node /odometry/base_raw /odometry/filtered /current_node /robot_pose /amcl_pose /current_edge /battery_data"
+       args="record --split --duration=15m -o $(arg data_folder)/navigation_benchmarks.bag /tf /scan /map /closest_node /odometry/base_raw /odometry/filtered /current_node /robot_pose /amcl_pose /current_edge /battery_data"
        if="$(arg record_bag)" output="screen" />
-
 </launch>
