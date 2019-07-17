@@ -74,9 +74,9 @@ class nav_benchmark(object):
         start_date =  time.strftime("%Y-%m-%d %H:%M:%S %Z", time.localtime())
         navtasks=0
         while not self.cancel:
-            if not self.cancel:
-                self.home_wheels()
-                rospy.sleep(10.0)
+#            if not self.cancel:
+#                self.home_wheels()
+#                rospy.sleep(10.0)
             
             for i in wplist:
                 self.navigate_to_waypoint(i)
