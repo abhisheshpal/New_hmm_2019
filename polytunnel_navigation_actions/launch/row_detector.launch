@@ -1,8 +1,10 @@
 <?xml version="1.0" ?>
 <launch>
 
-  <arg name="config" default="$(find polytunnel_navigation_actions)/config/row_detector.yaml" />
+  <arg name="config_common" default="$(find polytunnel_navigation_actions)/config/row_detector_common_cfg.yaml" />
+  <arg name="config_ellipse" default="$(find polytunnel_navigation_actions)/config/row_detector_ellipse_cfg.yaml" />
 
-  <node pkg="polytunnel_navigation_actions" type="row_detector.py" name="row_detector" output="screen" args="$(arg config)" />
+  <node pkg="polytunnel_navigation_actions" type="row_detector.py" name="row_detector" output="screen" 
+        args="$(arg config_common) $(arg config_ellipse)" />
 
 </launch>
