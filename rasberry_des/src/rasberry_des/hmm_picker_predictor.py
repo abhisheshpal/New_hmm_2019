@@ -259,8 +259,15 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         prev_node = curr_node
         prev_dir = curr_dir
         n_iter = _remain_tray_pick_time / self.predict_interval
-        obs = [curr_node, curr_node]
+        n_nodes = 0.
+        for _row_id in self.graph.row_ids:
+            if _row_id == row_id:
+                break
+            n_nodes += len(self.graph.row_nodes[_row_id])
+
         for i in range(n_iter):
+            curr_node_idx = n_nodes + self.graph.row_nodes[row_id].index(curr_node)
+            obs = [curr_node_idx, curr_node_idx]
             if curr_dir == "forward":
                 (state, kl, posterior) = self.fwd_picking_model.predict(obs,
                                                                         predict_time = i,
@@ -275,7 +282,11 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                 raise Exception("wrong picking direction")
 
             print state
-            if self.graph.get_row_id_of_row_node(state) != row_id:
+            # state is an index in the state map containing all rows
+            # row can change when the state > max index for that row or
+            # when a jump happens from last to first row
+            if ((state >= n_nodes + len(self.graph.row_nodes[row_id])) or
+                ((n_nodes > 0) and (state < len(self.graph.row_nodes[self.graph.row_ids[0]])))):
                 # row_id of the predicted node has changed => either row or dir is changed
                 if curr_dir == "forward" and row_id not in self.graph.half_rows:
                     curr_dir = "reverse"
@@ -285,10 +296,10 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                 elif curr_dir == "reverse":
                     row_change = True
                 break
-            obs = [state, state]
+
             _remain_tray_pick_time -= self.predict_interval
             prev_node = curr_node
-            curr_node = state
+            curr_node = self.graph.row_nodes[row_id][state - n_nodes]
             if prev_node != curr_node:
                 _, _, route_dists = self.graph.get_path_details(prev_node, curr_node)
                 dist_so_far += sum(route_dists)
@@ -298,18 +309,25 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
             # predict until row is completed or tray is full
             n_iter = _remain_tray_pick_time / self.predict_interval
             for i in range(n_iter):
+                curr_node_idx = n_nodes + self.graph.row_nodes[row_id].index(curr_node)
+                obs = [curr_node_idx, curr_node_idx]
+
                 (state, kl, posterior) = self.bwd_picking_model.predict(obs,
                                                                         predict_time = i,
                                                                         verbose = False
                                                                         )
-                if self.graph.get_row_id_of_row_node(state) != row_id:
+                # state is an index in the state map containing all rows
+                # row can change when the state > max index for that row or
+                # when a jump happens from last to first row
+                if ((state >= n_nodes + len(self.graph.row_nodes[row_id])) or
+                    ((n_nodes > 0) and (state < len(self.graph.row_nodes[self.graph.row_ids[0]])))):
                     # row_id of the predicted node has changed => row is changed
                     row_change = True
                     break
-                obs = [state, state]
+
                 _remain_tray_pick_time -= self.predict_interval
                 prev_node = curr_node
-                curr_node = state
+                curr_node = self.graph.row_nodes[row_id][state - n_nodes]
                 prev_dir = curr_dir
                 if prev_node != curr_node:
                     _, _, route_dists = self.graph.get_path_details(prev_node, curr_node)
