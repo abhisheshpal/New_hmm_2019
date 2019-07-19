@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<launch> 
+  <arg name="patrol_scenario" default="riseholme"/>
+  <arg name="record_bag" default="true"/>  
+  <arg name="data_folder" default="~/Data/"/>  
+
+  <node name="navigation_benchmarks" pkg="rasberry_navigation" type="navigation_benchmarks.py" args="$(find rasberry_navigation)/resources/$(arg patrol_scenario)_waypoints.yaml" output="screen"/>
+
+
+  <node pkg="rosbag" type="record" name="rosbag_record_benchmarks"
+       args="record --split --duration=15m -o $(arg data_folder)/navigation_benchmarks.bag /tf /scan /map /closest_node /odometry/base_raw /odometry/filtered /current_node /robot_pose /amcl_pose /current_edge /battery_data"
+       if="$(arg record_bag)" output="screen" />
+</launch>
