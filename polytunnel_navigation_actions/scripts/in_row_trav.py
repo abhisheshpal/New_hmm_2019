@@ -520,6 +520,8 @@ class inRowTravServer(object):
                 progress_to_goal=np.abs(gdist)-np.abs(pre_gdist)
                 if progress_to_goal > 0.0 and not self._user_controlled: 
                     goal_overshot= True
+                    self.not_pub.publish("OVERSHOOT!!!")
+                    rospy.logwarn("Row traversal has overshoot, going to next minigoal")
 
                 #print "- ", dist, " ", self.cancelled
             if not self.cancelled:
