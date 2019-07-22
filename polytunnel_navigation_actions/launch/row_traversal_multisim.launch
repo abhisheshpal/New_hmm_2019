@@ -1,0 +1,50 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="robot_name" />
+  <arg name="tf_prefix" default="$(arg robot_name)" />
+  <arg name="detector_config_common" default="$(find polytunnel_navigation_actions)/config/row_detector_common_cfg.yaml" />
+  <arg name="detector_config_ellipse" default="$(find polytunnel_navigation_actions)/config/row_detector_ellipse_cfg.yaml" />
+  <arg name="traversal_config" default="$(find polytunnel_navigation_actions)/config/row_traversal_cfg.yaml" />
+
+  <group ns="$(arg robot_name)" >
+    <rosparam param="row_traversal/base_frame" subst_value="True"> /$(arg tf_prefix)/base_link </rosparam>
+    <rosparam param="row_traversal/corner_frames" subst_value="True"> [/$(arg tf_prefix)/top0, /$(arg tf_prefix)/top1, /$(arg tf_prefix)/top2, /$(arg tf_prefix)/top3] </rosparam>
+
+    <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal" output="screen">
+      <rosparam file="$(arg traversal_config)" command="load"/>
+      <remap from="/scan" to="scan" />
+      <remap from="/robot_pose" to="robot_pose" />
+      <remap from="/closest_node" to="closest_node" />
+      <remap from="/row_detector/path_error" to="row_detector/path_error" />
+      <remap from="/row_detector/obstacles" to="row_detector/obstacles" />
+      <remap from="/row_detector/activate_detection" to="row_detector/activate_detection" />
+      <remap from="/row_traversal/row_line" to="row_traversal/row_line" />
+      <remap from="/nav_vel" to="nav_vel" />
+      <remap from="/row_traversal/goal_reference" to="row_traversal/goal_reference" />
+      <remap from="/row_traversal/safety_zone" to="row_traversal/safety_zone" />
+      <remap from="/row_traversal/notification" to="row_traversal/notification" />
+
+      <remap from="map" to="/map" />
+    </node>
+
+    <node pkg="polytunnel_navigation_actions" type="row_detector_vis.py" name="row_detector_vis" output="screen">
+      <remap from="/row_detector/poles" to="row_detector/poles" />
+      <remap from="/row_detector/obstacles" to="row_detector/obstacles" />
+      <remap from="/row_detector/poles_vis" to="row_detector/poles_vis" />
+      <remap from="/row_detector/obstacles_vis" to="row_detector/obstacles_vis" />
+
+      <remap from="map" to="/map" />
+    </node>
+
+  </group>
+
+
+  <include file="$(find polytunnel_navigation_actions)/launch/row_detector_multisim.launch">
+    <!-- this launch file can be included only after base_frame and corner_frames parameters are set -->
+    <!-- this launch file namespaces the nodes in it -->
+    <arg name="robot_name" value="$(arg robot_name)" />
+    <arg name="config_common" value="$(arg detector_config_common)" />
+    <arg name="config_ellipse" value="$(arg detector_config_ellipse)" />
+  </include>
+
+</launch>
