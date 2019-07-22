@@ -38,6 +38,7 @@ init_cmd: |
   export_default MONGO_PATH "$HOME/mongodb"
   # use IMU?
   export_default USE_IMU true
+  export default UM7_IMU_PORT "/dev/ttyUSB1"
   export_default USE_XSENS false
   # use RTK_GNSS?
   export_default USE_RTK false
@@ -73,7 +74,7 @@ windows:
   - roslaunch rasberry_bringup robot_bringup.launch robot_model:=$(rospack find rasberry_bringup)/config/robot_$ROBOT_NO.yaml model_extras:=$(rospack find rasberry_bringup)/urdf/robot_${ROBOT_NO}_sensors_corner_hokuyos.xacro ekf_publish_tf:="$EKF_PUBLISH_TF" simple_sim:=$USE_SIM with_teleoperation:=true world_name:=$GAZEBO_WORLD use_gui:=$USE_GUI
   - if ! $USE_SIM; then roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_front" ip_address:="192.168.0.11" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_front" topic_name:="scan_front"; fi
   - if ! $USE_SIM; then roslaunch rasberry_bringup hokuyo.launch frame_id:="hokuyo_back" ip_address:="192.168.0.10" angle_min:=-2.18 angle_max:=2.18 node_name:="urg_node_back" topic_name:="scan_back"; fi
-  - if ! $USE_SIM; then roslaunch rasberry_bringup rasberry_imu.launch use_imu:="$USE_IMU" use_xsens:="$USE_XSENS"; fi
+  - if ! $USE_SIM; then roslaunch rasberry_bringup rasberry_imu.launch use_imu:="$USE_IMU" um7_imu_port:="$UM7_IMU_PORT" use_xsens:="$USE_XSENS"; fi
 - name: localisation
   panes:
   - roslaunch rasberry_navigation map_server.launch map:="$MAP" use_no_go_map:=true no_go_map:=$NOGOMAP
