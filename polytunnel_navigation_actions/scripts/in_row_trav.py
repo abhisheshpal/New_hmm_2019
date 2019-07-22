@@ -61,18 +61,18 @@ class inRowTravServer(object):
         self.minimum_turning_speed = 0.01       # Minimum turning speed
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
-        self.forward_speed= 0.8                 
+        self.forward_speed= 0.8
         self.quit_on_timeout=False
         self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
-        
+
         # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
-        self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'], 
+        self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'],
                                 'functions':[self.define_safety_zone, self.define_safety_zone]}
-        
+
         self.object_detected = False
-        self.curr_distance_to_object=-1.0        
-        
-        
+        self.curr_distance_to_object=-1.0
+
+
         self.laser_emergency_regions=[]
         self.redefine_laser_regions=False
         self.limits=[]
@@ -88,6 +88,9 @@ class inRowTravServer(object):
         self.safety_marker=None
         self.active=True
 
+        self.base_frame = rospy.get_param("row_traversal/base_frame", "/base_link")
+        self.corner_frames = rospy.get_param("row_traversal/corner_frames", ["/top0", "/top1", "/top2", "/top3"])
+
         while not self.lnodes and not self.cancelled:
             rospy.loginfo("Waiting for topological map")
             rospy.Subscriber('/topological_map', TopologicalMap, self.topological_map_cb)
@@ -102,7 +105,7 @@ class inRowTravServer(object):
 
         self._tf_listerner = tf.TransformListener()
         self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
-        
+
         self.ppub = rospy.Publisher('/row_traversal/row_line', Path, queue_size=1)
         self.cmd_pub = rospy.Publisher('/nav_vel', Twist, queue_size=1)
         self.ref_pub = rospy.Publisher('/row_traversal/goal_reference', PoseStamped, queue_size=1)
@@ -123,14 +126,14 @@ class inRowTravServer(object):
         self._as.start()
         rospy.loginfo(" ...done")
         self.safety_zone_vis_pub.publish(self.safety_marker)
-        
+
         rospy.spin()
 
 
     def dyn_reconf_callback(self, config, level):
         rospy.loginfo("reconfigure request")
         print config, level
-        
+
         if self.config:
             changed_dict = {x: self.config[x] != config[x] for x in self.config if x in config}
             lk = [key  for (key, value) in changed_dict.items() if value]
@@ -144,20 +147,20 @@ class inRowTravServer(object):
             #self.set_config(lk[0], config[lk[0]])
             self.config = config
         else:
-            print "First config: "#, config.items()            
+            print "First config: "#, config.items()
             self.config = config
             for i in config.items():
                 if hasattr(self, i[0]):
                     setattr(self, i[0], i[1])
                     print i[0], getattr(self, i[0])
-                    
+
         return config
 
 
 
-    def define_safety_zone(self, corner_frames=['top0','top1','top2','top3']):
-        """ Defines the Safety zone around the robot 
-        
+    def define_safety_zone(self, ):
+        """ Defines the Safety zone around the robot
+
         Arguments:
         clearance     -- The outwards distance trom the corner_frames at which the vertices of the safety zone are defined
         corner_frames -- The name of the frames that define the extremes of the robot
@@ -165,28 +168,28 @@ class inRowTravServer(object):
         print "Defining Safety Zone"
         self.limits=[]
         self.emergency_base_points=[]
-        
-        for i in corner_frames:
+
+        for i in self.corner_frames:
             d={}
-            self._tf_listerner.waitForTransform('base_link',i,rospy.Time.now(), rospy.Duration(1.0))
-            (trans,rot) = self._tf_listerner.lookupTransform('base_link',i,rospy.Time.now())
+            self._tf_listerner.waitForTransform(self.base_frame,i,rospy.Time.now(), rospy.Duration(1.0))
+            (trans,rot) = self._tf_listerner.lookupTransform(self.base_frame,i,rospy.Time.now())
             i_x, i_y, i_z = trans
             cpi=PointStamped()
-            cpi.header.frame_id='base_link'
+            cpi.header.frame_id=self.base_frame
             cpi.point.x= i_x+self.emergency_clearance_x if i_x > 0 else  i_x-self.emergency_clearance_x
             cpi.point.y= i_y+self.emergency_clearance_y if i_y > 0 else  i_y-self.emergency_clearance_y
             cpi.point.z=-0.3
             d['point']=cpi
             d['angle']=math.atan2(cpi.point.y,cpi.point.x)
             self.emergency_base_points.append(d)
-        
+
         # We sort in angle from move base
-        self.emergency_base_points = sorted( self.emergency_base_points, key=lambda k: k['angle']) 
+        self.emergency_base_points = sorted( self.emergency_base_points, key=lambda k: k['angle'])
         self.redefine_laser_regions = True
         print "visualise safety zone"
         self.safety_zones_visualisation()
-    
-    
+
+
     def laser_cb(self, msg):
         if self.redefine_laser_regions:
             self.safety_zones_find_laser_regions(msg)
@@ -213,7 +216,7 @@ class inRowTravServer(object):
                         if self.quit_on_timeout and not self.giveup_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(self.time_to_quit), self.giveup, oneshot=True)
                             self.giveup_timer_active=True
-                        
+
                         if not self.notified and not self.notification_timer_active:
                             self.timer = rospy.Timer(rospy.Duration(3.0), self.nottim, oneshot=True)
                             self.notification_timer_active=True
@@ -221,10 +224,10 @@ class inRowTravServer(object):
                         break
             if not self.colision:
                 self.notified=False
-    
 
 
-    
+
+
     def obstacles_callback(self, msg):
         min_obs_dist=1000
         for obs in msg.obstacles:
@@ -242,13 +245,13 @@ class inRowTravServer(object):
 
 
         if min_obs_dist <= self.approach_dist_to_obj:
-            if (np.abs(obs_ang) <= (np.pi/25.0)) or (np.abs(obs_ang) >= (np.pi*24/25.0)): 
+            if (np.abs(obs_ang) <= (np.pi/25.0)) or (np.abs(obs_ang) >= (np.pi*24/25.0)):
                 if np.abs(obs_ang) < np.pi/2.0 :#and self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode           
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 elif np.abs(obs_ang) > np.pi/2.0 :#and not self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode        
+                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -259,7 +262,7 @@ class inRowTravServer(object):
             self.curr_distance_to_object=-1.0
 
 
-    
+
     def safety_zones_find_laser_regions(self, msg):
         self.laser_emergency_regions=[]
         for i in range(len(self.emergency_base_points)-1):
@@ -283,31 +286,31 @@ class inRowTravServer(object):
         d['mean_dist']=math.hypot(midx, midy)
         self.laser_emergency_regions.append(d)
 
-        self.emergency_poly=[]        
+        self.emergency_poly=[]
         for i in self.laser_emergency_regions:
             print i
-        
+
         for i in self.emergency_base_points:
             r=(i['point'].point.x, i['point'].point.y)
             self.emergency_poly.append(r)
-            
+
         self.emergency_poly=np.asarray(self.emergency_poly)
         self.redefine_laser_regions=False
-        
+
         self.max_emergency_dist= 0.0
         for i in self.laser_emergency_regions:
             print i['dist']
             self.max_emergency_dist=np.max([self.max_emergency_dist, i['dist']])
 #        laser_angles.append(msg.angle_max)
-            
-    
+
+
     def safety_zones_visualisation(self):
 
         base_pose = Pose()
         base_pose.orientation.w=1.0
 
         amarker = Marker()
-        amarker.header.frame_id = "base_link"
+        amarker.header.frame_id = self.base_frame
         #amarker.header.stamp = rospy.Time.now()
         amarker.type = 4
         amarker.pose = Pose()
@@ -319,11 +322,11 @@ class inRowTravServer(object):
         amarker.color.b = 0.1
         amarker.lifetime = rospy.Duration(0.0)
         amarker.frame_locked = True
-        
+
         for i in self.emergency_base_points:
             amarker.points.append(i['point'].point)
         amarker.points.append(self.emergency_base_points[0]['point'].point)
-               
+
         self.safety_marker=amarker
 
 
@@ -375,12 +378,12 @@ class inRowTravServer(object):
 
     def _transform_to_pose_stamped(self, pose_2d):
         the_pose = PoseStamped()
-        the_pose.header.frame_id = 'base_link'
+        the_pose.header.frame_id = self.base_frame
         the_pose.pose.position.x = pose_2d.pose.x#-1.0*pose_2d.pose.x
         the_pose.pose.position.y = pose_2d.pose.y
         the_pose.pose.position.z = 0.5
         the_pose.pose.orientation.w = 1.0#tf.transformations.quaternion_from_euler(0.0,0.0,pose_2d.pose.theta)
-        #map_pose = self.listener.transformPose('map', the_pose)
+        #map_pose = self.listener.transformPose('/map', the_pose)
         return the_pose
 
 
@@ -390,36 +393,36 @@ class inRowTravServer(object):
 
         ang1 = q1.GetRPY()
         ang2 = q2.GetRPY()
-        
+
         return ang2[2]-ang1[2]
 
 
     def _get_path(self, posea, poseb):
         the_path = Path()
-        the_path.header.frame_id='map'
+        the_path.header.frame_id='/map'
         radius, the_quat, ang = self._distance_between_poses(posea, poseb)
-        
-        
+
+
         for i in np.arange(0, radius, self.granularity):
             d=PoseStamped()
-            d.header.frame_id='map'
+            d.header.frame_id='/map'
             #d.header.stamp = rospy.Time.now()
             d.pose.position.x=posea.position.x + i*np.cos(ang)
             d.pose.position.y=posea.position.y + i*np.sin(ang)
             d.pose.orientation = the_quat
             the_path.poses.append(d)
-        
+
         d=PoseStamped()
-        d.header.frame_id='map'
+        d.header.frame_id='/map'
         #d.header.stamp = rospy.Time.now()
         d.pose.position.x=posea.position.x + radius*np.cos(ang)
         d.pose.position.y=posea.position.y + radius*np.sin(ang)
         d.pose.orientation = the_quat
         the_path.poses.append(d)
-        
-        
+
+
         return the_path
-        
+
 
 
     def align_orientation(self, path_to_goal):
@@ -445,7 +448,7 @@ class inRowTravServer(object):
             rospy.sleep(2.0) # We need to give time to the wheels to straighten
 
         print "Done: ", ang_diff
-        
+
     def get_forward_speed(self):
         if not self.constant_forward_speed:
             if not self.object_detected and self.curr_distance_to_object <= self.approach_dist_to_obj:
@@ -475,7 +478,7 @@ class inRowTravServer(object):
         #print speed
         return speed
 
-    def go_forwards(self, path_to_goal, start_goal):        
+    def go_forwards(self, path_to_goal, start_goal):
         print "GOING FORWARDS NOW"
         if self.backwards_mode:
             speed = -self.forward_speed
@@ -483,7 +486,7 @@ class inRowTravServer(object):
             speed = self.forward_speed
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
         for i in range(start_goal, len(path_to_goal.poses)):
-            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])        
+            dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
             #print "1-> ", dist, " ", self.cancelled
             while np.abs(dist)>0.1 and not self.cancelled:
                 speed=self.get_forward_speed()
@@ -501,7 +504,7 @@ class inRowTravServer(object):
             self._send_velocity_commands(0.0, 0.0, 0.0)
             self.active=False
 
-        
+
     def find_next_point_in_line(self, path_to_goal):
         '''
         Closest point to line method
@@ -520,12 +523,12 @@ class inRowTravServer(object):
         else:
             pathind=0
         #print (x3, y3, nx, pathind)
-        
+
         return pathind
 
 
     def follow_path(self, path_to_goal):
-        
+
         print "Align Orientation first"
         self.align_orientation(path_to_goal)
 
@@ -544,34 +547,34 @@ class inRowTravServer(object):
             cmd_vel.linear.y = yvel
             if consider_minimum_rot_vel:
                 if np.isclose(angvel, 0.0):
-                    cmd_vel.angular.z = 0.0            
+                    cmd_vel.angular.z = 0.0
                 elif np.abs(angvel) >= self.minimum_turning_speed:
                     cmd_vel.angular.z = angvel
                 else:
                     if angvel > 0.0:
-                        cmd_vel.angular.z = self.minimum_turning_speed 
+                        cmd_vel.angular.z = self.minimum_turning_speed
                     elif angvel < 0.0:
                         cmd_vel.angular.z = -1.0 * self.minimum_turning_speed
-    
+
             else:
                 cmd_vel.angular.z = angvel
-    
+
     #        print 'ANg: ', cmd_vel.angular.z
             self.cmd_pub.publish(cmd_vel)
         else:
             cmd_vel = Twist()
             cmd_vel.linear.x = 0.0
             cmd_vel.linear.y = 0.0
-            cmd_vel.angular.z = 0.0            
+            cmd_vel.angular.z = 0.0
             self.cmd_pub.publish(cmd_vel)
 
 
 
-            
+
 
     def _get_references(self,pose):
         dist, y_path_err, ang_path_diff = self._get_vector_to_pose(pose)
-        
+
         if self.y_ref:
 #            if self.backwards_mode:
 #                self.y_ref = -1.0*self.y_ref
@@ -591,22 +594,22 @@ class inRowTravServer(object):
 
 
     def _get_vector_to_pose(self, pose):
-        transform = self._tf_listerner.transformPose('base_link',pose)
-        
+        transform = self._tf_listerner.transformPose(self.base_frame,pose)
+
         orientation_list = [transform.pose.orientation.x, transform.pose.orientation.y, transform.pose.orientation.z, transform.pose.orientation.w]
         euls = tf.transformations.euler_from_quaternion(orientation_list)
         #print transform.pose.position.x, transform.pose.position.y, math.degrees(euls[2]), euls[2]
         self.ref_pub.publish(transform)
-        
+
         ang_diff = euls[2]
-        
-        if self.backwards_mode:        
+
+        if self.backwards_mode:
             if ang_diff>0:
                 ang_diff=-(math.pi-ang_diff)
             else:
                 ang_diff=-(-math.pi-ang_diff)
-        
-        
+
+
         return transform.pose.position.x, transform.pose.position.y, ang_diff
 
     def activate_row_detector(self, onoff):
@@ -617,7 +620,7 @@ class inRowTravServer(object):
             print resp1.message
             return resp1.success
         except rospy.ServiceException, e:
-            print "Service call failed: %s"%e       
+            print "Service call failed: %s"%e
 
 
     def executeCallback(self, goal):
@@ -625,9 +628,9 @@ class inRowTravServer(object):
         self.backwards_mode=False
         self.cancelled = False
         self.active=True
-        
+
         self.activate_row_detector(True)
-        initial_pose=self.get_node_position(self.closest_node)        
+        initial_pose=self.get_node_position(self.closest_node)
         final_pose=goal.target_pose.pose
         path_to_goal=self._get_path(initial_pose, final_pose)
         self.ppub.publish(path_to_goal)
@@ -647,8 +650,8 @@ class inRowTravServer(object):
             self.cancelled = True
             self.backwards_mode=False
         self.giveup_timer_active=False
-        
-        
+
+
     def do_stop(self, timer):
         if not self.active:
             print "do_stop"
@@ -663,9 +666,9 @@ class inRowTravServer(object):
             self.not_pub.publish(colstr)
         self.notification_timer_active=False
         self.notified=True
- 
-        
-        
+
+
+
     def preemptCallback(self):
         rospy.loginfo("Row Traversal Cancelled")
         self.cancelled = True
