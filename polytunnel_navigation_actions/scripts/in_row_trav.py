@@ -158,7 +158,7 @@ class inRowTravServer(object):
 
 
 
-    def define_safety_zone(self, ):
+    def define_safety_zone(self):
         """ Defines the Safety zone around the robot
 
         Arguments:
