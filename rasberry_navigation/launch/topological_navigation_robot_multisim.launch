@@ -78,6 +78,8 @@
     <node pkg="topological_navigation" name="execute_policy_server" type="execute_policy_server.py" output="screen" respawn="true">
       <param name="retries" type="int" value="$(arg execute_policy_retries)"/>
       <param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/>
+
+      <param name="reconfigure_edges" type="bool" value="$(arg reconfigure_edges)"/>
     </node>
 
   </group>
