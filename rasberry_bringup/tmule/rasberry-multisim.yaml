@@ -36,7 +36,7 @@ init_cmd: |
   export_default ROS_HOSTNAME "$ROS_IP"
   # path where to expect MONGODB
   export_default MONGO_PATH "$HOME/mongodb"
-  export_default USE_ROW_TRAVERSAL true
+  export_default USE_ROW_TRAVERSAL false
   # the topomap to be used 
   if [ ! $USE_ROW_TRAVERSAL ]; then export_default TMAP riseholme_bidirectional_sim; else export_default TMAP riseholme_poly_act_sim; fi
   # the gridmap to be used (key in mongodb)
