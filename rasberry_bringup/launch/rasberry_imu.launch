@@ -9,7 +9,7 @@
 
 
     <!-- UM7 IMU ARGS -->
-    <arg name="um7_imu_port" default="/dev/ttyUSB1"/>
+    <arg name="um7_imu_port" default="/dev/ttyUSB0"/>
 
     <!-- XSENS IMU ARGS -->
     <arg name="device" default="auto" doc="device file of the IMU"/>
