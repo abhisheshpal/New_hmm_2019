@@ -9,5 +9,5 @@ export EKF_PUBLISH_TF=false
 export USE_IMU=false
 export USE_CARROT=false
 export USE_GUI=false
-export USE_OMNI=false
+export USE_OMNI=true
 export SITE_CONFIG="riseholme"
