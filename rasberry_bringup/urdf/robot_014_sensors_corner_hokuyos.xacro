@@ -8,6 +8,7 @@
   <link name="$(arg tf_prefix)/septentrio"/>
   <link name="$(arg tf_prefix)/xsens"/>
   <link name="$(arg tf_prefix)/os1_sensor"/>
+  <link name="$(arg tf_prefix)/imu_link"/>
 
   <!-- Hokuyo Laser -->
   <link name="$(arg tf_prefix)/hokuyo_front">
