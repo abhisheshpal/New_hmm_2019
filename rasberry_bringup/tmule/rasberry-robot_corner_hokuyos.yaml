@@ -38,7 +38,7 @@ init_cmd: |
   export_default MONGO_PATH "$HOME/mongodb"
   # use IMU?
   export_default USE_IMU true
-  export default UM7_IMU_PORT "/dev/ttyUSB0"
+  export_default UM7_IMU_PORT "/dev/ttyUSB1"
   export_default USE_XSENS false
   # use RTK_GNSS?
   export_default USE_RTK false
