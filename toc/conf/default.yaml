@@ -73,7 +73,7 @@ robots:
       gps: "/gps/fix"
       battery: "/battery_data"
       ouster: "/ouster/cloud"
-      camera: ""
+      camera: "/usb_cam/image_raw/theora"
   dummy:
     description: "localhost for debugging"
     ip: "127.0.0.1"
