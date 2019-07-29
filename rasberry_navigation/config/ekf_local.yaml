@@ -11,6 +11,7 @@ ekf_local:
   odom_frame: odom
   base_link_frame: base_link
   world_frame: odom
+  #publish_tf: true
 
 
   odom0: /odometry/base_raw
