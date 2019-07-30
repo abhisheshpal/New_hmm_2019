@@ -536,6 +536,8 @@ class inRowTravServer(object):
                 if not self.goal_overshot:
                     speed=self.get_forward_speed()
                     self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
+                else:
+                    self._send_velocity_commands(0.0, 0.0, 0.0)
                 rospy.sleep(0.05)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
 
@@ -550,10 +552,12 @@ class inRowTravServer(object):
                 # and that is not being controlled (helped) by the user.
                 progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
                 if not self._user_controlled:
-                    print progress_to_goal, gdist, pre_gdist
+                    #print progress_to_goal, gdist, pre_gdist
                     if progress_to_goal >= 0.1 and np.abs(progress_to_goal)>=(0.1*self.forward_speed):
                         self.goal_overshot= True
                         nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
+                        print nottext                        
+                        print progress_to_goal, gdist, pre_gdist
                         self.not_pub.publish(nottext)
                         rospy.logwarn(nottext)
 
