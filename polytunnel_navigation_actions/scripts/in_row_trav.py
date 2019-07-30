@@ -238,6 +238,7 @@ class inRowTravServer(object):
                 self.notified=False
     
     
+    
     def joy_lock_cb(self, msg):
         if msg.data:
             self._user_controlled=True
@@ -269,11 +270,11 @@ class inRowTravServer(object):
         if min_obs_dist <= self.approach_dist_to_obj:
             if (np.abs(obs_ang) <= (np.pi/25.0)) or (np.abs(obs_ang) >= (np.pi*24/25.0)):
                 if np.abs(obs_ang) < np.pi/2.0 :#and self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 elif np.abs(obs_ang) > np.pi/2.0 :#and not self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -549,6 +550,7 @@ class inRowTravServer(object):
                 # and that is not being controlled (helped) by the user.
                 progress_to_goal=np.abs(gdist)-np.abs(pre_gdist)
                 if not self._user_controlled:
+                    print progress_to_goal, gdist, pre_gdist
                     if progress_to_goal >= 0.08 and np.abs(progress_to_goal)>=0.1*self.forward_speed:
                         self.goal_overshot= True
                         nottext="Row traversal has overshoot, previous distance ", np.abs(pre_gdist)," current distance ",np.abs(gdist)
