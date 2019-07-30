@@ -543,20 +543,19 @@ class inRowTravServer(object):
 
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
 
-                pre_gdist=gdist     #Hack to stop the robot if it overshot         
-                gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
-                
+                # Hack to stop the robot if it overshot:
                 # To see if the robot has overshot we check if the distance to goal has actually increased 
                 # or has changed much faster than expected (massive misslocalisation) 4 times the forward speed 
                 # times the control period (0.05 seconds) 
                 # and that is not being controlled (helped) by the user.
+                pre_gdist=gdist     
+                gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
                 progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
                 if not self._user_controlled:
-                    #print progress_to_goal, gdist, pre_gdist
                     if progress_to_goal >= 0.1 and np.abs(progress_to_goal)>=(0.1*self.forward_speed):
                         self.goal_overshot= True
                         nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
-                        print nottext                        
+                        print nottext
                         print progress_to_goal, gdist, pre_gdist
                         self.not_pub.publish(nottext)
                         rospy.logwarn(nottext)
