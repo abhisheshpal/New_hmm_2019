@@ -548,12 +548,12 @@ class inRowTravServer(object):
                 # or has changed much faster than expected (massive misslocalisation) 4 times the forward speed 
                 # times the control period (0.05 seconds) 
                 # and that is not being controlled (helped) by the user.
-                progress_to_goal=np.abs(gdist)-np.abs(pre_gdist)
+                progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
                 if not self._user_controlled:
                     print progress_to_goal, gdist, pre_gdist
-                    if progress_to_goal >= 0.08 and np.abs(progress_to_goal)>=0.1*self.forward_speed:
+                    if progress_to_goal >= 0.1 and np.abs(progress_to_goal)>=(0.1*self.forward_speed):
                         self.goal_overshot= True
-                        nottext="Row traversal has overshoot, previous distance ", np.abs(pre_gdist)," current distance ",np.abs(gdist)
+                        nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
                         self.not_pub.publish(nottext)
                         rospy.logwarn(nottext)
 
