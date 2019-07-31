@@ -135,14 +135,14 @@ class Picker(object):
 
         self.assigned_robot_id = robot_id
 
-    def proceed_with_picking(self, ):
+    def proceed_with_picking(self):
         """scheduler lets the picker continue picking after loading trays on robot.
         this is just to make sure the scheduler is aware that the robot is loaded
         """
         self.loginfo("%s can continue picking" %(self.picker_id))
         self.continue_picking = True
 
-    def picking_node_to_node(self, ):
+    def picking_node_to_node(self):
         """mimic picking from one node to another"""
         curr_node_index = self.row_path.index(self.curr_node)
         if self.picking_dir == "forward":
@@ -163,7 +163,7 @@ class Picker(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def update_trays_unloaded(self, ):
+    def update_trays_unloaded(self):
         """update tray counts after unloading"""
         # update trays unloaded
         self.tot_trays += self.n_trays
@@ -173,7 +173,7 @@ class Picker(object):
             self.tot_trays += self.picking_progress / self.tray_capacity
             self.picking_progress = 0.
 
-    def dist_to_robot(self, ):
+    def dist_to_robot(self):
         """return Eucledian distance between robot's pose and picker's pose"""
         robot_node = self.robots[self.assigned_robot_id].curr_node
 
@@ -191,18 +191,18 @@ class Picker(object):
 
             return math.hypot((robot_x - curr_x), (robot_y - curr_y))
 
-    def update_trays_loaded(self, ):
+    def update_trays_loaded(self):
         """update tray_counts after loading on a robot"""
         self.tot_trays += self.n_trays
         self.n_trays = 0
 
-    def reset_robot_assignment(self, ):
+    def reset_robot_assignment(self):
         """reset the assigned robot info after loading"""
         # To ensure the picker won't have a robot assigned, the next time the
         # picker's trays are full and the current robot has not unloaded yet
         self.assigned_robot_id = None
 
-    def normal_operation(self, ):
+    def normal_operation(self):
         """ Picker's picking process when there are robots to carry full trays
         """
         idle_start_time = self.env.now
@@ -506,7 +506,7 @@ class Picker(object):
         self.loginfo("%s reached %s" %(self.picker_id, goal_node))
         yield self.env.timeout(self.process_timeout)
 
-    def finished_row_routine(self, ):
+    def finished_row_routine(self):
         """Common things to do when picking along the allocated row is finished
         """
         # some attributes are reset
@@ -518,11 +518,11 @@ class Picker(object):
         self.row_finish_time = self.env.now
         self.n_rows += 1
 
-    def inform_picking_finished(self, ):
+    def inform_picking_finished(self):
         """called by farm - scheduler to indicate all rows are now picked"""
         self.picking_finished = True
 
-    def inform_allocation_finished(self, ):
+    def inform_allocation_finished(self):
         """called by farm - scheduler to indicate all rows are now allocated"""
         self.allocation_finished = True
 
