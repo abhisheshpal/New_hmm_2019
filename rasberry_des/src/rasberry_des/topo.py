@@ -97,7 +97,7 @@ class TopologicalForkGraph(object):
 
         self.route_search = topological_navigation.route_search.TopologicalRouteSearch(self.topo_map)
 
-    def update_node_index(self, ):
+    def update_node_index(self):
         """once topo_map is received, get the indices of nodes for easy access to node object"""
         for i in range(len(self.topo_map.nodes)):
             self.node_index[self.topo_map.nodes[i].name] = i
@@ -172,7 +172,7 @@ class TopologicalForkGraph(object):
         self.cold_storage = cold_storage
         self.use_local_storage = False
 
-    def set_row_info(self, ):
+    def set_row_info(self):
         """set_row_info: Set information about each row
         {row_id: [pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
 
@@ -218,23 +218,22 @@ class TopologicalForkGraph(object):
         """
         route_nodes = []
         route_edges = []
-        route_distance = []
+        route_distances = []
         if start_node == goal_node:
-            return ([start_node], route_edges, route_distance)
+            return ([start_node], route_edges, route_distances)
 
         route = self.route_search.search_route(start_node, goal_node)
         if route is not None:
             route_nodes = route.source
             route_edges = route.edge_id
 
-            edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
+            # append goal_node to route_nodes
             route_nodes.append(goal_node)
-            route_edges.append(edge_to_goal[0])
 
             for i in range(len(route_nodes) - 1):
-                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
+                route_distances.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
 
-        return (route_nodes, route_edges, route_distance)
+        return (route_nodes, route_edges, route_distances)
 
     def get_node(self, node):
         """get_node: Given a node name return its node object.
@@ -273,7 +272,7 @@ class TopologicalForkGraph(object):
             edge_ids.append(edge.edge_id)
         return edge_ids
 
-    def get_topo_map_no_agent_rownodes(self, ):
+    def get_topo_map_no_agent_rownodes(self):
         """get the current topological map without the edges connecting to row nodes with agents.
         this map should be used for route_search for all route searches here."""
         dyn_map = copy.deepcopy(self.topo_map)         # copy of map to be modified
@@ -315,7 +314,7 @@ class TopologicalForkGraph(object):
         start_node -- name of the starting node
         goal_node -- name of the goal node
         """
-        route_distance = []
+        route_distances = []
         route_nodes = []
         route_edges = []
 
@@ -329,16 +328,14 @@ class TopologicalForkGraph(object):
             route_nodes = route.source
             route_edges = route.edge_id
 
-            # find and append path from the last node to the goal_node using original topo_map
-            edge_to_goal = self.get_edges_between_nodes(route_nodes[-1], goal_node)
+            # append goal_node to route_nodes
             route_nodes.append(goal_node)
-            route_edges.append(edge_to_goal[0])
 
             # sum the path distance
             for i in range(len(route_nodes) - 1):
-                route_distance.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
+                route_distances.append(self.get_distance_between_adjacent_nodes(route_nodes[i], route_nodes[i + 1]))
 
-        return (route_nodes, route_edges, route_distance)
+        return (route_nodes, route_edges, route_distances)
 
     def get_row_id_of_row_node(self, node):
         """given a row_node, return the row_id"""

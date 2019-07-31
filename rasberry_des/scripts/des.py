@@ -68,15 +68,28 @@ if __name__ == "__main__":
     topo_graph.set_node_yields(_yield_per_node)
 
     n_trials = 1
-    min_n_pickers = 3#1
-    max_n_pickers = 4#n_topo_nav_rows + 1
-    min_n_robots = 3#0
-    max_n_robots = 4#max_n_pickers
+    min_n_pickers = 1
+    max_n_pickers = 3
+#    max_n_pickers = n_topo_nav_rows + 1
+    min_n_robots = 0
+    max_n_robots = 1
+#    max_n_robots = max_n_pickers
 #    n_local_storages = n_topo_nav_rows
 #    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
     policies = ["uniform_utilisation"]
+    use_cold_storage = False
 
-    raw_input("Press ENTER to start the DES")
+    # create log directory if does not exist already
+    if SAVE_STATS:
+        asc_time = time.asctime().split(" ")
+        if asc_time[2] == "":
+            log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_0%s_%s" %(asc_time[5], asc_time[1], asc_time[3], asc_time[4].replace(":", "_")))
+        else:
+            log_dir = os.path.join(os.path.expanduser("~"), "des_logs", "%s_%s_%s_%s" %(asc_time[4], asc_time[1], asc_time[2], asc_time[3].replace(":", "_")))
+        if os.path.exists(log_dir):
+            pass
+        else:
+            os.makedirs(log_dir)
 
     for n_pickers in range(min_n_pickers, max_n_pickers):
         if rospy.is_shutdown():
@@ -133,8 +146,9 @@ if __name__ == "__main__":
                     # assuming a fork graph with a head lane
                     local_storages = [simpy.Resource(env, capacity=n_pickers+n_robots) for i in range(n_local_storages)]
                     topo_graph.set_local_storages(local_storages)
-                    cold_storage = simpy.Resource(env, capacity=n_pickers+n_robots)
-                    topo_graph.set_cold_storage(cold_storage)
+                    if use_cold_storage:
+                        cold_storage = simpy.Resource(env, capacity=n_pickers+n_robots)
+                        topo_graph.set_cold_storage(cold_storage)
 
                     robots = []
                     for robot_id in robot_ids:
@@ -191,8 +205,144 @@ if __name__ == "__main__":
 
                     if SAVE_STATS:
                         time_now = time.time()*1000000
+
+                        # event logs
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_events.yaml" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        # sim details
+                        print >> f_handle, "# Environment details"
+                        print >> f_handle, "env_details:"
+                        print >> f_handle, "  map_name: %s" %(map_name)
+                        print >> f_handle, "  n_polytunnels: %d" %(topo_graph.n_polytunnels)
+                        if topo_graph.n_polytunnels > 1:
+                            print >> f_handle, "  n_farm_rows:"
+                            for i in range(topo_graph.n_polytunnels):
+                                print >> f_handle, "    tunnel-%d: %d" %(i, topo_graph.n_farm_rows[i])
+                        print >> f_handle, "  n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
+                        print >> f_handle, "  n_local_storages: %d" %(len(topo_graph.local_storages))
+                        print >> f_handle, "  use_local_storage: %s" %(topo_graph.use_local_storage)
+                        tot_yield = 0.
+                        if len(topo_graph.row_ids) > 1:
+                            print >> f_handle, "  row_details:"
+                        for row_id in topo_graph.row_ids:
+                            row_start_node = topo_graph.row_info[row_id][1]
+                            row_end_node = topo_graph.row_info[row_id][2]
+                            row_start_x = topo_graph.get_node(row_start_node).pose.position.x
+                            row_start_y = topo_graph.get_node(row_start_node).pose.position.y
+                            row_end_x = topo_graph.get_node(row_end_node).pose.position.x
+                            row_end_y = topo_graph.get_node(row_end_node).pose.position.y
+                            row_length = numpy.hypot((row_end_x - row_start_x), (row_end_y - row_start_y))
+                            node_dist = topo_graph.get_distance_between_adjacent_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
+                            storage_node = topo_graph.local_storage_nodes[row_id]
+                            print >> f_handle, "  -  row_id: %s" %(row_id)
+                            print >> f_handle, "     storage_node:"
+                            print >> f_handle, "       node_id: %s" %(topo_graph.local_storage_nodes[row_id])
+                            print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(storage_node).pose.position.x)
+                            print >> f_handle, "       y: %0.3f" %(topo_graph.get_node(storage_node).pose.position.y)
+                            print >> f_handle, "     start_node:"
+                            print >> f_handle, "       node_id: %s" %(topo_graph.row_info[row_id][1])
+                            print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(row_start_node).pose.position.x)
+                            print >> f_handle, "       y: %0.3f" %(topo_graph.get_node(row_start_node).pose.position.y)
+                            print >> f_handle, "     end_node:"
+                            print >> f_handle, "       node_id: %s" %(topo_graph.row_info[row_id][2])
+                            print >> f_handle, "       x: %0.3f" %(topo_graph.get_node(row_end_node).pose.position.x)
+                            print >> f_handle, "       y: %0.3f" %(topo_graph.get_node(row_end_node).pose.position.y)
+                            print >> f_handle, "     row_length: %0.3f" %(row_length)
+                            print >> f_handle, "     node_dist: %0.3f" %(node_dist)
+                            row_yield = 0.
+                            n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
+                            if row_id in topo_graph.half_rows:
+                                print >> f_handle, "     half_row: True"
+                                print >> f_handle, "     head_nodes:"
+                                for head_node in topo_graph.head_nodes[row_id]:
+                                    print >> f_handle, "     -  node_id: %s" %(head_node)
+                                    print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(head_node).pose.position.x)
+                                    print >> f_handle, "        y: %0.3f" %(topo_graph.get_node(head_node).pose.position.y)
+                                print >> f_handle, "     row_nodes:"
+                                for i in range(n_row_nodes):
+                                    node_name = topo_graph.row_nodes[row_id][i]
+                                    print >> f_handle, "     -  node_id: %s" %(node_name)
+                                    print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(node_name).pose.position.x,)
+                                    print >> f_handle, "        y: %0.3f" %(topo_graph.get_node(node_name).pose.position.y)
+                                    print >> f_handle, "        yield: %0.3f" %(topo_graph.yield_at_node[node_name])
+                                    row_yield += topo_graph.yield_at_node[node_name]
+                            else:
+                                print >> f_handle, "     half_row: False"
+                                print >> f_handle, "     head_nodes:"
+                                for head_node in topo_graph.head_nodes[row_id]:
+                                    print >> f_handle, "     -  node_id: %s" %(head_node)
+                                    print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(head_node).pose.position.x)
+                                    print >> f_handle, "        y: %0.3f" %(topo_graph.get_node(head_node).pose.position.y)
+                                print >> f_handle, "     row_nodes:"
+                                for i in range(n_row_nodes):
+                                    node_name = topo_graph.row_nodes[row_id][i]
+                                    print >> f_handle, "     -  node_id: %s" %(node_name)
+                                    print >> f_handle, "        x: %0.3f" %(topo_graph.get_node(node_name).pose.position.x,)
+                                    print >> f_handle, "        y: %0.3f" %(topo_graph.get_node(node_name).pose.position.y)
+                                    print >> f_handle, "        yield: %0.3f" %(topo_graph.yield_at_node[node_name])
+                                    if (i == 0) or (i == n_row_nodes - 1):
+                                        row_yield += topo_graph.yield_at_node[node_name]
+                                    else:
+                                        row_yield += 2 * topo_graph.yield_at_node[node_name]
+                            print >> f_handle, "     row_yield: %0.3f" %(row_yield)
+                            tot_yield += row_yield
+                        print >> f_handle, "  tot_yield: %0.3f" %(tot_yield)
+                        print >> f_handle, "  tot_yield_trays: %0.3f" %(tot_yield/tray_capacity)
+
+                        print >> f_handle, "# Simulation Details"
+                        print >> f_handle, "sim_details:"
+                        print >> f_handle, "  map_name: %s" %(map_name)
+                        print >> f_handle, "  n_pickers: %d" %(n_pickers)
+                        print >> f_handle, "  n_robots: %d" %(n_robots)
+                        print >> f_handle, "  sim_finish_time_simpy: %0.3f" %(finish_time_simpy)
+                        print >> f_handle, "  sim_finish_time_clock: %0.3f" %(finish_time_ros - start_time_ros)
+                        for item in farm.events:
+                            if item[1] == "starting the process":
+                                print >> f_handle, "  start_time_simpy: %0.3f" %(float(item[0]))
+                            if item[1] == "finished row allocations":
+                                print >> f_handle, "  finish_allocation_time_simpy: %0.3f" %(float(item[0]))
+                            if item[1] == "finished picking":
+                                print >> f_handle, "  finish_picking_time_simpy: %0.3f" %(float(item[0]))
+                        print >> f_handle, "# picker_modes:"
+                        print >> f_handle, "# 0:idle, 1:transporting to row_node, 2:picking, 3:transporting to storage,"
+                        print >> f_handle, "# 4: waiting for unload at storage, 5: waiting for loading on robot"
+                        print >> f_handle, "# 6: transporting to local storage from cold storage"
+                        print >> f_handle, "  picker_states:"
+                        for i in range(n_pickers):
+                            picker_id = picker_ids[i]
+                            print >> f_handle, "    -  picker_id: %s" %(pickers[i].picker_id)
+                            print >> f_handle, "       picking_rate: %0.3f" %(pickers[i].picking_rate)
+                            print >> f_handle, "       transportation_rate: %0.3f" %(pickers[i].transportation_rate)
+                            print >> f_handle, "       tray_capacity: %d" %(pickers[i].tray_capacity)
+                            print >> f_handle, "       max_n_trays: %d" %(pickers[i].max_n_trays)
+                            print >> f_handle, "       tray_loading_time: %0.3f" %(pickers[i].unloading_time)
+                            print >> f_handle, "       tray_unloading_time: %0.3f" %(pickers[i].unloading_time)
+                            print >> f_handle, "       allocated_rows:"
+                            for row_id in farm.picker_allocations[pickers[i].picker_id]:
+                                print >> f_handle, "       -  row_id: %s" %(row_id)
+                                alloc_time = farm.allocation_time[row_id]
+                                finish_time = farm.row_finish_time[row_id]
+                                print >> f_handle, "          allocation_time: %0.3f" %(alloc_time if alloc_time is not None else float("inf"))
+                                print >> f_handle, "          completion_time: %0.3f" %(finish_time if finish_time is not None else float("inf"))
+                            print >> f_handle, "       tot_trays: %0.3f" %(pickers[i].tot_trays)
+                            print >> f_handle, "       tot_tray_capacity: %0.3f" %(pickers[i].tot_trays * pickers[i].tray_capacity)
+                            print >> f_handle, "       picking_time: %0.3f" %(pickers[i].time_spent_picking)
+                            print >> f_handle, "       transportation_time: %0.3f" %(pickers[i].time_spent_transportation)
+                            print >> f_handle, "       idle_time: %0.3f" %(pickers[i].time_spent_idle)
+                            print >> f_handle, "       wait_for_robot_time: %0.3f" %(pickers[i].time_spent_waiting)
+                            print >> f_handle, "       loading_on_robot_time: %0.3f" %(pickers[i].time_spent_loading)
+                            print >> f_handle, "       unloading_at_storage_time: %0.3f" %(pickers[i].time_spent_unloading)
+                            print >> f_handle, "       total_working_time: %0.3f" %(pickers[i].time_spent_working())
+                            print >> f_handle, "       state_changes:"
+                            print >> f_handle, "# state_changes: mode, node, direction, time_now"
+                            for item in farm.predictor.predictors[picker_id].modes_nodes_dirs_times:
+                                print >> f_handle, "       -  mode: %d" %(item[0])
+                                print >> f_handle, "          node: %s" %(item[1])
+                                print >> f_handle, "          direction: %s" %(item[2])
+                                print >> f_handle, "          time: %0.3f" %(item[3])
+                        f_handle.close()
+
                         # predictions log
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
                         print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
                         for picker_id in picker_ids:
@@ -206,7 +356,7 @@ if __name__ == "__main__":
                         f_handle.close()
 
                         # des logs
-                        f_handle = open(os.path.expanduser("~")+"/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
                         # no ros related calls here to ensure printing even when the pickers_only node is killed
                         # farm details
                         print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
@@ -227,9 +377,11 @@ if __name__ == "__main__":
                             print >> f_handle, "  --%s--" %(row_id)
                             row_start_node = topo_graph.row_info[row_id][1]
                             row_end_node = topo_graph.row_info[row_id][2]
+                            row_start_x = topo_graph.get_node(row_start_node).pose.position.x
                             row_start_y = topo_graph.get_node(row_start_node).pose.position.y
+                            row_end_x = topo_graph.get_node(row_end_node).pose.position.x
                             row_end_y = topo_graph.get_node(row_end_node).pose.position.y
-                            row_length = row_end_y - row_start_y
+                            row_length = numpy.hypot((row_end_x - row_start_x), (row_end_y - row_start_y))
                             node_dist = topo_graph.get_distance_between_adjacent_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
                             print >> f_handle, "  row_length: %0.3f m" %(row_length)
                             print >> f_handle, "  node_dist: %0.3f m" %(node_dist)

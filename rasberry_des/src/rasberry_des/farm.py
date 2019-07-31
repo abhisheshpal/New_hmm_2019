@@ -82,31 +82,24 @@ class Farm(object):
         self.scheduler_policy = policy
 
         # picker predictor
-        mean_idle_time = 0. # assumed to be zero
+        mean_idle_times = {picker_id: 0.0 for picker_id in self.picker_ids}
+        mean_pick_rates = {picker_id:self.pickers[picker_id].picking_rate for picker_id in self.picker_ids}
+        mean_trans_rates = {picker_id:self.pickers[picker_id].transportation_rate for picker_id in self.picker_ids}
+        mean_unload_times = {picker_id:self.pickers[picker_id].unloading_time for picker_id in self.picker_ids}
+        mean_load_times = {picker_id:self.pickers[picker_id].unloading_time for picker_id in self.picker_ids}
+
         mean_tray_pick_dist = 0. # assumed to be average row length
-        mean_pick_rate = 0.
-        mean_trans_rate = 0.
-        mean_unload_time = 0.
-        mean_load_time = 0.
-        for picker_id in self.picker_ids:
-            mean_pick_rate += self.pickers[picker_id].picking_rate
-            mean_trans_rate += self.pickers[picker_id].transportation_rate
-            mean_unload_time += self.pickers[picker_id].unloading_time
-            mean_load_time += self.pickers[picker_id].unloading_time # loading and unloading time are assumed to be the same
-        mean_pick_rate /= self.n_pickers
-        mean_trans_rate /= self.n_pickers
-        mean_unload_time /= self.n_pickers
-        mean_load_time /= self.n_pickers
         for row_id in self.graph.row_ids:
             _, _, dists = self.graph.get_path_details(self.graph.row_info[row_id][1], self.graph.row_info[row_id][2])
             mean_tray_pick_dist += sum(dists)
         mean_tray_pick_dist /= self.graph.n_topo_nav_rows
+        mean_tray_pick_dists = {picker_id:mean_tray_pick_dist for picker_id in self.picker_ids}
 
         self.predictor = rasberry_des.tray_full_predictor.TrayFullPredictor(self.picker_ids, self.env,
                                                                             self.graph, self.n_robots,
-                                                                            mean_idle_time, mean_tray_pick_dist,
-                                                                            mean_pick_rate, mean_trans_rate,
-                                                                            mean_unload_time, mean_load_time,
+                                                                            mean_idle_times, mean_tray_pick_dists,
+                                                                            mean_pick_rates, mean_trans_rates,
+                                                                            mean_unload_times, mean_load_times,
                                                                             self.verbose)
 
         # to check predictions
@@ -114,9 +107,11 @@ class Farm(object):
         self.tray_counts = {picker_id:0 for picker_id in self.picker_ids}
         self.tray_full = {picker_id:True for picker_id in self.picker_ids}
 
+        self.events = []
+
         self.action = self.env.process(self.scheduler_monitor())
 
-    def scheduler_monitor(self, ):
+    def scheduler_monitor(self):
         """A process to allocate rows to the pickers.
         the picker should request for a row or
         when a picker becomes free, it should be allocated automatically.
@@ -130,12 +125,18 @@ class Farm(object):
         inform_picking_finished = False
         predictions = {}
 
+        time_now = self.env.now
+        # time_now, event
+        self.events.append([time_now, "starting the process"])
+
         while True:
             if rospy.is_shutdown():
                 break
 
             # picking finished in all rows
             if self.finished_picking() and not inform_picking_finished:
+                # time_now, event
+                self.events.append([time_now, "finished picking"])
                 inform_picking_finished = True
                 self.loginfo("all rows are picked")
                 for robot_id in self.robot_ids:
@@ -148,6 +149,8 @@ class Farm(object):
 
             # allocation of all rows is finished
             if self.finished_allocating() and not inform_allocation_finished:
+                # time_now, event
+                self.events.append([time_now, "finished row allocations"])
                 self.loginfo("all rows are allocated")
                 inform_allocation_finished = True # do it only once
                 for robot_id in self.robot_ids:
@@ -420,7 +423,7 @@ class Farm(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def allocate_rows_to_pickers(self, ):
+    def allocate_rows_to_pickers(self):
         """allocate unallocated_rows to idle_pickers based on scheduler_policy"""
         n_idle_pickers = len(self.idle_pickers)
         if n_idle_pickers > 0:
@@ -482,7 +485,7 @@ class Farm(object):
                                                         row_id,
                                                         self.allocation_time[row_id]))
 
-    def assign_robots_to_pickers(self, ):
+    def assign_robots_to_pickers(self):
         """assign idle_robots to waiting_for_robot_pickers based on scheduler_policy"""
         n_idle_robots = len(self.idle_robots)
         if n_idle_robots > 0:
