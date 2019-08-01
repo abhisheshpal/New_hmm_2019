@@ -43,6 +43,7 @@ class inRowTravServer(object):
 
     _feedback = polytunnel_navigation_actions.msg.inrownavFeedback()
     _result   = polytunnel_navigation_actions.msg.inrownavResult()
+    _controller_freq=1/20.0
 
     def __init__(self, name):
         self.colision=False
@@ -529,21 +530,24 @@ class inRowTravServer(object):
         dist, y_err, ang_diff = self._get_references(path_to_goal.poses[0])
 #        goal_overshot=False
         gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
-        
+        self.goal_overshot=False
         for i in range(start_goal, len(path_to_goal.poses)):           
             pre_gdist=gdist     #Hack to stop the robot if it overshot
 
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
             #print "1-> ", dist, " ", self.cancelled
-            self.goal_overshot=False
-            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled:
-                
+            #self.goal_overshot=False
+            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and not self.goal_overshot:
+                if self.cancelled:
+                    break
                 if not self.goal_overshot:
                     speed=self.get_forward_speed()
                     self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
                 else:
                     self._send_velocity_commands(0.0, 0.0, 0.0)
-                rospy.sleep(0.05)
+                    break
+                #rospy.sleep(0.05)
+                rospy.sleep(self._controller_freq)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
 
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
@@ -556,19 +560,22 @@ class inRowTravServer(object):
                 pre_gdist=gdist     
                 gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
                 progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
+                print progress_to_goal, gdist, pre_gdist, self._user_controlled, self.stop_on_overshoot
                 if not self._user_controlled:
-                    if progress_to_goal >= 0.1 and np.abs(progress_to_goal)>=(0.1*self.forward_speed):
+                    if progress_to_goal < -0.01:# or np.abs(progress_to_goal)>=((4*self._controller_freq)*self.forward_speed):
                         self.goal_overshot= True
                         nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
                         print nottext
                         print progress_to_goal, gdist, pre_gdist
                         self.not_pub.publish(nottext)
                         rospy.logwarn(nottext)
-                        if not self.stop_on_overshoot:
-                            break
+#                        if not self.stop_on_overshoot:
+                        #self.cancelled=True
+                        #self._send_velocity_commands(0.0, 0.0, 0.0)
+                        #break
 
                 #print "- ", dist, " ", self.cancelled
-            if self.cancelled:
+            if self.cancelled or self.goal_overshot:
                 break
 
         if not self.cancelled:
