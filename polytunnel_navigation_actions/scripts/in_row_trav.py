@@ -28,7 +28,11 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
+
+import strands_navigation_msgs.srv
 from strands_navigation_msgs.msg import TopologicalMap
+
+
 from sensor_msgs.msg import LaserScan
 from polytunnel_navigation_actions.msg import ObstacleArray
 
@@ -99,6 +103,7 @@ class inRowTravServer(object):
         self.safety_marker=None
         self.active=True
 
+        self.stop_on_overshoot = rospy.get_param("row_traversal/stop_on_overshoot", False)
         self.base_frame = rospy.get_param("row_traversal/base_frame", "/base_link")
         self.corner_frames = rospy.get_param("row_traversal/corner_frames", ["/top0", "/top1", "/top2", "/top3"])
 
@@ -559,6 +564,8 @@ class inRowTravServer(object):
                         print progress_to_goal, gdist, pre_gdist
                         self.not_pub.publish(nottext)
                         rospy.logwarn(nottext)
+                        if not self.stop_on_overshoot:
+                            break
 
                 #print "- ", dist, " ", self.cancelled
             if self.cancelled:
@@ -687,11 +694,28 @@ class inRowTravServer(object):
             print "Service call failed: %s"%e
 
 
+    def _get_goal_node(self, pose):
+        rospy.wait_for_service('topological_localisation/localise_pose')
+        try:
+            localise_pose_service = rospy.ServiceProxy('topological_localisation/localise_pose', strands_navigation_msgs.srv.LocalisePose)
+            resp1 = localise_pose_service(pose)
+            print resp1
+            return resp1
+        except rospy.ServiceException, e:
+            print "Service call failed: %s"%e
+
+
+
+
     def executeCallback(self, goal):
         rospy.loginfo("New goal received")
         self.backwards_mode=False
         self.cancelled = False
         self.active=True
+
+        print "GETTING GOAL NODE:"
+        self._get_goal_node(goal.target_pose.pose)
+        #rospy.sleep(1.0)
 
         self.activate_row_detector(True)
         initial_pose=self.get_node_position(self.closest_node)
