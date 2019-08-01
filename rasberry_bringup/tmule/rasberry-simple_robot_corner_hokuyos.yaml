@@ -95,4 +95,8 @@ windows:
   panes:
   - DISPLAY=:0 rviz -d $(rospack find rasberry_bringup)/resources/row_traversal_action.rviz
   - ls 
-
+- name: monitoring
+  panes:
+  - roslaunch sentor sentor.launch config_file:=$(rospack find rasberry_bringup)/config/sentor.yaml
+  - roslaunch toc robot.launch
+  - if [ "$SLACK_WEBHOOK" ]; then roslaunch slackeros slackeros.launch webhook:="$SLACK_WEBHOOK" topics:="/to_slack /row_traversal/notification" loggers:="/rosout:error /sentor:warn /base_driver:warn"; else cat; fi

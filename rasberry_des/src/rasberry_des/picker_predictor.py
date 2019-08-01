@@ -8,8 +8,6 @@
 import numpy
 import rospy
 
-import rasberry_des.config_utils
-
 
 class PickerPredictor(object):
     """A class to predict a picker's actions and positions"""
@@ -366,7 +364,7 @@ class PickerPredictor(object):
 
         return picking_dist
 
-    def predict_current_tray_full(self, ):
+    def predict_current_tray_full(self):
         """predict where and when the current tray could be full.
         it assumes the next row (if the tray won't be full in the current row)
         is curr_row + n_pickers, as the predictions are based only on individual picker's info
@@ -505,7 +503,7 @@ class PickerPredictor(object):
                     print "\t rem_dists:", cn_dists
                     print "\t cn_dirs:", cn_dirs
 
-#                if max(cn_dists) > remain_tray_pick_dist or rasberry_des.config_utils.isclose(max(cn_dists), remain_tray_pick_dist):
+#                if max(cn_dists) > remain_tray_pick_dist or numpy.isclose(max(cn_dists), remain_tray_pick_dist):
                 if len(cn_dists) == 2:
                     # will finish in this row - two nodes are returned
                     if abs(cn_dists[0]) < abs(cn_dists[1]):
@@ -538,7 +536,7 @@ class PickerPredictor(object):
 
         return (finish_row, finish_node, finish_dir, finish_time)
 
-    def get_dist_picked_so_far(self, ):
+    def get_dist_picked_so_far(self):
         """get the distance travelled so far while picking the current tray
         """
         if not self.has_started_a_tray():
@@ -589,7 +587,7 @@ class PickerPredictor(object):
             _, _, dists = self.graph.get_path_details(curr_node, goal_node)
             return sum(dists) / self.mean_trans_rate()
 
-    def predict_picking_finish_event(self, curr_node, curr_dir, dist_so_far, mode_start_time, time_now):
+    def predict_picking_finish_event(self, curr_node, curr_dir, dist_so_far, time_now):
         """predict which of tray_full and row_finish will be the first event
         if tray_full, event: `tray_full`, details: [node, dir, time, dist_so_far]
         if row_finish, event: `row_finish`, details: [node, dir, time, dist_so_far]
@@ -600,7 +598,6 @@ class PickerPredictor(object):
         curr_node -- current node
         curr_dir -- current direction
         dist_so_far -- if already started picking a tray, how much is picked so far
-        mode_start_time -- time at which this mode is started
         time_now -- current time
         """
         next_event = None
@@ -610,7 +607,7 @@ class PickerPredictor(object):
         remain_tray_pick_dist = self.mean_tray_pick_dist() - dist_so_far
 
         try:
-            assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+            assert remain_tray_pick_dist > 0. and not numpy.isclose(remain_tray_pick_dist, 0.)
         except:
             # remaining dist is less than zero
             next_event = "tray_full"
@@ -636,14 +633,14 @@ class PickerPredictor(object):
                 event_details.append(cn_nodes[0])
                 event_details.append(cn_dirs[0])
                 tot_dist = dist_so_far + cn_dists[0]
-                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(time_now + (cn_dists[0] / self.mean_pick_rate())) # picking time
                 event_details.append(tot_dist) # picked distance
             else:
                 # picking_to_finish, remain_dist is cn_dists[1]
                 event_details.append(cn_nodes[1])
                 event_details.append(cn_dirs[1])
                 tot_dist = dist_so_far + cn_dists[1]
-                event_details.append(mode_start_time + (cn_dists[0] / self.mean_pick_rate())) # picking time
+                event_details.append(time_now + (cn_dists[1] / self.mean_pick_rate())) # picking time
                 event_details.append(tot_dist) # picked distance
 
         else:
@@ -652,7 +649,7 @@ class PickerPredictor(object):
             event_details.append(cn_nodes[0])
             event_details.append(cn_dirs[0])
             tot_dist = dist_so_far + cn_dists[0]
-            event_details.append(mode_start_time + (tot_dist / self.mean_pick_rate())) # picking time
+            event_details.append(time_now + (cn_dists[0] / self.mean_pick_rate())) # picking time
             event_details.append(tot_dist) # picked distance
 
         return (next_event, event_details)
@@ -674,7 +671,7 @@ class PickerPredictor(object):
         row_id = self.graph.get_row_id_of_row_node(curr_node)
 
         try:
-            assert remain_tray_pick_dist > 0. and not rasberry_des.config_utils.isclose(remain_tray_pick_dist, 0.)
+            assert remain_tray_pick_dist > 0. and not numpy.isclose(remain_tray_pick_dist, 0.)
         except:
             msg = "remain_tray_pick_dist: %0.1f" %(remain_tray_pick_dist)
             raise Exception(msg)
@@ -708,12 +705,12 @@ class PickerPredictor(object):
         finish_dirs = []
         remain_row_dist = sum(route_dists)
 
-        if remain_tray_pick_dist < remain_row_dist or rasberry_des.config_utils.isclose(remain_tray_pick_dist, remain_row_dist):
+        if remain_tray_pick_dist < remain_row_dist or numpy.isclose(remain_tray_pick_dist, remain_row_dist):
             # given remain_tray_pick_dist <= the row_length (picking could finish in this row)
             _dist = 0.
             for i in range(len(route_dists)):
                 _dist += route_dists[i]
-                if (_dist > remain_tray_pick_dist or rasberry_des.config_utils.isclose(_dist, remain_tray_pick_dist)):
+                if (_dist > remain_tray_pick_dist or numpy.isclose(_dist, remain_tray_pick_dist)):
                     # len(route_dists) = len(route_nodes) - 1
                     # return the nodes just before and after _dist == remain_tray_pick_dist
                     closest_nodes.append(route_nodes[i])
@@ -729,16 +726,16 @@ class PickerPredictor(object):
             if (len(route_dists) == 0):
                 # start and end nodes are the same -> empty route_dists
                 closest_nodes.append(curr_node)
-                finish_dists.append(remain_tray_pick_dist)
+                finish_dists.append(0.0)
                 finish_dirs.append(curr_dir)
             else:
                 # won't be finishing in this row
                 closest_nodes.append(route_nodes[-1])
-                finish_dists.append(remain_tray_pick_dist - remain_row_dist)
+                finish_dists.append(remain_row_dist)
                 finish_dirs.append(route_dir[-1])
 
         return (closest_nodes, finish_dists, finish_dirs)
 
-    def has_started_a_tray(self,):
+    def has_started_a_tray(self):
         """return true if a tray has been started and it is not full yet"""
         return True if len(self.mode_index_tray_start) > len(self.mode_index_tray_stop) else False

@@ -112,7 +112,7 @@ class PickerMimic(rasberry_des.picker.Picker):
         msg.data = '{\"user\":\"%s\", \"state\": \"%s\"}' %(self.picker_id, state)
         self.car_state_pub.publish(msg)
 
-    def normal_operation(self, ):
+    def normal_operation(self):
         """ Picker's picking process when there are robots to carry full trays
         """
         idle_start_time = self.env.now
