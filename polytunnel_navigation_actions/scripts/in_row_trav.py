@@ -29,7 +29,7 @@ from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
 
-import strands_navigation_msgs.srv
+#import strands_navigation_msgs.srv
 from strands_navigation_msgs.msg import TopologicalMap
 
 
@@ -701,15 +701,15 @@ class inRowTravServer(object):
             print "Service call failed: %s"%e
 
 
-    def _get_goal_node(self, pose):
-        rospy.wait_for_service('topological_localisation/localise_pose')
-        try:
-            localise_pose_service = rospy.ServiceProxy('topological_localisation/localise_pose', strands_navigation_msgs.srv.LocalisePose)
-            resp1 = localise_pose_service(pose)
-            print resp1
-            return resp1
-        except rospy.ServiceException, e:
-            print "Service call failed: %s"%e
+#    def _get_goal_node(self, pose):
+#        rospy.wait_for_service('topological_localisation/localise_pose')
+#        try:
+#            localise_pose_service = rospy.ServiceProxy('topological_localisation/localise_pose', strands_navigation_msgs.srv.LocalisePose)
+#            resp1 = localise_pose_service(pose)
+#            print resp1
+#            return resp1
+#        except rospy.ServiceException, e:
+#            print "Service call failed: %s"%e
 
 
 
@@ -721,7 +721,7 @@ class inRowTravServer(object):
         self.active=True
 
         print "GETTING GOAL NODE:"
-        self._get_goal_node(goal.target_pose.pose)
+        #self._get_goal_node(goal.target_pose.pose)
         #rospy.sleep(1.0)
 
         self.activate_row_detector(True)
