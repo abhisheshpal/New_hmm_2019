@@ -3,8 +3,7 @@ Panels:
     Help Height: 78
     Name: Displays
     Property Tree Widget:
-      Expanded:
-        - /thorvald_0021/Row Detector1
+      Expanded: ~
       Splitter Ratio: 0.5
     Tree Height: 732
   - Class: rviz/Selection
@@ -469,7 +468,7 @@ Visualization Manager:
               Marker Topic: /thorvald_001/row_detector/poles_vis
               Name: Poles
               Namespaces:
-                "": true
+                {}
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
@@ -477,11 +476,20 @@ Visualization Manager:
               Marker Topic: /thorvald_001/row_detector/obstacles_vis
               Name: Obstacles
               Namespaces:
-                "": true
+                {}
               Queue Size: 100
               Value: true
           Enabled: true
           Name: Row Detector
+        - Class: rviz/InteractiveMarkers
+          Enable Transparency: true
+          Enabled: false
+          Name: GotoNode
+          Show Axes: false
+          Show Descriptions: true
+          Show Visual Aids: false
+          Update Topic: /thorvald_001/go_to_node/update
+          Value: false
       Enabled: true
       Name: thorvald_001
     - Class: rviz/Group
@@ -852,7 +860,7 @@ Visualization Manager:
               Marker Topic: /thorvald_002/row_detector/poles_vis
               Name: Poles
               Namespaces:
-                "": true
+                {}
               Queue Size: 100
               Value: true
             - Class: rviz/MarkerArray
@@ -860,11 +868,20 @@ Visualization Manager:
               Marker Topic: /thorvald_002/row_detector/obstacles_vis
               Name: Obstacles
               Namespaces:
-                "": true
+                {}
               Queue Size: 100
               Value: true
           Enabled: true
           Name: Row Detector
+        - Class: rviz/InteractiveMarkers
+          Enable Transparency: true
+          Enabled: false
+          Name: GotoNode
+          Show Axes: false
+          Show Descriptions: true
+          Show Visual Aids: false
+          Update Topic: /thorvald_002/go_to_node/update
+          Value: false
       Enabled: true
       Name: thorvald_002
     - Class: rviz/Group
@@ -1007,5 +1024,5 @@ Window Geometry:
   Views:
     collapsed: true
   Width: 1920
-  X: 0
+  X: 1920
   Y: 32

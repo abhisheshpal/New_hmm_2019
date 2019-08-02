@@ -132,5 +132,5 @@ windows:
 - name: visualisation
   panes:
   - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_1 map:=$TMAP
-  - echo "roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_2 map:=$TMAP"
+  - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_2 map:=$TMAP
   - rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation_multisim.rviz
