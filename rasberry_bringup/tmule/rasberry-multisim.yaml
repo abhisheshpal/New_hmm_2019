@@ -36,8 +36,9 @@ init_cmd: |
   export_default ROS_HOSTNAME "$ROS_IP"
   # path where to expect MONGODB
   export_default MONGO_PATH "$HOME/mongodb"
-  # the topomap to be used
-  export_default TMAP riseholme_bidirectional_sim
+  export_default USE_ROW_TRAVERSAL false
+  # the topomap to be used 
+  if [ ! $USE_ROW_TRAVERSAL ]; then export_default TMAP riseholme_bidirectional_sim; else export_default TMAP riseholme_poly_act_sim; fi
   # the gridmap to be used (key in mongodb)
   export_default MAP "$(rospack find rasberry_navigation)/maps/riseholme_sim.yaml"
   export_default NOGOMAP "$(rospack find rasberry_navigation)/maps/riseholme_sim_no_go.yaml"
@@ -104,9 +105,13 @@ windows:
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_1 scenario:=$SITE_CONFIG
   - roslaunch rasberry_move_base move_base_dwa_multisim.launch use_carrot_planner:=$USE_CARROT robot_name:=$ROBOT_NAME_2 use_omni:=$USE_OMNI robot_no:=$ROBOT_NO_2
   - roslaunch rasberry_navigation topological_navigation_robot_multisim.launch move_base_reconf_service:=DWAPlannerROS robot_name:=$ROBOT_NAME_2 scenario:=$SITE_CONFIG
+- name: row-traversal
+  panes:
+  - roslaunch polytunnel_navigation_actions row_traversal_multisim.launch robot_name:=$ROBOT_NAME_1
+  - roslaunch polytunnel_navigation_actions row_traversal_multisim.launch robot_name:=$ROBOT_NAME_2
 - name: rosduct
   panes:
-  - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination coordination.launch
+  - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination coordination.launch rosbridge_port:=$ROSBRIDGE_PORT
   - sleep 3; export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_navigation topological_map_manager_central.launch map:=$TMAP
   - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$ROBOT_NAME_1 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
   - roslaunch rasberry_coordination robot_websocket_adapter_multisim.launch robot_name:=$ROBOT_NAME_2 rosbridge_ip:=$ROS_MASTER rosbridge_port:=$ROSBRIDGE_PORT
@@ -115,11 +120,11 @@ windows:
   panes:
   - export ROS_MASTER_URI=${SERVER_URI}; roscd rasberry_coordination/callarobot; python callarobot.py
   - export ROS_MASTER_URI=${SERVER_URI}; python $(rospack find rasberry_coordination)/callarobot/ws_client.py
-  - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_coordination simple_task_executor_node.py $(rospack find rasberry_coordination)/config/map_config_$SCENARIO_NAME.yaml
+  - export ROS_MASTER_URI=${SERVER_URI}; roslaunch rasberry_coordination simple_task_coordinator.launch scenario:=$SCENARIO_NAME
 - name: people_perception
   panes:
-  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '1' '0' '12.3' '-3.31' '0.0' '0'
-  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '2' '0' '18.0' '5.0' '0.0' '0'
+  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '1' '0' '11.6' '-3.31' '0.0' '0'
+  - rostopic pub -r 3 /hedge_pos_a marvelmind_nav/hedge_pos_a -- '2' '0' '19.9' '4.6' '0.0' '0'
   - export ROS_MASTER_URI=${SERVER_URI}; rosrun rasberry_people_perception simple_marvel_localiser.py
 - name: des
   panes:
@@ -127,5 +132,5 @@ windows:
 - name: visualisation
   panes:
   - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_1 map:=$TMAP
-  - echo "roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_2 map:=$TMAP"
+  - roslaunch rasberry_navigation topological_visualiser_multisim.launch robot_name:=$ROBOT_NAME_2 map:=$TMAP
   - rviz -d $(rospack find rasberry_bringup)/resources/topological_navigation_multisim.rviz
