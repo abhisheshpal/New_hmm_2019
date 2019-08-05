@@ -7,8 +7,7 @@
 
 import random
 import rospy
-
-import rasberry_des.config_utils
+import numpy
 
 
 class Robot(object):
@@ -69,7 +68,7 @@ class Robot(object):
 
         self.action = self.env.process(self.normal_operation())
 
-    def normal_operation(self, ):
+    def normal_operation(self):
         """normal operation sequences of the robot in different modes"""
         idle_start_time = self.env.now
         transportation_start_time = 0.
@@ -96,7 +95,7 @@ class Robot(object):
                     self.loginfo("%s is assigned to %s" %(self.robot_id, self.assigned_picker_id))
 
                 # TODO: idle state battery charge changes
-                if self.battery_charge < 40.0 or rasberry_des.config_utils.isclose(self.battery_charge, 40.0):
+                if self.battery_charge < 40.0 or numpy.isclose(self.battery_charge, 40.0):
                     self.loginfo("battery low on %s, going to charging mode" %(self.robot_id))
                     self.time_spent_idle += self.env.now - idle_start_time
                     # change mode to charging
@@ -203,7 +202,7 @@ class Robot(object):
         self.assigned_picker_n_trays = n_trays
         self.assigned_local_storage_node = local_storage_node
 
-    def proceed_with_transporting(self, ):
+    def proceed_with_transporting(self):
         """scheduler confirms the robot can go to local storage and unload.
         this is to make sure the scheduler is aware that the picker has loaded trays on the robot.
         """
@@ -239,7 +238,7 @@ class Robot(object):
         self.loginfo("%s reached %s" %(self.robot_id, goal_node))
         yield self.env.timeout(self.process_timeout)
 
-    def wait_for_loading(self, ):
+    def wait_for_loading(self):
         """wait until picker loads trays and confirms it"""
         while True:
             # wait until picker calls loading_complete
@@ -253,13 +252,13 @@ class Robot(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def trays_loaded(self, ):
+    def trays_loaded(self):
         """picker calls this to indicate the trays are loaded"""
         self.n_empty_trays -= self.assigned_picker_n_trays
         self.n_full_trays += self.assigned_picker_n_trays
         self.loaded = True
 
-    def wait_for_unloading(self, ):
+    def wait_for_unloading(self):
         """wait for unloading the trays at the local storage"""
         storage = self.graph.local_storages[self.assigned_local_storage_node] if self.use_local_storage else self.graph.cold_storage
         with storage.request() as req:
@@ -271,7 +270,7 @@ class Robot(object):
         self.trays_unloaded()
         yield self.env.timeout(self.process_timeout)
 
-    def trays_unloaded(self, ):
+    def trays_unloaded(self):
         """update tray counts and assignments"""
         self.tot_trays += self.assigned_picker_n_trays
         self.n_empty_trays += self.assigned_picker_n_trays
@@ -282,7 +281,7 @@ class Robot(object):
         self.assigned_local_storage_node = None
         self.loaded = False
 
-    def charging_process(self, ):
+    def charging_process(self):
         """charging process"""
         while True:
             if rospy.is_shutdown():
@@ -295,11 +294,11 @@ class Robot(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def inform_picking_finished(self, ):
+    def inform_picking_finished(self):
         """called by farm - scheduler to indicate all rows are now picked"""
         self.picking_finished = True
 
-    def inform_allocation_finished(self, ):
+    def inform_allocation_finished(self):
         """called by farm - scheduler to indicate all rows are now allocated"""
         self.allocation_finished = True
 

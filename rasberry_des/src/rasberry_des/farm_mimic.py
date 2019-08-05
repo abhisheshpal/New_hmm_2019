@@ -52,7 +52,7 @@ class FarmMimic(rasberry_des.farm.Farm):
         self.finished_allocating = lambda iteration: True if len(self.unallocated_rows[iteration]) == 0 else False
 
 
-    def next_iteration(self, ):
+    def next_iteration(self):
         """checks whether incrementing the iteration number for all rows is possible
         """
         # check if any picker still in the oldest iterations in active_iterations
@@ -106,7 +106,7 @@ class FarmMimic(rasberry_des.farm.Farm):
                     self.active_iterations.remove(self.n_iteration - 1)
 
 
-    def scheduler_monitor(self, ):
+    def scheduler_monitor(self):
         """A process to allocate rows to the pickers.
         the picker should request for a row or
         when a picker becomes free, it should be allocated automatically.
@@ -209,7 +209,7 @@ class FarmMimic(rasberry_des.farm.Farm):
         yield self.env.timeout(self.process_timeout)
 
 
-    def allocate_rows_to_pickers(self, ):
+    def allocate_rows_to_pickers(self):
         """allocate unallocated_rows to idle_pickers based on scheduler_policy"""
         n_idle_pickers = len(self.idle_pickers)
         if n_idle_pickers > 0:
