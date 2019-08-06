@@ -59,11 +59,11 @@ class VisualiseAgents(object):
         # show the plot
         matplotlib.pyplot.show(block=False)
 
-    def close_plot(self, ):
+    def close_plot(self):
         """close plot"""
         matplotlib.pyplot.close(self.fig)
 
-    def init_plot(self, ):
+    def init_plot(self):
         """Initialise the plot frame"""
         farm_rows_x, farm_rows_y = [], []
         nav_rows_x, nav_rows_y = [], []
@@ -254,7 +254,7 @@ class VisualiseAgents(object):
         return (self.static_lines + self.picker_position_lines +
                 self.picker_status_texts + self.robot_position_lines + self.robot_status_texts)
 
-    def update_plot(self, ):
+    def update_plot(self):
         """update the positions of the dynamic objects"""
         for i in range(self.n_pickers):
             picker = self.pickers[i]
