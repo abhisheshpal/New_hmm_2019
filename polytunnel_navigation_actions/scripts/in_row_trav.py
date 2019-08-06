@@ -562,7 +562,7 @@ class inRowTravServer(object):
                 progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
                 #print progress_to_goal, gdist, pre_gdist, self._user_controlled, self.stop_on_overshoot
                 if not self._user_controlled:
-                    if progress_to_goal < -0.01:# or np.abs(progress_to_goal)>=((4*self._controller_freq)*self.forward_speed):
+                    if np.sign(pre_gdist) != np.sign(gdist):#progress_to_goal < -0.1:# or np.abs(progress_to_goal)>=((4*self._controller_freq)*self.forward_speed):
                         self.goal_overshot= True
                         nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
                         print nottext
