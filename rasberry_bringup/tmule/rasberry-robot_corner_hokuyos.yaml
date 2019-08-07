@@ -88,7 +88,7 @@ windows:
   - rosrun topological_navigation visualise_map.py "$TMAP"
 - name: row_traversal
   panes:
-  - roslaunch polytunnel_navigation_actions row_traversal.launch
+  - roslaunch polytunnel_navigation_actions row_traversal.launch site_config:=$SITE_CONFIG
 - name: people_perception
   panes:
   - ls 
