@@ -17,4 +17,6 @@ emergency_clearance_x: 0.7        # Clearance from corner frames to trigger emer
 emergency_clearance_y: 0.2        # Clearance from corner frames to trigger emergency stop in y
 quit_on_timeout: False            # Wether the robot should cancel row traversal after collision detected
 time_to_quit: 10.0                # Time until the action is cancelled since collision detected
-goal_tolerance_radius: 0.1        # Goal tolerance Radius in metres
+goal_tolerance_radius: 0.35       # Goal tolerance Radius in metres
+prealign_y_axis: True             # Align laterally before going forwards
+initial_alignment_tolerance: 0.05 # Initial alingment tolerance [m], how far to the side it is acceptable for the robot to be before moving forwards

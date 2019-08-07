@@ -350,7 +350,9 @@ edge_nav_reconfig_groups:
       - WayPoint138_WayPoint74
       - WayPoint139_WayPoint74
       - WayPoint140_WayPoint74
+      - WayPoint140_WayPoint141
       - WayPoint141_WayPoint73
+      - WayPoint141_WayPoint140
       - WayPoint69_WayPoint70
       - WayPoint69_WayPoint71
       - WayPoint69_WayPoint72

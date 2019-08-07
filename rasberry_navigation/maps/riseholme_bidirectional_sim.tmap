@@ -2296,6 +2296,13 @@
       node: WayPoint74
       recovery_behaviours_config: ''
       top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint140_WayPoint141
+      inflation_radius: 0.0
+      map_2d: riseholme_sim
+      node: WayPoint141
+      recovery_behaviours_config: ''
+      top_vel: 0.55
     localise_by_topic: ''
     map: riseholme_sim
     name: WayPoint140
@@ -2340,6 +2347,13 @@
       inflation_radius: 0.0
       map_2d: riseholme_sim
       node: WayPoint73
+      recovery_behaviours_config: ''
+      top_vel: 0.55
+    - action: move_base
+      edge_id: WayPoint141_WayPoint140
+      inflation_radius: 0.0
+      map_2d: riseholme_sim
+      node: WayPoint140
       recovery_behaviours_config: ''
       top_vel: 0.55
     localise_by_topic: ''
