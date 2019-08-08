@@ -20,4 +20,3 @@ time_to_quit: 10.0                # Time until the action is cancelled since col
 goal_tolerance_radius: 0.35       # Goal tolerance Radius in metres
 prealign_y_axis: True             # Align laterally before going forwards
 initial_alignment_tolerance: 0.05 # Initial alingment tolerance [m], how far to the side it is acceptable for the robot to be before moving forwards
-

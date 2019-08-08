@@ -49,7 +49,7 @@ class inRowTravServer(object):
         self.colision=False
         self._user_controlled=False
         self.goal_overshot=False
-
+        self.prealign_y_axis=True
 
         self.giveup_timer_active=False
         self.notification_timer_active=False
@@ -242,7 +242,6 @@ class inRowTravServer(object):
                         break
             if not self.colision:
                 self.notified=False
-    
     
     
     def joy_lock_cb(self, msg):
