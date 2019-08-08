@@ -1,5 +1,6 @@
 <?xml version="1.0" ?>
 <launch>
+  <arg name="site_config" default="riseholme" /> 
   <arg name="detector_config_common" default="$(find polytunnel_navigation_actions)/config/row_detector_common_cfg.yaml" />
   <arg name="detector_config_ellipse" default="$(find polytunnel_navigation_actions)/config/row_detector_ellipse_cfg.yaml" />
   <arg name="traversal_config" default="$(find polytunnel_navigation_actions)/config/row_traversal_cfg.yaml" />
@@ -10,7 +11,8 @@
   </include>
 
   <node pkg="polytunnel_navigation_actions" type="in_row_trav.py" name="row_traversal" output="screen">
-    <rosparam file="$(arg traversal_config)" command="load"/>
+    <!--rosparam file="$(arg traversal_config)" command="load"/-->
+    <rosparam file="$(find polytunnel_navigation_actions)/config/row_traversal_cfg_$(arg site_config).yaml" command="load"/>
   </node>
 
   <node pkg="polytunnel_navigation_actions" type="row_detector_vis.py" name="row_detector_vis" output="screen" />

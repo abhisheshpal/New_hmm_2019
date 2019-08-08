@@ -20,6 +20,7 @@ from dynamic_reconfigure.server import Server
 from polytunnel_navigation_actions.cfg import RowTraversalConfig
 
 from std_msgs.msg import String
+from std_msgs.msg import Bool
 from nav_msgs.msg import Path
 from geometry_msgs.msg import Pose2D
 from geometry_msgs.msg import PointStamped
@@ -27,7 +28,11 @@ from geometry_msgs.msg import Pose
 from geometry_msgs.msg import PoseStamped
 from geometry_msgs.msg import Quaternion
 from geometry_msgs.msg import Twist
+
+#import strands_navigation_msgs.srv
 from strands_navigation_msgs.msg import TopologicalMap
+
+
 from sensor_msgs.msg import LaserScan
 from polytunnel_navigation_actions.msg import ObstacleArray
 
@@ -38,19 +43,27 @@ class inRowTravServer(object):
 
     _feedback = polytunnel_navigation_actions.msg.inrownavFeedback()
     _result   = polytunnel_navigation_actions.msg.inrownavResult()
+    _controller_freq=1/20.0
 
     def __init__(self, name):
         self.colision=False
+        self._user_controlled=False
+        self.goal_overshot=False
+
+
         self.giveup_timer_active=False
         self.notification_timer_active=False
         self.notified=False
 
+        # Dynamically reconfigurable parameters
         self.kp_ang_ro= 0.6                     # Proportional gain for initial orientation target
         self.constant_forward_speed = False     # Stop when obstacle in safety area only (no slowdown) **WIP**
         self.min_obj_size = 0.1                 # Minimum object radius for slow down
         self.min_dist_to_obj = 0.5              # Distance to object at which the robot should stop
         self.approach_dist_to_obj = 3.0         # Distance to object at which the robot starts to slow down
+        self.prealign_y_axis=True               # Align laterally before going forwards
         self.initial_heading_tolerance = 0.005  # Initial heading tolerance [rads]
+        self.initial_alignment_tolerance = 0.05 # Initial alingment tolerance [m], how far to the side it is acceptable for the robot to be before moving forwards
         self.kp_ang= 0.2                        # Proportional gain for heading correction
         self.kp_y= 0.1                          # Proportional gain for sideways corrections
         self.granularity= 0.5                   # Distance between minigoals along path (carrot points)
@@ -61,13 +74,16 @@ class inRowTravServer(object):
         self.minimum_turning_speed = 0.01       # Minimum turning speed
         self.emergency_clearance_x = 0.22       # Clearance from corner frames to trigger emergency stop in x
         self.emergency_clearance_y = 0.22       # Clearance from corner frames to trigger emergency stop in y
-        self.forward_speed= 0.8
-        self.quit_on_timeout=False
+        self.goal_tolerance_radius = 0.1        # Goal tolerance Radius in metres
+        self.forward_speed= 0.8                 # Forward moving speed
+        self.quit_on_timeout=False              # SHould the robot cancel when it meets an obstacle?
         self.time_to_quit=10.0                  # Time until the action is cancelled since collision detected
+
 
         # This dictionary defines which function should be called when a variable changes via dynamic reconfigure
         self._reconf_functions={'variables':['emergency_clearance_x', 'emergency_clearance_y'],
                                 'functions':[self.define_safety_zone, self.define_safety_zone]}
+
 
         self.object_detected = False
         self.curr_distance_to_object=-1.0
@@ -88,6 +104,7 @@ class inRowTravServer(object):
         self.safety_marker=None
         self.active=True
 
+        self.stop_on_overshoot = rospy.get_param("row_traversal/stop_on_overshoot", False)
         self.base_frame = rospy.get_param("row_traversal/base_frame", "/base_link")
         self.corner_frames = rospy.get_param("row_traversal/corner_frames", ["/top0", "/top1", "/top2", "/top3"])
 
@@ -102,6 +119,7 @@ class inRowTravServer(object):
         rospy.Subscriber('/closest_node', std_msgs.msg.String, self.closest_node_cb)
         rospy.Subscriber('/row_detector/path_error',Pose2D, self.row_correction_cb)
         rospy.Subscriber("/row_detector/obstacles", ObstacleArray, self.obstacles_callback,  queue_size=1)
+        rospy.Subscriber('/teleop_joy/joy_priority', Bool, self.joy_lock_cb)
 
         self._tf_listerner = tf.TransformListener()
         self._activate_srv = rospy.ServiceProxy('/row_detector/activate_detection', SetBool)
@@ -224,6 +242,17 @@ class inRowTravServer(object):
                         break
             if not self.colision:
                 self.notified=False
+    
+    
+    
+    def joy_lock_cb(self, msg):
+        if msg.data:
+            self._user_controlled=True
+            if self.goal_overshot:
+                self.goal_overshot=False
+        else:
+            self._user_controlled=False
+    
 
 
 
@@ -247,11 +276,11 @@ class inRowTravServer(object):
         if min_obs_dist <= self.approach_dist_to_obj:
             if (np.abs(obs_ang) <= (np.pi/25.0)) or (np.abs(obs_ang) >= (np.pi*24/25.0)):
                 if np.abs(obs_ang) < np.pi/2.0 :#and self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 elif np.abs(obs_ang) > np.pi/2.0 :#and not self.backwards_mode:
-                    print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
+                    #print "Obstacle Size: ", obs.radius, " detected at ", obs_ang, " degrees ", obs_dist," meters away",  self.backwards_mode
                     self.object_detected = True
                     self.curr_distance_to_object=obs_dist
                 else:
@@ -444,6 +473,16 @@ class inRowTravServer(object):
                 rospy.sleep(0.05)
                 dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
 
+
+            if self.prealign_y_axis:
+                print "Y dev", y_err
+                while np.abs(y_err) >= self.initial_alignment_tolerance and not self.cancelled:
+                    self._send_velocity_commands(0.0, (self.kp_y/2.0)*y_err, 0.0, consider_minimum_rot_vel=True)
+                    rospy.sleep(0.05)
+                    dist, y_err, ang_diff = self._get_vector_to_pose(path_to_goal.poses[0])
+                    print "Aligning Y dev", y_err
+            
+            
             self._send_velocity_commands(0.0, 0.0, 0.0)
             rospy.sleep(2.0) # We need to give time to the wheels to straighten
 
@@ -478,6 +517,7 @@ class inRowTravServer(object):
         #print speed
         return speed
 
+
     def go_forwards(self, path_to_goal, start_goal):
         print "GOING FORWARDS NOW"
         if self.backwards_mode:
@@ -485,19 +525,57 @@ class inRowTravServer(object):
         else:
             speed = self.forward_speed
         print "Number of intermediate goals: ",start_goal, len(path_to_goal.poses)
-        for i in range(start_goal, len(path_to_goal.poses)):
+        
+        
+        dist, y_err, ang_diff = self._get_references(path_to_goal.poses[0])
+#        goal_overshot=False
+        gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
+        self.goal_overshot=False
+        for i in range(start_goal, len(path_to_goal.poses)):           
+            pre_gdist=gdist     #Hack to stop the robot if it overshot
+
             dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
             #print "1-> ", dist, " ", self.cancelled
-            while np.abs(dist)>0.1 and not self.cancelled:
-                speed=self.get_forward_speed()
-                self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
-                rospy.sleep(0.05)
+            #self.goal_overshot=False
+            while np.abs(dist)>self.goal_tolerance_radius and not self.cancelled and not self.goal_overshot:
+                if self.cancelled:
+                    break
+                if not self.goal_overshot:
+                    speed=self.get_forward_speed()
+                    self._send_velocity_commands(speed, self.kp_y*y_err, self.kp_ang*ang_diff)
+                else:
+                    self._send_velocity_commands(0.0, 0.0, 0.0)
+                    break
+                #rospy.sleep(0.05)
+                rospy.sleep(self._controller_freq)
                 #self._get_vector_to_pose(path_to_goal.poses[i])
+
                 dist, y_err, ang_diff = self._get_references(path_to_goal.poses[i])
+
+                # Hack to stop the robot if it overshot:
+                # To see if the robot has overshot we check if the distance to goal has actually increased 
+                # or has changed much faster than expected (massive misslocalisation) 4 times the forward speed 
+                # times the control period (0.05 seconds) 
+                # and that is not being controlled (helped) by the user.
+                pre_gdist=gdist     
+                gdist, gy_err, gang_diff = self._get_references(path_to_goal.poses[-1])
+                progress_to_goal=np.abs(pre_gdist)-np.abs(gdist)
+                #print progress_to_goal, gdist, pre_gdist, self._user_controlled, self.stop_on_overshoot
+                if not self._user_controlled:
+                    if np.sign(pre_gdist) != np.sign(gdist):#progress_to_goal < -0.1:# or np.abs(progress_to_goal)>=((4*self._controller_freq)*self.forward_speed):
+                        self.goal_overshot= True
+                        nottext="Row traversal has overshoot, previous distance "+str(np.abs(pre_gdist))+" current distance "+str(np.abs(gdist))
+                        print nottext
+                        print progress_to_goal, gdist, pre_gdist
+                        self.not_pub.publish(nottext)
+                        rospy.logwarn(nottext)
+#                        if not self.stop_on_overshoot:
+                        #self.cancelled=True
+                        #self._send_velocity_commands(0.0, 0.0, 0.0)
+                        #break
+
                 #print "- ", dist, " ", self.cancelled
-            if not self.cancelled:
-                print("Next Goal")
-            else:
+            if self.cancelled or self.goal_overshot:
                 break
 
         if not self.cancelled:
@@ -562,13 +640,12 @@ class inRowTravServer(object):
     #        print 'ANg: ', cmd_vel.angular.z
             self.cmd_pub.publish(cmd_vel)
         else:
-            cmd_vel = Twist()
-            cmd_vel.linear.x = 0.0
-            cmd_vel.linear.y = 0.0
-            cmd_vel.angular.z = 0.0
-            self.cmd_pub.publish(cmd_vel)
-
-
+            if self.active:
+                cmd_vel = Twist()
+                cmd_vel.linear.x = 0.0
+                cmd_vel.linear.y = 0.0
+                cmd_vel.angular.z = 0.0            
+                self.cmd_pub.publish(cmd_vel)
 
 
 
@@ -589,7 +666,7 @@ class inRowTravServer(object):
             ang_diff = ang_path_diff
 
 
-        #print dist, y_err, ang_diff
+#        print dist, y_err, ang_diff
         return dist, y_err, ang_diff
 
 
@@ -612,6 +689,7 @@ class inRowTravServer(object):
 
         return transform.pose.position.x, transform.pose.position.y, ang_diff
 
+
     def activate_row_detector(self, onoff):
         rospy.wait_for_service('/row_detector/activate_detection')
         try:
@@ -623,11 +701,28 @@ class inRowTravServer(object):
             print "Service call failed: %s"%e
 
 
+#    def _get_goal_node(self, pose):
+#        rospy.wait_for_service('topological_localisation/localise_pose')
+#        try:
+#            localise_pose_service = rospy.ServiceProxy('topological_localisation/localise_pose', strands_navigation_msgs.srv.LocalisePose)
+#            resp1 = localise_pose_service(pose)
+#            print resp1
+#            return resp1
+#        except rospy.ServiceException, e:
+#            print "Service call failed: %s"%e
+
+
+
+
     def executeCallback(self, goal):
         rospy.loginfo("New goal received")
         self.backwards_mode=False
         self.cancelled = False
         self.active=True
+
+        print "GETTING GOAL NODE:"
+        #self._get_goal_node(goal.target_pose.pose)
+        #rospy.sleep(1.0)
 
         self.activate_row_detector(True)
         initial_pose=self.get_node_position(self.closest_node)
