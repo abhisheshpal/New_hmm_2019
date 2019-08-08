@@ -8,6 +8,7 @@
   <link name="$(arg tf_prefix)/septentrio"/>
   <link name="$(arg tf_prefix)/xsens"/>
   <link name="$(arg tf_prefix)/os1_sensor"/>
+  <link name="$(arg tf_prefix)/imu_link"/>
 
   <!-- Hokuyo Laser -->
   <link name="$(arg tf_prefix)/hokuyo_front">
@@ -72,7 +73,13 @@
   <joint name="base_sens_xsens" type="fixed">
     <parent link="$(arg tf_prefix)/base_link"/>
     <child link="$(arg tf_prefix)/xsens"/>
-    <origin xyz="0.18 -0.266 0.717" rpy="0 0 0"/>
+    <origin xyz="0.00 -0.23 0.69" rpy="0 0 0"/>
+  </joint>
+  
+  <joint name="base_sens_um7" type="fixed">
+    <parent link="$(arg tf_prefix)/base_link"/>
+    <child link="$(arg tf_prefix)/imu_link"/>
+    <origin xyz="0.20 0.16 0.69" rpy="0 0 0"/>
   </joint>
 
    <joint name="base_sens_hokuyo_front" type="fixed">
