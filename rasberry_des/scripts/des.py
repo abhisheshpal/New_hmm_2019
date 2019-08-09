@@ -341,107 +341,33 @@ if __name__ == "__main__":
                                 print >> f_handle, "          time: %0.3f" %(item[3])
                         f_handle.close()
 
-#                        # predictions log
-#                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
-#                        print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
-#                        print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
-#                        for picker_id in picker_ids:
-#                            print >> f_handle, picker_id
-#                            predictions = farm.predictions[picker_id]
-#                            for tray in range(1, farm.tray_counts[picker_id] + 1):
-##                                f_handle.write(predictions[tray])
-#                                print >> f_handle, "\t", tray, ":"
-#                                for item in predictions[tray]:
-#                                    print >> f_handle, "\t\t", item
-#                        f_handle.close()
-#
-#                        # des logs
-#                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
-#                        # no ros related calls here to ensure printing even when the pickers_only node is killed
-#                        # farm details
-#                        print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
-#
-#                        print >> f_handle, "simulation_finish_time(sim): %0.3f" %(finish_time_simpy)
-#                        print >> f_handle, "simulation_finish_time(clock): %0.3f" %(finish_time_ros - start_time_ros)
-#
-#                        print >> f_handle, "n_pickers: %d" %(n_pickers)
-#                        print >> f_handle, "n_robots: %d" %(n_robots)
-#
-#                        print >> f_handle, "n_polytunnels: %d" %(topo_graph.n_polytunnels)
-#                        for i in range(topo_graph.n_polytunnels):
-#                            print >> f_handle, "n_farm_rows[tunnel-%d]: %d" %(i, topo_graph.n_farm_rows[i])
-#                        print >> f_handle, "n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)
-#
-#                        tot_yield = 0.
-#                        for row_id in topo_graph.row_ids:
-#                            print >> f_handle, "  --%s--" %(row_id)
-#                            row_start_node = topo_graph.row_info[row_id][1]
-#                            row_end_node = topo_graph.row_info[row_id][2]
-#                            row_start_x = topo_graph.get_node(row_start_node).pose.position.x
-#                            row_start_y = topo_graph.get_node(row_start_node).pose.position.y
-#                            row_end_x = topo_graph.get_node(row_end_node).pose.position.x
-#                            row_end_y = topo_graph.get_node(row_end_node).pose.position.y
-#                            row_length = numpy.hypot((row_end_x - row_start_x), (row_end_y - row_start_y))
-#                            node_dist = topo_graph.get_distance_between_adjacent_nodes(topo_graph.row_nodes[row_id][0], topo_graph.row_nodes[row_id][1])
-#                            print >> f_handle, "  row_length: %0.3f m" %(row_length)
-#                            print >> f_handle, "  node_dist: %0.3f m" %(node_dist)
-#                            row_yield = 0.
-#                            n_row_nodes = len(numpy.arange(0, row_length, node_dist)) + 1
-#                            if row_id in topo_graph.half_rows:
-#                                for i in range(1, n_row_nodes):
-#                                    row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
-#                            else:
-#                                for i in range(n_row_nodes):
-#                                    if (i == 0) or (i == n_row_nodes - 1):
-#                                        row_yield += topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
-#                                    else:
-#                                        row_yield += 2 * topo_graph.yield_at_node[topo_graph.row_nodes[row_id][i]]
-#                            print >> f_handle, "  row_yield: %0.3f g" %(row_yield)
-#                            tot_yield += row_yield
-#                        print >> f_handle, "tot_yield: %0.3f trays (%0.3f g)" %(tot_yield/tray_capacity, tot_yield)
-#                        print >> f_handle, "\n"
-#
-#                        # picker details
-#                        for i in range(n_pickers):
-#                            print >> f_handle, "----%s----\n-----------------" %(pickers[i].picker_id)
-#                            print >> f_handle, "picker_picking_rate: %0.3f m/s" %(pickers[i].picking_rate)
-#                            print >> f_handle, "picker_transportation_rate: %0.3f m/s" %(pickers[i].transportation_rate)
-#                            print >> f_handle, "tray_capacity: %d g" %(pickers[i].tray_capacity)
-#                            print >> f_handle, "picker_max_n_trays: %d" %(pickers[i].max_n_trays)
-#                            print >> f_handle, "picker_unloading_time(per tray): %d" %(pickers[i].unloading_time)
-#                            print >> f_handle, "rows allocated: ", farm.picker_allocations[pickers[i].picker_id]
-#                            for row_id in farm.picker_allocations[pickers[i].picker_id]:
-#                                alloc_time = farm.allocation_time[row_id]
-#                                finish_time = farm.row_finish_time[row_id]
-#                                print >> f_handle, "  %s allocation time: %0.3f" %(row_id,
-#                                                                                   alloc_time if alloc_time is not None else float("inf"))
-#                                print >> f_handle, "  %s completion time: %0.3f" %(row_id,
-#                                                                                   finish_time if finish_time is not None else float("inf"))
-#                            print >> f_handle, "tot_trays: %0.3f (%0.3f g)" %(pickers[i].tot_trays,
-#                                                                              pickers[i].tot_trays * pickers[i].tray_capacity)
-#                            print >> f_handle, "picking_time: %0.3f" %(pickers[i].time_spent_picking)
-#                            print >> f_handle, "transportation_time: %0.3f" %(pickers[i].time_spent_transportation)
-#                            print >> f_handle, "idle_time: %0.3f" %(pickers[i].time_spent_idle)
-#                            print >> f_handle, "waiting_for_robot_time: %0.3f" %(pickers[i].time_spent_waiting)
-#                            print >> f_handle, "loading_on_robot_time: %0.3f" %(pickers[i].time_spent_loading)
-#                            print >> f_handle, "unloading_time: %0.3f" %(pickers[i].time_spent_unloading)
-#                            print >> f_handle, "total_working_time: %0.3f" %(pickers[i].time_spent_working())
-#                            print >> f_handle, "-----------------\n"
-#
-#                        # robot details
-#                        for i in range(n_robots):
-#                            print >> f_handle, "----%s----\n-----------------" %(robots[i].robot_id)
-#                            print >> f_handle, "robot_transportation_rate: %0.3f m/s" %(robots[i].transportation_rate)
-#                            print >> f_handle, "robot_max_n_trays: %d" %(robots[i].max_n_trays)
-#                            print >> f_handle, "robot_unloading_time(per tray): %d" %(robots[i].unloading_time)
-#                            print >> f_handle, "tot_trays: %0.3f" %(robots[i].tot_trays)
-#                            print >> f_handle, "picking_time: %0.3f" %(robots[i].time_spent_picking)
-#                            print >> f_handle, "transportation_time: %0.3f" %(robots[i].time_spent_transportation)
-#                            print >> f_handle, "idle_time: %0.3f" %(robots[i].time_spent_idle)
-#                            print >> f_handle, "loading_time: %0.3f" %(robots[i].time_spent_loading)
-#                            print >> f_handle, "unloading_time: %0.3f" %(robots[i].time_spent_unloading)
-#                            print >> f_handle, "charging_time: %0.3f" %(robots[i].time_spent_charging)
-#                            print >> f_handle, "total_working_time: %0.3f" %(robots[i].time_spent_working())
-#                            print >> f_handle, "-----------------\n"
-#
-#                        f_handle.close()
+                        # predictions log
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
+                        print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
+                        for picker_id in picker_ids:
+                            print >> f_handle, picker_id
+                            predictions = farm.predictions[picker_id]
+                            for tray in range(1, farm.tray_counts[picker_id] + 1):
+#                                f_handle.write(predictions[tray])
+                                print >> f_handle, "\t", tray, ":"
+                                for item in predictions[tray]:
+                                    print >> f_handle, "\t\t", item
+                        f_handle.close()
+
+                        # des logs
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        # no ros related calls here to ensure printing even when the pickers_only node is killed
+                        # farm details
+                        print >> f_handle, "-----------------\n----%s----\n-----------------" %(farm.name)
+
+                        print >> f_handle, "simulation_finish_time(sim): %0.3f" %(finish_time_simpy)
+                        print >> f_handle, "simulation_finish_time(clock): %0.3f" %(finish_time_ros - start_time_ros)
+
+                        print >> f_handle, "n_pickers: %d" %(n_pickers)
+                        print >> f_handle, "n_robots: %d" %(n_robots)
+
+                        print >> f_handle, "n_polytunnels: %d" %(topo_graph.n_polytunnels)
+                        for i in range(topo_graph.n_polytunnels):
+                            print >> f_handle, "n_farm_rows[tunnel-%d]: %d" %(i, topo_graph.n_farm_rows[i])
+                        print >> f_handle, "n_topo_nav_rows: %d" %(topo_graph.n_topo_nav_rows)

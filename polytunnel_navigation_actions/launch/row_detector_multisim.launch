@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<launch>
+  <arg name="robot_name"/>
+  <arg name="tf_prefix" default="$(arg robot_name)" />
+  <arg name="config_common" default="$(find polytunnel_navigation_actions)/config/row_detector_common_cfg.yaml" />
+  <arg name="config_ellipse" default="$(find polytunnel_navigation_actions)/config/row_detector_ellipse_cfg.yaml" />
+
+  <group ns="$(arg robot_name)" >
+    <node pkg="polytunnel_navigation_actions" type="row_detector.py" name="row_detector" output="screen" 
+        args="$(arg config_common) $(arg config_ellipse)" >
+
+      <remap from="/scan" to="scan" />
+      <remap from="/row_detector/path_error" to="row_detector/path_error" />
+      <remap from="/row_detector/poles" to="row_detector/poles" />
+      <remap from="/row_detector/obstacles" to="row_detector/obstacles" />
+      <remap from="/row_detector/activate_detection" to="row_detector/activate_detection" />
+
+    </node>
+  </group>
+
+</launch>

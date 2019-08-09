@@ -9,12 +9,12 @@
   <arg name="machine" default="localhost" />
   <arg name="user" default="" />
   <arg name="launch_manager" default="true"/>
+  <arg name="execute_policy_retries" default="3"/>
   <arg name="move_base_reconf_service" default="DWAPlannerROS" />
   <arg name="reconfigure_edges" default="true" />
 
   <arg name="scenario" default="riseholme"/>
   <arg name="use_omni" default="false"/>
-  <arg name="multi_robot" default="true"/>
 
   <arg name="steering_type" value="omni" if="$(arg use_omni)"/>
   <arg name="steering_type" value="diff" unless="$(arg use_omni)"/>
@@ -73,6 +73,15 @@
 
       <param name="reconfigure_edges" type="bool" value="$(arg reconfigure_edges)"/>
     </node>
+
+
+    <node pkg="topological_navigation" name="execute_policy_server" type="execute_policy_server.py" output="screen" respawn="true">
+      <param name="retries" type="int" value="$(arg execute_policy_retries)"/>
+      <param name="move_base_reconf_service" type="str" value="$(arg move_base_reconf_service)"/>
+
+      <param name="reconfigure_edges" type="bool" value="$(arg reconfigure_edges)"/>
+    </node>
+
   </group>
 
 </launch>

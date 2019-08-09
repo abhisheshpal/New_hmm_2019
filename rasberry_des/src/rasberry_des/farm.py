@@ -111,7 +111,7 @@ class Farm(object):
 
         self.action = self.env.process(self.scheduler_monitor())
 
-    def scheduler_monitor(self, ):
+    def scheduler_monitor(self):
         """A process to allocate rows to the pickers.
         the picker should request for a row or
         when a picker becomes free, it should be allocated automatically.
@@ -124,6 +124,10 @@ class Farm(object):
         inform_allocation_finished = False
         inform_picking_finished = False
         predictions = {}
+        time_now = self.env.now
+        # time_now, event
+        self.events.append([time_now, "starting the process"])
+
         time_now = self.env.now
         # time_now, event
         self.events.append([time_now, "starting the process"])
@@ -422,7 +426,7 @@ class Farm(object):
 
         yield self.env.timeout(self.process_timeout)
 
-    def allocate_rows_to_pickers(self, ):
+    def allocate_rows_to_pickers(self):
         """allocate unallocated_rows to idle_pickers based on scheduler_policy"""
         n_idle_pickers = len(self.idle_pickers)
         if n_idle_pickers > 0:
@@ -484,7 +488,7 @@ class Farm(object):
                                                         row_id,
                                                         self.allocation_time[row_id]))
 
-    def assign_robots_to_pickers(self, ):
+    def assign_robots_to_pickers(self):
         """assign idle_robots to waiting_for_robot_pickers based on scheduler_policy"""
         n_idle_robots = len(self.idle_robots)
         if n_idle_robots > 0:

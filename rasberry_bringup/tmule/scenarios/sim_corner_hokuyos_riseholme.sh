@@ -1,4 +1,5 @@
 export TMAP="riseholme_bidirectional_sim"
+#export TMAP="riseholme_poly_act_sim"
 export MAP="`readlink -f ../../rasberry_navigation/maps/riseholme_sim.yaml`"
 export NOGOMAP="`readlink -f ../../rasberry_navigation/maps/riseholme_sim_no_go.yaml`"
 export ROSBRIDGE_IP="10.8.0.18"
@@ -10,4 +11,4 @@ export USE_IMU=false
 export USE_CARROT=false
 export USE_GUI=false
 export USE_OMNI=false
-export LOC_EDGE_RECONF="riseholme"
+export SITE_CONFIG="riseholme"

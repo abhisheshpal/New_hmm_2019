@@ -8,9 +8,9 @@
 
 import copy
 import rospy
+import numpy
 
 import rasberry_des.picker_predictor
-import rasberry_des.config_utils
 
 
 class TrayFullPredictor(object):
@@ -74,7 +74,7 @@ class TrayFullPredictor(object):
         """
         self._unallocated_rows.remove(row_id)
 
-    def predict_tray_full(self, ):
+    def predict_tray_full(self):
         """predict when and where the pickers (who are in the picking mode now) will have their
         trays full.
 
@@ -140,7 +140,7 @@ class TrayFullPredictor(object):
             time_now = min_event_time
 
             try:
-                assert time_now > time_org or rasberry_des.config_utils.isclose(time_now, time_org)
+                assert time_now > time_org or numpy.isclose(time_now, time_org)
             except:
                 msg = "%0.2f, %0.2f" %(time_now, time_org)
                 raise Exception(msg)
