@@ -13,7 +13,6 @@
   </node>
 
   <include file="$(find rasberry_navigation)/launch/rasberry_localisation_corner_hokuyos.launch" unless="$(arg use_fake_localisation)" >
-    <arg name="use_imu" value="false" />
     <arg name="publish_tf" value="false" />
     <arg name="use_omni" value="$(arg use_omni)" />
   </include>
