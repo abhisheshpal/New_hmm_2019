@@ -30,6 +30,11 @@ class HMMTrayFullPredictor(rasberry_des.tray_full_predictor.TrayFullPredictor):
         self.fwd_state_map = forward_paths
         self.bd_state_map = reverse_paths
 
+        #TODO:
+        # n_pick_substates might be depended on the picking rates
+        # however, based on Abhishesh's prediction analysis 20 seems to be a good one with less error
+        self.n_pick_substates = {picker_id:20 for picker_id in self.picker_ids}
+
         self.predictors = {picker_id:rasberry_des.hmm_picker_predictor.HMMPickerPredictor(picker_id, self.env,
                                                                                    self.graph, self.n_pickers, self.n_robots,
                                                                                    mean_idle_times[picker_id],

@@ -8,11 +8,12 @@
 import operator
 import rospy
 import rasberry_des.tray_full_predictor
+import rasberry_des.hmm_tray_full_predictor
 
 
 class Farm(object):
     """Farm class definition"""
-    def __init__(self, name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, verbose):
+    def __init__(self, name, env, n_topo_nav_rows, topo_graph, robots, pickers, policy, forward_paths, reverse_paths, verbose):
         """Create a Farm object
 
         Keyword arguments:
@@ -95,15 +96,27 @@ class Farm(object):
         mean_tray_pick_dist /= self.graph.n_topo_nav_rows
         mean_tray_pick_dists = {picker_id:mean_tray_pick_dist for picker_id in self.picker_ids}
 
+        mean_tray_pick_times = {picker_id:float(mean_tray_pick_dists[picker_id])/mean_pick_rates[picker_id] for picker_id in self.picker_ids}
+
         self.predictor = rasberry_des.tray_full_predictor.TrayFullPredictor(self.picker_ids, self.env,
                                                                             self.graph, self.n_robots,
                                                                             mean_idle_times, mean_tray_pick_dists,
                                                                             mean_pick_rates, mean_trans_rates,
                                                                             mean_unload_times, mean_load_times,
                                                                             self.verbose)
+        self.hmm_predictor = rasberry_des.hmm_tray_full_predictor.HMMTrayFullPredictor(self.picker_ids, self.env,
+                                                                            self.graph, self.n_robots,
+                                                                            mean_idle_times,
+                                                                            mean_tray_pick_times, mean_tray_pick_dists,
+                                                                            mean_pick_rates, mean_trans_rates,
+                                                                            mean_unload_times, mean_load_times,
+                                                                            forward_paths, reverse_paths,
+                                                                            self.verbose)
 
         # to check predictions
         self.predictions = {picker_id:{} for picker_id in self.picker_ids} #{picker_00:{tray_00:[predict_1, predict_2, ..., actual]}}
+        self.hmm_predictions = {picker_id:{} for picker_id in self.picker_ids} #{picker_00:{tray_00:[predict_1, predict_2, ..., actual]}}
+
         self.tray_counts = {picker_id:0 for picker_id in self.picker_ids}
         self.tray_full = {picker_id:True for picker_id in self.picker_ids}
 
@@ -124,6 +137,7 @@ class Farm(object):
         inform_allocation_finished = False
         inform_picking_finished = False
         predictions = {}
+        hmm_predictions = {}
         time_now = self.env.now
         # time_now, event
         self.events.append([time_now, "starting the process"])
@@ -210,6 +224,7 @@ class Farm(object):
                         self.tray_full[picker_id] = False
                         self.tray_counts[picker_id] += 1
                         self.predictions[picker_id][self.tray_counts[picker_id]] = []
+                        self.hmm_predictions[picker_id][self.tray_counts[picker_id]] = []
 
                 elif picker.mode == 3 or picker.mode == 4 or picker.mode == 6:
                     # picker transporting to storage (3) or unloading at storage (4)
@@ -229,6 +244,7 @@ class Farm(object):
                             prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.curr_row, picker.curr_node, picker.picking_dir, time_now)
 
                         self.predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
+                        self.hmm_predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
                         self.tray_full[picker_id] = True
 
                 elif picker.mode == 5:
@@ -267,6 +283,7 @@ class Farm(object):
                             prediction_actual = "%s, %s, %s, %0.1f, actual" %(picker.curr_row, picker.curr_node, picker.picking_dir, time_now)
 
                         self.predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
+                        self.hmm_predictions[picker_id][self.tray_counts[picker_id]].append(prediction_actual)
                         self.tray_full[picker_id] = True
 
             for picker_id in to_remove_pickers:
@@ -292,6 +309,9 @@ class Farm(object):
 
                 self.predictor.update_mode_and_pose(picker_id, picker.mode, picker.curr_node,
                                                     picker.picking_dir, goal_node)
+                self.hmm_predictor.update_mode_and_pose(picker_id, picker.mode, picker.curr_node,
+                                                    picker.picking_dir, goal_node)
+                ## DEPRECATED predictions using individual picker's beliefs alone
 #                # make predictions - only once from a node and only when in picking mode
 #                if ((picker.mode == 2) and
 #                    ((predicted_from[picker_id] is None) or (predicted_from[picker_id] != picker.curr_node))):
@@ -326,6 +346,15 @@ class Farm(object):
                     picker = self.pickers[picker_id]
                     new_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(pred_row, pred_node, pred_dir, pred_time, picker.curr_node, picker.picking_dir, time_now))
                     self.predictions[picker_id][self.tray_counts[picker_id]].append(new_prediction)
+                    predicted_from[picker_id] = picker.curr_node
+
+                hmm_predictions = self.hmm_predictor.predict_tray_full()
+
+                for picker_id in hmm_predictions:
+                    hmm_pred_row, hmm_pred_node, hmm_pred_dir, hmm_pred_time = hmm_predictions[picker_id][1:5]
+                    picker = self.pickers[picker_id]
+                    new_hmm_prediction = ("%s, %s, %s, %0.1f, from %s %s %0.1f" %(hmm_pred_row, hmm_pred_node, hmm_pred_dir, hmm_pred_time, picker.curr_node, picker.picking_dir, time_now))
+                    self.hmm_predictions[picker_id][self.tray_counts[picker_id]].append(new_hmm_prediction)
                     predicted_from[picker_id] = picker.curr_node
 
 #==============================================================================
@@ -483,6 +512,7 @@ class Farm(object):
 
         # update unallocated rows in predictor
         self.predictor.update_unallocated(row_id)
+        self.hmm_predictor.update_unallocated(row_id)
 
         self.loginfo("%s is allocated to %s at %0.3f" %(picker_id,
                                                         row_id,

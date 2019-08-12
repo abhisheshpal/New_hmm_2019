@@ -26,6 +26,7 @@ import rasberry_des.config_utils
 import rasberry_des.visualise
 import rasberry_des.robot
 import rasberry_des.topo
+import rospkg
 
 RANDOM_SEED = 1111
 SHOW_VIS = False
@@ -78,6 +79,14 @@ if __name__ == "__main__":
 #    policies = ["lexicographical", "shortest_distance", "uniform_utilisation"]
     policies = ["uniform_utilisation"]
     use_cold_storage = False
+
+    # assuming the state_map is in the rasberry_des/resources/hmm_topo_state_maps
+    rospack = rospkg.RosPack()
+    state_map_dir = os.path.join(rospack.get_path("rasberry_des"), "resources", "hmm_topo_state_maps")
+    fwd_map_file = numpy.load(os.path.join(state_map_dir, "%s_fwd_state_map.npz" %(map_name)))
+    forward_paths = fwd_map_file["state_map"]
+    bwd_map_file = numpy.load(os.path.join(state_map_dir, "%s_bwd_state_map.npz" %(map_name)))
+    reverse_paths = bwd_map_file["state_map"]
 
     # create log directory if does not exist already
     if SAVE_STATS:
@@ -169,7 +178,8 @@ if __name__ == "__main__":
 
                     farm = rasberry_des.farm.Farm(map_name,
                                                   env, n_topo_nav_rows, topo_graph, robots,
-                                                  pickers, scheduling_policy, VERBOSE)
+                                                  pickers, scheduling_policy,
+                                                  forward_paths, reverse_paths, VERBOSE)
 
                     if SHOW_VIS:
                         vis = rasberry_des.visualise.VisualiseAgents(topo_graph, robots,
@@ -352,6 +362,20 @@ if __name__ == "__main__":
 #                                f_handle.write(predictions[tray])
                                 print >> f_handle, "\t", tray, ":"
                                 for item in predictions[tray]:
+                                    print >> f_handle, "\t\t", item
+                        f_handle.close()
+
+                        # hmm_predictions log
+                        f_handle = open(log_dir + "/M%s_P%d_R%d_S%s_%d_hmm_predictions.dat" %(map_name, n_pickers, n_robots, scheduling_policy, time_now), "w")
+                        print >> f_handle, "picker.pred_row, picker.pred_node, picker.pred_dir, picker.pred_time, picker.curr_node, picker.picking_dir, time_now"
+                        print >> f_handle, "picker.prev_row, picker.curr_node, picker.picking_dir, time_now, actual\n"
+                        for picker_id in picker_ids:
+                            print >> f_handle, picker_id
+                            hmm_predictions = farm.hmm_predictions[picker_id]
+                            for tray in range(1, farm.tray_counts[picker_id] + 1):
+#                                f_handle.write(predictions[tray])
+                                print >> f_handle, "\t", tray, ":"
+                                for item in hmm_predictions[tray]:
                                     print >> f_handle, "\t\t", item
                         f_handle.close()
 
