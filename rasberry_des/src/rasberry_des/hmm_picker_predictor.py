@@ -7,6 +7,7 @@ Created on: Day Mon DD HH:MM:SS YYYY
 """
 import numpy
 
+import rasberry_des.hmmodel
 import rasberry_des.picker_predictor
 import rasberry_des.hmm_picker_predictor
 import rasberry_des.config_utils
@@ -17,7 +18,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
     """
     def __init__(self, picker_id, env, topo_graph, n_pickers, n_robots, mean_idle_time, mean_tray_pick_time, mean_tray_pick_dist,
                  mean_pick_rate, mean_trans_rate, mean_unload_time, mean_load_time, fwd_state_map, bwd_state_map, n_pick_substates,
-                 mean_node_dist, verbose=False):
+                 verbose=False):
         """
         """
         super(HMMPickerPredictor, self).__init__(picker_id, env, topo_graph, n_pickers, n_robots, mean_idle_time, mean_tray_pick_dist,
@@ -26,7 +27,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         self.fwd_state_map = fwd_state_map
         self.bwd_state_map = bwd_state_map
         self.n_pick_substates = n_pick_substates
-        self.mean_node_dist = mean_node_dist
+        self.mean_node_dist = numpy.mean(self.graph.mean_node_dist.values())
 
         self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else mean_tray_pick_time
         self.predict_interval = 120 # time period to which the prediction is made in a loop. This must be < node-to-node picking time
@@ -41,7 +42,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
 #         # pick_substates_model
 #==============================================================================
         # optimum number of substates depends on the picking rate of the picker
-        rate_pick_substates = (1.0 / self.mean_tray_pick_time) * self.n_pick_substates
+        rate_pick_substates = (1.0 / self.mean_tray_pick_time()) * self.n_pick_substates
 
         # defining a state map to change through the substates. 0 --> 1 --> 2 --> 3 --> 4 --> 5 --> 0
         state_map_pick_substates = numpy.eye(self.n_pick_substates, k=1) # connect all the successive nodes
@@ -73,7 +74,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                                                                  from_file=False,
                                                                  trans_rate_mat=Q_pick_substates,
                                                                  obs_prob_mat=B_pick_substates,
-                                                                 init_stae_prob=Pi_pick_substates
+                                                                 init_state_prob=Pi_pick_substates
                                                                  )
 
         # TODO:
@@ -87,7 +88,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         rs_fwd_pick = numpy.sum(self.fwd_state_map, axis=1)       # it sums up all the columns of a single row,so that it can help in defining Q in next step
         # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
         # expected mean rate in per seconds
-        rate_fwd_pick =   self.mean_pick_rate / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
+        rate_fwd_pick =   self.mean_pick_rate() / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
         Q_fwd_pick = (numpy.diag(-rs_fwd_pick) + self.fwd_state_map) * rate_fwd_pick # Keep in mind that, sum(Qij) = -Qii =< 1.
 
         B_pre_fwd_pick = numpy.ones(self.fwd_state_map.size) * .001 + numpy.eye(self.fwd_state_map.size) * .7 + numpy.eye(self.fwd_state_map.size, k=1) * .02 + numpy.eye(self.fwd_state_map.size, k=-1) * .02 + numpy.eye(self.fwd_state_map.size, k=2) * .01 + numpy.eye(self.fwd_state_map.size, k=-2) * .01
@@ -115,7 +116,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         rs_bwd_pick = numpy.sum(self.bwd_state_map, axis=1)       # it sums up all the columns of a single row,so that it can help in defining Q in next step
         # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
         # expected mean rate in per seconds
-        rate_bwd_pick =   self.mean_pick_rate / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
+        rate_bwd_pick =   self.mean_pick_rate() / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
         Q_bwd_pick = (numpy.diag(-rs_bwd_pick) + self.bwd_state_map) * rate_bwd_pick # Keep in mind that, sum(Qij) = -Qii =< 1.
 
         B_pre_bwd_pick = numpy.ones(self.bwd_state_map.size) * .001 + numpy.eye(self.bwd_state_map.size) * .7 + numpy.eye(self.bwd_state_map.size, k=1) * .02 + numpy.eye(self.bwd_state_map.size, k=-1) * .02 + numpy.eye(self.bwd_state_map.size, k=2) * .01 + numpy.eye(self.bwd_state_map.size, k=-2) * .01

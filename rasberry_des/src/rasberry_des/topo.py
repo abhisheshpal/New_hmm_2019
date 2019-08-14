@@ -61,6 +61,8 @@ class TopologicalForkGraph(object):
         self._row_nodes = []        # list of all row nodes, for internal use
         # row_info {row_id:[pri_head_node, start_node, end_node, local_storage_node, sec_head_node]}
         self.row_info = {}
+
+        self.mean_node_dist = {row_id:0.0 for row_id in self.row_ids}
         # yield_at_node {node_id:yield_at_node}
         self.yield_at_node = {}
         # local storage nodes
@@ -208,6 +210,18 @@ class TopologicalForkGraph(object):
                                      self.local_storage_nodes[row_id]]
             if self.second_head_lane:
                 self.row_info[row_id].append(self.head_nodes[row_id][1])
+
+        # mean node dist
+        for row_id in self.row_ids:
+            n_row_nodes = len(self.row_nodes[row_id])
+            for j in range(n_row_nodes):
+                if j != n_row_nodes - 1:
+                   self.mean_node_dist[row_id] += self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][0],
+                                                                                           self.row_nodes[row_id][1])
+                else:
+                    self.mean_node_dist[row_id] += self.get_distance_between_adjacent_nodes(self.row_nodes[row_id][-2],
+                                                                                            self.row_nodes[row_id][-1])
+            self.mean_node_dist[row_id] /= float(n_row_nodes)
 
     def get_path_details(self, start_node, goal_node):
         """get route_nodes, route_edges and route_distance from start_node to goal_node

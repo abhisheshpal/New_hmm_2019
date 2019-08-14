@@ -28,7 +28,7 @@ class HMMTrayFullPredictor(rasberry_des.tray_full_predictor.TrayFullPredictor):
         self.mean_tray_pick_times = mean_tray_pick_times
 
         self.fwd_state_map = forward_paths
-        self.bd_state_map = reverse_paths
+        self.bwd_state_map = reverse_paths
 
         #TODO:
         # n_pick_substates might be depended on the picking rates
