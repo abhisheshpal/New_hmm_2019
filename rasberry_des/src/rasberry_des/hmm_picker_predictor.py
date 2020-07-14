@@ -9,7 +9,6 @@ import numpy
 
 import rasberry_des.hmmodel
 import rasberry_des.picker_predictor
-import rasberry_des.hmm_picker_predictor
 import rasberry_des.config_utils
 
 
@@ -18,6 +17,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
     """
     def __init__(self, picker_id, env, topo_graph, n_pickers, n_robots, mean_idle_time, mean_tray_pick_time, mean_tray_pick_dist,
                  mean_pick_rate, mean_trans_rate, mean_unload_time, mean_load_time, fwd_state_map, bwd_state_map, n_pick_substates,
+                 predict_interval=120,
                  verbose=False):
         """
         """
@@ -30,7 +30,14 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         self.mean_node_dist = numpy.mean(self.graph.mean_node_dist.values())
 
         self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else mean_tray_pick_time
-        self.predict_interval = 120 # time period to which the prediction is made in a loop. This must be < node-to-node picking time
+        # prediction interval. This should be less than node-to-node picking time
+        # also, assuming mean_tray_pick_time is greater than node-to-node picking time
+        self.predict_interval = mean_tray_pick_time # time period to which the prediction is made in a loop. This must be < node-to-node picking time
+
+        try:
+            assert self.predict_interval <= mean_tray_pick_time
+        except AssertionError:
+            raise Exception("hmm_picker_predictor - %s: (mean_tray_pick_time <= predict_interval)" %(self.picker_id))
 
         self._init_hmmodels()
 
@@ -106,7 +113,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                                                               from_file=False,
                                                               trans_rate_mat=Q_fwd_pick,
                                                               obs_prob_mat=B_fwd_pick,
-                                                              init_stae_prob=Pi_fwd_pick
+                                                              init_state_prob=Pi_fwd_pick
                                                               )
 
 #==============================================================================
@@ -134,7 +141,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                                                               from_file=False,
                                                               trans_rate_mat=Q_bwd_pick,
                                                               obs_prob_mat=B_bwd_pick,
-                                                              init_stae_prob=Pi_bwd_pick
+                                                              init_state_prob=Pi_bwd_pick
                                                               )
 
     def predict_tray_full_time(self, ):
@@ -142,11 +149,13 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         """
         # TODO: take the progress (completed substates) into consideration
         # now prediction is assuming picking mode started at time zero
-        n_iter = 1.25 * (self.mean_tray_pick_time() / self.predict_interval) # 25 % extra time to check progress
+        n_iter = int(numpy.ceil(1.25 * (self.mean_tray_pick_time() / self.predict_interval))) # 25 % extra time to check progress
+
         obs = [0, 0]
         curr_substate = 0
         prev_substate = 0
         tray_pick_time = 0.
+
         for i in range(n_iter):
             (state, kl, posterior) = self.fwd_picking_model.predict(obs,
                                                                     predict_time = i,
