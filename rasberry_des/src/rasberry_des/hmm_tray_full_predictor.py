@@ -43,6 +43,7 @@ class HMMTrayFullPredictor(rasberry_des.tray_full_predictor.TrayFullPredictor):
                                                                                    mean_unload_times[picker_id], mean_load_times[picker_id],
                                                                                    self.fwd_state_map, self.bwd_state_map,
                                                                                    self.n_pick_substates[picker_id],
+                                                                                   120.0,
                                                                                    self.verbose) for picker_id in self.picker_ids}
 
     # method overloaded only for picking mode (2)
