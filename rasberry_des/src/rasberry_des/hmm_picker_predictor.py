@@ -269,7 +269,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         dir_change = False
         prev_node = curr_node
         prev_dir = curr_dir
-        n_iter = _remain_tray_pick_time / self.predict_interval
+        n_iter = int(numpy.ceil(_remain_tray_pick_time / self.predict_interval))
         n_nodes = 0.
         for _row_id in self.graph.row_ids:
             if _row_id == row_id:
@@ -318,7 +318,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         if dir_change:
             # picking in reverse dir now
             # predict until row is completed or tray is full
-            n_iter = _remain_tray_pick_time / self.predict_interval
+            n_iter = int(numpy.ceil(_remain_tray_pick_time / self.predict_interval))
             for i in range(n_iter):
                 curr_node_idx = n_nodes + self.graph.row_nodes[row_id].index(curr_node)
                 obs = [curr_node_idx, curr_node_idx]
