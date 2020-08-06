@@ -64,20 +64,24 @@ class HMModel(object):
         hmms.plot_hmm(s_seq, e_seq, time=t_seq )
         if verbose:
             print('t_seq',t_seq)
+            
+        print ("HERE is it called?")
 
         return (t_seq, s_seq, e_seq)
 
-    def predict(self, obs=numpy.array([0,1,2,3,4]), predict_time=20.0, verbose=False):
+    def predict(self, obs=numpy.array([0,1,2,3,4]), predict_time = 20.0, verbose=False):
         """ predict function that takes some initial observations so far
 
         Keyword arguments:
-
+        
         predict_time - look ahead time (i.e. the time we look into the future based on the last observation)
         """
+        
+#        (t_seq1, s_seq1, e_seq1) = generate_random(len(obs), 1)
+        
         e_seq = numpy.array(obs)
         # assume the observations were made 1 second apart
-        t_seq = numpy.array(range(0,len(e_seq)))
-
+        t_seq = numpy.array(range(0, len(e_seq)))
         # Now the predict step
         # the last observation codes for unknown,"abusing" the Viterbi algorithm to provide predictions
         # purely on the transition model
@@ -85,12 +89,14 @@ class HMModel(object):
 
         # set the last "unknown" observation time:
         t_seq[-1] = t_seq[-2] + predict_time
+        print 'predict_time', t_seq[-2]
 
         if verbose:
             print('t_seq, e_seq', t_seq, e_seq)
 
         # run Viterbi algorithm for the CtHMM
-        (log_prob, s_seq) =  self._model.viterbi( t_seq, e_seq )
+        # (log_prob, s_seq) =  self._model.viterbi( t_seq, e_seq )
+        (log_prob, s_seq) =  self._model.viterbi( t_seq, e_seq)
 
         # We can also query the state distribution for the entire sequence
         log_prob_table = self._model.states_confidence( t_seq, e_seq )

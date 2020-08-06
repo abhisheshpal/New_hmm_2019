@@ -91,7 +91,7 @@ class HMMPredictor(object):
                                                                        from_file=False,
                                                                        trans_rate_mat=Q,
                                                                        obs_prob_mat=B,
-                                                                       init_stae_prob=Pi
+                                                                       init_state_prob=Pi
                                                                        )
         # TODO:
         # forward and reverse models may not be necessary. It could be assumed that the picker is moving at a constant rate and decide where he will be
@@ -106,7 +106,7 @@ class HMMPredictor(object):
                                                                                   from_file=False,
                                                                                   trans_rate_mat=Q,
                                                                                   obs_prob_mat=B,
-                                                                                  init_stae_prob=Pi
+                                                                                  init_state_prob=Pi
                                                                                   )
         # reverse picking models
         B = [] # observation probability matrix
@@ -117,6 +117,5 @@ class HMMPredictor(object):
                                                                                   from_file=False,
                                                                                   trans_rate_mat=Q,
                                                                                   obs_prob_mat=B,
-                                                                                  init_stae_prob=Pi
+                                                                                  init_state_prob=Pi
                                                                                   )
-

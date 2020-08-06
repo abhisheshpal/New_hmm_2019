@@ -143,25 +143,54 @@ class VisualiseAgents(object):
                 node_obj = self.graph.get_node(cold_storage_node)
                 cold_storage_x = node_obj.pose.position.x
                 cold_storage_y = node_obj.pose.position.y
+                
+                min_x = float("inf")
+                max_x = - float("inf")
+                min_y = float("inf")
+                max_y = - float("inf")
+                all_xs = pri_head_lane_x + nav_row_nodes_x
+                all_ys = pri_head_lane_y + nav_row_nodes_y
+                for xs in farm_rows_x:
+                    all_xs.extend(xs)
+                for ys in farm_rows_y:
+                    all_ys.extend(ys)
+                if self.graph.second_head_lane:
+                    all_xs.extend(sec_head_lane_x)
+                    all_ys.extend(sec_head_lane_y)
+                if self.show_cold_storage:
+                    all_xs.append(cold_storage_x)
+                    all_ys.append(cold_storage_y)
+                min_x = min(all_xs)
+                max_x = max(all_xs)
+                min_y = min(all_ys)
+                max_y = max(all_ys)
+                # limits of the axes
+                self.ax.set_xlim(min_x - 5, max_x + 5)
+                self.ax.set_ylim(min_y - 5, max_y + 5)
 
-        if not self.show_cold_storage:
-            min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]))
-            max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]))
-            min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]))
-            max_y = max(max(nav_rows_y[-1]), max(farm_rows_y[-1]))
 
-            # limits of the axes
-            self.ax.set_xlim(min_x - 1, max_x + 1)
-            self.ax.set_ylim(min_y - 1, max_y + 1)
-        else:
-            min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]), cold_storage_x)
-            max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]), cold_storage_x)
-            min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]), cold_storage_y)
-            max_y = max(max(nav_rows_y[-1]), max(farm_rows_y[-1]), cold_storage_y)
+#        if not self.show_cold_storage:
+#            min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]))
+#            max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]))
+#            min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]))
+#            max_y = max(max(nav_rows_y[-1]), max(farm_rows_y[-1]))
+#
+#            # limits of the axes
+#            self.ax.set_xlim(min_x - 1, max_x + 1)
+#            self.ax.set_ylim(min_y - 1, max_y + 1)
+#        else:
+#            min_x = min(min(nav_rows_x[0]), min(farm_rows_x[0]), cold_storage_x)
+#            max_x = max(max(nav_rows_x[-1]), max(farm_rows_x[-1]), cold_storage_x)
+#            min_y = min(min(nav_rows_y[0]), min(farm_rows_y[0]), cold_storage_y)
+#            max_y = max(max(nav_rows_y[-1]), max(farm_rows_y[-1]), cold_storage_y)
+#
+#            # limits of the axes
+#            self.ax.set_xlim(min_x - 5, max_x + 5)
+#            self.ax.set_ylim(min_y - 5, max_y + 5)
 
-            # limits of the axes
-            self.ax.set_xlim(min_x - 5, max_x + 5)
-            self.ax.set_ylim(min_y - 5, max_y + 5)
+
+
+
 
 #        self.fig.set_figheight((max_y - min_y + 2)*2)
 #        self.fig.set_figwidth((max_x - min_x + 2)*2)
@@ -204,9 +233,9 @@ class VisualiseAgents(object):
             self.static_lines.append(self.ax.plot(cold_storage_x, cold_storage_y,
                                                   color="black", marker="8", markersize=12,
                                                   markeredgecolor="r", linestyle="none")[0])
-            self.static_lines.append(self.ax.plot([pri_head_nodes_x[0], cold_storage_x],
-                                                  [pri_head_nodes_y[0], cold_storage_y],
-                                                  color="black", linewidth=4)[0])
+            # self.static_lines.append(self.ax.plot([pri_head_nodes_x[0], cold_storage_x],
+            #                                       [pri_head_nodes_y[0], cold_storage_y],
+            #                                       color="black", linewidth=4)[0])
 
         # dynamic objects - pickers and robots
         # pickers

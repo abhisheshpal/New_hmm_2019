@@ -32,7 +32,7 @@ RANDOM_SEED = 1111
 SHOW_VIS = False
 SAVE_STATS = True
 SIM_RT_FACTOR = 5.0
-VERBOSE = False
+VERBOSE = True #False
 
 random.seed(RANDOM_SEED)
 numpy.random.seed(RANDOM_SEED)
@@ -57,6 +57,7 @@ if __name__ == "__main__":
     second_head_lane = config_params["second_head_lane"]
     n_pickers = config_params["n_pickers"]
     tray_capacity = config_params["tray_capacity"]
+    print 'tray_capacity', tray_capacity
 
     _yield_per_node = config_params["yield_per_node"]
 
@@ -87,7 +88,7 @@ if __name__ == "__main__":
     forward_paths = fwd_map_file["state_map"]
     bwd_map_file = numpy.load(os.path.join(state_map_dir, "%s_bwd_state_map.npz" %(map_name)))
     reverse_paths = bwd_map_file["state_map"]
-
+    print reverse_paths
     # create log directory if does not exist already
     if SAVE_STATS:
         asc_time = time.asctime().split(" ")

@@ -361,6 +361,7 @@ class TrayFullPredictor(object):
             # time at which the mode started and mean time for that mode, which could be less
             # than what the picker is taking in the current execution.
             if self._mode_finish_details[picker_id][2] < time_now:
+                
                 self._mode_finish_details[picker_id][2] += time_now - self._mode_finish_details[picker_id][2]
 
             if self._mode_finish_details[picker_id][2] < min_event_time:
