@@ -23,6 +23,6 @@
   </include-->
   <node pkg="topological_navigation" type="map_manager.py" name="topological_map_manager" args="$(arg tmap)" respawn="true"/>
 
-  <node pkg="rasberry_des" type="des.py" name="des" args="$(arg config_file)" />
+  <!--node pkg="rasberry_des" type="des.py" name="des" args="$(arg config_file)" /-->
 
 </launch>
