@@ -31,9 +31,6 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         self.mean_node_dist = numpy.mean(self.graph.mean_node_dist.values())
 
         self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else mean_tray_pick_time
-<<<<<<< HEAD
-        self.predict_interval = 300 #120. # time period to which the prediction is made in a loop. This must be < node-to-node picking time
-=======
         # prediction interval. This should be less than node-to-node picking time
         # also, assuming mean_tray_pick_time is greater than node-to-node picking time
         self.predict_interval = mean_tray_pick_time # time period to which the prediction is made in a loop. This must be < node-to-node picking time
@@ -42,7 +39,6 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
             assert self.predict_interval <= mean_tray_pick_time
         except AssertionError:
             raise Exception("hmm_picker_predictor - %s: (mean_tray_pick_time <= predict_interval)" %(self.picker_id))
->>>>>>> c439a7e296f99450ed2ad5f9a4ebcc58e85a7650
 
         self._init_hmmodels()
 
@@ -96,10 +92,6 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
 #==============================================================================
 #         # forward picking model
 #==============================================================================
-<<<<<<< HEAD
-        ## changed B_pre_fwd_pick shape to solve issues of memory ---
-=======
->>>>>>> c439a7e296f99450ed2ad5f9a4ebcc58e85a7650
         # summing all column of adjency matrix
         rs_fwd_pick = numpy.sum(self.fwd_state_map, axis=1)       # it sums up all the columns of a single row,so that it can help in defining Q in next step
         # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
@@ -125,19 +117,9 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                                                               obs_prob_mat=B_fwd_pick,
                                                               init_state_prob=Pi_fwd_pick
                                                               )
-<<<<<<< HEAD
-                                                             
 #==============================================================================
 #         # backward picking models
 #==============================================================================
-        # # summing all column of adjency matrix
-        ####---------- changed B_pre_bwd_pick shape to solve issues of memory ---
-=======
-
-#==============================================================================
-#         # backward picking models
-#==============================================================================
->>>>>>> c439a7e296f99450ed2ad5f9a4ebcc58e85a7650
         # summing all column of adjency matrix
         rs_bwd_pick = numpy.sum(self.bwd_state_map, axis=1)       # it sums up all the columns of a single row,so that it can help in defining Q in next step
         # creating the transition rate matrix (https://en.wikipedia.org/wiki/Transition_rate_matrix)
@@ -169,29 +151,16 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         
         # TODO: take the progress (completed substates) into consideration
         # now prediction is assuming picking mode started at time zero
-<<<<<<< HEAD
-#        n_iter = 1.25 * (self.mean_tray_pick_time() / self.predict_interval) # 25 % extra time to check progress
-        n_iter = int(numpy.ceil(1 * (self.mean_tray_pick_time() / self.predict_interval))) # 25 % extra time to check progress
-        print 'self.mean_tray_pick_time()', self.mean_tray_pick_time()
+        n_iter = int(numpy.ceil(1.25 * (self.mean_tray_pick_time() / self.predict_interval))) # 25 % extra time to check progress
+#        obs = [0, 0]
         obs = numpy.array([21, 22, 23, 24, 25, 26, 27])
         curr_substate = 0
         prev_substate = 0
         tray_pick_time = 0.
-       
-        for i in range(n_iter/10):
-#        for i in range(int(numpy.ceil(n_iter/10))):  # working with this param already
-            (state, kl, posterior) = self.pick_substates_model.predict(obs,
-=======
-        n_iter = int(numpy.ceil(1.25 * (self.mean_tray_pick_time() / self.predict_interval))) # 25 % extra time to check progress
-
-        obs = [0, 0]
-        curr_substate = 0
-        prev_substate = 0
-        tray_pick_time = 0.
-
+        
+#        for i in range(n_iter/10):
         for i in range(n_iter):
             (state, kl, posterior) = self.fwd_picking_model.predict(obs,
->>>>>>> c439a7e296f99450ed2ad5f9a4ebcc58e85a7650
                                                                     predict_time = i,
                                                                     verbose = False
                                                                     )
