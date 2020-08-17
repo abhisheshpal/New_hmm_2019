@@ -9,7 +9,6 @@ import numpy
 
 import rasberry_des.hmmodel
 import rasberry_des.picker_predictor
-import rasberry_des.hmm_picker_predictor
 import rasberry_des.config_utils
 
 
