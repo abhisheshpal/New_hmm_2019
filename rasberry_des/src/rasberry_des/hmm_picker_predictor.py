@@ -99,18 +99,18 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         rate_fwd_pick =   self.mean_pick_rate() / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
         Q_fwd_pick = (numpy.diag(-rs_fwd_pick) + self.fwd_state_map) * rate_fwd_pick # Keep in mind that, sum(Qij) = -Qii =< 1.
 
-        B_pre_fwd_pick = numpy.ones(self.fwd_state_map.size) * .001 + numpy.eye(self.fwd_state_map.size) * .7 + numpy.eye(self.fwd_state_map.size, k=1) * .02 + numpy.eye(self.fwd_state_map.size, k=-1) * .02 + numpy.eye(self.fwd_state_map.size, k=2) * .01 + numpy.eye(self.fwd_state_map.size, k=-2) * .01
-        B_fwd_pick = numpy.transpose(numpy.vstack([B_pre_fwd_pick, [.101] * self.fwd_state_map.size]))  # np.vstack will add extra column in B_pre matrix vertically
+        B_pre_fwd_pick = numpy.ones(self.fwd_state_map.shape[0]) * .001 + numpy.eye(self.fwd_state_map.shape[0]) * .7 + numpy.eye(self.fwd_state_map.shape[0], k=1) * .02 + numpy.eye(self.fwd_state_map.shape[0], k=-1) * .02 + numpy.eye(self.fwd_state_map.shape[0], k=2) * .01 + numpy.eye(self.fwd_state_map.shape[0], k=-2) * .01
+        B_fwd_pick = numpy.transpose(numpy.vstack([B_pre_fwd_pick, [.101] * self.fwd_state_map.shape[0]]))  # np.vstack will add extra column in B_pre matrix vertically
         B_fwd_pick[0,-2] = .101     # first row and second last column is filled with 0.101
         B_fwd_pick[-1,0] = .101     # Last row and first columm is filled with 0.101
         # normalise B (make sure probs sum up to 1)
         row_sums = B_fwd_pick.sum(axis=1)
         B_fwd_pick = B_fwd_pick / row_sums[:, numpy.newaxis]
-        B_fwd_pick = [] # observation probability matrix
+#        B_fwd_pick = [] # observation probability matrix
 
-        Pi_fwd_pick = numpy.array([1.0 / self.fwd_state_map.size] * self.fwd_state_map.size )   # Uniform Pi for all substates
+        Pi_fwd_pick = numpy.array([1.0 / self.fwd_state_map.shape[0]] * self.fwd_state_map.shape[0] )   # Uniform Pi for all substates
 
-        self.fwd_picking_model = rasberry_des.hmmodel.HMModel(self.fwd_state_map.size,
+        self.fwd_picking_model = rasberry_des.hmmodel.HMModel(self.fwd_state_map.shape[0],
                                                               from_file=False,
                                                               trans_rate_mat=Q_fwd_pick,
                                                               obs_prob_mat=B_fwd_pick,
@@ -127,18 +127,18 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         rate_bwd_pick =   self.mean_pick_rate() / self.mean_node_dist # The picking_rate (0.001724078) is calculated from DES
         Q_bwd_pick = (numpy.diag(-rs_bwd_pick) + self.bwd_state_map) * rate_bwd_pick # Keep in mind that, sum(Qij) = -Qii =< 1.
 
-        B_pre_bwd_pick = numpy.ones(self.bwd_state_map.size) * .001 + numpy.eye(self.bwd_state_map.size) * .7 + numpy.eye(self.bwd_state_map.size, k=1) * .02 + numpy.eye(self.bwd_state_map.size, k=-1) * .02 + numpy.eye(self.bwd_state_map.size, k=2) * .01 + numpy.eye(self.bwd_state_map.size, k=-2) * .01
-        B_bwd_pick = numpy.transpose(numpy.vstack([B_pre_bwd_pick, [.101] * self.bwd_state_map.size]))  # np.vstack will add extra column in B_pre matrix vertically
+        B_pre_bwd_pick = numpy.ones(self.bwd_state_map.shape[0]) * .001 + numpy.eye(self.bwd_state_map.shape[0]) * .7 + numpy.eye(self.bwd_state_map.shape[0], k=1) * .02 + numpy.eye(self.bwd_state_map.shape[0], k=-1) * .02 + numpy.eye(self.bwd_state_map.shape[0], k=2) * .01 + numpy.eye(self.bwd_state_map.shape[0], k=-2) * .01
+        B_bwd_pick = numpy.transpose(numpy.vstack([B_pre_bwd_pick, [.101] * self.bwd_state_map.shape[0]]))  # np.vstack will add extra column in B_pre matrix vertically
         B_bwd_pick[0,-2] = .101     # first row and second last column is filled with 0.101
         B_bwd_pick[-1,0] = .101     # Last row and first columm is filled with 0.101
         # normalise B (make sure probs sum up to 1)
         row_sums = B_bwd_pick.sum(axis=1)
         B_bwd_pick = B_bwd_pick / row_sums[:, numpy.newaxis]
-        B_bwd_pick = [] # observation probability matrix
+#        B_bwd_pick = [] # observation probability matrix
 
-        Pi_bwd_pick = numpy.array([1.0 / self.bwd_state_map.size] * self.bwd_state_map.size )   # Uniform Pi for all substates
+        Pi_bwd_pick = numpy.array([1.0 / self.bwd_state_map.shape[0]] * self.bwd_state_map.shape[0] )   # Uniform Pi for all substates
 
-        self.bwd_picking_model = rasberry_des.hmmodel.HMModel(self.bwd_state_map.size,
+        self.bwd_picking_model = rasberry_des.hmmodel.HMModel(self.bwd_state_map.shape[0],
                                                               from_file=False,
                                                               trans_rate_mat=Q_bwd_pick,
                                                               obs_prob_mat=B_bwd_pick,
@@ -159,7 +159,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
 
         for i in range(n_iter):
             (state, kl, posterior) = self.fwd_picking_model.predict(obs,
-                                                                    predict_time = i,
+                                                                    predict_time = self.predict_interval,
                                                                     verbose = False
                                                                     )
             tray_pick_time += self.predict_interval
@@ -270,29 +270,29 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         prev_node = curr_node
         prev_dir = curr_dir
         n_iter = int(numpy.ceil(_remain_tray_pick_time / self.predict_interval))
-        n_nodes = 0.
+        n_nodes = 0
         for _row_id in self.graph.row_ids:
             if _row_id == row_id:
                 break
-            n_nodes += len(self.graph.row_nodes[_row_id])
+            else:
+                n_nodes += len(self.graph.row_nodes[_row_id])
 
         for i in range(n_iter):
             curr_node_idx = n_nodes + self.graph.row_nodes[row_id].index(curr_node)
             obs = [curr_node_idx, curr_node_idx]
             if curr_dir == "forward":
                 (state, kl, posterior) = self.fwd_picking_model.predict(obs,
-                                                                        predict_time = i,
+                                                                        predict_time = self.predict_interval,
                                                                         verbose = False
                                                                         )
             elif curr_dir == "reverse":
                 (state, kl, posterior) = self.bwd_picking_model.predict(obs,
-                                                                        predict_time = i,
+                                                                        predict_time = self.predict_interval,
                                                                         verbose = False
                                                                         )
             else:
                 raise Exception("wrong picking direction")
 
-            print state
             # state is an index in the state map containing all rows
             # row can change when the state > max index for that row or
             # when a jump happens from last to first row
@@ -324,7 +324,7 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
                 obs = [curr_node_idx, curr_node_idx]
 
                 (state, kl, posterior) = self.bwd_picking_model.predict(obs,
-                                                                        predict_time = i,
+                                                                        predict_time = self.predict_interval,
                                                                         verbose = False
                                                                         )
                 # state is an index in the state map containing all rows

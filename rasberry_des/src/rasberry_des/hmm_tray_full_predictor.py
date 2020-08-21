@@ -110,6 +110,7 @@ class HMMTrayFullPredictor(rasberry_des.tray_full_predictor.TrayFullPredictor):
                     next_event, event_details = self.predictors[picker_id].predict_picking_finish_event(self._curr_nodes[picker_id],
                                                                                                         self._curr_dirs[picker_id],
                                                                                                         remain_tray_pick_time,
+                                                                                                        self._dists_picked[picker_id],
                                                                                                         time_now)
 
                     self._mode_finish_details[picker_id] = event_details # full details

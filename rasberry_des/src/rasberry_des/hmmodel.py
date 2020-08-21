@@ -74,7 +74,7 @@ class HMModel(object):
 
         predict_time - look ahead time (i.e. the time we look into the future based on the last observation)
         """
-        e_seq = numpy.array(obs)
+        e_seq = numpy.array(obs, dtype=numpy.int64)
         # assume the observations were made 1 second apart
         t_seq = numpy.array(range(0,len(e_seq)))
 
