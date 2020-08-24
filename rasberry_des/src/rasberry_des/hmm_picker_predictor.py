@@ -30,11 +30,14 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         self.n_pick_substates = n_pick_substates
         self.mean_node_dist = numpy.mean(self.graph.mean_node_dist.values())
 
-        self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else mean_tray_pick_time
+#        self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else mean_tray_pick_time
+        self.mean_tray_pick_time = lambda: numpy.mean(self.picking_times_per_tray) if numpy.size(self.picking_times_per_tray) != 0. else 400
+
+        print "mean_tray_pick_time", mean_tray_pick_time
+
         # prediction interval. This should be less than node-to-node picking time
         # also, assuming mean_tray_pick_time is greater than node-to-node picking time
-        self.predict_interval = mean_tray_pick_time # time period to which the prediction is made in a loop. This must be < node-to-node picking time
-
+        self.predict_interval = 400 #mean_tray_pick_time # time period to which the prediction is made in a loop. This must be < node-to-node picking time
         try:
             assert self.predict_interval <= mean_tray_pick_time
         except AssertionError:
@@ -152,20 +155,34 @@ class HMMPickerPredictor(rasberry_des.picker_predictor.PickerPredictor):
         # TODO: take the progress (completed substates) into consideration
         # now prediction is assuming picking mode started at time zero
         n_iter = int(numpy.ceil(1.25 * (self.mean_tray_pick_time() / self.predict_interval))) # 25 % extra time to check progress
+        print "self.mean_tray_pick_time()", self.mean_tray_pick_time()
+        print "self.predict_interval", self.predict_interval
+        print "total_iterations", n_iter
 #        obs = [0, 0]
         obs = numpy.array([21, 22, 23, 24, 25, 26, 27])
+#        obs = numpy.array([1, 2, 3, 4, 5, 6, 7])
+
         curr_substate = 0
         prev_substate = 0
         tray_pick_time = 0.
         
 #        for i in range(n_iter/10):
-        for i in range(n_iter):
+        for i in range(1, n_iter):
+            print "iteration", i
             (state, kl, posterior) = self.fwd_picking_model.predict(obs,
                                                                     predict_time = self.predict_interval,
                                                                     verbose = False
                                                                     )
                                                                     
+#            (state, kl, posterior) = self.pick_substates_model.predict(obs,
+#                                                                    predict_time = self.predict_interval,
+#                                                                    verbose = False
+#                                                                    )                                                                    
+                                                                    
+                                                                    
             tray_pick_time += self.predict_interval
+#            tray_pick_time += i
+
 
             if state== 0 and (prev_substate == self.n_pick_substates - 2 or curr_substate == self.n_pick_substates - 1):
                 break

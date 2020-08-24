@@ -284,6 +284,9 @@ class PickerPredictor(object):
                                                                       self.mode_stop_poses[idx])
 
                     self.picking_times_per_tray.append(picking_time)
+                    print "Picking_time", picking_time
+                    print "Picking_times_per_tray", self.picking_times_per_tray
+
                     self.picking_dists_per_tray.append(picking_dist)
 
 #==============================================================================

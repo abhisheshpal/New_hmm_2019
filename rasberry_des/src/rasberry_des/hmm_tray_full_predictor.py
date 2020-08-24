@@ -104,6 +104,7 @@ class HMMTrayFullPredictor(rasberry_des.tray_full_predictor.TrayFullPredictor):
             elif self._picker_modes[picker_id] == 2:
                 # two possible events - tray_full -> [3/5] and row_finish -> [0/3]
                 predicted_tray_pick_time = self.predictors[picker_id].predict_tray_full_time() 
+                print "predicted_tray_pick_time", predicted_tray_pick_time
                 remain_tray_pick_time = predicted_tray_pick_time - self._times_picked[picker_id]
                 if remain_tray_pick_time > 0 and not rasberry_des.config_utils.isclose(remain_tray_pick_time, 0.):
                     print 'remain_tray_pick_time', remain_tray_pick_time

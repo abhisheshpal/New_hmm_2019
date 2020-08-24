@@ -34,7 +34,7 @@ class HMModel(object):
             assert init_state_prob is not None
             # Create CtHMM by given parameters
             self._model = hmms.CtHMM(trans_rate_mat, obs_prob_mat, init_state_prob)
-        print('Q=%s,\nB=%s,\nPi=%s' % self._model.params)
+#        print('Q=%s,\nB=%s,\nPi=%s' % self._model.params)
 
     def from_file(self, f_name):
         """Load model object from a file
@@ -69,7 +69,7 @@ class HMModel(object):
 
         return (t_seq, s_seq, e_seq)
 
-    def predict(self, obs=numpy.array([0,1,2,3,4]), predict_time = 20.0, verbose=False):
+    def predict(self, obs=numpy.array([0,1,2,3,4]), predict_time = 40.0, verbose=False):
         """ predict function that takes some initial observations so far
 
         Keyword arguments:
@@ -86,7 +86,7 @@ class HMModel(object):
 
         # set the last "unknown" observation time:
         t_seq[-1] = t_seq[-2] + predict_time
-        print 'predict_time', t_seq[-2]
+        print 'predict_time', t_seq
 
         if verbose:
             print('t_seq, e_seq', t_seq, e_seq)
